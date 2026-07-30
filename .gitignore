@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+public/
+resources/
+.docker-build-hash
+.hugo_build.lock

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corridor Beam-Geometry Tool — FNAL Muon Collider</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 16px/1.55 Georgia, 'Times New Roman', serif; margin: 0;
+         color: #1e2229; background: #fbfaf7; }
+  @media (prefers-color-scheme: dark) {
+    body { color: #d8d4cc; background: #191b1f; }
+    a { color: #8ab8e8; }
+    .panel, .out { background: #22252b !important; border-color: #3a3d44 !important; }
+    svg { background: #101216 !important; }
+    .warn { background: #4a3216 !important; }
+    .bad  { background: #58222218 !important; }
+  }
+  main { max-width: 62rem; margin: 0 auto; padding: 1rem 1.2rem 4rem; }
+  h1 { font-size: 1.45rem; line-height: 1.3; }
+  a { color: #1c5a96; }
+  svg { width: 100%; height: auto; background: #fff; border-radius: 6px;
+        touch-action: none; display: block; }
+  .panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+           gap: .7rem 1.4rem; background: #f2efe7; border: 1px solid #d8d2c4;
+           border-radius: 6px; padding: .9rem 1.1rem; margin: .9rem 0; }
+  .panel label { display: block; font-size: .82rem; color: #666; }
+  .panel input[type=range] { width: 100%; }
+  .panel .val { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .out { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+         gap: .55rem 1.3rem; background: #f2efe7; border: 1px solid #d8d2c4;
+         border-radius: 6px; padding: .9rem 1.1rem; font-size: .9rem; }
+  .out b { font-size: 1.12rem; font-variant-numeric: tabular-nums; }
+  .out .lbl { color: #777; font-size: .78rem; display: block; }
+  .flag { border-radius: 4px; padding: .15rem .45rem; }
+  .warn { background: #ffe9c2; }
+  .bad { background: #ffd9d4; }
+  .note { font-size: .85rem; color: #777; }
+  footer { font-size: .8rem; color: #888; margin-top: 2rem;
+           border-top: 1px solid #d8d2c4; padding-top: .7rem; }
+</style>
+</head>
+<body>
+<main>
+<p style="font-size:.85rem"><a href="../">← corridor siting study</a></p>
+<h1>Where does the beam come out of the ground?</h1>
+<p>
+The neutrino plume from the collider's interaction-point straight travels in a
+perfectly straight line while the Earth's surface curves and the terrain
+rolls. Pick <em>where the collision point sits along the on-site corridor</em>,
+<em>how deep the detector hall is</em>, and <em>where you want the beam to
+emerge</em> — the tool computes the <strong>upward tilt the straight section
+needs</strong>, how deep the ring ends up, and the <strong>height of the beam
+over the nearest house at the north end of the ComEd corridor</strong>
+(Smith Road crossing, 41.935618 N).
+Drag the <span style="color:#b3261e">▲ IP</span> and
+<span style="color:#7a2e21">● emergence point</span> directly, or use the sliders.
+</p>
+
+<svg id="plot" viewBox="0 0 980 480" aria-label="corridor elevation profile with beam line"></svg>
+<p class="note" id="ve"></p>
+
+<div class="panel">
+  <div>
+    <label>Collision point (IP) latitude — along the on-site corridor</label>
+    <input type="range" id="ipLat" min="41.8207" max="41.8695" step="0.0002" value="41.8491">
+    <span class="val" id="ipLatV"></span>
+  </div>
+  <div>
+    <label>Detector hall depth below grade (detector fixed at 41.927583 N)</label>
+    <input type="range" id="detDepth" min="10" max="250" step="1" value="100">
+    <span class="val" id="detDepthV"></span>
+  </div>
+  <div>
+    <label>Beam emergence point (latitude, north of the detector)</label>
+    <input type="range" id="exitLat" min="41.9290" max="42.0480" step="0.0002" value="42.0100">
+    <span class="val" id="exitLatV"></span>
+  </div>
+  <div>
+    <label>Nearest-house height at Smith Rd (ridge above grade)</label>
+    <input type="range" id="houseH" min="4" max="20" step="0.5" value="10">
+    <span class="val" id="houseHV"></span>
+  </div>
+</div>
+
+<div class="out" id="out"></div>
+
+<h2 style="font-size:1.1rem">Reading the answer</h2>
+<ul style="font-size:.9rem">
+  <li><strong>Straight-section tilt</strong> is the beam angle above the local
+  horizontal <em>at the IP</em>. For a planar ring this equals the ring-plane
+  pitch; LEP's plane was tilted 14 mrad (0.8°), so values beyond ~15 mrad are
+  flagged as beyond engineering precedent.</li>
+  <li>The beam line is anchored by two constraints: it must pass through the
+  detector hall (fixed latitude, chosen depth) and graze the surface at your
+  chosen emergence point. Earth curvature (R = 6371 km) makes the required
+  angle at the IP larger than the naive rise-over-run by Δs/R ≈ 1.4 mrad per
+  9 km, and the beam appears as a gentle parabola against the terrain.</li>
+  <li>An <em>upward</em>-tilted north straight tilts the south-going plume
+  <em>down</em>, pushing the southern exit farther away — helpful, see the
+  <a href="../safety/">safety assessment</a>.</li>
+  <li>Once airborne, the neutrino beam keeps climbing relative to the curving
+  ground; the number that matters for the Smith Road houses is the clearance
+  at the corridor's north end. An overhead neutrino beam in open air produces
+  far less dose than a surface-grazing one (showers need hundreds of metres
+  of air to develop — King 1999, §2), but any occupied-airspace / skyshine
+  case still needs its own assessment.</li>
+</ul>
+
+<footer>
+Terrain: SRTM 30 m via open-elevation along meridian −88.222972° (detector
+longitude); Smith Rd point sampled at (41.935618, −88.222542), grade 239 m ASL.
+Spherical-Earth chord geometry; geoid/ellipsoid differences are negligible at
+this scale. Part of the
+<a href="https://github.com/lawrenceleejr/FNALMuonColliderSite">FNALMuonColliderSite</a> study.
+</footer>
+</main>
+
+<script>
+"use strict";
+// ---- fixed geography --------------------------------------------------
+const R_E = 6371000;
+const DET_LAT = 41.927583, SMITH_LAT = 41.935618, SMITH_GRADE = 239.0;
+const FENCE_LAT = 41.86990;                 // FNAL NE corner on the meridian
+const SITE_S = 41.82065, SITE_N = 41.86990; // on-site corridor extent
+const MLAT = 111059;                        // m per degree latitude at 41.9 N
+// SRTM elevation profile along lon -88.222972, [lat, m ASL], 200 m spacing
+const PROFILE = [[41.8,226],[41.802,226],[41.804,219],[41.806,218],[41.808,222],[41.81,222],[41.812,221],[41.814,225],[41.816,221],[41.818,224],[41.82,225],[41.822,224],[41.824,224],[41.826,224],[41.828,226],[41.83,221],[41.832,225],[41.834,223],[41.836,221],[41.838,222],[41.84,225],[41.842,227],[41.844,225],[41.846,226],[41.848,224],[41.85,224],[41.852,224],[41.854,225],[41.856,226],[41.858,226],[41.86,226],[41.862,226],[41.864,225],[41.866,228],[41.868,230],[41.87,227],[41.872,229],[41.874,230],[41.876,229],[41.878,230],[41.88,231],[41.882,232],[41.884,231],[41.886,235],[41.888,232],[41.89,230],[41.892,235],[41.894,234],[41.896,235],[41.898,236],[41.9,231],[41.902,231],[41.904,233],[41.906,234],[41.908,237],[41.91,235],[41.912,229],[41.914,233],[41.916,232],[41.918,236],[41.92,234],[41.922,235],[41.924,234],[41.926,245],[41.928,235],[41.93,240],[41.932,235],[41.934,237],[41.936,240],[41.938,239],[41.94,238],[41.942,240],[41.944,239],[41.946,238],[41.948,239],[41.95,239],[41.952,239],[41.954,236],[41.956,233],[41.958,240],[41.96,234],[41.962,237],[41.964,236],[41.966,234],[41.968,238],[41.97,244],[41.972,242],[41.974,246],[41.976,238],[41.978,241],[41.98,236],[41.982,242],[41.984,239],[41.986,237],[41.988,239],[41.99,237],[41.992,234],[41.994,239],[41.996,240],[41.998,236],[42,240],[42.002,240],[42.004,246],[42.006,244],[42.008,246],[42.01,248],[42.012,249],[42.014,247],[42.016,247],[42.018,249],[42.02,249],[42.022,252],[42.024,259],[42.026,260],[42.028,260],[42.03,255],[42.032,236],[42.034,243],[42.036,258],[42.038,258],[42.04,262],[42.042,265],[42.044,263],[42.046,260],[42.048,264],[42.05,266]];
+
+const s_of = lat => (lat - 41.80) * MLAT;   // northward ground distance (m)
+const lat_of = s => 41.80 + s / MLAT;
+
+function terrain(lat) {
+  const p = PROFILE;
+  if (lat <= p[0][0]) return p[0][1];
+  if (lat >= p[p.length-1][0]) return p[p.length-1][1];
+  let lo = 0, hi = p.length - 1;
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; (p[m][0] <= lat) ? lo = m : hi = m; }
+  const t = (lat - p[lo][0]) / (p[hi][0] - p[lo][0]);
+  return p[lo][1] + t * (p[hi][1] - p[lo][1]);
+}
+
+// ---- beam model ---------------------------------------------------------
+// Height above the geoid vs arc distance for a straight chord:
+//   h(s) = h1 + th1*(s-s1) - (s-s1)^2/(2R),  th(s) = th1 - (s-s1)/R
+// anchored at the detector (s1, h1) and the emergence point (s2, terrain).
+function solve(ipLat, detDepth, exitLat) {
+  const s1 = s_of(DET_LAT), h1 = terrain(DET_LAT) - detDepth;
+  const s2 = s_of(exitLat), h2 = terrain(exitLat);
+  const d = s2 - s1;
+  const th1 = (h2 - h1) / d + d / (2 * R_E);
+  const h  = s => h1 + th1 * (s - s1) - (s - s1) ** 2 / (2 * R_E);
+  const th = s => th1 - (s - s1) / R_E;
+  const sIP = s_of(ipLat);
+  return {
+    h, th, s1, h1, s2, h2,
+    thIP: th(sIP), hIP: h(sIP),
+    ringDepth: terrain(ipLat) - h(sIP),
+    fenceDepth: terrain(FENCE_LAT) - h(s_of(FENCE_LAT)),
+    smithH: h(s_of(SMITH_LAT)) - SMITH_GRADE,     // beam above grade at Smith Rd
+    exitAngle: th(s2),
+    distIPdet: (s1 - sIP), distIPexit: (s2 - sIP), distDetExit: d,
+  };
+}
+
+// ---- svg ---------------------------------------------------------------
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("plot");
+const W = 980, H = 480, ML = 58, MR = 16, MT = 14, MB = 40;
+const LAT_MIN = 41.812, LAT_MAX = 42.052;
+const X = lat => ML + (lat - LAT_MIN) / (LAT_MAX - LAT_MIN) * (W - ML - MR);
+const invX = px => LAT_MIN + (px - ML) / (W - ML - MR) * (LAT_MAX - LAT_MIN);
+
+const state = { ipLat: 41.8491, detDepth: 100, exitLat: 42.0100, houseH: 10 };
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e);
+  return e;
+}
+
+function fmt(v, dp) { return v.toLocaleString("en-US", {maximumFractionDigits: dp, minimumFractionDigits: dp}); }
+
+function render() {
+  const b = solve(state.ipLat, state.detDepth, state.exitLat);
+
+  // vertical window: include beam at IP and terrain, with headroom
+  // (clamped at -280 m so extreme geometries keep the terrain readable)
+  let zMin = Math.max(Math.min(b.hIP, 170), -280), zMax = 270;
+  for (const [la, e] of PROFILE) if (la > LAT_MIN && la < LAT_MAX) zMax = Math.max(zMax, e);
+  const beamEnd = b.h(s_of(LAT_MAX));
+  zMax = Math.max(zMax, Math.min(beamEnd, zMax + 120)) + 25;
+  zMin -= 15;
+  const Y = z => MT + (zMax - z) / (zMax - zMin) * (H - MT - MB);
+
+  svg.textContent = "";
+  // site band
+  el("rect", {x: X(SITE_S), y: MT, width: X(SITE_N) - X(SITE_S), height: H - MT - MB,
+              fill: "#8a6d3b", opacity: .10});
+  el("text", {x: (X(SITE_S)+X(SITE_N))/2, y: MT + 16, "text-anchor": "middle",
+              "font-size": 12, fill: "#8a6d3b"}).textContent = "Fermilab site";
+
+  // gridlines + axes labels
+  for (let z = Math.ceil(zMin/50)*50; z <= zMax; z += 50) {
+    el("line", {x1: ML, y1: Y(z), x2: W-MR, y2: Y(z), stroke: "#8883", "stroke-width": .7});
+    el("text", {x: ML-6, y: Y(z)+4, "text-anchor": "end", "font-size": 11, fill: "#888"})
+      .textContent = z + " m";
+  }
+  for (let la = 41.82; la <= LAT_MAX; la += 0.02) {
+    const km = (s_of(la) - s_of(state.ipLat)) / 1000;
+    el("text", {x: X(la), y: H-8, "text-anchor": "middle", "font-size": 10.5, fill: "#888"})
+      .textContent = la.toFixed(2) + "° (" + (km>=0?"+":"") + km.toFixed(1) + " km)";
+  }
+
+  // terrain
+  let tp = "";
+  for (const [la, e] of PROFILE)
+    if (la >= LAT_MIN && la <= LAT_MAX) tp += (tp?" L":"M") + X(la).toFixed(1) + " " + Y(e).toFixed(1);
+  // ground fill
+  el("path", {d: tp + ` L ${W-MR} ${H-MB} L ${ML} ${H-MB} Z`, fill: "#c9b98a", opacity: .30});
+  el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2});
+
+  // beam: sample, split underground/air
+  const sA = s_of(Math.max(state.ipLat - 0.004, LAT_MIN)), sB = s_of(LAT_MAX);
+  let segs = [], cur = null, curAir = null;
+  for (let s = sA; s <= sB; s += 150) {
+    const la = lat_of(s), hb = b.h(s), air = hb > terrain(la) + 0.01;
+    if (air !== curAir) { cur = {air, pts: []}; segs.push(cur); curAir = air; }
+    cur.pts.push([X(la), Y(hb)]);
+  }
+  for (const g of segs) {
+    const d = g.pts.map((p,i) => (i?"L":"M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+    el("path", {d, fill: "none", stroke: "#0b6e4f", "stroke-width": 2.2,
+                "stroke-dasharray": g.air ? "none" : "7 5"});
+  }
+
+  // fence marker
+  el("line", {x1: X(FENCE_LAT), y1: MT+22, x2: X(FENCE_LAT), y2: H-MB, stroke: "#8a6d3b",
+              "stroke-width": 1, "stroke-dasharray": "3 4"});
+
+  // detector
+  const yDetT = Y(terrain(DET_LAT)), yDet = Y(b.h1);
+  el("line", {x1: X(DET_LAT), y1: yDetT, x2: X(DET_LAT), y2: yDet, stroke: "#0b6e4f", "stroke-width": 1});
+  el("rect", {x: X(DET_LAT)-5, y: yDet-7, width: 10, height: 14, fill: "#0b6e4f", rx: 2});
+  el("text", {x: X(DET_LAT), y: yDet+26, "text-anchor": "middle", "font-size": 11.5,
+              fill: "#0b6e4f"}).textContent = "detector −" + fmt(state.detDepth,0) + " m";
+
+  // Smith Rd + house
+  const xS = X(SMITH_LAT), ySg = Y(SMITH_GRADE);
+  el("line", {x1: xS, y1: MT+22, x2: xS, y2: H-MB, stroke: "#666", "stroke-width": 1, "stroke-dasharray": "2 4"});
+  const hh = state.houseH, yRoof = Y(SMITH_GRADE + hh);
+  el("rect", {x: xS-4, y: yRoof, width: 8, height: ySg - yRoof, fill: "#555"});
+  el("path", {d: `M ${xS-6} ${yRoof} L ${xS} ${yRoof-6} L ${xS+6} ${yRoof} Z`, fill: "#555"});
+  el("text", {x: xS+4, y: MT+34, "font-size": 11.5, fill: "#666"}).textContent = "Smith Rd";
+  const ySmithBeam = Y(SMITH_GRADE + b.smithH);
+  if (b.smithH > 0) {
+    el("line", {x1: xS, y1: yRoof-6, x2: xS, y2: ySmithBeam, stroke: "#b3261e",
+                "stroke-width": 1.2, "stroke-dasharray": "2 3"});
+    el("text", {x: xS+5, y: (yRoof + ySmithBeam)/2, "font-size": 11, fill: "#b3261e"})
+      .textContent = fmt(b.smithH - hh, 0) + " m over roof";
+  }
+
+  // emergence handle (on terrain)
+  const xE = X(state.exitLat), yE = Y(terrain(state.exitLat));
+  el("circle", {cx: xE, cy: yE, r: 8, fill: "#7a2e21", stroke: "#fff", "stroke-width": 2,
+                id: "hExit", style: "cursor:ew-resize"});
+  const labelLeft = xE > W - 130;   // keep the label on-canvas and off the Smith Rd text
+  el("text", {x: labelLeft ? xE - 12 : xE + 12, y: yE + 20,
+              "text-anchor": labelLeft ? "end" : "start",
+              "font-size": 11.5, fill: "#7a2e21"}).textContent = "emerges here";
+
+  // IP handle
+  const xI = X(state.ipLat), yI = Y(b.hIP);
+  el("path", {d: `M ${xI} ${yI-9} L ${xI-8} ${yI+7} L ${xI+8} ${yI+7} Z`, fill: "#b3261e",
+              stroke: "#fff", "stroke-width": 1.5, id: "hIP", style: "cursor:ew-resize"});
+  el("text", {x: xI, y: yI+22, "text-anchor": "middle", "font-size": 11.5, fill: "#b3261e"})
+    .textContent = "IP";
+
+  // tilt annotation at IP
+  el("text", {x: xI+12, y: yI-6, "font-size": 11, fill: "#0b6e4f"})
+    .textContent = "tilt " + fmt(b.thIP*1000, 2) + " mrad ↑";
+
+  // vertical exaggeration note
+  const veH = ((H-MT-MB) / (zMax-zMin));            // px per m vertical
+  const veW = (W-ML-MR) / ((LAT_MAX-LAT_MIN)*MLAT); // px per m horizontal
+  document.getElementById("ve").textContent =
+    "Vertical exaggeration ≈ " + Math.round(veH/veW) + "×. Dashed beam = underground, solid = airborne. " +
+    "Beam is a true straight line in space; it appears curved because heights are measured from the curved geoid.";
+
+  // outputs
+  const lep = Math.abs(b.thIP*1000) > 15;
+  const shallow = b.ringDepth < 30;
+  const smithTxt = b.smithH > 0
+      ? fmt(b.smithH,0) + " m above grade — " +
+        (b.smithH - hh > 0 ? "<b>" + fmt(b.smithH-hh,0) + " m</b> above a " + fmt(hh,0) + " m house"
+                           : "<span class='flag bad'>BELOW the " + fmt(hh,0) + " m roofline</span>")
+      : "<span class='flag'>still " + fmt(-b.smithH,0) + " m underground</span>";
+  document.getElementById("out").innerHTML = `
+    <div><span class="lbl">Required straight-section tilt at IP (up, toward N)</span>
+      <b class="${lep?'flag bad':''}">${fmt(b.thIP*1000,2)} mrad</b> = ${fmt(b.thIP*180/Math.PI,3)}°
+      ${lep ? "<br><span class='note'>beyond LEP-precedent ring-plane tilt (14 mrad)</span>" : ""}</div>
+    <div><span class="lbl">Ring/straight depth below grade at the IP</span>
+      <b class="${shallow?'flag warn':''}">${fmt(b.ringDepth,0)} m</b>
+      ${shallow ? "<br><span class='note'>very shallow — above bedrock</span>" : ""}
+      <br><span class="note">beam elev ${fmt(b.hIP,0)} m ASL; ${fmt(b.fenceDepth,0)} m deep at the fence</span></div>
+    <div><span class="lbl">Beam at Smith Rd (north end of ComEd corridor)</span>
+      <b>${smithTxt}</b></div>
+    <div><span class="lbl">Detector hall</span>
+      <b>−${fmt(state.detDepth,0)} m</b> at 41.927583 N
+      <br><span class="note">${fmt(b.distIPdet/1000,2)} km from IP; beam angle there ${fmt(b.th(b.s1)*1000,2)} mrad</span></div>
+    <div><span class="lbl">Emergence point</span>
+      <b>${state.exitLat.toFixed(4)}° N</b>
+      <br><span class="note">${fmt(b.distIPexit/1000,2)} km from IP, ${fmt(b.distDetExit/1000,2)} km past the detector;
+      grazing angle ${fmt(b.exitAngle*1000,2)} mrad</span></div>
+    <div><span class="lbl">South-going plume (same straight, opposite direction)</span>
+      <b>tilted ${fmt(b.thIP*1000,2)} mrad down</b>
+      <br><span class="note">southern exit pushed farther out — see safety note</span></div>`;
+
+  // sync control labels
+  document.getElementById("ipLatV").textContent = state.ipLat.toFixed(4) + "° N";
+  document.getElementById("detDepthV").textContent = fmt(state.detDepth,0) + " m";
+  document.getElementById("exitLatV").textContent = state.exitLat.toFixed(4) + "° N";
+  document.getElementById("houseHV").textContent = fmt(state.houseH,1) + " m";
+  document.getElementById("ipLat").value = state.ipLat;
+  document.getElementById("exitLat").value = state.exitLat;
+}
+
+// ---- controls -----------------------------------------------------------
+for (const [id, key, num] of [["ipLat","ipLat",1],["detDepth","detDepth",1],
+                              ["exitLat","exitLat",1],["houseH","houseH",1]]) {
+  document.getElementById(id).addEventListener("input", e => {
+    state[key] = parseFloat(e.target.value); render();
+  });
+}
+
+// dragging on the SVG
+let dragging = null;
+svg.addEventListener("pointerdown", e => {
+  const t = e.target.id;
+  if (t === "hIP" || t === "hExit") { dragging = t; svg.setPointerCapture(e.pointerId); }
+});
+svg.addEventListener("pointermove", e => {
+  if (!dragging) return;
+  const r = svg.getBoundingClientRect();
+  const px = (e.clientX - r.left) * W / r.width;
+  let la = invX(px);
+  if (dragging === "hIP")  state.ipLat  = Math.min(SITE_N - 0.0004, Math.max(SITE_S, la));
+  if (dragging === "hExit") state.exitLat = Math.min(42.048, Math.max(DET_LAT + 0.0012, la));
+  render();
+});
+svg.addEventListener("pointerup", () => dragging = null);
+
+render();
+</script>
+</body>
+</html>

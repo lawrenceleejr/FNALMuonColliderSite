@@ -1,0 +1,11 @@
+baseURL = 'https://lawrenceleejr.github.io/FNALMuonColliderSite/'
+languageCode = 'en-us'
+title = 'FNAL Muon Collider — Corridor-Aligned Siting Study'
+
+disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[params]
+  description = 'Siting a 10 TeV muon collider at Fermilab with all long straights on one N-S meridian, feeding a neutrino experiment on the ComEd corridor.'
