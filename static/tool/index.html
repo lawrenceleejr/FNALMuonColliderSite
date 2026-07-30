@@ -47,8 +47,8 @@
 <p>
 This is a straight-line ray trace over the real elevation profile of the
 corridor. You set three things about the machine: <em>where the collision
-point sits</em> (N–S along the on-site corridor), <em>how deep the
-straightaway is</em>, and <em>its upward tilt</em>. The neutrino beam then
+point sits</em> (N–S along the on-site corridor), <em>the height (elevation)
+of the straightaway</em>, and <em>its upward tilt</em>. The neutrino beam then
 travels in a perfectly straight line while the Earth curves away beneath it
 and the terrain rolls above it. The tool shows the whole story downstream:
 the beam's depth where it crosses the <strong>detector site
@@ -57,8 +57,8 @@ ground</strong>, and its <strong>height over the houses at the Smith Road
 crossing</strong> of the ComEd corridor (41.935618 N).
 </p>
 <p class="note">
-Drag the <span style="color:#b3261e">▲ collision point</span> to move the
-machine; drag the <span style="color:#7a2e21">● emergence point</span> along
+Drag the <span style="color:#b3261e">▲ collision point</span> in 2-D to move the
+machine north–south and up–down; drag the <span style="color:#7a2e21">● emergence point</span> along
 the ground to ask "what tilt puts the beam out <em>here</em>?" — the tilt
 slider updates to the required angle.
 </p>
@@ -73,9 +73,9 @@ slider updates to the required angle.
     <span class="val" id="ipLatV"></span>
   </div>
   <div>
-    <label>Straightaway depth below grade at the IP</label>
-    <input type="range" id="ipDepth" min="10" max="250" step="1" value="100">
-    <span class="val" id="ipDepthV"></span>
+    <label>Height of the straightaway at the IP (elevation above sea level; grade there is ~225 m)</label>
+    <input type="range" id="ipElev" min="-100" max="235" step="1" value="125">
+    <span class="val" id="ipElevV"></span>
   </div>
   <div>
     <label>Upward tilt of the straight section (toward north)</label>
@@ -157,14 +157,14 @@ function terrain(lat) {
 // the local horizontal grows as th(s) = th0 + (s-s0)/R.
 // (Equivalent to the ground-frame form depth = d0 + dz - th0*x - x^2/2R
 // used in tools/corridor_layout.py.)
-function trace(ipLat, ipDepth, th0) {
-  const s0 = s_of(ipLat), h0 = terrain(ipLat) - ipDepth;
+function trace(ipLat, ipElev, th0) {
+  const s0 = s_of(ipLat), h0 = ipElev;
   const h  = s => h0 + th0 * (s - s0) + (s - s0) ** 2 / (2 * R_E);
   const th = s => th0 + (s - s0) / R_E;
 
   // first ground crossing north of the IP (150 m scan + bisection)
   let exitS = null;
-  let prev = -ipDepth;
+  let prev = h0 - terrain(ipLat);
   for (let s = s0 + 150; s <= s_of(LAT_END); s += 150) {
     const clr = h(s) - terrain(lat_of(s));
     if (clr >= 0 && prev < 0) {
@@ -196,8 +196,8 @@ function trace(ipLat, ipDepth, th0) {
 }
 
 // tilt that puts the ray through the ground surface at a chosen latitude
-function tiltFor(ipLat, ipDepth, exitLat) {
-  const s0 = s_of(ipLat), h0 = terrain(ipLat) - ipDepth;
+function tiltFor(ipLat, ipElev, exitLat) {
+  const s0 = s_of(ipLat), h0 = ipElev;
   const d = s_of(exitLat) - s0;
   return (terrain(exitLat) - h0) / d - d / (2 * R_E);
 }
@@ -210,7 +210,8 @@ const LAT_MIN = 41.812, LAT_MAX = 42.052;
 const X = lat => ML + (lat - LAT_MIN) / (LAT_MAX - LAT_MIN) * (W - ML - MR);
 const invX = px => LAT_MIN + (px - ML) / (W - ML - MR) * (LAT_MAX - LAT_MIN);
 
-const state = { ipLat: 41.8491, ipDepth: 100, tilt: 11.5e-3, houseH: 10 };
+const state = { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, houseH: 10 };
+let yMap = { zMin: -280, zMax: 315 };
 
 function el(tag, attrs, parent) {
   const e = document.createElementNS(NS, tag);
@@ -221,13 +222,15 @@ function el(tag, attrs, parent) {
 const fmt = (v, dp) => v.toLocaleString("en-US", {maximumFractionDigits: dp, minimumFractionDigits: dp});
 
 function render() {
-  const b = trace(state.ipLat, state.ipDepth, state.tilt);
+  const b = trace(state.ipLat, state.ipElev, state.tilt);
+  const ipDepth = terrain(state.ipLat) - state.ipElev;
 
   // vertical window: keep terrain readable; include IP and some sky
   let zMax = 270, zMin = Math.max(Math.min(b.h0 - 15, 170), -280);
   for (const [la, e] of PROFILE) if (la > LAT_MIN && la < LAT_MAX) zMax = Math.max(zMax, e);
   zMax += 45;
   const Y = z => MT + (zMax - z) / (zMax - zMin) * (H - MT - MB);
+  yMap = { zMin, zMax };   // for inverse-mapping pointer drags
 
   svg.textContent = "";
   // site band
@@ -316,11 +319,12 @@ function render() {
   // IP handle
   const xI = X(state.ipLat), yI = Y(b.h0);
   el("path", {d: `M ${xI} ${yI-9} L ${xI-8} ${yI+7} L ${xI+8} ${yI+7} Z`, fill: "#b3261e",
-              stroke: "#fff", "stroke-width": 1.5, id: "hIP", style: "cursor:ew-resize"});
+              stroke: "#fff", "stroke-width": 1.5, id: "hIP", style: "cursor:move"});
   el("text", {x: xI, y: yI+22, "text-anchor": "middle", "font-size": 11.5, fill: "#b3261e"})
-    .textContent = "IP −" + fmt(state.ipDepth,0) + " m";
+    .textContent = "IP " + fmt(state.ipElev,0) + " m ASL (" +
+      (ipDepth >= 0 ? "−" + fmt(ipDepth,0) + " m" : "above ground!") + ")";
   el("text", {x: xI+12, y: yI-6, "font-size": 11, fill: "#0b6e4f"})
-    .textContent = "tilt " + fmt(state.tilt*1000, 2) + " mrad ↑";
+    .textContent = "tilt " + fmt(state.tilt*1000, 2) + " mrad = " + fmt(state.tilt*180/Math.PI, 3) + "° ↑";
 
   const veH = ((H-MT-MB) / (zMax-zMin));
   const veW = (W-ML-MR) / ((LAT_MAX-LAT_MIN)*MLAT);
@@ -365,8 +369,11 @@ function render() {
       <br><span class="note">southern exit pushed farther out — see safety note</span></div>`;
 
   document.getElementById("ipLatV").textContent = state.ipLat.toFixed(4) + "° N";
-  document.getElementById("ipDepthV").textContent = fmt(state.ipDepth,0) + " m";
-  document.getElementById("tiltV").textContent = fmt(state.tilt*1000,2) + " mrad ↑";
+  document.getElementById("ipElevV").textContent = fmt(state.ipElev,0) + " m ASL  (" +
+    (ipDepth >= 0 ? fmt(ipDepth,0) + " m below grade at the IP)" : "ABOVE grade at the IP!)");
+  document.getElementById("ipElev").value = state.ipElev;
+  document.getElementById("tiltV").textContent =
+    fmt(state.tilt*1000,2) + " mrad = " + fmt(state.tilt*180/Math.PI,3) + "° ↑";
   document.getElementById("houseHV").textContent = fmt(state.houseH,1) + " m";
   document.getElementById("ipLat").value = state.ipLat;
   document.getElementById("tilt").value = state.tilt*1000;
@@ -374,7 +381,7 @@ function render() {
 
 // ---- controls -----------------------------------------------------------
 document.getElementById("ipLat").addEventListener("input", e => { state.ipLat = +e.target.value; render(); });
-document.getElementById("ipDepth").addEventListener("input", e => { state.ipDepth = +e.target.value; render(); });
+document.getElementById("ipElev").addEventListener("input", e => { state.ipElev = +e.target.value; render(); });
 document.getElementById("tilt").addEventListener("input", e => { state.tilt = +e.target.value/1000; render(); });
 document.getElementById("houseH").addEventListener("input", e => { state.houseH = +e.target.value; render(); });
 
@@ -388,10 +395,15 @@ svg.addEventListener("pointermove", e => {
   if (!dragging) return;
   const r = svg.getBoundingClientRect();
   let la = invX((e.clientX - r.left) * W / r.width);
-  if (dragging === "hIP") state.ipLat = Math.min(SITE_N - 0.0004, Math.max(SITE_S, la));
+  if (dragging === "hIP") {
+    state.ipLat = Math.min(SITE_N - 0.0004, Math.max(SITE_S, la));
+    const py = (e.clientY - r.top) * H / r.height;
+    const z = yMap.zMax - (py - MT) / (H - MT - MB) * (yMap.zMax - yMap.zMin);
+    state.ipElev = Math.round(Math.min(235, Math.max(-100, z)));
+  }
   if (dragging === "hExit") {
     la = Math.min(LAT_MAX, Math.max(state.ipLat + 0.004, la));
-    state.tilt = Math.min(70e-3, Math.max(-5e-3, tiltFor(state.ipLat, state.ipDepth, la)));
+    state.tilt = Math.min(70e-3, Math.max(-5e-3, tiltFor(state.ipLat, state.ipElev, la)));
   }
   render();
 });
