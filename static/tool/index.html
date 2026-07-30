@@ -152,8 +152,16 @@ function solve(ipLat, detDepth, exitLat) {
   const h  = s => h1 + th1 * (s - s1) - (s - s1) ** 2 / (2 * R_E);
   const th = s => th1 - (s - s1) / R_E;
   const sIP = s_of(ipLat);
+  // minimum ground cover between the site fence and just short of the chosen
+  // emergence point -- at shallow depths the rolling terrain, not the chosen
+  // exit, decides where the beam actually comes out
+  let minCover = 1e9, minCoverLat = null;
+  for (let la = FENCE_LAT; la < exitLat - 0.0012; la += 0.0004) {
+    const c = terrain(la) - h(s_of(la));
+    if (c < minCover) { minCover = c; minCoverLat = la; }
+  }
   return {
-    h, th, s1, h1, s2, h2,
+    h, th, s1, h1, s2, h2, minCover, minCoverLat,
     thIP: th(sIP), hIP: h(sIP),
     ringDepth: terrain(ipLat) - h(sIP),
     fenceDepth: terrain(FENCE_LAT) - h(s_of(FENCE_LAT)),
@@ -315,7 +323,12 @@ function render() {
       grazing angle ${fmt(b.exitAngle*1000,2)} mrad</span></div>
     <div><span class="lbl">South-going plume (same straight, opposite direction)</span>
       <b>tilted ${fmt(b.thIP*1000,2)} mrad down</b>
-      <br><span class="note">southern exit pushed farther out — see safety note</span></div>`;
+      <br><span class="note">southern exit pushed farther out — see safety note</span></div>
+    <div><span class="lbl">Minimum ground cover, fence → emergence</span>
+      <b class="${b.minCover < 0 ? 'flag bad' : b.minCover < 5 ? 'flag warn' : ''}">${fmt(b.minCover,1)} m</b>
+      at ${b.minCoverLat ? b.minCoverLat.toFixed(4) : '—'}° N
+      ${b.minCover < 0 ? "<br><span class='note'>terrain breaches the beamline — the real emergence is here, not at your chosen point</span>"
+        : b.minCover < 5 ? "<br><span class='note'>grazing: this stretch is radiologically an exit strip; SRTM is ±few m — verify with lidar</span>" : ""}</div>`;
 
   // sync control labels
   document.getElementById("ipLatV").textContent = state.ipLat.toFixed(4) + "° N";
