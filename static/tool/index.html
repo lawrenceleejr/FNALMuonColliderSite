@@ -51,16 +51,17 @@ point sits</em> (N–S along the on-site corridor), <em>the height (elevation)
 of the straightaway</em>, and <em>its upward tilt</em>. The neutrino beam then
 travels in a perfectly straight line while the Earth curves away beneath it
 and the terrain rolls above it. The tool shows the whole story downstream:
-the beam's depth where it crosses the <strong>detector site
-(41.927583 N)</strong>, the point where it <strong>emerges from the
-ground</strong>, and its <strong>height over the houses at the Smith Road
-crossing</strong> of the ComEd corridor (41.935618 N).
+the beam's depth where it crosses the <strong>detector site</strong> (whose
+latitude you also choose), the point where it <strong>emerges from the
+ground</strong>, and how it sits relative to the <strong>airspace over private
+property north of Smith Road</strong> (41.935618 N).
 </p>
 <p class="note">
 Drag the <span style="color:#b3261e">▲ collision point</span> in 2-D to move the
-machine north–south and up–down; drag the <span style="color:#7a2e21">● emergence point</span> along
-the ground to ask "what tilt puts the beam out <em>here</em>?" — the tilt
-slider updates to the required angle.
+machine north–south and up–down; drag the <span style="color:#1c5a96">■ detector
+hall</span> along the corridor; drag the <span style="color:#7a2e21">● emergence
+point</span> along the ground to ask "what tilt puts the beam out <em>here</em>?" —
+the tilt slider updates to the required angle.
 </p>
 
 <svg id="plot" viewBox="0 0 980 480" aria-label="corridor elevation profile with beam ray"></svg>
@@ -81,6 +82,16 @@ slider updates to the required angle.
     <label>Upward tilt of the straight section (toward north)</label>
     <input type="range" id="tilt" min="-5" max="70" step="0.05" value="11.5">
     <span class="val" id="tiltV"></span>
+  </div>
+  <div>
+    <label>Detector hall latitude — anywhere along the corridor</label>
+    <input type="range" id="detLat" min="41.8750" max="42.0480" step="0.0002" value="41.9276">
+    <span class="val" id="detLatV"></span>
+  </div>
+  <div>
+    <label>Private-airspace ceiling above ground, north of Smith Rd</label>
+    <input type="range" id="airFt" min="100" max="500" step="25" value="300">
+    <span class="val" id="airFtV"></span>
   </div>
   <div>
     <label>Nearest-house height at Smith Rd (ridge above grade)</label>
@@ -129,7 +140,8 @@ chord geometry. Part of the
 "use strict";
 // ---- fixed geography --------------------------------------------------
 const R_E = 6371000;
-const DET_LAT = 41.927583, SMITH_LAT = 41.935618, SMITH_GRADE = 239.0;
+const DET_LAT0 = 41.927583, SMITH_LAT = 41.935618, SMITH_GRADE = 239.0;
+const FT = 0.3048;
 const FENCE_LAT = 41.86990;                 // FNAL NE corner on the meridian
 const SITE_S = 41.82065, SITE_N = 41.86990; // on-site corridor extent
 const MLAT = 111059;                        // m per degree latitude at 41.9 N
@@ -157,7 +169,7 @@ function terrain(lat) {
 // the local horizontal grows as th(s) = th0 + (s-s0)/R.
 // (Equivalent to the ground-frame form depth = d0 + dz - th0*x - x^2/2R
 // used in tools/corridor_layout.py.)
-function trace(ipLat, ipElev, th0) {
+function trace(ipLat, ipElev, th0, detLat) {
   const s0 = s_of(ipLat), h0 = ipElev;
   const h  = s => h0 + th0 * (s - s0) + (s - s0) ** 2 / (2 * R_E);
   const th = s => th0 + (s - s0) / R_E;
@@ -188,11 +200,37 @@ function trace(ipLat, ipElev, th0) {
   return {
     h, th, s0, h0, exitS,
     exitLat: exitS !== null ? lat_of(exitS) : null,
-    detDepth: terrain(DET_LAT) - h(s_of(DET_LAT)),
+    detDepth: terrain(detLat) - h(s_of(detLat)),
     fenceDepth: terrain(FENCE_LAT) - h(s_of(FENCE_LAT)),
     smithH: h(s_of(SMITH_LAT)) - SMITH_GRADE,
     minCover, minCoverLat,
   };
+}
+
+// Airspace over private property north of Smith Rd: the band from the ground
+// surface up to `hM` metres above it. Returns where the beam sits relative to
+// that band -- the stretch it flies through (an occupied-airspace question,
+// distinct from the surface-grazing dose question) and where it finally clears.
+function airspace(b, hM) {
+  const ceil = la => terrain(la) + hM;
+  const sStart = s_of(SMITH_LAT), sEnd = s_of(LAT_END), STEP = 40;
+  let firstIn = null, lastIn = null, inLen = 0, undergroundAll = true;
+  for (let s = sStart; s <= sEnd; s += STEP) {
+    const la = lat_of(s), hb = b.h(s);
+    if (hb > terrain(la)) undergroundAll = false;
+    if (hb > terrain(la) && hb <= ceil(la)) {
+      if (firstIn === null) firstIn = la;
+      lastIn = la; inLen += STEP;
+    }
+  }
+  // last point at or below the ceiling -> north of it the beam is clear for good
+  let clearLat = SMITH_LAT;
+  for (let s = sEnd; s >= sStart; s -= STEP) {
+    if (b.h(s) <= ceil(lat_of(s))) { clearLat = lat_of(Math.min(s + STEP, sEnd)); break; }
+  }
+  const smithMargin = b.h(sStart) - ceil(SMITH_LAT);   // + = above the ceiling
+  return { ceil, firstIn, lastIn, inLen, clearLat, smithMargin, undergroundAll,
+           clearsInProfile: clearLat < LAT_END - 1e-6 };
 }
 
 // tilt that puts the ray through the ground surface at a chosen latitude
@@ -210,7 +248,8 @@ const LAT_MIN = 41.812, LAT_MAX = 42.052;
 const X = lat => ML + (lat - LAT_MIN) / (LAT_MAX - LAT_MIN) * (W - ML - MR);
 const invX = px => LAT_MIN + (px - ML) / (W - ML - MR) * (LAT_MAX - LAT_MIN);
 
-const state = { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, houseH: 10 };
+const state = { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, houseH: 10,
+                detLat: 41.9276, airFt: 300 };
 let yMap = { zMin: -280, zMax: 315 };
 
 function el(tag, attrs, parent) {
@@ -222,13 +261,16 @@ function el(tag, attrs, parent) {
 const fmt = (v, dp) => v.toLocaleString("en-US", {maximumFractionDigits: dp, minimumFractionDigits: dp});
 
 function render() {
-  const b = trace(state.ipLat, state.ipElev, state.tilt);
+  const b = trace(state.ipLat, state.ipElev, state.tilt, state.detLat);
   const ipDepth = terrain(state.ipLat) - state.ipElev;
+  const airM = state.airFt * FT;
+  const air = airspace(b, airM);
 
   // vertical window: keep terrain readable; include IP and some sky
   let zMax = 270, zMin = Math.max(Math.min(b.h0 - 15, 170), -280);
-  for (const [la, e] of PROFILE) if (la > LAT_MIN && la < LAT_MAX) zMax = Math.max(zMax, e);
-  zMax += 45;
+  for (const [la, e] of PROFILE) if (la > LAT_MIN && la < LAT_MAX)
+    zMax = Math.max(zMax, e + (la >= SMITH_LAT ? airM : 0));
+  zMax += 35;
   const Y = z => MT + (zMax - z) / (zMax - zMin) * (H - MT - MB);
   yMap = { zMin, zMax };   // for inverse-mapping pointer drags
 
@@ -257,6 +299,41 @@ function render() {
   el("path", {d: tp + ` L ${W-MR} ${H-MB} L ${ML} ${H-MB} Z`, fill: "#c9b98a", opacity: .30});
   el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2});
 
+  // private-airspace band: ground -> ground + ceiling, from Smith Rd northward
+  {
+    const las = [SMITH_LAT];
+    for (const [la] of PROFILE) if (la > SMITH_LAT && la < LAT_MAX) las.push(la);
+    las.push(LAT_MAX);
+    let up = "", dn = "";
+    las.forEach((la, i) => {
+      up += (i ? " L" : "M") + X(la).toFixed(1) + " " + Y(terrain(la) + airM).toFixed(1);
+    });
+    for (let i = las.length - 1; i >= 0; i--)
+      dn += " L" + X(las[i]).toFixed(1) + " " + Y(terrain(las[i])).toFixed(1);
+    el("path", {d: up + dn + " Z", fill: "#b3261e", opacity: .13});
+    el("path", {d: up, fill: "none", stroke: "#b3261e", "stroke-width": 1.2,
+                "stroke-dasharray": "5 4", opacity: .8});
+    el("text", {x: X(SMITH_LAT) + 7, y: Y(terrain(SMITH_LAT) + airM) - 6,
+                "font-size": 11, fill: "#b3261e"})
+      .textContent = fmt(state.airFt, 0) + " ft over private property →";
+  }
+
+  // stretch of beam flying inside that band (drawn under the beam line)
+  {
+    let runs = [], cur = null;
+    for (let s = s_of(SMITH_LAT); s <= s_of(LAT_MAX); s += 40) {
+      const la = lat_of(s), hb = b.h(s);
+      if (hb > terrain(la) && hb <= terrain(la) + airM) {
+        if (!cur) { cur = []; runs.push(cur); }
+        cur.push([X(la), Y(hb)]);
+      } else cur = null;
+    }
+    for (const g of runs) if (g.length > 1)
+      el("path", {d: g.map((q,i) => (i?"L":"M") + q[0].toFixed(1) + " " + q[1].toFixed(1)).join(" "),
+                  fill: "none", stroke: "#b3261e", "stroke-width": 7, opacity: .5,
+                  "stroke-linecap": "round"});
+  }
+
   // beam ray: dashed underground, solid airborne
   const sA = s_of(Math.max(state.ipLat - 0.004, LAT_MIN)), sB = s_of(LAT_MAX);
   let segs = [], cur = null, curAir = null;
@@ -276,11 +353,13 @@ function render() {
               "stroke-width": 1, "stroke-dasharray": "3 4"});
 
   // detector hall: box drawn where the beam crosses the detector latitude
-  const hDet = b.h(s_of(DET_LAT)), yDetT = Y(terrain(DET_LAT)), yDet = Y(hDet);
-  el("line", {x1: X(DET_LAT), y1: yDetT, x2: X(DET_LAT), y2: yDet, stroke: "#1c5a96", "stroke-width": 1});
-  el("rect", {x: X(DET_LAT)-5, y: yDet-8, width: 10, height: 16, fill: "none",
-              stroke: "#1c5a96", "stroke-width": 2, rx: 2});
-  el("text", {x: X(DET_LAT)-8, y: yDet+26, "text-anchor": "middle", "font-size": 11.5,
+  const xD = X(state.detLat), hDet = b.h(s_of(state.detLat));
+  const yDetT = Y(terrain(state.detLat)), yDet = Y(hDet);
+  el("line", {x1: xD, y1: yDetT, x2: xD, y2: yDet, stroke: "#1c5a96", "stroke-width": 1});
+  el("rect", {x: xD-6, y: yDet-9, width: 12, height: 18, fill: "#1c5a96", "fill-opacity": .12,
+              stroke: "#1c5a96", "stroke-width": 2.2, rx: 2, id: "hDet",
+              style: "cursor:ew-resize"});
+  el("text", {x: xD-9, y: yDet+27, "text-anchor": "middle", "font-size": 11.5,
               fill: "#1c5a96"}).textContent =
     b.detDepth > 0 ? "hall −" + fmt(b.detDepth,0) + " m" : "beam already airborne";
 
@@ -347,15 +426,33 @@ function render() {
       ? "<span class='flag'>no exit within the profile (beyond 42.60°)</span>"
       : "<b>" + b.exitLat.toFixed(4) + "° N</b><br><span class='note'>" +
         fmt((b.exitS - b.s0)/1000,2) + " km from IP, " +
-        fmt((b.exitS - s_of(DET_LAT))/1000,2) + " km past the detector site; grazing angle " +
+        fmt((b.exitS - s_of(state.detLat))/1000,2) + " km past the detector; grazing angle " +
         fmt(b.th(b.exitS)*1000,2) + " mrad</span>";
+  let airTxt;
+  if (air.undergroundAll) {
+    airTxt = "<b>no incursion</b> — beam stays underground all the way north";
+  } else if (air.inLen === 0) {
+    airTxt = "<b>no incursion</b> — beam is already above the ceiling at Smith Rd" +
+      (air.smithMargin > 0 ? " (" + fmt(air.smithMargin,0) + " m clear there)" : "");
+  } else {
+    airTxt = "<b class='flag bad'>" + fmt(air.inLen/1000,2) + " km</b> of beam inside it, " +
+      (air.firstIn !== null ? air.firstIn.toFixed(4) + "° → " + air.lastIn.toFixed(4) + "° N" : "") +
+      "<br><span class='note'>" +
+      (air.clearsInProfile
+        ? "clears the ceiling at " + air.clearLat.toFixed(4) + "° N, " +
+          fmt((s_of(air.clearLat) - s_of(SMITH_LAT))/1000,2) + " km north of Smith Rd"
+        : "does not clear the ceiling within the profile") +
+      "; at Smith Rd the beam is " +
+      (air.smithMargin >= 0 ? fmt(air.smithMargin,0) + " m above" : fmt(-air.smithMargin,0) + " m below") +
+      " it</span>";
+  }
   document.getElementById("out").innerHTML = `
     <div><span class="lbl">Straight-section tilt (= ring-plane pitch)</span>
       <b class="${lep?'flag bad':''}">${fmt(state.tilt*1000,2)} mrad</b> = ${fmt(state.tilt*180/Math.PI,3)}°
       ${lep ? "<br><span class='note'>beyond LEP-precedent plane tilt (14 mrad)</span>" : ""}</div>
-    <div><span class="lbl">Beam depth at the detector site (41.927583 N)</span>
+    <div><span class="lbl">Beam depth at the detector (${state.detLat.toFixed(4)}° N)</span>
       ${detTxt}
-      <br><span class="note">${fmt((s_of(DET_LAT)-b.s0)/1000,2)} km from IP; ${fmt(b.fenceDepth,0)} m deep at the fence</span></div>
+      <br><span class="note">${fmt((s_of(state.detLat)-b.s0)/1000,2)} km from IP; ${fmt(b.fenceDepth,0)} m deep at the fence</span></div>
     <div><span class="lbl">Emergence from the ground</span>
       ${exitTxt}</div>
     <div><span class="lbl">Beam at Smith Rd (north end of ComEd corridor)</span>
@@ -364,6 +461,8 @@ function render() {
       <b class="${b.minCover < 5 ? 'flag warn' : ''}">${fmt(Math.max(b.minCover,0),1)} m</b>
       at ${b.minCoverLat ? b.minCoverLat.toFixed(4) : '—'}° N
       ${b.minCover < 5 ? "<br><span class='note'>grazing stretch — radiologically an exit strip; SRTM is ±few m, verify with lidar</span>" : ""}</div>
+    <div><span class="lbl">Private airspace north of Smith Rd (${fmt(state.airFt,0)} ft = ${fmt(airM,0)} m ceiling)</span>
+      ${airTxt}</div>
     <div><span class="lbl">South-going plume (same straight, opposite direction)</span>
       <b>tilted ${fmt(state.tilt*1000,2)} mrad down</b>
       <br><span class="note">southern exit pushed farther out — see safety note</span></div>`;
@@ -375,6 +474,11 @@ function render() {
   document.getElementById("tiltV").textContent =
     fmt(state.tilt*1000,2) + " mrad = " + fmt(state.tilt*180/Math.PI,3) + "° ↑";
   document.getElementById("houseHV").textContent = fmt(state.houseH,1) + " m";
+  document.getElementById("detLatV").textContent = state.detLat.toFixed(4) + "° N  (" +
+    fmt((s_of(state.detLat) - s_of(state.ipLat))/1000,2) + " km from IP)";
+  document.getElementById("detLat").value = state.detLat;
+  document.getElementById("airFtV").textContent =
+    fmt(state.airFt,0) + " ft = " + fmt(state.airFt*FT,0) + " m above ground";
   document.getElementById("ipLat").value = state.ipLat;
   document.getElementById("tilt").value = state.tilt*1000;
 }
@@ -384,12 +488,16 @@ document.getElementById("ipLat").addEventListener("input", e => { state.ipLat = 
 document.getElementById("ipElev").addEventListener("input", e => { state.ipElev = +e.target.value; render(); });
 document.getElementById("tilt").addEventListener("input", e => { state.tilt = +e.target.value/1000; render(); });
 document.getElementById("houseH").addEventListener("input", e => { state.houseH = +e.target.value; render(); });
+document.getElementById("detLat").addEventListener("input", e => { state.detLat = +e.target.value; render(); });
+document.getElementById("airFt").addEventListener("input", e => { state.airFt = +e.target.value; render(); });
 
 // dragging: IP moves the machine; emergence point solves the tilt
 let dragging = null;
 svg.addEventListener("pointerdown", e => {
   const t = e.target.id;
-  if (t === "hIP" || t === "hExit") { dragging = t; svg.setPointerCapture(e.pointerId); }
+  if (t === "hIP" || t === "hExit" || t === "hDet") {
+    dragging = t; svg.setPointerCapture(e.pointerId);
+  }
 });
 svg.addEventListener("pointermove", e => {
   if (!dragging) return;
@@ -401,6 +509,7 @@ svg.addEventListener("pointermove", e => {
     const z = yMap.zMax - (py - MT) / (H - MT - MB) * (yMap.zMax - yMap.zMin);
     state.ipElev = Math.round(Math.min(235, Math.max(-100, z)));
   }
+  if (dragging === "hDet") state.detLat = Math.min(42.048, Math.max(41.875, la));
   if (dragging === "hExit") {
     la = Math.min(LAT_MAX, Math.max(state.ipLat + 0.004, la));
     state.tilt = Math.min(70e-3, Math.max(-5e-3, tiltFor(state.ipLat, state.ipElev, la)));
