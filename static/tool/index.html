@@ -6,7 +6,27 @@
 <title>Corridor Beam-Geometry Tool — FNAL Muon Collider</title>
 <link rel="stylesheet" href="../vendor/leaflet.css">
 <style>
-  #map { height: 460px; border-radius: 6px; border: 1px solid #d8d2c4; }
+  #map { height: 540px; border-radius: 6px; border: 1px solid #d8d2c4;
+         background: #eae6dd; }
+  @media (prefers-color-scheme: dark) { #map { background: #1c1f25; border-color: #3a3d44; } }
+  /* pins sit above basemap labels and cast a slight shadow */
+  .leaflet-pins-pane svg { filter: drop-shadow(0 1px 2.5px rgba(0,0,0,.5)); }
+  .leaflet-container { font: inherit; font-size: .85rem; }
+  .maptip { background: rgba(255,255,255,.93); border: 1px solid rgba(0,0,0,.18);
+            border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,.2); color: #1e2229;
+            font-size: .78rem; font-weight: 600; padding: .18rem .42rem; white-space: nowrap; }
+  .maptip::before { display: none; }
+  .maptip .sub { font-weight: 400; color: #666; }
+  @media (prefers-color-scheme: dark) {
+    .maptip { background: rgba(28,31,37,.94); border-color: #4a4d55; color: #e6e2da; }
+    .maptip .sub { color: #a9a49a; }
+  }
+  .maplegend { background: rgba(255,255,255,.93); border-radius: 5px; padding: .45rem .6rem;
+               box-shadow: 0 1px 4px rgba(0,0,0,.25); font-size: .78rem; line-height: 1.5; }
+  @media (prefers-color-scheme: dark) {
+    .maplegend { background: rgba(28,31,37,.94); color: #e6e2da; }
+  }
+  .maprow { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .55rem 0; }
   .maptable { width: 100%; border-collapse: collapse; font-size: .85rem; margin-top: .6rem; }
   .maptable th, .maptable td { border-bottom: 1px solid #d8d2c4; padding: .32em .5em; text-align: left; }
   .maptable th { color: #777; font-weight: normal; font-size: .78rem; }
@@ -157,9 +177,18 @@ sphere comes back up at a central angle of 2θ — so every milliradian of
 north-side tilt pushes the southern exit ~13 km farther down Illinois. This
 map is live with the controls above.
 </p>
+<div class="maprow">
+  <label for="basemap" style="font-size:.82rem;color:#777">basemap</label>
+  <select id="basemap">
+    <option value="positron">Positron — light, minimal</option>
+    <option value="voyager">Voyager — roads &amp; places</option>
+    <option value="dark">Dark Matter</option>
+  </select>
+  <button class="mini" id="fitBtn">recentre on both exits</button>
+  <button class="mini" id="zoomIpBtn">zoom to the site</button>
+</div>
 <div id="map"></div>
 <p class="note" id="mapNote" style="margin:.5rem 0 0"></p>
-<div style="margin:.5rem 0"><button class="mini" id="fitBtn">recentre on both exits</button></div>
 <table class="maptable"><thead><tr>
   <th>point</th><th>latitude</th><th>longitude</th><th>ground distance</th>
   <th>rock traversed</th><th>deepest point</th></tr></thead>
@@ -683,34 +712,108 @@ function render() {
 // ---- live map of both emergence points ----------------------------------
 // A due-north beam stays in the meridian plane, so both exits share the
 // corridor longitude and differ from the IP only in latitude.
-let map = null, mk = {}, beamLine = null, mapReady = false;
+let map = null, mk = {}, beamLine = null, beamCase = null, mapReady = false;
+let baseTiles = null, labelTiles = null;
+
+// CARTO basemaps, split into a label-free base and a labels-only overlay so
+// place names draw above the beam line but below the pins. {r} picks up the
+// @2x tiles automatically on high-DPI screens.
+const CARTO_URL = "https://{s}.basemaps.cartocdn.com/{style}/{z}/{x}/{y}{r}.png";
+const CARTO_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
+                   ' contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const BASEMAPS = {
+  positron: { base: "light_nolabels", labels: "light_only_labels" },
+  voyager:  { base: "rastertiles/voyager_nolabels", labels: "rastertiles/voyager_only_labels" },
+  dark:     { base: "dark_nolabels", labels: "dark_only_labels" },
+};
+
+function cartoLayer(style, pane) {
+  return L.tileLayer(CARTO_URL, {
+    style, pane, subdomains: "abcd", maxZoom: 20, minZoom: 3,
+    attribution: CARTO_ATTR, crossOrigin: true,
+  });
+}
+
+function setBasemap(name) {
+  if (!mapReady) return;
+  const bm = BASEMAPS[name] || BASEMAPS.positron;
+  if (baseTiles) map.removeLayer(baseTiles);
+  if (labelTiles) map.removeLayer(labelTiles);
+  baseTiles  = cartoLayer(bm.base, "basePane").addTo(map);
+  labelTiles = cartoLayer(bm.labels, "labels").addTo(map);
+  const dark = name === "dark";
+  beamCase.setStyle({ color: dark ? "#0b0d10" : "#ffffff" });
+  beamLine.setStyle({ color: dark ? "#4fd1a5" : "#0b6e4f" });
+}
 
 function initMap() {
   if (typeof L === "undefined") {
     document.getElementById("mapNote").textContent =
-      "Map tiles could not be loaded (offline?). The table below is computed locally and is still correct.";
+      "The map library could not be loaded. The table below is computed locally and is still correct.";
     return;
   }
-  map = L.map("map", { scrollWheelZoom: false }).setView([40.9, LON], 7);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-    { attribution: "&copy; OpenStreetMap contributors", maxZoom: 18 }).addTo(map);
-  beamLine = L.polyline([], { color: "#0b6e4f", weight: 2, dashArray: "6 5" }).addTo(map);
-  const dot = (color, r) => L.circleMarker([0, 0],
-    { radius: r, color: "#fff", weight: 2, fillColor: color, fillOpacity: .95 }).addTo(map);
+  map = L.map("map", {
+    scrollWheelZoom: false, zoomSnap: 0.25, zoomDelta: 0.5, zoomControl: false,
+  }).setView([40.9, LON], 7.5);
+  L.control.zoom({ position: "topleft" }).addTo(map);
+  L.control.scale({ position: "bottomleft", imperial: true, metric: true }).addTo(map);
+
+  // panes: base tiles < beam line < basemap labels < pins
+  map.createPane("basePane").style.zIndex = 200;
+  const lp = map.createPane("labels");
+  lp.style.zIndex = 450; lp.style.pointerEvents = "none";
+  map.createPane("pins").style.zIndex = 470;
+  const pinRenderer = L.svg({ pane: "pins" });
+
+  beamCase = L.polyline([], { color: "#fff", weight: 6, opacity: .55, lineCap: "round" }).addTo(map);
+  beamLine = L.polyline([], { color: "#0b6e4f", weight: 2.4, dashArray: "7 6", lineCap: "round" }).addTo(map);
+
+  const dot = (color, r) => L.circleMarker([0, 0], {
+    radius: r, color: "#fff", weight: 2.2, fillColor: color, fillOpacity: 1,
+    renderer: pinRenderer,
+  }).addTo(map);
   mk.south = dot("#7a2e21", 9);
-  mk.north = dot("#7a2e21", 9);
+  mk.north = dot("#7a2e21", 7.5);
   mk.det   = dot("#1c5a96", 7);
-  mk.ip    = dot("#b3261e", 8);
+  mk.ip    = dot("#b3261e", 8.5);
+
+  // permanent labels for the points that never collide; hover for the rest
+  mk.south.bindTooltip("", { permanent: true, direction: "right", offset: [10, 0], className: "maptip" });
+  mk.north.bindTooltip("", { permanent: true, direction: "right", offset: [10, 0], className: "maptip" });
+  mk.ip.bindTooltip("",    { permanent: true, direction: "left",  offset: [-10, 0], className: "maptip" });
+  mk.det.bindTooltip("",   { direction: "top", className: "maptip" });
+
+  const legend = L.control({ position: "topright" });
+  legend.onAdd = () => {
+    const d = L.DomUtil.create("div", "maplegend");
+    const sw = c => '<span class="swatch" style="background:' + c + '"></span>';
+    d.innerHTML = sw("#b3261e") + "collision point<br>" + sw("#1c5a96") + "detector<br>" +
+                  sw("#7a2e21") + "beam leaves the ground";
+    return d;
+  };
+  legend.addTo(map);
+
   mapReady = true;
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const pick = prefersDark ? "dark" : "positron";
+  document.getElementById("basemap").value = pick;
+  setBasemap(pick);
+
   document.getElementById("mapNote").textContent =
-    "Dashed line: the corridor meridian (88°13′22.7″ W). Scroll-zoom is off — drag to pan, use the +/− buttons. " +
-    "Basemap tiles come from openstreetmap.org; without a network connection the markers still plot on a blank canvas.";
+    "Dashed line: the corridor meridian (88°13′22.7″ W), the plane both beams travel in. " +
+    "Scroll-zoom is off — drag to pan, use the +/− buttons.";
 }
 
 function fitMap() {
   if (!mapReady) return;
   const pts = [mk.south.getLatLng(), mk.north.getLatLng(), mk.ip.getLatLng()];
-  map.fitBounds(L.latLngBounds(pts).pad(0.25));
+  map.fitBounds(L.latLngBounds(pts), { padding: [60, 60] });
+}
+
+function zoomSite() {
+  if (!mapReady) return;
+  map.fitBounds(L.latLngBounds([mk.ip.getLatLng(), mk.north.getLatLng(), mk.det.getLatLng()]),
+                { padding: [70, 70], maxZoom: 14 });
 }
 
 function renderMap(b) {
@@ -747,7 +850,20 @@ function renderMap(b) {
       "<br>" + fmt(down.arcKm, 1) + " km south of the IP" +
       "<br>through " + km(down.t) + " of rock, dipping " + km(down.maxDepth) + " deep" +
       "<br>tilted " + angTxt(state.tilt) + " down");
-    beamLine.setLatLngs([[southLat, LON], [northLat, LON]]);
+    const span = [[southLat, LON], [northLat, LON]];
+    beamCase.setLatLngs(span);
+    beamLine.setLatLngs(span);
+    const tip = (main, sub) =>
+      "<span>" + main + "</span><br><span class='sub'>" + sub + "</span>";
+    mk.ip.setTooltipContent(tip("collision point",
+      state.ipLat.toFixed(4) + "° N &middot; " + fmt(state.ipElev, 0) + " m ASL"));
+    mk.det.setTooltipContent(tip("detector",
+      state.detLat.toFixed(4) + "° N &middot; " +
+      (b.detDepth > 0 ? fmt(b.detDepth, 0) + " m deep" : "above ground")));
+    mk.north.setTooltipContent(tip("north beam surfaces",
+      fmt((s_of(northLat) - b.s0) / 1000, 1) + " km &middot; " + northLat.toFixed(3) + "° N"));
+    mk.south.setTooltipContent(tip("south beam surfaces",
+      fmt(down.arcKm, 0) + " km through the Earth &middot; " + southLat.toFixed(3) + "° N"));
   }
 
   document.getElementById("mapRows").innerHTML = `
@@ -819,6 +935,17 @@ svg.addEventListener("pointerup", () => dragging = null);
 
 initMap();
 document.getElementById("fitBtn").addEventListener("click", fitMap);
+document.getElementById("zoomIpBtn").addEventListener("click", zoomSite);
+document.getElementById("basemap").addEventListener("change", e => setBasemap(e.target.value));
+if (window.matchMedia) {
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  const onScheme = e => {
+    const pick = e.matches ? "dark" : "positron";
+    document.getElementById("basemap").value = pick;
+    setBasemap(pick);
+  };
+  mq.addEventListener ? mq.addEventListener("change", onScheme) : mq.addListener(onScheme);
+}
 render();
 fitMap();
 </script>
