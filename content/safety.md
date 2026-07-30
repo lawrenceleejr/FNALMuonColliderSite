@@ -1,7 +1,10 @@
-# Neutrino Radiation Safety Along the North–South Corridor
+---
+title: Neutrino Radiation Safety Along the North-South Corridor
+weight: 2
+---
 
 This note quantifies the off-site radiological picture for the
-corridor-aligned layout in [DESIGN.md](DESIGN.md), for the communities that
+corridor-aligned layout in [the design note](../design/), for the communities that
 live above and beyond the beam. Numbers come from
 `tools/corridor_layout.py`; the model and every correction factor are stated
 explicitly so they can be checked and later replaced by full MARS/FLUKA

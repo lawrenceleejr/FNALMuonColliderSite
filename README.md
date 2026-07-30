@@ -13,12 +13,12 @@ extremely intense TeV neutrino beam to an underground experiment at
 
 | Path | What it is |
 |---|---|
-| [`docs/DESIGN.md`](docs/DESIGN.md) | Layout, alignment geometry, detector siting, and the explicit list of edits vs published FNAL siting concepts |
-| [`docs/SAFETY.md`](docs/SAFETY.md) | Neutrino radiation assessment for downstream communities (zones, doses, exit strips, mitigation) |
+| [`content/design.md`](content/design.md) | Layout, alignment geometry, detector siting, and the explicit list of edits vs published FNAL siting concepts |
+| [`content/safety.md`](content/safety.md) | Neutrino radiation assessment for downstream communities (zones, doses, exit strips, mitigation) |
 | [`tools/corridor_layout.py`](tools/corridor_layout.py) | Parametric generator: fits rings inside the real OSM site boundary, computes plume geometry over real terrain, fluxes, event rates, and King-model doses. Pure stdlib — `python3 tools/corridor_layout.py` |
-| [`geo/layout.geojson`](geo/layout.geojson), [`geo/summary.json`](geo/summary.json) | Generated layout and numeric summary |
-| [`map/index.html`](map/index.html) | Interactive Leaflet map of the layout (open locally in a browser) |
-| [`figs/corridor_profile.svg`](figs/corridor_profile.svg) | Corridor elevation cross-section: terrain vs plume centreline, detector, exit points |
+| [`static/geo/layout.geojson`](static/geo/layout.geojson), [`static/geo/summary.json`](static/geo/summary.json) | Generated layout and numeric summary |
+| [`static/map/index.html`](static/map/index.html) | Interactive Leaflet map of the layout (open locally in a browser) |
+| [`static/figs/corridor_profile.svg`](static/figs/corridor_profile.svg) | Corridor elevation cross-section: terrain vs plume centreline, detector, exit points |
 | `data/` | Inputs: FNAL boundary (OSM way 31974155, ODbL), ComEd corridor lines (OSM, ODbL), SRTM elevation profile along the meridian |
 
 ## Key numbers (baseline)
