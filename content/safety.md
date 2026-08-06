@@ -159,6 +159,12 @@ surfaces there deliberately, on institutional land, instead of at the ~28 km
 default. (Load the *"South exit at UIUC South Farms"* preset in the
 [beam-geometry tool](../tool/) to explore it live.)
 
+*(Two flavours of this scenario ship as presets in the tool: the one below,
+which keeps the north beam underground past Smith Road, and the site default —
+straightaway at 178 m ASL, 15.38 mrad — which additionally lifts the north
+beam above the 300 ft private-airspace ceiling from Smith Road onward, with a
+near-surface detector hall at −15 m just inside the Fermilab fence.)*
+
 **Geometry.** Straightaway at 76 m ASL (148 m below grade at the IP), tilted
 **14.87 mrad (0.85°)** up to the north — a hair above the 14 mrad LEP
 precedent. Then:

@@ -115,7 +115,11 @@ satisfy it.
 </p>
 
 <svg id="plot" viewBox="0 0 980 500" aria-label="corridor elevation profile with beam ray"></svg>
-<p class="note" id="ve"></p>
+<p class="note" id="ve" style="margin-bottom:.25rem"></p>
+<p class="note" style="margin-top:0">figure export:
+  <button class="mini" id="figSvg">SVG (vector)</button>
+  <button class="mini" id="figPng">PNG 4×</button>
+  <span id="figNote"></span></p>
 
 <div class="panel">
   <div class="span-all" style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center">
@@ -127,7 +131,8 @@ satisfy it.
       <option value="airsolve">Clear 300 ft airspace — tilt solves</option>
       <option value="smith">Emerge exactly at Smith Rd — tilt solves</option>
       <option value="shallow10">10 m detector, emergence follows</option>
-      <option value="uiuc">South exit at UIUC South Farms (199 km)</option>
+      <option value="default">Default: UIUC exit + airspace-clear north beam</option>
+      <option value="uiuc">UIUC exit, north beam kept UNDER Smith Rd (14.87 mrad)</option>
     </select>
     <button class="mini" id="resetBtn">reset</button>
     <button class="mini" id="shareBtn">copy link to this configuration</button>
@@ -155,19 +160,19 @@ satisfy it.
   <div id="wrapIpElev">
     <label><span class="lock"><input type="checkbox" id="lockIpElev"> lock</span>
       Height of the straightaway at the IP (elevation ASL; grade ~225 m)</label>
-    <input type="range" id="ipElev" min="-100" max="235" step="1" value="125">
+    <input type="range" id="ipElev" min="-100" max="235" step="1" value="178">
     <span class="val" id="ipElevV"></span>
   </div>
   <div id="wrapTilt">
     <label><span class="lock"><input type="checkbox" id="lockTilt"> lock</span>
       Upward tilt of the straight section (toward north)</label>
-    <input type="range" id="tilt" min="-5" max="70" step="0.05" value="11.5">
+    <input type="range" id="tilt" min="-5" max="70" step="0.05" value="15.38">
     <span class="val" id="tiltV"></span>
   </div>
 
   <div>
     <label>Detector latitude — on the Fermilab site or up the corridor</label>
-    <input type="range" id="detLat" min="41.8207" max="42.0480" step="0.0002" value="41.9276">
+    <input type="range" id="detLat" min="41.8207" max="42.0480" step="0.0002" value="41.8695">
     <span class="val" id="detLatV"></span>
   </div>
   <div>
@@ -211,6 +216,8 @@ map is live with the controls above.
 </div>
 <div id="map"></div>
 <p class="note" id="mapNote" style="margin:.5rem 0 0"></p>
+<p class="note">figure export: <button class="mini" id="mapPng">PNG 3×</button>
+  <span id="mapFigNote"></span></p>
 <div style="overflow-x:auto"><table class="maptable"><thead><tr>
   <th>point</th><th>latitude</th><th>longitude</th><th>ground distance</th>
   <th>rock traversed</th><th>deepest point</th></tr></thead>
@@ -410,8 +417,11 @@ function terrain(lat) {
 
 // ---- state --------------------------------------------------------------
 const state = {
-  ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3,     // machine (lockable / solvable)
-  detLat: 41.9276, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
+  // Default scenario: south beam surfaces on UIUC South Farms (40.0600 N),
+  // north beam clears the 300 ft private-airspace band at Smith Rd, and the
+  // detector sits near-surface (-15 m) just inside the Fermilab fence.
+  ipLat: 41.8491, ipElev: 178, tilt: 15.38e-3,    // machine (lockable / solvable)
+  detLat: 41.8695, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
   constraint: 'none', detTarget: 50, exitTarget: 41.9400,
   locks: { ipLat: false, ipElev: false, tilt: false },
 };
@@ -748,7 +758,7 @@ function render() {
   el("line", {x1: xD, y1: yDetT, x2: xD, y2: yDet, stroke: "#1c5a96", "stroke-width": 1});
   el("rect", {x: xD-6, y: yDet-9, width: 12, height: 18, fill: "#1c5a96", "fill-opacity": .12,
               stroke: "#1c5a96", "stroke-width": 2.2, rx: 2, id: "hDet", style: "cursor:ew-resize"});
-  el("text", {x: xD-9, y: yDet+27, "text-anchor": "middle", "font-size": 11.5, fill: "#1c5a96"})
+  el("text", {x: xD-12, y: yDet+4, "text-anchor": "end", "font-size": 11.5, fill: "#1c5a96"})
     .textContent = b.detDepth > 0 ? "hall −" + fmt(b.detDepth,0) + " m" : "beam already airborne";
 
   // IP: horizontal reference, angle wedge with both units, handle
@@ -760,12 +770,10 @@ function render() {
                 fill: "#0b6e4f", opacity: .16});
     el("line", {x1: xI, y1: yI, x2: xI+RR+14, y2: yI, stroke: "#666",
                 "stroke-width": 1, "stroke-dasharray": "4 3"});
-    el("text", {x: xI+RR+18, y: yI+4, "font-size": 10.5, fill: "#888"}).textContent = "horizontal";
-    const yLab = Math.min(yI, yArm) - 10;
-    el("text", {x: xI+RR+2, y: yLab, "font-size": 13.5, fill: "#0b6e4f", "font-weight": 600})
+    el("text", {x: xI+RR+18, y: yI+4, "font-size": 10, fill: "#999"})
+      .textContent = "horizontal (wedge exaggerated by the vertical scale)";
+    el("text", {x: xI+12, y: yI-10, "font-size": 13.5, fill: "#0b6e4f", "font-weight": 600})
       .textContent = angTxt(state.tilt);
-    el("text", {x: xI+RR+2, y: yLab+13, "font-size": 10, fill: "#999"})
-      .textContent = "wedge exaggerated by the vertical scale";
   }
   el("path", {d: `M ${xI} ${yI-9} L ${xI-8} ${yI+7} L ${xI+8} ${yI+7} Z`, fill: "#b3261e",
               stroke: "#fff", "stroke-width": 1.5, id: "hIP", style: "cursor:move"});
@@ -778,7 +786,7 @@ function render() {
   {
     // sit near the bottom, but step up if the IP's horizontal reference is there
     const yBottom = H - MB - 12;
-    const yDim = Math.abs(yI - yBottom) < 26 ? yBottom - 30 : yBottom;
+    const yDim = Math.abs(yI - yBottom) < 26 ? yBottom - 56 : yBottom;
     const x1 = Math.min(xI, xD), x2 = Math.max(xI, xD);
     el("line", {x1, y1: yDim, x2, y2: yDim, stroke: "#444", "stroke-width": 1});
     for (const x of [x1, x2])
@@ -1020,10 +1028,21 @@ function initMap() {
     const d = L.DomUtil.create("div", "maplegend");
     const sw = c => '<span class="swatch" style="background:' + c + '"></span>';
     d.innerHTML = sw("#b3261e") + "collision point<br>" + sw("#1c5a96") + "detector<br>" +
-                  sw("#7a2e21") + "beam leaves the ground";
+                  sw("#7a2e21") + "beam leaves the ground<br>" +
+                  '<span class="swatch" style="background:#e8f0e4;border:1.5px solid #4a7c3f;border-radius:2px"></span>UIUC land (OSM)';
     return d;
   };
   legend.addTo(map);
+
+  // UIUC boundary (campus + South Farms, and Willard Airport), from OSM
+  map.createPane("land").style.zIndex = 380;
+  fetch("../geo/uiuc_boundary.geojson").then(r => r.json()).then(gj => {
+    L.geoJSON(gj, {
+      pane: "land",
+      style: { color: "#4a7c3f", weight: 1.6, fillColor: "#6da55c", fillOpacity: .18 },
+      onEachFeature: (f, l) => l.bindTooltip(f.properties.name, { sticky: true, className: "maptip" }),
+    }).addTo(map);
+  }).catch(() => {});
 
   mapReady = true;
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -1469,6 +1488,121 @@ document.getElementById("g4copy").addEventListener("click", () => {
   else done();
 });
 
+// ---- publication figure exports -------------------------------------------
+function figName(ext) {
+  return "corridor_profile_" + (state.tilt * 1000).toFixed(1).replace("-", "m") + "mrad." + ext;
+}
+function plotSvgString() {
+  const clone = svg.cloneNode(true);
+  clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  clone.setAttribute("width", W); clone.setAttribute("height", H);
+  clone.setAttribute("font-family", "Georgia, 'Times New Roman', serif");
+  const bg = document.createElementNS(NS, "rect");
+  bg.setAttribute("width", W); bg.setAttribute("height", H); bg.setAttribute("fill", "#ffffff");
+  clone.insertBefore(bg, clone.firstChild);
+  return new XMLSerializer().serializeToString(clone);
+}
+document.getElementById("figSvg").addEventListener("click", () => dl(figName("svg"), plotSvgString()));
+document.getElementById("figPng").addEventListener("click", () => {
+  const SC = 4, img = new Image();
+  const url = URL.createObjectURL(new Blob([plotSvgString()], { type: "image/svg+xml" }));
+  img.onload = () => {
+    const c = document.createElement("canvas");
+    c.width = W * SC; c.height = H * SC;
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url);
+    c.toBlob(bl => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(bl); a.download = figName("png"); a.click();
+      URL.revokeObjectURL(a.href);
+    }, "image/png");
+  };
+  img.src = url;
+});
+
+// Map figure: composite the CARTO tiles (CORS-enabled), the vector panes,
+// and the marker labels onto one canvas at 3x.
+async function exportMapPng() {
+  const note = document.getElementById("mapFigNote");
+  if (!mapReady) { note.textContent = "map not available"; return; }
+  const SC = 3, mEl = document.getElementById("map"), mr = mEl.getBoundingClientRect();
+  const c = document.createElement("canvas");
+  c.width = Math.round(mr.width * SC); c.height = Math.round(mr.height * SC);
+  const ctx = c.getContext("2d");
+  ctx.fillStyle = "#eae6dd"; ctx.fillRect(0, 0, c.width, c.height);
+  const drawImgEl = (img) => {
+    const r = img.getBoundingClientRect();
+    if (r.width < 1 || r.right < mr.left || r.left > mr.right ||
+        r.bottom < mr.top || r.top > mr.bottom) return;
+    try {
+      ctx.drawImage(img, (r.left - mr.left) * SC, (r.top - mr.top) * SC,
+                    r.width * SC, r.height * SC);
+    } catch (e) { /* skip unloadable tile */ }
+  };
+  const svgToImage = el => new Promise(res => {
+    const str = new XMLSerializer().serializeToString(el);
+    const img = new Image();
+    const url = URL.createObjectURL(new Blob([str], { type: "image/svg+xml" }));
+    img.onload = () => { URL.revokeObjectURL(url); res(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); res(null); };
+    img.src = url;
+  });
+  try {
+    // 1. base tiles, 2. beam-line svg, 3. label tiles, 4. pin svg
+    const panes = map.getPanes();
+    for (const img of panes.basePane.querySelectorAll("img")) drawImgEl(img);
+    for (const paneName of ["overlayPane", "labels", "pins"]) {
+      const pane = panes[paneName];
+      if (!pane) continue;
+      if (paneName === "labels") { for (const img of pane.querySelectorAll("img")) drawImgEl(img); continue; }
+      for (const sv of pane.querySelectorAll("svg")) {
+        const im = await svgToImage(sv);
+        if (!im) continue;
+        const r = sv.getBoundingClientRect();
+        ctx.drawImage(im, (r.left - mr.left) * SC, (r.top - mr.top) * SC, r.width * SC, r.height * SC);
+      }
+    }
+    // 5. marker labels redrawn as text
+    ctx.textBaseline = "middle";
+    for (const tip of mEl.querySelectorAll(".maptip")) {
+      const r = tip.getBoundingClientRect();
+      if (r.width < 2 || r.right < mr.left || r.left > mr.right) continue;
+      const lines = tip.innerText.split("\n").filter(x => x.trim());
+      const x = (r.left - mr.left) * SC, y = (r.top - mr.top) * SC;
+      ctx.fillStyle = "rgba(255,255,255,.93)";
+      ctx.strokeStyle = "rgba(0,0,0,.25)"; ctx.lineWidth = SC;
+      ctx.beginPath();
+      ctx.roundRect(x, y, r.width * SC, r.height * SC, 4 * SC);
+      ctx.fill(); ctx.stroke();
+      lines.forEach((ln, i) => {
+        ctx.fillStyle = i === 0 ? "#1e2229" : "#666";
+        ctx.font = (i === 0 ? "600 " : "") + (11.5 * SC) + "px Georgia, serif";
+        ctx.fillText(ln, x + 6 * SC, y + (i + 0.55) * (r.height * SC / lines.length));
+      });
+    }
+    // 6. attribution
+    ctx.font = (10 * SC) + "px Georgia, serif";
+    const attr = "© OpenStreetMap contributors © CARTO";
+    const tw = ctx.measureText(attr).width;
+    ctx.fillStyle = "rgba(255,255,255,.85)";
+    ctx.fillRect(c.width - tw - 12 * SC, c.height - 18 * SC, tw + 12 * SC, 18 * SC);
+    ctx.fillStyle = "#444";
+    ctx.fillText(attr, c.width - tw - 6 * SC, c.height - 9 * SC);
+    c.toBlob(bl => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(bl);
+      a.download = "corridor_map_" + (state.tilt * 1000).toFixed(1).replace("-", "m") + "mrad.png";
+      a.click(); URL.revokeObjectURL(a.href);
+      note.textContent = "";
+    }, "image/png");
+  } catch (e) {
+    note.textContent = "export failed (tiles not CORS-readable?): " + e.message;
+  }
+}
+document.getElementById("mapPng").addEventListener("click", exportMapPng);
+
 // ---- presets, reset, shareable URLs --------------------------------------
 const DEFAULTS = JSON.parse(JSON.stringify(state));
 const PRESETS = {
@@ -1486,6 +1620,8 @@ const PRESETS = {
   // Farms, ~5 km south of downtown Urbana -- while the detector hall stays
   // 25 m deep and the north beam emerges just NORTH of Smith Rd.
   uiuc:      { ipLat: 41.8491, ipElev: 76, tilt: 14.87e-3, detLat: 41.9276, constraint: "none",
+               locks: { ipLat: false, ipElev: false, tilt: false } },
+  default:   { ipLat: 41.8491, ipElev: 178, tilt: 15.38e-3, detLat: 41.8695, constraint: "none",
                locks: { ipLat: false, ipElev: false, tilt: false } },
 };
 
