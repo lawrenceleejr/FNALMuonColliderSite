@@ -976,7 +976,8 @@ function render() {
   }
   el("path", {d: `M ${xI} ${yI-9} L ${xI-8} ${yI+7} L ${xI+8} ${yI+7} Z`, fill: "#b3261e",
               stroke: "#fff", "stroke-width": 1.5, id: "hIP", style: "cursor:move"});
-  el("text", {x: xI, y: yI+22, "text-anchor": "middle", "font-size": 11.5, fill: "#b3261e"})
+  el("text", {x: xI - 12, y: yI - 48, "text-anchor": "end", "font-size": 11.5, fill: "#b3261e",
+              stroke: "#fff", "stroke-width": 2.5, "paint-order": "stroke"})
     .textContent = "IP " + fmt(state.ipElev,0) + " m ASL (" +
       (ipDepth >= 0 ? "−" + fmt(ipDepth,0) + " m" : "above ground!") + ")";
 
