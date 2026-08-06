@@ -121,6 +121,21 @@ satisfy it.
   <button class="mini" id="figPng">PNG 4×</button>
   <span id="figNote"></span></p>
 
+<h2 style="font-size:1.15rem">The whole chord at a glance</h2>
+<p style="font-size:.93rem">
+The full geometry in one frame: heights are measured from the horizontal
+tangent plane touching the ground at the IP, so the <strong>beam is the
+straight line it really is</strong> and the <strong>Earth's surface falls
+away</strong> from it on both sides — by s²/2R, more than 3 km over the
+~200 km run to Champaign–Urbana. Real SRTM terrain rides on top of the
+curve (the Illinois River valley is the dip around −80 km).
+</p>
+<svg id="plotO" viewBox="0 0 980 430" aria-label="whole-chord overview with Earth curvature"></svg>
+<p class="note" id="veO" style="margin-bottom:.25rem"></p>
+<p class="note" style="margin-top:0">figure export:
+  <button class="mini" id="figSvgO">SVG (vector)</button>
+  <button class="mini" id="figPngO">PNG 4×</button></p>
+
 <div class="panel">
   <div class="span-all" style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center">
     <label style="margin:0">scenario</label>
@@ -418,6 +433,19 @@ const PROFILE = [[41.8,226],[41.802,226],[41.804,219],[41.806,218],[41.808,222],
 const LAT_END = PROFILE[PROFILE.length-1][0];
 // SRTM terrain near the southern (UIUC) exit, same meridian
 const PROFILE_S = [[39.98,210],[39.982,211],[39.984,210],[39.986,210],[39.988,210],[39.99,210],[39.992,212],[39.994,212],[39.996,209],[39.998,211],[40,212],[40.002,212],[40.004,211],[40.006,211],[40.008,212],[40.01,212],[40.012,211],[40.014,211],[40.016,211],[40.018,210],[40.02,210],[40.022,210],[40.024,211],[40.026,211],[40.028,209],[40.03,211],[40.032,209],[40.034,211],[40.036,211],[40.038,212],[40.04,210],[40.042,211],[40.044,212],[40.046,212],[40.048,210],[40.05,212],[40.052,212],[40.054,214],[40.056,214],[40.058,212],[40.06,212],[40.062,212],[40.064,211],[40.066,213],[40.068,215],[40.07,213],[40.072,216],[40.074,213],[40.076,213],[40.078,216],[40.08,216],[40.082,216],[40.084,217],[40.086,217],[40.088,220],[40.09,222],[40.092,227],[40.094,231],[40.096,230],[40.098,234],[40.1,228],[40.102,228],[40.104,230],[40.106,229],[40.108,232],[40.11,222],[40.112,222],[40.114,222],[40.116,224],[40.118,223],[40.12,225],[40.122,228],[40.124,224],[40.126,225],[40.128,228],[40.13,226],[40.132,225],[40.134,225],[40.136,228],[40.138,224],[40.14,228],[40.142,219],[40.144,221],[40.146,221],[40.148,223],[40.15,222]];
+// coarse terrain bridging the gap between the two detailed profiles
+const PROFILE_M = [[40.16,221],[40.18,225],[40.2,223],[40.22,224],[40.24,228],[40.26,232],[40.28,235],[40.3,221],[40.32,220],[40.34,223],[40.36,223],[40.38,227],[40.4,237],[40.42,249],[40.44,237],[40.46,229],[40.48,223],[40.5,228],[40.52,233],[40.54,237],[40.56,239],[40.58,236],[40.6,237],[40.62,236],[40.64,237],[40.66,240],[40.68,241],[40.7,238],[40.72,225],[40.74,220],[40.76,213],[40.78,205],[40.8,201],[40.82,199],[40.84,202],[40.86,201],[40.88,206],[40.9,213],[40.92,213],[40.94,227],[40.96,226],[40.98,217],[41,210],[41.02,203],[41.04,196],[41.06,193],[41.08,191],[41.1,186],[41.12,183],[41.14,179],[41.16,182],[41.18,184],[41.2,189],[41.22,184],[41.24,186],[41.26,181],[41.28,172],[41.3,170],[41.32,167],[41.34,162],[41.36,155],[41.38,155],[41.4,161],[41.42,162],[41.44,165],[41.46,165],[41.48,172],[41.5,177],[41.52,188],[41.54,187],[41.56,187],[41.58,187],[41.6,192],[41.62,191],[41.64,197],[41.66,200],[41.68,206],[41.7,210],[41.72,214],[41.74,215],[41.76,216],[41.78,221]];
+function terrainAll(lat) {           // whole-corridor terrain, coarse in the middle
+  if (lat >= 41.79) return terrain(lat);
+  if (lat <= 40.15) return terrainS(lat);
+  const p = PROFILE_M;
+  let lo = 0, hi = p.length - 1;
+  if (lat <= p[0][0]) return p[0][1];
+  if (lat >= p[hi][0]) return p[hi][1];
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; (p[m][0] <= lat) ? lo = m : hi = m; }
+  const t = (lat - p[lo][0]) / (p[hi][0] - p[lo][0]);
+  return p[lo][1] + t * (p[hi][1] - p[lo][1]);
+}
 // meridian interval inside the UIUC boundary polygon (from OSM rel 12299045)
 const UIUC_BAND = [40.055, 40.095];
 function terrainS(lat) {
@@ -827,6 +855,18 @@ function render() {
       .textContent = txt;
   }
 
+  // dimension: IP -> north emergence (headline distance on this panel)
+  {
+    const yBase = Math.abs(yI - (H - MB - 12)) < 26 ? H - MB - 68 : H - MB - 34;
+    if (b.exitLat !== null && b.exitLat <= LAT_MAX) {
+      dimLine(svg, xI, X(b.exitLat), yBase,
+              "IP → exit  " + fmt((b.exitS - b.s0)/1000, 2) + " km", "#7a2e21");
+    } else if (b.exitLat !== null) {
+      el("text", {x: W-MR-6, y: yBase, "text-anchor": "end", "font-size": 11.5, fill: "#7a2e21"})
+        .textContent = "north exit at +" + fmt((b.exitS - b.s0)/1000, 1) + " km →";
+    }
+  }
+
   // emergence marker (draggable when it drives something)
   const exitDraggable = state.constraint === 'none' || state.constraint === 'exit';
   const markLat = state.constraint === 'exit' ? state.exitTarget : b.exitLat;
@@ -973,6 +1013,7 @@ function render() {
   document.getElementById("detTargetWrap").hidden = state.constraint !== 'det';
 
   renderMap(b, south, north, phys);
+  renderOverview(b);
   renderSouth();
   writeHash();
   refreshMacPreview();
@@ -1601,14 +1642,17 @@ function renderSouth() {
     el("circle", {cx: XS(exitLa), cy: YS(terrainS(exitLa)), r: 7, fill: "#7a2e21",
                   stroke: "#fff", "stroke-width": 2}, svgS);
     el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) - 12, "text-anchor": "end",
-                "font-size": 11.5, fill: "#7a2e21", "font-weight": 600}, svgS)
+                "font-size": 11.5, fill: "#7a2e21", "font-weight": 600, stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
       .textContent = "emerges " + exitLa.toFixed(4) + "° N";
     // exact local angle of the chord vs the horizontal: cos(graze) = p / r
     const rr0 = R_E + state.ipElev;
     const graze = Math.acos(Math.min(1, rr0 * Math.cos(state.tilt) / (R_E + terrainS(exitLa))));
     el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) + 24, "text-anchor": "end",
-                "font-size": 11, fill: "#0b6e4f"}, svgS)
+                "font-size": 11, fill: "#0b6e4f", stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
       .textContent = "grazing " + angTxt(graze);
+    el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) + 38, "text-anchor": "end",
+                "font-size": 11, fill: "#7a2e21", "font-weight": 600, stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
+      .textContent = "IP → here  " + fmt((state.ipLat - exitLa) * MLAT / 1000, 1) + " km";
   }
 
   // landmarks
@@ -1641,6 +1685,128 @@ function renderSouth() {
   document.getElementById("veS").textContent =
     "Vertical exaggeration ≈ " + Math.round(veH/veW) + "×. Terrain here is 10–15 m below Fermilab grade, " +
     "which pulls the real exit north of the flat model. Orange: cover < 5 m (radiologically the exit strip).";
+}
+
+// dimension line with end ticks and a boxed label, for any SVG panel
+function dimLine(parent, x1, x2, y, label, color) {
+  const col = color || "#444";
+  const lo = Math.min(x1, x2), hi = Math.max(x1, x2);
+  el("line", {x1: lo, y1: y, x2: hi, y2: y, stroke: col, "stroke-width": 1}, parent);
+  for (const x of [lo, hi])
+    el("line", {x1: x, y1: y-5, x2: x, y2: y+5, stroke: col, "stroke-width": 1}, parent);
+  const wid = label.length * 6.1;
+  if (hi - lo < wid + 12) {          // too short to letter inside: label beside it
+    const right = hi + wid + 16 < W - MR;
+    const lx = right ? hi + 8 : lo - 8;
+    el("text", {x: lx, y: y+4, "text-anchor": right ? "start" : "end",
+                "font-size": 11.5, fill: col}, parent).textContent = label;
+    return;
+  }
+  const mid = (lo + hi) / 2;
+  el("rect", {x: mid - wid/2, y: y-9, width: wid, height: 16, fill: "#fff",
+              "fill-opacity": .85, rx: 2}, parent);
+  el("text", {x: mid, y: y+3.5, "text-anchor": "middle", "font-size": 11.5, fill: col}, parent)
+    .textContent = label;
+}
+
+// ---- whole-chord overview: straight beam, curving Earth --------------------
+const svgO = document.getElementById("plotO");
+const HO = 430;
+function renderOverview(b) {
+  const dn = chord(-state.tilt);
+  const southLat = state.ipLat - dn.deltaDeg;
+  const northLat = b.exitLat !== null ? b.exitLat : null;
+  const sIP = s_of(state.ipLat), eIP = terrain(state.ipLat);
+  // x: km from the IP (south negative); y: metres above the IP tangent plane
+  const X0 = -(dn.arcKm + 18), X1 = Math.max(30, (northLat ? (s_of(northLat)-sIP)/1000 : 20) + 15);
+  const XO = xkm => ML + (xkm - X0) / (X1 - X0) * (W - ML - MR);
+  const tangentH = xkm => {                       // ground height in the tangent frame
+    const la = lat_of(sIP + xkm * 1000);
+    return (terrainAll(la) - eIP) - (xkm * 1000) ** 2 / (2 * R_E);
+  };
+  let yMin = 0, yMax = 200;
+  for (let x = X0; x <= X1; x += 2) yMin = Math.min(yMin, tangentH(x));
+  yMin -= 260;
+  yMax = Math.max(300, -yMin * 0.30);      // sky headroom for the dimension lines
+  const YO = ym => MT + (yMax - ym) / (yMax - yMin) * (HO - MT - MB);
+  svgO.textContent = "";
+
+  // Earth surface (curving away), filled below
+  let tp = "";
+  for (let x = X0; x <= X1; x += 0.8)
+    tp += (tp ? " L" : "M") + XO(x).toFixed(1) + " " + YO(tangentH(x)).toFixed(1);
+  el("path", {d: tp + ` L ${W-MR} ${HO-MB} L ${ML} ${HO-MB} Z`, fill: "#c9b98a", opacity: .35}, svgO);
+  el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2}, svgO);
+  // tangent plane reference
+  el("line", {x1: ML, y1: YO(0), x2: W-MR, y2: YO(0), stroke: "#999",
+              "stroke-width": .8, "stroke-dasharray": "5 5"}, svgO);
+  el("text", {x: ML+5, y: YO(0)-5, "font-size": 10, fill: "#999"}, svgO)
+    .textContent = "horizontal tangent plane at the IP";
+
+  // the beam: a genuinely straight line in this frame
+  const hIPt = -(eIP - state.ipElev);            // beam height at IP in tangent frame
+  const yAt = xkm => hIPt + state.tilt * xkm * 1000;
+  el("line", {x1: XO(X0), y1: YO(yAt(X0)), x2: XO(X1), y2: YO(yAt(X1)),
+              stroke: "#0b6e4f", "stroke-width": 2.4}, svgO);
+
+  // markers: IP, exits, detector
+  const mark = (xkm, color, name, above) => {
+    const y = YO(tangentH(xkm));
+    el("circle", {cx: XO(xkm), cy: YO(yAt(xkm)), r: 6.5, fill: color,
+                  stroke: "#fff", "stroke-width": 2}, svgO);
+    el("text", {x: XO(xkm), y: (above ? YO(yAt(xkm)) - 12 : YO(yAt(xkm)) + 22),
+                "text-anchor": "middle", "font-size": 11.5, fill: color, "font-weight": 600,
+                stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgO).textContent = name;
+  };
+  mark(-dn.arcKm, "#7a2e21", "south exit (UIUC)", true);
+  const dDet = (s_of(state.detLat) - sIP) / 1000;
+  el("rect", {x: XO(dDet)-4, y: YO(yAt(dDet))-6, width: 8, height: 12, fill: "#1c5a96",
+              stroke: "#fff", "stroke-width": 1.5, rx: 1.5}, svgO);
+  if (northLat) mark((s_of(northLat)-sIP)/1000, "#7a2e21", "north exit", true);
+  mark(0, "#b3261e", "IP", false);        // drawn last: sits on top of its neighbours
+
+  // deepest point of the chord
+  const xDeep = -Math.tan(state.tilt) * R_E / 1000;   // perigee (~ -tilt*R)
+  if (xDeep > X0 && xDeep < 0) {
+    el("line", {x1: XO(xDeep), y1: YO(yAt(xDeep)), x2: XO(xDeep), y2: YO(tangentH(xDeep)),
+                stroke: "#888", "stroke-width": 1, "stroke-dasharray": "3 3"}, svgO);
+    el("text", {x: XO(xDeep), y: YO(yAt(xDeep)) + 18, "text-anchor": "middle",
+                "font-size": 10.5, fill: "#666", stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgO)
+      .textContent = "deepest: " + fmt(dn.maxDepth/1000, 2) + " km below the surface";
+  }
+
+  // the headline dimensions: IP -> each exit
+  const yDim1 = MT + 20, yDim2 = MT + 46;
+  dimLine(svgO, XO(-dn.arcKm), XO(0), yDim1,
+          "IP → south exit  " + fmt(dn.arcKm, 1) + " km", "#7a2e21");
+  if (northLat)
+    dimLine(svgO, XO(0), XO((s_of(northLat)-sIP)/1000), yDim2,
+            "IP → north exit  " + fmt((s_of(northLat)-sIP)/1000, 2) + " km", "#7a2e21");
+
+  // geography ticks
+  [[40.11, "Champaign–Urbana", 30], [41.60, "Joliet", 30], [41.88, "West Chicago", 44]]
+    .forEach(([la, name, dy]) => {
+      const xkm = (s_of(la) - sIP) / 1000;
+      if (xkm < X0 || xkm > X1) return;
+      el("text", {x: XO(xkm), y: HO - MB + dy, "text-anchor": "middle", "font-size": 10,
+                  fill: "#999"}, svgO).textContent = name;
+    });
+  for (let x = Math.ceil(X0/50)*50; x <= X1; x += 50) {
+    el("line", {x1: XO(x), y1: HO-MB, x2: XO(x), y2: HO-MB+4, stroke: "#aaa"}, svgO);
+    el("text", {x: XO(x), y: HO-MB+16, "text-anchor": "middle", "font-size": 11, fill: "#777"}, svgO)
+      .textContent = x === 0 ? "IP" : (x > 0 ? "+" : "−") + Math.abs(x);
+  }
+  el("text", {x: (ML+W-MR)/2, y: HO-MB+44, "text-anchor": "middle", "font-size": 12, fill: "#777"}, svgO)
+    .textContent = "kilometres north of the collision point →";
+  for (let z = Math.ceil(yMin/1000)*1000; z <= yMax; z += 1000) {
+    el("text", {x: ML-6, y: YO(z)+4, "text-anchor": "end", "font-size": 11, fill: "#888"}, svgO)
+      .textContent = (z/1000) + " km";
+    el("line", {x1: ML, y1: YO(z), x2: W-MR, y2: YO(z), stroke: "#8883", "stroke-width": .7}, svgO);
+  }
+  const veH = (HO-MT-MB)/(yMax-yMin), veW = (W-ML-MR)/((X1-X0)*1000);
+  document.getElementById("veO").textContent =
+    "Vertical exaggeration ≈ " + Math.round(veH/veW) +
+    "×. In this frame the beam is exactly straight; the curve is the Earth itself (s²/2R), with SRTM terrain on top.";
 }
 
 // ---- publication figure exports -------------------------------------------
@@ -1679,6 +1845,10 @@ document.getElementById("figSvg").addEventListener("click",
   () => dl(figName("corridor_profile", "svg"), svgString(svg, W, H)));
 document.getElementById("figPng").addEventListener("click",
   () => pngFromSvg(svgString(svg, W, H), W, H, figName("corridor_profile", "png")));
+document.getElementById("figSvgO").addEventListener("click",
+  () => dl(figName("corridor_overview", "svg"), svgString(svgO, W, HO)));
+document.getElementById("figPngO").addEventListener("click",
+  () => pngFromSvg(svgString(svgO, W, HO), W, HO, figName("corridor_overview", "png")));
 document.getElementById("figSvgS").addEventListener("click",
   () => dl(figName("uiuc_exit_profile", "svg"), svgString(svgS, W, HS)));
 document.getElementById("figPngS").addEventListener("click",
