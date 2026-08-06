@@ -17,7 +17,7 @@ extremely intense TeV neutrino beam to an underground experiment at
 | [`content/safety.md`](content/safety.md) | Neutrino radiation assessment for downstream communities (zones, doses, exit strips, mitigation) |
 | [`tools/corridor_layout.py`](tools/corridor_layout.py) | Parametric generator: fits rings inside the real OSM site boundary, computes plume geometry over real terrain, fluxes, event rates, and King-model doses. Pure stdlib — `python3 tools/corridor_layout.py` |
 | [`static/geo/layout.geojson`](static/geo/layout.geojson), [`static/geo/summary.json`](static/geo/summary.json) | Generated layout and numeric summary |
-| [`static/tool/index.html`](static/tool/index.html) | Interactive beam-geometry tool: terrain + stratigraphy ray trace, constraint solver, emergence map, interaction-length accounting, Geant4 macro export for [G4TargetPractice](https://github.com/lawrenceleejr/G4TargetPractice) |
+| [`static/tool/index.html`](static/tool/index.html) | Interactive beam-geometry tool: terrain + stratigraphy ray trace, constraint solver, emergence map, interaction-length accounting, Geant4 export (rock-column GDML + macro) for [G4TargetPractice](https://github.com/lawrenceleejr/G4TargetPractice) |
 | [`static/map/index.html`](static/map/index.html) | Interactive Leaflet map of the layout (open locally in a browser) |
 | [`static/figs/corridor_profile.svg`](static/figs/corridor_profile.svg) | Corridor elevation cross-section: terrain vs plume centreline, detector, exit points |
 | `data/` | Inputs: FNAL boundary (OSM way 31974155, ODbL), ComEd corridor lines (OSM, ODbL), SRTM elevation profile along the meridian |
