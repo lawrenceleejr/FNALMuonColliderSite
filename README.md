@@ -1,13 +1,17 @@
 # FNALMuonColliderSite
 
-Corridor-aligned siting study for a 10 TeV muon collider at Fermilab, in
-which the collider's interaction-point straight and the long straights of
-the RCS acceleration chain are all placed on the meridian **−88.222972°**
+Corridor-aligned siting study for a 10 TeV muon collider at Fermilab: an
+11 km ring whose interaction-point straight — and the long straights of the
+RCS acceleration chain — all lie on the meridian **−88.222972°**
 (true-north azimuth), so their muon-decay neutrino plumes stack into a
-single N–S corridor. The corridor leaves the site at its northeast corner,
-follows the ComEd *Aurora–Wayne* transmission right-of-way, and delivers an
-extremely intense TeV neutrino beam to an underground experiment at
-**41°55′39.3″ N, 88°13′22.7″ W** (8.71 km from the IP, hall ~109 m deep).
+single N–S corridor. In the civic-envelope baseline the straight is tilted
+15.40 mrad: the north beam feeds an on-site experiment, leaves the ground
+**inside the Fermilab fence**, and climbs the ComEd *Aurora–Wayne*
+right-of-way into navigable airspace; the south beam dives under Aurora and
+resurfaces 198 km away on the **UIUC South Farms** (the second IP's south
+beam exits onto UIUC's Willard Airport). Wherever a beam is within 500 ft
+of the surface, the land is DOE, utility-easement, or University of
+Illinois property.
 
 ## Contents
 
@@ -15,6 +19,9 @@ extremely intense TeV neutrino beam to an underground experiment at
 |---|---|
 | [`content/design.md`](content/design.md) | Layout, alignment geometry, detector siting, and the explicit list of edits vs published FNAL siting concepts |
 | [`content/safety.md`](content/safety.md) | Neutrino radiation assessment for downstream communities (zones, doses, exit strips, mitigation) |
+| [`content/envelope.md`](content/envelope.md) | Airspace & land-ownership legal geometry: the ±500 ft civic envelope, Causby, 14 CFR 91.119, subsurface easements, segment-by-segment walk |
+| [`content/aquifer.md`](content/aquifer.md) | Aquifer radiation audit: activation of every water-bearing unit vs EPA drinking-water limits |
+| [`paper/corridor.tex`](paper/corridor.tex) | Short PRL-format paper draft of the concept |
 | [`tools/corridor_layout.py`](tools/corridor_layout.py) | Parametric generator: fits rings inside the real OSM site boundary, computes plume geometry over real terrain, fluxes, event rates, and King-model doses. Pure stdlib — `python3 tools/corridor_layout.py` |
 | [`static/geo/layout.geojson`](static/geo/layout.geojson), [`static/geo/summary.json`](static/geo/summary.json) | Generated layout and numeric summary |
 | [`static/tool/index.html`](static/tool/index.html) | Interactive beam-geometry tool: terrain + stratigraphy ray trace, constraint solver, emergence map, interaction-length accounting, Geant4 export (rock-column GDML + macro) for [G4TargetPractice](https://github.com/lawrenceleejr/G4TargetPractice) |
@@ -22,19 +29,29 @@ extremely intense TeV neutrino beam to an underground experiment at
 | [`static/figs/corridor_profile.svg`](static/figs/corridor_profile.svg) | Corridor elevation cross-section: terrain vs plume centreline, detector, exit points |
 | `data/` | Inputs: FNAL boundary (OSM way 31974155, ODbL), ComEd corridor lines (OSM, ODbL), SRTM elevation profile along the meridian |
 
-## Key numbers (baseline)
+## Key numbers (civic-envelope baseline)
 
-* Collider C = 10 km, IP at 41.849142 N on the corridor meridian, 100 m deep.
+* Collider C = 11.0 km (R_arc = 1 528 m, 2 × 700 m straights), IP at
+  41.84428 N on the corridor meridian; straightaway 191 m ASL (34 m below
+  grade), ring plane tilted 15.40 mrad (one LEP). Second IP on the west
+  straight, meridian −88.2598°.
+* North beam: emerges on site at 41.8640° N, crosses the fence 27 ft up,
+  clears Smith Rd rooftops by 380 ft, enters navigable airspace 9.3 km out.
+* South beam: 74–152 m under Aurora, perigee 789 m, exits at 40.067° N on
+  UIUC South Farms; Urbana passage 66–119 m deep. IP2's south exit lands on
+  UIUC's Willard Airport with a +0.13 mrad trim.
 * RCS3/4 racetrack C = 14.72 km (10.8 % below the 16.5 km site-filler bound —
   the machine cost of straight alignment), RCS1/2 C = 6.28 km stacked over
-  the IP straight; RCS planes pitched 2.3 / 4.6 mrad so all plumes converge
-  on the detector hall.
-* Detector: 6 × 10¹⁵ ν/cm²·yr core fluence, ⟨Eν⟩ ≈ 3.2 TeV,
-  ≈ 4 × 10¹⁰ interactions per tonne-year.
-* Communities above the corridor: no measurable dose (plume 90–170 m deep).
-  The two surface-grazing exit strips of the IP straight (~4 m × ~7 km, at
-  38 km N and 28 km S) are the real radiological land-use item — see
-  `docs/SAFETY.md` before quoting any number.
+  the IP straight; RCS planes pitched 2.16 / 4.32 mrad so all plumes
+  converge on the detector hall.
+* Detector: ~5 × 10¹⁵ ν/cm²·yr core fluence, ⟨Eν⟩ ≈ 3.2 TeV,
+  ≈ 3.5 × 10¹⁰ interactions per tonne-year (deep-hall reference).
+* Aquifers: every municipal-aquifer crossing ≥ 120× below the EPA tritium
+  MCL in the stagnant worst case; whole-chord production ≈ 0.06 Ci/yr —
+  see `content/aquifer.md`.
+* Airspace/land: the ±500 ft civic envelope holds everywhere except four
+  enumerated deep/high crossings — see `content/envelope.md` before quoting
+  any number.
 
 **Status: conceptual study.** Dose figures use a deliberately conservative
 analytic model (King, arXiv:physics/9908017) and must be confirmed with

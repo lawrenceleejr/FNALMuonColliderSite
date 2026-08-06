@@ -46,7 +46,7 @@ E_MU = 5.0             # TeV per beam (sqrt(s) = 10 TeV)
 GAMMA = E_MU * 1e12 / 105.658e6
 N_MU_YEAR = 1.8e12 * 5 * 1.2e7      # muons/yr/sign injected (1.8e12/bunch, 5 Hz, 1.2e7 s)
 CHAIN_TRANSMISSION = 0.90           # fraction of injected muons alive at collider
-C_COLLIDER = 10000.0    # m  (IMCC 10 TeV scenario 1)
+C_COLLIDER = 11000.0    # m  (11 km per the corridor study baseline)
 LS_COLLIDER = 700.0     # m  IP insertion straight (FF + matching), also utility straight
 C_RCS12 = 6283.0        # m  Tevatron-equal circumference, two stacked RCS (63->750 GeV)
 LS_RCS12 = 500.0        # m
@@ -152,10 +152,13 @@ def northmost_fit(Ls, R, margin, y_hi=3000.0, y_lo=-3500.0, step=10.0):
         y -= step
     return None
 
-# Collider: fixed C, slide as far north as possible
+# Collider: fixed C, slide as far north as possible, then step 350 m south so
+# BOTH straights' plume emergences (at the corridor-study tilt) fall on-site --
+# the west boundary sits lower (~41.8656) than the NE corner.
 R_COLL = (C_COLLIDER - 2*LS_COLLIDER) / (2*math.pi)
 y_coll = northmost_fit(LS_COLLIDER, R_COLL, BOUNDARY_MARGIN)
 assert y_coll is not None, "collider does not fit"
+y_coll -= 350.0
 
 # RCS3/4 "site filler": maximise C = 2*pi*R + 2*Ls subject to fit
 best34 = None

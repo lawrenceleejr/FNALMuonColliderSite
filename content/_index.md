@@ -4,50 +4,60 @@ title: Home
 
 # A Neutrino Corridor for a 10 TeV Muon Collider at Fermilab
 
-A siting study that edits the published FNAL muon-collider concepts so that
-the collider's interaction-point straight **and** the long straights of the
-RCS acceleration chain all lie on one true-north meridian (−88.222972°). The
-muon-decay neutrino plumes then stack into a single N–S corridor that leaves
-the site at its northeast corner, follows the **ComEd Aurora–Wayne
-right-of-way**, and delivers the most intense TeV-scale neutrino beam ever
-contemplated to an underground experiment at **41°55′39.3″ N, 88°13′22.7″ W**
-— 8.7 km from the IP.
+**A complete siting study.** Place an 11 km muon collider on the Fermilab
+campus so that its interaction-point straight lies on the true-north
+meridian **−88.222972°**, tilted up **15.40 mrad**. The muon-decay neutrino
+beam then does four things at once: it delivers the most intense TeV-scale
+neutrino flux ever contemplated to an on-site experiment; it leaves the
+ground *inside the Fermilab fence* and climbs over the ComEd Aurora–Wayne
+right-of-way into public navigable airspace; its south-going twin dives
+under Aurora, crosses 198 km of deep rock, and resurfaces on the
+**University of Illinois South Farms** outside Urbana; and the second
+interaction point's beam exits onto **UIUC's Willard Airport**. Every point
+where a beam is within 500 ft of the ground surface is on DOE, utility
+easement, or University of Illinois land.
 
-## Explore
+## The study
 
-* **[Design note](design/)** — layout geometry, the ring placements, the
-  detector siting, and the explicit list of edits vs published siting concepts.
-* **[Safety assessment](safety/)** — what the downstream communities see:
-  zone-by-zone doses, the two surface-grazing exit strips, mitigation and
-  land-use options.
-* **[Interactive beam-geometry tool](tool/)** — ray-trace the beam over the
-  real terrain and (rough) stratigraphy: set the collision point, straightaway
-  height, and tilt — or lock parameters and let a constraint solve the rest;
-  read off detector depth, a whole-chord overview showing the Earth's curvature,
-  a close-up cross-section at the southern exit, emergence points on a live map
-  (both beams, with
-  rock columns in ν interaction lengths), airspace clearance at Smith Road,
-  and per-tonne event rates. Configurations are shareable by URL, and any
-  scenario exports a ready-to-run Geant4 setup for
-  [G4TargetPractice](https://github.com/lawrenceleejr/G4TargetPractice) —
-  a generated GDML of the exact rock column the beam traverses plus a macro
-  with the decay spectrum and auto-tuned interaction biasing.
-* **[Interactive map](map/)** — the rings fitted inside the real site
-  boundary, the corridor, the detector, and the plume exit points, over
-  OpenStreetMap.
+* **[Design note](design/)** — the 11 km ring and RCS chain on the corridor
+  meridian, the fit inside the real site boundary, the civic-envelope
+  machine configuration, and the second interaction point (§5).
+* **[Airspace & land-ownership note](envelope/)** — the ±500 ft civic
+  envelope: *United States v. Causby*, the navigable-airspace floor,
+  subsurface easement practice, and the segment-by-segment walk of both
+  beams against it.
+* **[Aquifer radiation audit](aquifer/)** — activation of every
+  water-bearing unit the beams cross, against EPA drinking-water limits:
+  the only place any standard could be approached is a centimetres-wide
+  filament within 2.1 km of the IP, entirely on DOE land.
+* **[Safety assessment](safety/)** — the King-model dose framework,
+  zone-by-zone numbers for the downstream communities, exit-strip
+  management, and the UIUC scenario.
+* **[Paper draft](paper/)** — a short PRL-format writeup of the concept.
+* **[Interactive beam-geometry tool](tool/)** — the study's numbers, live:
+  ray-trace the beam over real SRTM terrain and the corridor stratigraphy,
+  drag the IP/detector/exit, lock parameters and solve constraints, audit
+  the civic envelope for any configuration, see both emergence points on a
+  map with full rock-column accounting, and export publication figures or a
+  ready-to-run Geant4 setup
+  ([G4TargetPractice](https://github.com/lawrenceleejr/G4TargetPractice))
+  for the exact rock path.
+* **[Interactive map](map/)** — the rings inside the real site boundary,
+  the corridor, and the plume exits, over OpenStreetMap.
 * **[Corridor elevation profile](figs/corridor_profile.svg)** — terrain vs
-  plume centreline from 45 km south to 55 km north.
+  plume centreline.
 
-## Key numbers (baseline)
+## Key numbers (civic-envelope baseline)
 
 | Quantity | Value |
 |---|---|
-| Collider | C = 10 km, IP at 41.849142 N on the corridor meridian, 100 m deep |
-| RCS chain | RCS1/2 C = 6.28 km (60 m deep), RCS3/4 C = 14.72 km (80 m deep), straights co-aligned, planes pitched 4.6 / 2.3 mrad |
-| Detector | 8.71 km from IP, hall ≈ 109 m below grade, on the ComEd ROW |
-| Beam at detector | 6 × 10¹⁵ ν/cm²·yr core, ⟨Eν⟩ ≈ 3.2 TeV, ≈ 4 × 10¹⁰ interactions per tonne-year |
-| Corridor communities | plume 90–170 m underground — no measurable surface dose |
-| Real radiological item | two ~4 m × ~7 km surface-grazing exit strips at 38 km N / 28 km S — see [Safety](safety/) |
+| Collider | C = 11.0 km racetrack, east straight on −88.222972°, **IP at 41.84428° N**, straightaway 191 m ASL (34 m below grade), plane tilt 15.40 mrad |
+| Second IP | west straight, meridian −88.2598°; south exit on UIUC Willard Airport with a +0.13 mrad trim |
+| North beam | emerges **on site** at 41.8640° N (655 m inside the fence); Smith Rd rooftops cleared by 380 ft; navigable airspace (500 ft AGL) at 9.3 km |
+| South beam | 74–152 m under Aurora, perigee 789 m, surfaces 198 km away at **40.067° N on UIUC South Farms**; Urbana passage 66–119 m deep |
+| Detector | on-site, e.g. 15 m deep at 41.8560° N (1.3 km from IP): ~10¹⁰ interactions per tonne-year at ⟨Eν⟩ ≈ 3.2 TeV |
+| Aquifers | every municipal-aquifer crossing ≥ 120× below the EPA tritium MCL in the stagnant worst case; whole-chord production ≈ 0.06 Ci/yr |
+| RCS chain | RCS1/2 C = 6.28 km, RCS3/4 C = 14.72 km, straights co-aligned on the meridian, planes pitched 4.32 / 2.16 mrad |
 
 Everything is generated by
 [`tools/corridor_layout.py`](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/tools/corridor_layout.py)
