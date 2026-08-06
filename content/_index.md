@@ -23,7 +23,9 @@ contemplated to an underground experiment at **41°55′39.3″ N, 88°13′22.7
 * **[Interactive beam-geometry tool](tool/)** — ray-trace the beam over the
   real terrain and (rough) stratigraphy: set the collision point, straightaway
   height, and tilt — or lock parameters and let a constraint solve the rest;
-  read off detector depth, emergence points on a live map (both beams, with
+  read off detector depth, a whole-chord overview showing the Earth's curvature,
+  a close-up cross-section at the southern exit, emergence points on a live map
+  (both beams, with
   rock columns in ν interaction lengths), airspace clearance at Smith Road,
   and per-tonne event rates. Configurations are shareable by URL, and any
   scenario exports a ready-to-run Geant4 setup for
