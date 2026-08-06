@@ -25,7 +25,9 @@ contemplated to an underground experiment at **41°55′39.3″ N, 88°13′22.7
   height, and tilt — or lock parameters and let a constraint solve the rest;
   read off detector depth, emergence points on a live map (both beams, with
   rock columns in ν interaction lengths), airspace clearance at Smith Road,
-  and per-tonne event rates. Configurations are shareable by URL.
+  and per-tonne event rates. Configurations are shareable by URL, and any
+  scenario can be exported as a ready-to-run Geant4 macro for
+  [G4TargetPractice](https://github.com/lawrenceleejr/G4TargetPractice).
 * **[Interactive map](map/)** — the rings fitted inside the real site
   boundary, the corridor, the detector, and the plume exit points, over
   OpenStreetMap.
