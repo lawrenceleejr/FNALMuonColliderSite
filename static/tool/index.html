@@ -127,6 +127,7 @@ satisfy it.
       <option value="airsolve">Clear 300 ft airspace — tilt solves</option>
       <option value="smith">Emerge exactly at Smith Rd — tilt solves</option>
       <option value="shallow10">10 m detector, emergence follows</option>
+      <option value="uiuc">South exit at UIUC South Farms (199 km)</option>
     </select>
     <button class="mini" id="resetBtn">reset</button>
     <button class="mini" id="shareBtn">copy link to this configuration</button>
@@ -1481,6 +1482,11 @@ const PRESETS = {
                exitTarget: SMITH_LAT, locks: { ipLat: true, ipElev: true, tilt: false } },
   shallow10: { ipLat: 41.8491, ipElev: 125, detLat: 41.9276, constraint: "det", detTarget: 10,
                locks: { ipLat: true, ipElev: true, tilt: false } },
+  // South beam surfaces at 40.060 N on the corridor meridian -- UIUC South
+  // Farms, ~5 km south of downtown Urbana -- while the detector hall stays
+  // 25 m deep and the north beam emerges just NORTH of Smith Rd.
+  uiuc:      { ipLat: 41.8491, ipElev: 76, tilt: 14.87e-3, detLat: 41.9276, constraint: "none",
+               locks: { ipLat: false, ipElev: false, tilt: false } },
 };
 
 function syncPanel() {
