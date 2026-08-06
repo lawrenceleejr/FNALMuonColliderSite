@@ -160,14 +160,14 @@ default. (Load the *"South exit at UIUC South Farms"* preset in the
 [beam-geometry tool](../tool/) to explore it live.)
 
 *(Two flavours of this scenario ship as presets in the tool: the one below,
-which keeps the north beam underground past Smith Road, and the site default —
-straightaway at 185 m ASL, 15.42 mrad — which instead surfaces the north beam
-at 41.8746° N, 0.5 km past the Fermilab fence at the southern edge of West
-Chicago (Roosevelt Rd corridor), so that it crosses Smith Road a full 300 ft
-above the 10 m rooflines; detector hall −14 m just inside the fence. The
-default's trade: the first ~2 km after emergence pass low over West Chicago's
-Roosevelt Road commercial/residential edge, which inherits the low-overflight
-caveat below.)*
+which keeps the north beam underground past Smith Road, and the study
+baseline — straightaway at 191 m ASL, 15.40 mrad — which instead surfaces
+the north beam at 41.8640° N, **still 655 m inside the Fermilab fence**, so
+that it crosses the boundary 27 ft up, climbs the ComEd right-of-way, and
+passes Smith Road 380 ft above the 10 m rooflines; detector ~15 m deep on
+site. The baseline's civic-envelope walk — including its one overflight
+caveat, 1.9 km of Wayne at 384–500 ft AGL — is in the
+[envelope note](../envelope/).)*
 
 **Geometry.** Straightaway at 76 m ASL (148 m below grade at the IP), tilted
 **14.87 mrad (0.85°)** up to the north — a hair above the 14 mrad LEP

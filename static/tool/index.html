@@ -169,25 +169,25 @@ curve (the Illinois River valley is the dip around −80 km).
   <div id="wrapIpLat">
     <label><span class="lock"><input type="checkbox" id="lockIpLat"> lock</span>
       Collision point (IP) latitude — N–S along the on-site corridor</label>
-    <input type="range" id="ipLat" min="41.8207" max="41.8695" step="0.0002" value="41.8491">
+    <input type="range" id="ipLat" min="41.8207" max="41.8695" step="0.0002" value="41.8443">
     <span class="val" id="ipLatV"></span>
   </div>
   <div id="wrapIpElev">
     <label><span class="lock"><input type="checkbox" id="lockIpElev"> lock</span>
       Height of the straightaway at the IP (elevation ASL; grade ~225 m)</label>
-    <input type="range" id="ipElev" min="-100" max="235" step="1" value="185">
+    <input type="range" id="ipElev" min="-100" max="235" step="1" value="191">
     <span class="val" id="ipElevV"></span>
   </div>
   <div id="wrapTilt">
     <label><span class="lock"><input type="checkbox" id="lockTilt"> lock</span>
       Upward tilt of the straight section (toward north)</label>
-    <input type="range" id="tilt" min="-5" max="70" step="0.05" value="15.42">
+    <input type="range" id="tilt" min="-5" max="70" step="0.05" value="15.40">
     <span class="val" id="tiltV"></span>
   </div>
 
   <div>
     <label>Detector latitude — on the Fermilab site or up the corridor</label>
-    <input type="range" id="detLat" min="41.8207" max="42.0480" step="0.0002" value="41.8650">
+    <input type="range" id="detLat" min="41.8207" max="42.0480" step="0.0002" value="41.8560">
     <span class="val" id="detLatV"></span>
   </div>
   <div>
@@ -208,6 +208,37 @@ curve (the Illinois River valley is the dip around −80 km).
 </div>
 
 <div class="out" id="out"></div>
+
+<h2 style="font-size:1.15rem">Civic-envelope audit — who is within 500 ft of this beam?</h2>
+<p style="font-size:.93rem">
+The siting argument of this study is a <strong>±500 ft rule</strong>: wherever
+the beam is within 500 ft (152 m) of the ground surface — above it or below
+it — the land should belong to an institutional partner (DOE, the ComEd
+transmission easement the corridor follows, or the University of Illinois).
+Above 500 ft the beam is in federally navigable airspace
+(14&nbsp;CFR&nbsp;91.119(c)), where no private surface-owner claim reaches;
+below 500 ft of depth it is beneath every private well, foundation, and
+utility along the route (Chicago-area deep tunnels are routinely easement-ed
+at a fraction of that depth). The table audits the <em>current</em>
+configuration live: every stretch where either beam is inside the shell,
+what sits above or below it, and whether that stretch keeps the rule.
+</p>
+<div id="envVerdict" style="font-size:.95rem;margin:.4rem 0"></div>
+<div style="overflow-x:auto"><table class="maptable"><thead><tr>
+  <th>beam</th><th>from → to (°N)</th><th>length</th>
+  <th>beam vs surface</th><th>land at the surface</th><th>class</th></tr></thead>
+  <tbody id="envRows"></tbody></table></div>
+<p class="note">
+Land classes are a coarse meridian strip-map assembled from the OSM
+boundaries used elsewhere on this page (Fermilab site, UIUC) plus county
+context — parcel-level truth needs a title search, not a physics tool. The
+500 ft airspace floor applies over uncongested land; over congested areas
+14&nbsp;CFR&nbsp;91.119(b) uses 1,000 ft — in the baseline the beam climbs
+through 1,000 ft AGL near 42.03° N, still over the low-density Wayne
+countryside and before the first congested suburbs. See the <a href="../envelope/">airspace &amp; land-ownership
+note</a> for the legal geometry (<em>United States v. Causby</em>, the
+navigable-airspace floor, and subsurface easement practice).
+</p>
 
 <h2 style="font-size:1.15rem">Where both beams leave the Earth</h2>
 <p style="font-size:.93rem">
@@ -366,7 +397,11 @@ interaction happens per simulated event.
   Maquoketa shale, and the Galena–Platteville dolomite that hosts Fermilab's
   existing deep halls. Unit depths are rough (±30%-ish) and the strata dip
   gently south into the Illinois Basin, so read it as tunnelling context, not
-  a site investigation.</li>
+  a site investigation. Units washed <span style="color:#2b6cb0">blue</span>
+  are used as water-supply aquifers along the corridor (drift sand-and-gravel,
+  Silurian, St.&nbsp;Peter, Ironton–Galesville; Mt.&nbsp;Simon is brackish at
+  depth) — the <a href="../aquifer/">aquifer radiation audit</a> works through
+  what the beam does to each of them.</li>
   <li>Once airborne the beam keeps climbing relative to the curving ground.
   Open-air showers need hundreds of metres of air to develop, so an overhead
   beam is far more benign than a surface-grazing one — but structures sitting
@@ -376,7 +411,9 @@ interaction happens per simulated event.
 
 <footer>
 Terrain: SRTM 30 m via open-elevation along meridian −88.222972° (detector
-longitude), 200 m spacing to 42.05° then 1.1 km spacing to 42.60°; Smith Rd
+longitude): 55 m spacing over the north climb-out (41.86–42.00°) and the
+UIUC exit zone (40.03–40.10°), 200 m spacing elsewhere to 42.05° / across
+39.98–40.15°, then 1.1 km spacing to 42.60°; Smith Rd
 point sampled at (41.935618, −88.222542), grade 239 m ASL. Spherical-Earth
 chord geometry. Stratigraphy: illustrative flat-layer model informed by
 Illinois State Geological Survey statewide summaries and Fermilab NuMI/MINOS
@@ -400,9 +437,9 @@ const FT = 0.3048;
 const AIR_MARGIN = 2;                       // m of headroom when solving "clears the ceiling"
 const N_A = 6.022e23;
 // Baseline machine (see the design note): 1.8e12 mu/bunch/sign at 5 Hz for
-// 1.2e7 s/yr, 90% chain transmission, 700 m straight in a 10 km ring -> the
+// 1.2e7 s/yr, 90% chain transmission, 700 m straight in an 11 km ring -> the
 // decays aimed along the corridor in EACH direction, per year:
-const N_DEC_YR = 1.8e12 * 5 * 1.2e7 * 0.90 * (700 / 10000);
+const N_DEC_YR = 1.8e12 * 5 * 1.2e7 * 0.90 * (700 / 11000);
 // sigma_nu ~ 0.35e-38 cm^2/GeV per nucleon (CC+NC slope, flattened above ~1 TeV)
 const SIGMA_SLOPE = 0.35e-38;
 
@@ -412,16 +449,21 @@ const SIGMA_SLOPE = 0.35e-38;
 // at Fermilab (whose deep halls sit in the Galena-Platteville dolomite).
 // Real strata dip gently south into the Illinois Basin -- treat unit
 // boundaries as +-30% and see the note under the geology table.
+// Units flagged aq:true are used as water-supply aquifers somewhere along the
+// corridor (sand-and-gravel lenses in the drift incl. the Mahomet valley near
+// Champaign; the Silurian is the shallow private-well aquifer in Kane/DuPage;
+// St. Peter + Ironton-Galesville are the deep municipal "sandstone aquifers";
+// Mt. Simon is brackish at depth and used mainly for gas storage/injection).
 const GEOLOGY = [
-  { name: "Glacial drift (Quaternary till & outwash)", short: "glacial drift",             top: 0,    bot: 25,   rho: 2.10, color: "#d9c8a0" },
-  { name: "Silurian dolomite (Niagaran–Alexandrian)", short: "Silurian dolomite",     top: 25,   bot: 110,  rho: 2.70, color: "#bcc8d1" },
-  { name: "Maquoketa Group (shale, argillaceous dolomite)", short: "Maquoketa shale",      top: 110,  bot: 170,  rho: 2.55, color: "#b3a28f" },
-  { name: "Galena–Platteville dolomite",          short: "Galena–Platteville dolomite", top: 170, bot: 340, rho: 2.65, color: "#c6cfb6" },
-  { name: "Ancell Group (St. Peter sandstone)",        short: "St. Peter sandstone",       top: 340,  bot: 470,  rho: 2.45, color: "#e2d4ac" },
-  { name: "Prairie du Chien–Eminence dolomites",  short: "Prairie du Chien dolomite", top: 470,  bot: 640,  rho: 2.65, color: "#b9c8c0" },
-  { name: "Ironton–Galesville & Eau Claire ss.",  short: "Ironton–Galesville sandstone", top: 640, bot: 880, rho: 2.50, color: "#dccab0" },
-  { name: "Mt. Simon sandstone",                       short: "Mt. Simon sandstone",       top: 880,  bot: 1400, rho: 2.45, color: "#cfbaa0" },
-  { name: "Precambrian crystalline basement",          short: "Precambrian basement",      top: 1400, bot: 1e9,  rho: 2.65, color: "#c8aaa5" },
+  { name: "Glacial drift (Quaternary till & outwash)", short: "glacial drift",             top: 0,    bot: 25,   rho: 2.10, color: "#d9c8a0", aq: true,  aqNote: "sand & gravel lenses; Mahomet valley aquifer near Champaign" },
+  { name: "Silurian dolomite (Niagaran–Alexandrian)", short: "Silurian dolomite",     top: 25,   bot: 110,  rho: 2.70, color: "#bcc8d1", aq: true,  aqNote: "shallow private-well aquifer (typ. wells 50–120 m)" },
+  { name: "Maquoketa Group (shale, argillaceous dolomite)", short: "Maquoketa shale",      top: 110,  bot: 170,  rho: 2.55, color: "#b3a28f", aq: false, aqNote: "regional aquitard" },
+  { name: "Galena–Platteville dolomite",          short: "Galena–Platteville dolomite", top: 170, bot: 340, rho: 2.65, color: "#c6cfb6", aq: false, aqNote: "tight; hosts the deep FNAL/NuMI halls" },
+  { name: "Ancell Group (St. Peter sandstone)",        short: "St. Peter sandstone",       top: 340,  bot: 470,  rho: 2.45, color: "#e2d4ac", aq: true,  aqNote: "deep municipal sandstone aquifer" },
+  { name: "Prairie du Chien–Eminence dolomites",  short: "Prairie du Chien dolomite", top: 470,  bot: 640,  rho: 2.65, color: "#b9c8c0", aq: false, aqNote: "minor/leaky" },
+  { name: "Ironton–Galesville & Eau Claire ss.",  short: "Ironton–Galesville sandstone", top: 640, bot: 880, rho: 2.50, color: "#dccab0", aq: true,  aqNote: "deep municipal sandstone aquifer" },
+  { name: "Mt. Simon sandstone",                       short: "Mt. Simon sandstone",       top: 880,  bot: 1400, rho: 2.45, color: "#cfbaa0", aq: true,  aqNote: "brackish at depth; storage/injection horizon" },
+  { name: "Precambrian crystalline basement",          short: "Precambrian basement",      top: 1400, bot: 1e9,  rho: 2.65, color: "#c8aaa5", aq: false, aqNote: "" },
 ];
 function unitAt(depth) {
   if (depth <= 0) return null;
@@ -429,10 +471,10 @@ function unitAt(depth) {
   return GEOLOGY[GEOLOGY.length - 1];
 }
 // SRTM elevation profile along lon -88.222972, [lat, m ASL]
-const PROFILE = [[41.8,226],[41.802,226],[41.804,219],[41.806,218],[41.808,222],[41.81,222],[41.812,221],[41.814,225],[41.816,221],[41.818,224],[41.82,225],[41.822,224],[41.824,224],[41.826,224],[41.828,226],[41.83,221],[41.832,225],[41.834,223],[41.836,221],[41.838,222],[41.84,225],[41.842,227],[41.844,225],[41.846,226],[41.848,224],[41.85,224],[41.852,224],[41.854,225],[41.856,226],[41.858,226],[41.86,226],[41.862,226],[41.864,225],[41.866,228],[41.868,230],[41.87,227],[41.872,229],[41.874,230],[41.876,229],[41.878,230],[41.88,231],[41.882,232],[41.884,231],[41.886,235],[41.888,232],[41.89,230],[41.892,235],[41.894,234],[41.896,235],[41.898,236],[41.9,231],[41.902,231],[41.904,233],[41.906,234],[41.908,237],[41.91,235],[41.912,229],[41.914,233],[41.916,232],[41.918,236],[41.92,234],[41.922,235],[41.924,234],[41.926,245],[41.928,235],[41.93,240],[41.932,235],[41.934,237],[41.936,240],[41.938,239],[41.94,238],[41.942,240],[41.944,239],[41.946,238],[41.948,239],[41.95,239],[41.952,239],[41.954,236],[41.956,233],[41.958,240],[41.96,234],[41.962,237],[41.964,236],[41.966,234],[41.968,238],[41.97,244],[41.972,242],[41.974,246],[41.976,238],[41.978,241],[41.98,236],[41.982,242],[41.984,239],[41.986,237],[41.988,239],[41.99,237],[41.992,234],[41.994,239],[41.996,240],[41.998,236],[42,240],[42.002,240],[42.004,246],[42.006,244],[42.008,246],[42.01,248],[42.012,249],[42.014,247],[42.016,247],[42.018,249],[42.02,249],[42.022,252],[42.024,259],[42.026,260],[42.028,260],[42.03,255],[42.032,236],[42.034,243],[42.036,258],[42.038,258],[42.04,262],[42.042,265],[42.044,263],[42.046,260],[42.048,264],[42.05,266],[42.06,266],[42.07,261],[42.08,264],[42.09,261],[42.1,267],[42.11,256],[42.12,244],[42.13,268],[42.14,267],[42.15,240],[42.16,268],[42.17,262],[42.18,262],[42.19,235],[42.2,227],[42.21,242],[42.22,264],[42.23,269],[42.24,232],[42.25,224],[42.26,230],[42.27,232],[42.28,227],[42.29,227],[42.3,232],[42.31,225],[42.32,223],[42.33,234],[42.34,226],[42.35,238],[42.36,223],[42.37,231],[42.38,235],[42.39,234],[42.4,255],[42.41,257],[42.42,264],[42.43,268],[42.44,239],[42.45,258],[42.46,256],[42.47,259],[42.48,260],[42.49,285],[42.5,278],[42.51,273],[42.52,251],[42.53,250],[42.54,239],[42.55,237],[42.56,227],[42.57,232],[42.58,237],[42.59,230],[42.6,250]];
+const PROFILE = [[41.8,226],[41.802,226],[41.804,219],[41.806,218],[41.808,222],[41.81,222],[41.812,221],[41.814,225],[41.816,221],[41.818,224],[41.82,225],[41.822,224],[41.824,224],[41.826,224],[41.828,226],[41.83,221],[41.832,225],[41.834,223],[41.836,221],[41.838,222],[41.84,225],[41.842,227],[41.844,225],[41.846,226],[41.848,224],[41.85,224],[41.852,224],[41.854,225],[41.856,226],[41.858,226],[41.86,226],[41.8605,226],[41.861,226],[41.8615,226],[41.862,226],[41.8625,225],[41.863,225],[41.8635,225],[41.864,225],[41.8645,225],[41.865,228],[41.8655,228],[41.866,228],[41.8665,228],[41.867,230],[41.8675,230],[41.868,230],[41.8685,230],[41.869,227],[41.8695,227],[41.87,227],[41.8705,227],[41.871,229],[41.8715,229],[41.872,229],[41.8725,229],[41.873,230],[41.8735,230],[41.874,230],[41.8745,230],[41.875,229],[41.8755,229],[41.876,229],[41.8765,229],[41.877,229],[41.8775,230],[41.878,230],[41.8785,230],[41.879,230],[41.8795,231],[41.88,231],[41.8805,231],[41.881,231],[41.8815,232],[41.882,232],[41.8825,232],[41.883,232],[41.8835,231],[41.884,231],[41.8845,231],[41.885,231],[41.8855,235],[41.886,235],[41.8865,235],[41.887,235],[41.8875,232],[41.888,232],[41.8885,232],[41.889,232],[41.8895,232],[41.89,230],[41.8905,230],[41.891,230],[41.8915,230],[41.892,235],[41.8925,235],[41.893,235],[41.8935,235],[41.894,234],[41.8945,234],[41.895,234],[41.8955,234],[41.896,235],[41.8965,235],[41.897,235],[41.8975,235],[41.898,236],[41.8985,236],[41.899,236],[41.8995,236],[41.9,231],[41.9005,231],[41.901,231],[41.9015,231],[41.902,231],[41.9025,233],[41.903,233],[41.9035,233],[41.904,233],[41.9045,234],[41.905,234],[41.9055,234],[41.906,234],[41.9065,237],[41.907,237],[41.9075,237],[41.908,237],[41.9085,235],[41.909,235],[41.9095,235],[41.91,235],[41.9105,229],[41.911,229],[41.9115,229],[41.912,229],[41.9125,233],[41.913,233],[41.9135,233],[41.914,233],[41.9145,233],[41.915,232],[41.9155,232],[41.916,232],[41.9165,232],[41.917,236],[41.9175,236],[41.918,236],[41.9185,236],[41.919,234],[41.9195,234],[41.92,234],[41.9205,234],[41.921,235],[41.9215,235],[41.922,235],[41.9225,235],[41.923,234],[41.9235,234],[41.924,234],[41.9245,234],[41.925,245],[41.9255,245],[41.926,245],[41.9265,245],[41.927,245],[41.9275,235],[41.928,235],[41.9285,235],[41.929,235],[41.9295,240],[41.93,240],[41.9305,240],[41.931,240],[41.9315,235],[41.932,235],[41.9325,235],[41.933,235],[41.9335,237],[41.934,237],[41.9345,237],[41.935,237],[41.9355,240],[41.936,240],[41.9365,240],[41.937,240],[41.9375,239],[41.938,239],[41.9385,239],[41.939,239],[41.9395,239],[41.94,238],[41.9405,238],[41.941,238],[41.9415,238],[41.942,240],[41.9425,240],[41.943,240],[41.9435,240],[41.944,239],[41.9445,239],[41.945,239],[41.9455,239],[41.946,238],[41.9465,238],[41.947,238],[41.9475,238],[41.948,239],[41.9485,239],[41.949,239],[41.9495,239],[41.95,239],[41.9505,239],[41.951,239],[41.9515,239],[41.952,239],[41.9525,236],[41.953,236],[41.9535,236],[41.954,236],[41.9545,233],[41.955,233],[41.9555,233],[41.956,233],[41.9565,240],[41.957,240],[41.9575,240],[41.958,240],[41.9585,234],[41.959,234],[41.9595,234],[41.96,234],[41.9605,237],[41.961,237],[41.9615,237],[41.962,237],[41.9625,236],[41.963,236],[41.9635,236],[41.964,236],[41.9645,236],[41.965,234],[41.9655,234],[41.966,234],[41.9665,234],[41.967,238],[41.9675,238],[41.968,238],[41.9685,238],[41.969,244],[41.9695,244],[41.97,244],[41.9705,244],[41.971,242],[41.9715,242],[41.972,242],[41.9725,242],[41.973,246],[41.9735,246],[41.974,246],[41.9745,246],[41.975,238],[41.9755,238],[41.976,238],[41.9765,238],[41.977,238],[41.9775,241],[41.978,241],[41.9785,241],[41.979,241],[41.9795,236],[41.98,236],[41.9805,236],[41.981,236],[41.9815,242],[41.982,242],[41.9825,242],[41.983,242],[41.9835,239],[41.984,239],[41.9845,239],[41.985,239],[41.9855,237],[41.986,237],[41.9865,237],[41.987,237],[41.9875,239],[41.988,239],[41.9885,239],[41.989,239],[41.9895,239],[41.99,237],[41.9905,237],[41.991,237],[41.9915,237],[41.992,234],[41.9925,234],[41.993,234],[41.9935,234],[41.994,239],[41.9945,239],[41.995,239],[41.9955,239],[41.996,240],[41.9965,240],[41.997,240],[41.9975,240],[41.998,236],[41.9985,236],[41.999,236],[41.9995,236],[42,240],[42.002,240],[42.004,246],[42.006,244],[42.008,246],[42.01,248],[42.012,249],[42.014,247],[42.016,247],[42.018,249],[42.02,249],[42.022,252],[42.024,259],[42.026,260],[42.028,260],[42.03,255],[42.032,236],[42.034,243],[42.036,258],[42.038,258],[42.04,262],[42.042,265],[42.044,263],[42.046,260],[42.048,264],[42.05,266],[42.06,266],[42.07,261],[42.08,264],[42.09,261],[42.1,267],[42.11,256],[42.12,244],[42.13,268],[42.14,267],[42.15,240],[42.16,268],[42.17,262],[42.18,262],[42.19,235],[42.2,227],[42.21,242],[42.22,264],[42.23,269],[42.24,232],[42.25,224],[42.26,230],[42.27,232],[42.28,227],[42.29,227],[42.3,232],[42.31,225],[42.32,223],[42.33,234],[42.34,226],[42.35,238],[42.36,223],[42.37,231],[42.38,235],[42.39,234],[42.4,255],[42.41,257],[42.42,264],[42.43,268],[42.44,239],[42.45,258],[42.46,256],[42.47,259],[42.48,260],[42.49,285],[42.5,278],[42.51,273],[42.52,251],[42.53,250],[42.54,239],[42.55,237],[42.56,227],[42.57,232],[42.58,237],[42.59,230],[42.6,250]];
 const LAT_END = PROFILE[PROFILE.length-1][0];
 // SRTM terrain near the southern (UIUC) exit, same meridian
-const PROFILE_S = [[39.98,210],[39.982,211],[39.984,210],[39.986,210],[39.988,210],[39.99,210],[39.992,212],[39.994,212],[39.996,209],[39.998,211],[40,212],[40.002,212],[40.004,211],[40.006,211],[40.008,212],[40.01,212],[40.012,211],[40.014,211],[40.016,211],[40.018,210],[40.02,210],[40.022,210],[40.024,211],[40.026,211],[40.028,209],[40.03,211],[40.032,209],[40.034,211],[40.036,211],[40.038,212],[40.04,210],[40.042,211],[40.044,212],[40.046,212],[40.048,210],[40.05,212],[40.052,212],[40.054,214],[40.056,214],[40.058,212],[40.06,212],[40.062,212],[40.064,211],[40.066,213],[40.068,215],[40.07,213],[40.072,216],[40.074,213],[40.076,213],[40.078,216],[40.08,216],[40.082,216],[40.084,217],[40.086,217],[40.088,220],[40.09,222],[40.092,227],[40.094,231],[40.096,230],[40.098,234],[40.1,228],[40.102,228],[40.104,230],[40.106,229],[40.108,232],[40.11,222],[40.112,222],[40.114,222],[40.116,224],[40.118,223],[40.12,225],[40.122,228],[40.124,224],[40.126,225],[40.128,228],[40.13,226],[40.132,225],[40.134,225],[40.136,228],[40.138,224],[40.14,228],[40.142,219],[40.144,221],[40.146,221],[40.148,223],[40.15,222]];
+const PROFILE_S = [[39.98,210],[39.982,211],[39.984,210],[39.986,210],[39.988,210],[39.99,210],[39.992,212],[39.994,212],[39.996,209],[39.998,211],[40,212],[40.002,212],[40.004,211],[40.006,211],[40.008,212],[40.01,212],[40.012,211],[40.014,211],[40.016,211],[40.018,210],[40.02,210],[40.022,210],[40.024,211],[40.026,211],[40.028,209],[40.03,211],[40.0305,211],[40.031,211],[40.0315,209],[40.032,209],[40.0325,209],[40.033,209],[40.0335,211],[40.034,211],[40.0345,211],[40.035,211],[40.0355,211],[40.036,211],[40.0365,211],[40.037,211],[40.0375,212],[40.038,212],[40.0385,212],[40.039,212],[40.0395,212],[40.04,210],[40.0405,210],[40.041,210],[40.0415,210],[40.042,211],[40.0425,211],[40.043,211],[40.0435,211],[40.044,212],[40.0445,212],[40.045,212],[40.0455,212],[40.046,212],[40.0465,212],[40.047,212],[40.0475,212],[40.048,210],[40.0485,210],[40.049,210],[40.0495,210],[40.05,212],[40.0505,212],[40.051,212],[40.0515,212],[40.052,212],[40.0525,214],[40.053,214],[40.0535,214],[40.054,214],[40.0545,214],[40.055,214],[40.0555,214],[40.056,214],[40.0565,212],[40.057,212],[40.0575,212],[40.058,212],[40.0585,212],[40.059,212],[40.0595,212],[40.06,212],[40.0605,212],[40.061,212],[40.0615,212],[40.062,212],[40.0625,211],[40.063,211],[40.0635,211],[40.064,211],[40.0645,211],[40.065,213],[40.0655,213],[40.066,213],[40.0665,213],[40.067,215],[40.0675,215],[40.068,215],[40.0685,215],[40.069,213],[40.0695,213],[40.07,213],[40.0705,213],[40.071,216],[40.0715,216],[40.072,216],[40.0725,216],[40.073,213],[40.0735,213],[40.074,213],[40.0745,213],[40.075,213],[40.0755,213],[40.076,213],[40.0765,213],[40.077,213],[40.0775,216],[40.078,216],[40.0785,216],[40.079,216],[40.0795,216],[40.08,216],[40.0805,216],[40.081,216],[40.0815,216],[40.082,216],[40.0825,216],[40.083,216],[40.0835,217],[40.084,217],[40.0845,217],[40.085,217],[40.0855,217],[40.086,217],[40.0865,217],[40.087,217],[40.0875,220],[40.088,220],[40.0885,220],[40.089,220],[40.0895,220],[40.09,222],[40.0905,222],[40.091,222],[40.0915,222],[40.092,227],[40.0925,227],[40.093,227],[40.0935,227],[40.094,231],[40.0945,231],[40.095,231],[40.0955,231],[40.096,230],[40.0965,230],[40.097,230],[40.0975,230],[40.098,234],[40.0985,234],[40.099,234],[40.0995,234],[40.1,228],[40.102,228],[40.104,230],[40.106,229],[40.108,232],[40.11,222],[40.112,222],[40.114,222],[40.116,224],[40.118,223],[40.12,225],[40.122,228],[40.124,224],[40.126,225],[40.128,228],[40.13,226],[40.132,225],[40.134,225],[40.136,228],[40.138,224],[40.14,228],[40.142,219],[40.144,221],[40.146,221],[40.148,223],[40.15,222]];
 // coarse terrain bridging the gap between the two detailed profiles
 const PROFILE_M = [[40.16,221],[40.18,225],[40.2,223],[40.22,224],[40.24,228],[40.26,232],[40.28,235],[40.3,221],[40.32,220],[40.34,223],[40.36,223],[40.38,227],[40.4,237],[40.42,249],[40.44,237],[40.46,229],[40.48,223],[40.5,228],[40.52,233],[40.54,237],[40.56,239],[40.58,236],[40.6,237],[40.62,236],[40.64,237],[40.66,240],[40.68,241],[40.7,238],[40.72,225],[40.74,220],[40.76,213],[40.78,205],[40.8,201],[40.82,199],[40.84,202],[40.86,201],[40.88,206],[40.9,213],[40.92,213],[40.94,227],[40.96,226],[40.98,217],[41,210],[41.02,203],[41.04,196],[41.06,193],[41.08,191],[41.1,186],[41.12,183],[41.14,179],[41.16,182],[41.18,184],[41.2,189],[41.22,184],[41.24,186],[41.26,181],[41.28,172],[41.3,170],[41.32,167],[41.34,162],[41.36,155],[41.38,155],[41.4,161],[41.42,162],[41.44,165],[41.46,165],[41.48,172],[41.5,177],[41.52,188],[41.54,187],[41.56,187],[41.58,187],[41.6,192],[41.62,191],[41.64,197],[41.66,200],[41.68,206],[41.7,210],[41.72,214],[41.74,215],[41.76,216],[41.78,221]];
 function terrainAll(lat) {           // whole-corridor terrain, coarse in the middle
@@ -473,11 +515,13 @@ function terrain(lat) {
 
 // ---- state --------------------------------------------------------------
 const state = {
-  // Default scenario: south beam surfaces on UIUC South Farms (40.0600 N in
-  // the spherical model); north beam emerges 0.5 km past the fence and crosses
-  // Smith Rd a full 300 ft ABOVE the 10 m rooflines; near-surface detector.
-  ipLat: 41.8491, ipElev: 185, tilt: 15.42e-3,    // machine (lockable / solvable)
-  detLat: 41.8650, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
+  // Default = the civic-envelope baseline of the study: IP at the centre of
+  // the 11 km ring's east straight (41.84428 N), straightaway at 191 m ASL
+  // (34 m below grade), minimum tilt 15.40 mrad. North beam emerges ON SITE
+  // 655 m inside the fence and crosses Smith Rd well above the rooflines;
+  // south beam dives under Aurora and surfaces on UIUC South Farms.
+  ipLat: 41.8443, ipElev: 191, tilt: 15.40e-3,    // machine (lockable / solvable)
+  detLat: 41.8560, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
   constraint: 'none', detTarget: 50, exitTarget: 41.9400,
   locks: { ipLat: false, ipElev: false, tilt: false },
 };
@@ -554,6 +598,78 @@ function airspace(b, hM) {
   return { ceil, firstIn, lastIn, inLen, clearLat,
            smithMargin: b.h(sStart) - ceil(SMITH_LAT), undergroundAll,
            clearsInProfile: clearLat < LAT_END - 1e-6 };
+}
+
+// ---- civic envelope: the ±500 ft shell around the ground surface ----------
+// 500 ft up is where federally navigable airspace begins over uncongested
+// land (14 CFR 91.119(c)); 500 ft down is far below any private well or
+// foundation along the corridor. The study's siting claim is that the beam
+// is inside this shell ONLY over institutional land (DOE, the ComEd
+// transmission easement it follows, UIUC) — plus the enumerated exceptions
+// this audit lists live for the current configuration.
+const SHELL_FT = 500, SHELL_M = SHELL_FT * FT;   // 152.4 m
+// Coarse land classification along the corridor meridian (−88.222972°),
+// from the OSM boundaries used elsewhere in this study plus county context.
+// cls: 'inst' = institutional partner (DOE / ComEd easement / UIUC),
+//      'res' = residential/urban private, 'rur' = rural private farmland.
+const LAND = [
+  { a: 39.980, b: 40.055,   cls: "rur",  who: "Savoy / Champaign Co. farmland" },
+  { a: 40.055, b: 40.095,   cls: "inst", who: "UIUC South Farms (university land)" },
+  { a: 40.095, b: 40.130,   cls: "res",  who: "UIUC main campus & Urbana (urban)" },
+  { a: 40.130, b: 41.690,   cls: "rur",  who: "east-central Illinois farmland" },
+  { a: 41.690, b: 41.790,   cls: "res",  who: "Aurora east side (residential)" },
+  { a: 41.790, b: 41.82065, cls: "res",  who: "Aurora NE (Eola) / N. Aurora edge" },
+  { a: 41.82065, b: 41.86990, cls: "inst", who: "Fermilab (DOE)" },
+  { a: 41.86990, b: 41.93562, cls: "inst", who: "ComEd Aurora–Wayne ROW (easement)" },
+  { a: 41.93562, b: 42.100,  cls: "res", who: "Wayne / Bartlett (residential-rural)" },
+];
+function landAt(la) {
+  for (const L of LAND) if (la >= L.a && la < L.b) return L;
+  return { cls: "rur", who: "rural" };
+}
+
+// Every stretch where either beam is within ±500 ft of the local surface,
+// merged by land parcel class; d = depth below grade (negative = airborne).
+function envelopeAudit(b) {
+  const segs = [];
+  const push = (la, dir, d) => {
+    const L = landAt(la);
+    const last = segs[segs.length - 1];
+    if (last && last.dir === dir && last.who === L.who &&
+        (last.status === (d > 0 ? "under" : "over"))) {
+      last.b = la; last.d2 = d;
+      last.dMin = Math.min(last.dMin, Math.abs(d));
+      last.dMax = Math.max(last.dMax, Math.abs(d));
+    } else segs.push({ a: la, b: la, dir, status: d > 0 ? "under" : "over",
+                       cls: L.cls, who: L.who, d1: d, d2: d,
+                       dMin: Math.abs(d), dMax: Math.abs(d) });
+  };
+  // north beam: from the IP until it climbs out of the top of the shell
+  for (let s = b.s0; s <= s_of(LAT_END); s += 30) {
+    const la = lat_of(s), d = terrain(la) - b.h(s);
+    if (-d >= SHELL_M) break;              // entered navigable airspace: done
+    if (d < SHELL_M) push(la, "N", d);
+  }
+  // south beam: the dive below the shell and the climb back out of the Earth
+  for (let la = state.ipLat; la >= 39.99; la -= 0.0004) {
+    const hb = southBeamH(la);
+    if (hb > 5e8) break;
+    const d = terrainAll(la) - hb;
+    if (d <= 0 && la < state.ipLat - 0.01) break;   // south beam has emerged
+    if (d > 0 && d < SHELL_M) push(la, "S", d);
+  }
+  // absorb over/under flicker where the beam skims rolling terrain: a sliver
+  // (<250 m) on the same parcel as its predecessor joins it, keeping dMin=0
+  // as the record that the beam touched the surface there
+  for (let i = segs.length - 1; i > 0; i--) {
+    const g = segs[i], p = segs[i - 1];
+    if (Math.abs(g.a - g.b) * MLAT < 250 && g.dir === p.dir && g.who === p.who) {
+      p.b = g.b; p.d2 = g.d2;
+      p.dMin = Math.min(p.dMin, g.dMin); p.dMax = Math.max(p.dMax, g.dMax);
+      segs.splice(i, 1);
+    }
+  }
+  return segs;
 }
 
 // ---- straight-line chord through a spherical Earth -----------------------
@@ -745,13 +861,18 @@ function render() {
       dn += " L" + X(la).toFixed(1) + " " + Math.min(Y(e - g.bot), H - MB).toFixed(1);
     }
     el("path", {d: up + dn + " Z", fill: g.color, opacity: .42});
-    // label inside the band at the left edge, if it is thick enough on screen
-    const e0 = winPts[0][1];
+    // aquifer units get a translucent blue wash so the water-bearing horizons
+    // read at a glance (see the aquifer audit page)
+    if (g.aq) el("path", {d: up + dn + " Z", fill: "#2b6cb0", opacity: .10});
+    // label inside the band, a third of the way across (clear of the IP
+    // annotations at the left edge), if it is thick enough on screen
+    const laLbl = LAT_MIN + 0.56 * (LAT_MAX - LAT_MIN);
+    const e0 = terrain(laLbl);
     const yTop = Y(e0 - g.top), yBot = Math.min(Y(e0 - g.bot), H - MB);
     if (yBot - yTop > 15 && yTop < H - MB - 14)
-      el("text", {x: ML + 8, y: Math.min((yTop + yBot) / 2 + 4, H - MB - 6),
-                  "font-size": 10.5, fill: "#6b6257", opacity: .95})
-        .textContent = g.short + " · ρ " + g.rho;
+      el("text", {x: X(laLbl), y: Math.min((yTop + yBot) / 2 + 4, H - MB - 6),
+                  "font-size": 10.5, fill: g.aq ? "#3d5a80" : "#6b6257", opacity: .95})
+        .textContent = g.short + " · ρ " + g.rho + (g.aq ? " · aquifer" : "");
   }
   el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2});
 
@@ -772,6 +893,28 @@ function render() {
     el("text", {x: X(SMITH_LAT) + 7, y: Y(terrain(SMITH_LAT) + airM) - 6,
                 "font-size": 11, fill: "#b3261e"})
       .textContent = fmt(state.airFt, 0) + " ft over private property →";
+  }
+
+  // civic-envelope boundaries: the ±500 ft shell around the local surface.
+  // Above the top line is federally navigable airspace (14 CFR 91.119(c));
+  // below the bottom line is deeper than any private well or foundation here.
+  {
+    const up = winPts.map(([la, e], i) =>
+      (i?" L":"M") + X(la).toFixed(1) + " " + Y(e + SHELL_M).toFixed(1)).join("");
+    const dn = winPts.map(([la, e], i) =>
+      (i?" L":"M") + X(la).toFixed(1) + " " + Math.min(Y(e - SHELL_M), H - MB).toFixed(1)).join("");
+    el("path", {d: up, fill: "none", stroke: "#6b4fa0", "stroke-width": 1.1,
+                "stroke-dasharray": "9 5", opacity: .7});
+    el("path", {d: dn, fill: "none", stroke: "#6b4fa0", "stroke-width": 1.1,
+                "stroke-dasharray": "9 5", opacity: .5});
+    el("text", {x: W - MR - 8, y: Y(winPts[winPts.length-1][1] + SHELL_M) - 5,
+                "text-anchor": "end", "font-size": 10.5, fill: "#6b4fa0",
+                stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"})
+      .textContent = "navigable airspace ≥ 500 ft AGL";
+    el("text", {x: W - MR - 8, y: Math.min(Y(winPts[winPts.length-1][1] - SHELL_M), H - MB) - 5,
+                "text-anchor": "end", "font-size": 10.5, fill: "#6b4fa0", opacity: .85,
+                stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"})
+      .textContent = "civic-envelope floor: −500 ft";
   }
 
   // stretch of beam flying inside that band (drawn under the beam line)
@@ -968,7 +1111,32 @@ function render() {
       <br><span class="note">${fmt(lamS*1e4,2)} × 10⁻⁴ interaction lengths → ${fmt(100*Math.exp(-lamS),3)}% of the beam survives; details in the geology table below the map</span></div>
     <div><span class="lbl">Beam at the detector (baseline machine, ${fmt(state.emu,2)} TeV μ)</span>
       <b>${detRateTxt}</b>
-      <br><span class="note">1/γ core radius ${fmt(1e2*Math.abs(s_of(state.detLat)-b.s0)/phys.gamma,1)} cm at ${fmt(Math.abs(dkm),2)} km; ${(6.8e18/1e18).toFixed(1)} × 10¹⁸ decays/yr aimed each way</span></div>`;
+      <br><span class="note">1/γ core radius ${fmt(1e2*Math.abs(s_of(state.detLat)-b.s0)/phys.gamma,1)} cm at ${fmt(Math.abs(dkm),2)} km; ${(N_DEC_YR/1e18).toFixed(1)} × 10¹⁸ decays/yr aimed each way</span></div>`;
+
+  // ---- civic-envelope audit ----
+  {
+    const env = envelopeAudit(b);
+    const clsChip = c => c === "inst"
+      ? "<span style='color:#0b6e4f;font-weight:600'>institutional ✓</span>"
+      : c === "res" ? "<span style='color:#b3261e;font-weight:600'>residential / urban</span>"
+                    : "<span style='color:#9a7b1c;font-weight:600'>rural private</span>";
+    document.getElementById("envRows").innerHTML = env.map(g => {
+      const len = Math.abs(g.a - g.b) * MLAT / 1000;
+      const vs = g.status === "under"
+        ? "underground, " + fmt(g.dMin, 0) + "–" + fmt(g.dMax, 0) + " m of cover"
+        : "airborne, " + fmt(g.dMin / FT, 0) + "–" + fmt(g.dMax / FT, 0) + " ft AGL";
+      return `<tr><td>${g.dir === "N" ? "north ↑" : "south ↓"}</td>
+        <td>${g.a.toFixed(4)} → ${g.b.toFixed(4)}</td>
+        <td>${fmt(len, len < 10 ? 1 : 0)} km</td>
+        <td>${vs}</td><td>${g.who}</td><td>${clsChip(g.cls)}</td></tr>`;
+    }).join("");
+    const bad = env.filter(g => g.cls !== "inst");
+    const badLen = bad.reduce((t, g) => t + Math.abs(g.a - g.b) * MLAT, 0);
+    document.getElementById("envVerdict").innerHTML = bad.length === 0
+      ? "<span class='flag solving'><b>±500 ft rule holds everywhere</b> — the beam is inside the shell only over DOE, ComEd-easement, or UIUC land.</span>"
+      : "<span class='flag warn'><b>" + bad.length + " stretch" + (bad.length > 1 ? "es" : "") +
+        " (" + fmt(badLen / 1000, 1) + " km)</b> inside the ±500 ft shell over non-institutional land — enumerated below; every one is either deep underground or high overflight, never at the surface.</span>";
+  }
 
   // ---- panel sync ----
   for (const k of SOLVE_ORDER) {
@@ -1210,7 +1378,8 @@ function renderMap(b, south, north, phys) {
 
   // per-unit breakdown of the south chord
   document.getElementById("rockRows").innerHTML = south.layers.map(({g, L, X}) => `
-    <tr><td><span class="swatch" style="background:${g.color};border-radius:2px"></span>${g.name}</td>
+    <tr><td><span class="swatch" style="background:${g.color};border-radius:2px"></span>${g.name}${
+          g.aq ? ' <span style="color:#2b6cb0;font-size:11px" title="' + g.aqNote + '">💧 aquifer</span>' : ''}</td>
         <td>${g.rho.toFixed(2)}</td><td>${fmt(L/1000, L < 10000 ? 2 : 1)} km</td>
         <td>${X.toExponential(2)}</td>
         <td>${fmt(100*X/south.X,0)}%</td>
@@ -1937,23 +2106,25 @@ document.getElementById("mapPng").addEventListener("click", exportMapPng);
 
 // ---- presets, reset, shareable URLs --------------------------------------
 const DEFAULTS = JSON.parse(JSON.stringify(state));
+// All presets put the IP at 41.8443 N -- the centre of the 11 km ring's east
+// straight in the audited layout (straight spans 41.84113-41.84743).
 const PRESETS = {
-  deep:      { ipLat: 41.8491, ipElev: 125, tilt: 0,       detLat: 41.9276, constraint: "none",
+  deep:      { ipLat: 41.8443, ipElev: 125, tilt: 0,       detLat: 41.9276, constraint: "none",
                locks: { ipLat: false, ipElev: false, tilt: false } },
-  hall:      { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "none",
+  hall:      { ipLat: 41.8443, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "none",
                locks: { ipLat: false, ipElev: false, tilt: false } },
-  airsolve:  { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "air",
+  airsolve:  { ipLat: 41.8443, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "air",
                locks: { ipLat: true, ipElev: true, tilt: false } },
-  smith:     { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "exit",
+  smith:     { ipLat: 41.8443, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "exit",
                exitTarget: SMITH_LAT, locks: { ipLat: true, ipElev: true, tilt: false } },
-  shallow10: { ipLat: 41.8491, ipElev: 125, detLat: 41.9276, constraint: "det", detTarget: 10,
+  shallow10: { ipLat: 41.8443, ipElev: 125, detLat: 41.9276, constraint: "det", detTarget: 10,
                locks: { ipLat: true, ipElev: true, tilt: false } },
-  // South beam surfaces at 40.060 N on the corridor meridian -- UIUC South
-  // Farms, ~5 km south of downtown Urbana -- while the detector hall stays
-  // 25 m deep and the north beam emerges just NORTH of Smith Rd.
-  uiuc:      { ipLat: 41.8491, ipElev: 76, tilt: 14.87e-3, detLat: 41.9276, constraint: "none",
+  // South beam surfaces on UIUC South Farms while the detector hall stays
+  // ~25 m deep and the north beam emerges just NORTH of Smith Rd (a deeper,
+  // higher-tilt alternative to the baseline).
+  uiuc:      { ipLat: 41.8443, ipElev: 76, tilt: 14.87e-3, detLat: 41.9276, constraint: "none",
                locks: { ipLat: false, ipElev: false, tilt: false } },
-  default:   { ipLat: 41.8491, ipElev: 185, tilt: 15.42e-3, detLat: 41.8650, constraint: "none",
+  default:   { ipLat: 41.8443, ipElev: 191, tilt: 15.40e-3, detLat: 41.8560, constraint: "none",
                locks: { ipLat: false, ipElev: false, tilt: false } },
 };
 

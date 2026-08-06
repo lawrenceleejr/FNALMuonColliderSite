@@ -49,9 +49,17 @@ practice, not novel civil engineering.
 
 | Ring | Role | C | Arc radius | Straights | Depth | East-straight location | Ring-plane pitch |
 |---|---|---|---|---|---|---|---|
-| **Collider** | 2 × 5 TeV (√s = 10 TeV) | 10.00 km | 1 369 m | 2 × 700 m | 100 m | lat 41.845990 – 41.852293, **IP at 41.849142** | 0 (horizontal; see Safety §2 for the pitch knob) |
-| **RCS3 / RCS4** | 0.75 → 1.5 → ~4.5 TeV | 14.72 km | 2 200 m | 2 × 450 m | 80 m | centred lat 41.840723 | 2.30 mrad down-to-N |
-| **RCS1 / RCS2** | 63 → 314 → 750 GeV | 6.28 km | 841 m | 2 × 500 m | 60 m | centred lat 41.849142 (stacked 40 m above the IP straight) | 4.59 mrad down-to-N |
+| **Collider** | 2 × 5 TeV (√s = 10 TeV) | 11.00 km | 1 528 m | 2 × 700 m | 100 m (reference; §5 for the shallow civic-envelope option) | lat 41.841129 – 41.847431, **IP at 41.844280** | 0 (horizontal; see §5 and Safety §2 for the pitch knob) |
+| **RCS3 / RCS4** | 0.75 → 1.5 → ~4.5 TeV | 14.72 km | 2 200 m | 2 × 450 m | 80 m | centred lat 41.840768 | 2.16 mrad down-to-N |
+| **RCS1 / RCS2** | 63 → 314 → 750 GeV | 6.28 km | 841 m | 2 × 500 m | 60 m | centred lat 41.844280 (stacked 40 m above the IP straight) | 4.32 mrad down-to-N |
+
+The collider is placed 350 m south of the northmost fit so that **both** ends
+of the IP straight — and both surface-grazing emergences of the tilted
+civic-envelope configuration (§5) — stay comfortably inside the boundary.
+The 11.0 km circumference (R_arc = 1 528 m, 2 × 700 m insertions) is the
+"give or take" middle of the 10–11.5 km range the site supports on this
+alignment; its **west straight falls on meridian ≈ −88.2598°**, which is
+where the second interaction point lives (§5).
 
 Notes:
 
@@ -79,8 +87,9 @@ site for maximum circumference, with straight-section azimuths falling
 wherever the fit puts them. The corridor design makes five deliberate edits:
 
 1. **Collider ring rotated and translated** so the IP insertion is at
-   azimuth 0° on meridian −88.222972, IP at 41.849142 N — instead of an
-   orientation-agnostic centrally-placed ring. C = 10 km, unchanged.
+   azimuth 0° on meridian −88.222972, IP at 41.844280 N — instead of an
+   orientation-agnostic centrally-placed ring. C = 11 km (within the
+   published concepts' 10 km-class envelope).
 2. **RCS1/2 moved out of the Tevatron tunnel** into a new 6.28 km racetrack
    (same circumference, so the published optics carry over) at 60 m depth
    with its straight on the corridor. *Rationale:* the Tevatron tunnel is
@@ -95,30 +104,35 @@ wherever the fit puts them. The corridor design makes five deliberate edits:
    (b) accept ~4.5 TeV per beam (√s ≈ 9 TeV), or (c) keep the
    boundary-hugging 16.5 km shape and give up straight alignment for RCS4
    only (its wobbled straights contribute ≤0.6 mSv/yr — see [Safety](../safety/) §2).
-4. **Ring planes pitched** (0 / 2.30 / 4.59 mrad) to focus all straight
-   plumes on one detector hall.
+4. **Ring planes pitched** (0 / 2.16 / 4.32 mrad in the deep reference;
+   15.40 mrad for the collider in the civic-envelope configuration, §5) to
+   focus all straight plumes on one detector hall.
 5. **Deep siting** (60–100 m, bedrock) replaces FNAL's traditional ~7–10 m
    cut-and-cover, which is what keeps every plume underground for tens of
    kilometres and pushes the surface-grazing exits far from the site.
 
 ## 4. The neutrino beamline and detector
 
-**Geometry.** From the IP the plume centreline runs due north, 100 m deep at
-the fence, passing under the ComEd right-of-way. Earth curvature plus the
-terrain rise toward the detector puts the centreline **108.5 m below grade**
-at the experiment (grade 238.5 m ASL → hall floor near 125 m ASL),
-**8.71 km** from the IP. See [the corridor profile](../figs/corridor_profile.svg).
+**Geometry.** From the IP the plume centreline runs due north, ~100 m deep
+at the fence in the deep reference layout, passing under the ComEd
+right-of-way. Earth curvature plus the terrain rise toward the detector puts
+the centreline **107 m below grade** at the experiment (grade 238.5 m ASL →
+hall floor near 130 m ASL), **9.25 km** from the IP. See
+[the corridor profile](../figs/corridor_profile.svg). (In the civic-envelope
+configuration of §5 the same detector site can instead be served by a
+near-surface hall — the [tool](../tool/) baseline puts a detector 15 m deep
+at 41.8560° N, 1.3 km from the IP, still on DOE land.)
 
 **What the detector sees** (per 1.2 × 10⁷ s Snowmass-year, IMCC-class beam:
 1.8 × 10¹² μ/bunch/sign at 5 Hz, 90 % chain transmission):
 
 | Quantity | Value |
 |---|---|
-| Decays aimed north in the IP straight | 6.8 × 10¹⁸ /yr (one muon sign → pure νμ + ν̄e *or* ν̄μ + νe beam, selectable by circulation direction) |
-| Pencil-core radius at detector (1/γ = 21 µrad) | **0.18 m** |
-| Core fluence | 6.4 × 10¹⁵ ν/cm²/yr |
+| Decays aimed north in the IP straight | 6.2 × 10¹⁸ /yr (one muon sign → pure νμ + ν̄e *or* ν̄μ + νe beam, selectable by circulation direction) |
+| Pencil-core radius at detector (1/γ = 21 µrad) | **0.20 m** |
+| Core fluence | 5.2 × 10¹⁵ ν/cm²/yr |
 | On-axis mean Eν | ≈ 3.2 TeV |
-| Interaction rate | **4.4 × 10⁷ per kg-year** (4.4 × 10¹⁰ per tonne-year) |
+| Interaction rate | **3.5 × 10⁷ per kg-year** (3.5 × 10¹⁰ per tonne-year) |
 
 Even a ~10-tonne instrumented target collects ~10¹¹ TeV-scale ν
 interactions per year — roughly seven orders of magnitude beyond FASERν, with
@@ -136,9 +150,64 @@ negotiation as any deep utility crossing). The plume passes ~90–110 m under
 Wayne / West Chicago parcels between the site and the hall — no surface
 facility is needed anywhere along the corridor except at the detector.
 
-## 5. Open items
+## 5. The civic-envelope configuration and the second interaction point
 
-* Full lattice check: racetrack optics with 700 m insertions at 10 km
+The deep reference layout above keeps every plume ~100 m underground for
+tens of kilometres, at the price of two far-away surface-grazing exit strips
+(Safety §3). The **civic-envelope configuration** — the baseline of the
+[interactive tool](../tool/), the [envelope note](../envelope/), and the
+[aquifer audit](../aquifer/) — instead *chooses* both emergence points:
+
+* **IP straight raised to 191 m ASL** (34 m below grade) and **tilted up
+  15.40 mrad** (0.88°) toward north. This is the *minimum* tilt for which
+  both beams pierce the ground only on institutional land:
+  * the **north beam emerges at 41.8640° N — on the Fermilab site**, 655 m
+    inside the fence, crosses the boundary 8 m up, climbs the ComEd ROW,
+    passes Smith Road 116 m (380 ft) above the rooftops, and enters
+    federally navigable airspace (500 ft AGL) 9.3 km past the fence;
+  * the **south beam dives under Aurora** (74 m deep at the boundary,
+    below 152 m/500 ft within 5.6 km), crosses under east-central Illinois
+    at up to 789 m depth, and **surfaces 198 km away at 40.067° N on the
+    UIUC South Farms** — university land, with the approach under Urbana
+    66–119 m deep.
+* Anything *less* tilted pushes the north emergence off-site into the ROW
+  (still workable, but no longer on DOE land); anything more tilted is
+  farther beyond LEP's 14 mrad plane-tilt precedent than necessary.
+* **Ring options for the 15.40 mrad plane:** (a) a *planar tilted ring* —
+  the natural choice; across the 3.06 km ring width the plane rises/falls
+  ±23.5 m, so the north-arc apex needs ~6 m of engineered cover (berm —
+  exactly how the original Main Ring was covered) while the south arc is
+  63 m deep; or (b) a planar horizontal ring at depth with **vertical
+  chicanes** (double-bend "doglegs") bringing only the IP insertion onto
+  the tilted line — more optics work, standard geometry.
+
+**The second interaction point** sits diametrically opposite, at the centre
+of the **west straight, on meridian −88.2598°** (2.6 km west of the corridor
+— under the west side of the site). In the planar tilted ring the IP2
+straight is *automatically* tilted 15.40 mrad the same way (up-to-north). Its
+beams do not follow the ComEd corridor; the audit of that meridian gives:
+
+* **north beam:** emerges on-site or immediately north into
+  Fermilab-adjacent open land west of the villages, climbing on the same
+  schedule as IP1's beam (500 ft AGL within ~9 km); the meridian passes over
+  the West Chicago/Wayne rural fringe rather than a subdivision line;
+* **south beam:** re-surfaces ~198 km south at ≈ 40.045° N, −88.2598° —
+  which is **Willard Airport (CMI), owned and operated by the University of
+  Illinois**. A **+0.13 mrad trim** of the IP2 straight (well inside the
+  ±1 mrad mover budget the IMCC already carries for exactly this purpose)
+  centres that exit on airport land. An exit strip on a
+  university-controlled airfield is the same land-use class as the South
+  Farms solution: institutionally owned, fenced, and monitorable.
+
+Both IPs therefore satisfy the same rule: **every point where a collider
+plume is within 500 ft of the ground surface is on DOE, easement, or
+University of Illinois land.** The RCS straights stay in the deep reference
+configuration (their plumes exit at 20–80 km with the mover/wobble
+mitigation of Safety §2) — only the collider ring is tilted.
+
+## 6. Open items
+
+* Full lattice check: racetrack optics with 700 m insertions at 11 km
   circumference; vertical-dogleg utility straights; combined-function arcs.
 * MARS/FLUKA confirmation of everything in the [safety assessment](../safety/) (the analytic model is
   deliberately conservative).
