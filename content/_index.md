@@ -53,7 +53,7 @@ easement, or University of Illinois land.
 |---|---|
 | Collider | C = 11.0 km racetrack, east straight on −88.222972°, **IP at 41.84428° N**, straightaway 191 m ASL (34 m below grade), plane tilt 15.40 mrad |
 | Second IP | west straight, meridian −88.2598°; south exit on UIUC Willard Airport with a +0.13 mrad trim |
-| North beam | emerges **on site** at 41.8640° N (655 m inside the fence); Smith Rd rooftops cleared by 380 ft; navigable airspace (500 ft AGL) at 9.3 km |
+| North beam | emerges **on site** at 41.8640° N (655 m inside the fence); crosses Smith Rd 380 ft above grade (350 ft above a 10 m roofline); navigable airspace (500 ft AGL) at 9.3 km |
 | South beam | 74–152 m under Aurora, perigee 789 m, surfaces 198 km away at **40.067° N on UIUC South Farms**; Urbana passage 66–119 m deep |
 | Detector | on-site, e.g. 15 m deep at 41.8560° N (1.3 km from IP): ~10¹⁰ interactions per tonne-year at ⟨Eν⟩ ≈ 3.2 TeV |
 | Aquifers | every municipal-aquifer crossing ≥ 120× below the EPA tritium MCL in the stagnant worst case; whole-chord production ≈ 0.06 Ci/yr |

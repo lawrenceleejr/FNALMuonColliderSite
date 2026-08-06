@@ -163,7 +163,8 @@ tens of kilometres, at the price of two far-away surface-grazing exit strips
   both beams pierce the ground only on institutional land:
   * the **north beam emerges at 41.8640° N — on the Fermilab site**, 655 m
     inside the fence, crosses the boundary 8 m up, climbs the ComEd ROW,
-    passes Smith Road 116 m (380 ft) above the rooftops, and enters
+    passes Smith Road 116 m (380 ft) above grade — 350 ft above a 10 m
+    roofline — and enters
     federally navigable airspace (500 ft AGL) 9.3 km past the fence;
   * the **south beam dives under Aurora** (74 m deep at the boundary,
     below 152 m/500 ft within 5.6 km), crosses under east-central Illinois

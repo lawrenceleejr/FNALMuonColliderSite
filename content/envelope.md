@@ -76,7 +76,7 @@ or deeper than that.
 |---|---|---|---|---|
 | N1 | IP (41.8443°) → emergence 41.8640° | underground, 34 → 0 m | **Fermilab (DOE)** | ✓ pierces the ground on site, 655 m inside the fence |
 | N2 | 41.8640° → fence (41.8699°) | airborne, 0 → 27 ft AGL | **Fermilab (DOE)** | ✓ |
-| N3 | fence → Smith Rd (41.9356°) | airborne, 27 → 384 ft AGL | **ComEd Aurora–Wayne ROW** — the transmission easement the beam was aimed along | ✓ climbs over the wires' corridor; crosses Smith Rd 380 ft above the rooftops |
+| N3 | fence → Smith Rd (41.9356°) | airborne, 27 → 384 ft AGL | **ComEd Aurora–Wayne ROW** — the transmission easement the beam was aimed along | ✓ climbs over the wires' corridor; crosses Smith Rd 380 ft above grade — 350 ft above a 10 m roofline |
 | N4 | Smith Rd → 41.9530° | airborne, 384 → 500 ft AGL | Wayne (residential-rural) | ⚠ 1.9 km of overflight in the 384–500 ft band — above every structure and above the 300 ft "immediate reaches" band, but below the navigable-airspace floor; see §4 |
 | — | north of 41.9530° | > 500 ft AGL | — | public navigable airspace |
 | S1 | IP → site boundary (41.8207°) | underground, 34 → 74 m | **Fermilab (DOE)** | ✓ |
@@ -121,9 +121,9 @@ resolution:
    worst-case groundwater activation here at four orders of magnitude below
    the EPA limit.
 4. **The 300-vs-500 ft band at Smith Road** (the tool's red band) is
-   *cleared entirely* in the baseline: the beam crosses the nearest
-   rooftops 380 ft up, above even the conservative private-airspace
-   ceiling the tool lets you set.
+   *cleared entirely* in the baseline: the beam crosses Smith Road 380 ft
+   above grade — 350 ft above a 10 m roofline — clearing even the
+   conservative 300 ft private-airspace ceiling the tool lets you set.
 
 The envelope argument, in one sentence: **the beam meets the ground only on
 partner land, is otherwise never within 500 ft of private surface except

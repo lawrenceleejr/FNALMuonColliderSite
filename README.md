@@ -36,7 +36,8 @@ Illinois property.
   grade), ring plane tilted 15.40 mrad (one LEP). Second IP on the west
   straight, meridian −88.2598°.
 * North beam: emerges on site at 41.8640° N, crosses the fence 27 ft up,
-  clears Smith Rd rooftops by 380 ft, enters navigable airspace 9.3 km out.
+  crosses Smith Rd 380 ft above grade (350 ft above a 10 m roofline), and
+  enters navigable airspace 9.3 km out.
 * South beam: 74–152 m under Aurora, perigee 789 m, exits at 40.067° N on
   UIUC South Farms; Urbana passage 66–119 m deep. IP2's south exit lands on
   UIUC's Willard Airport with a +0.13 mrad trim.

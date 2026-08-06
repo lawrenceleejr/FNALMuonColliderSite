@@ -164,7 +164,8 @@ which keeps the north beam underground past Smith Road, and the study
 baseline — straightaway at 191 m ASL, 15.40 mrad — which instead surfaces
 the north beam at 41.8640° N, **still 655 m inside the Fermilab fence**, so
 that it crosses the boundary 27 ft up, climbs the ComEd right-of-way, and
-passes Smith Road 380 ft above the 10 m rooflines; detector ~15 m deep on
+passes Smith Road 380 ft above grade — 350 ft above the 10 m
+rooflines; detector ~15 m deep on
 site. The baseline's civic-envelope walk — including its one overflight
 caveat, 1.9 km of Wayne at 384–500 ft AGL — is in the
 [envelope note](../envelope/).)*
