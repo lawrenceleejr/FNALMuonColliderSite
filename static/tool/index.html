@@ -244,47 +244,60 @@ answer, not a parcel-level one.
 
 <h2 style="font-size:1.15rem">Simulate these neutrinos in Geant4</h2>
 <p style="font-size:.93rem">
-Export a ready-to-run macro for
-<a href="https://github.com/lawrenceleejr/G4TargetPractice">G4TargetPractice</a>.
-The macro carries this page's configuration into the simulation: the beam
-species (pick which of the two decay products, for either muon sign), an
-<code>arb</code>-mode energy histogram built from the <em>on-axis muon-decay
-spectrum</em> at your chosen Eμ (dN/dx ∝ x²(3−2x) for the μ-type neutrino,
-∝ x²(1−x) for the e-type, x = Eν/Eμ), the neutrino-physics biasing needed to
-make ν interactions visible, and a header documenting the full siting
-scenario with a link back to it.
+Export a ready-to-run configuration for
+<a href="https://github.com/lawrenceleejr/G4TargetPractice">G4TargetPractice</a>
+that shoots this beam <strong>through the actual rock column of the current
+configuration</strong>. The tool writes two files: a <strong>GDML
+geometry</strong> — the ordered stack of rock segments the beam traverses
+(unit by unit, with realistic compositions and this page's densities; the
+south chord descends through the stratigraphic sequence and climbs back out
+the other side) — and a <strong>macro</strong> with the species, an
+<code>arb</code>-mode energy histogram from the on-axis muon-decay spectrum
+at your chosen Eμ, and neutrino-interaction biasing tuned so roughly one
+interaction happens per simulated event.
 </p>
 <div class="panel">
   <div>
-    <label>Beam species (each decay makes one of each pair)</label>
-    <select id="g4species">
-      <option value="nu_mu">ν_μ — μ⁻ circulating north</option>
-      <option value="anti_nu_e">ν̄_e — μ⁻ circulating north</option>
-      <option value="anti_nu_mu">ν̄_μ — μ⁺ circulating north</option>
-      <option value="nu_e">ν_e — μ⁺ circulating north</option>
+    <label>Beam direction — which rock path to simulate</label>
+    <select id="g4dir">
+      <option value="south">south chord — down through the Earth and back out</option>
+      <option value="north">north beam — IP to emergence, under the corridor</option>
     </select>
   </div>
   <div>
-    <label>Target geometry (ships with the repo)</label>
-    <select id="g4geom">
-      <option value="lar">1 m³ liquid argon (~1.4 t)</option>
-      <option value="maia">MAIA detector concept v0</option>
-      <option value="si">1 mm silicon slab</option>
+    <label>Beam species (each decay makes one of each pair)</label>
+    <select id="g4species">
+      <option value="nu_mu">ν_μ — μ⁻ circulating this way</option>
+      <option value="anti_nu_e">ν̄_e — μ⁻ circulating this way</option>
+      <option value="anti_nu_mu">ν̄_μ — μ⁺ circulating this way</option>
+      <option value="nu_e">ν_e — μ⁺ circulating this way</option>
     </select>
+  </div>
+  <div>
+    <label>Interaction bias factor
+      <span style="float:right;font-size:.74rem"><input type="checkbox" id="g4autobias" checked>
+      auto ≈ 1 interaction/event</span></label>
+    <input type="number" id="g4bias" min="1" step="any" value="1" style="width:9em" disabled>
+    <span class="val note" id="g4biasV"></span>
   </div>
   <div>
     <label>Events to simulate (/run/beamOn)</label>
     <input type="number" id="g4events" min="1" max="10000000" step="100" value="1000" style="width:8em">
   </div>
   <div style="display:flex;gap:.5rem;align-items:end;flex-wrap:wrap">
-    <button class="mini" id="g4dl">download .mac</button>
+    <button class="mini" id="g4dlmac">download .mac</button>
+    <button class="mini" id="g4dlgdml">download rock .gdml</button>
     <button class="mini" id="g4copy">copy macro</button>
     <span class="note" id="g4note"></span>
   </div>
 </div>
-<details style="margin:.6rem 0 1.4rem">
-  <summary class="note" style="cursor:pointer">preview the generated macro</summary>
+<details style="margin:.6rem 0 .4rem">
+  <summary class="note" style="cursor:pointer">preview the macro</summary>
   <pre id="macPreview" style="font-size:.72rem;line-height:1.45;background:#f2efe7;border:1px solid #d8d2c4;border-radius:6px;padding:.8rem;overflow-x:auto"></pre>
+</details>
+<details style="margin:.4rem 0 1.4rem">
+  <summary class="note" style="cursor:pointer">preview the rock-column GDML</summary>
+  <pre id="gdmlPreview" style="font-size:.72rem;line-height:1.45;background:#f2efe7;border:1px solid #d8d2c4;border-radius:6px;padding:.8rem;overflow-x:auto;max-height:24rem"></pre>
 </details>
 
 <h2 style="font-size:1.1rem">Reading the answer</h2>
@@ -1167,120 +1180,284 @@ svg.addEventListener("pointermove", e => {
 });
 svg.addEventListener("pointerup", () => dragging = null);
 
-// ---- Geant4 (G4TargetPractice) macro export -------------------------------
-const G4_GEOMS = {
-  lar:  { file: "liquid_argon_1m3.gdml", label: "1 m3 liquid argon", pos: "0 0 -60 cm",  mass_t: 1.396 },
-  maia: { file: "MAIA_v0.gdml",          label: "MAIA detector concept v0", pos: "0 0 -25 m", mass_t: null },
-  si:   { file: "silicon_slab_1mm.gdml", label: "1 mm silicon slab", pos: "0 0 -4 cm",   mass_t: 2.33e-5 },
-};
+// ---- Geant4 (G4TargetPractice) export: shoot the beam through the rock ----
 const G4_SPECIES = {
-  nu_mu:      { type: "mu", label: "nu_mu (from mu- decays)",      xmean: 0.7 },
-  anti_nu_mu: { type: "mu", label: "anti_nu_mu (from mu+ decays)", xmean: 0.7 },
-  nu_e:       { type: "e",  label: "nu_e (from mu+ decays)",       xmean: 0.6 },
-  anti_nu_e:  { type: "e",  label: "anti_nu_e (from mu- decays)",  xmean: 0.6 },
+  nu_mu:      { type: "mu", xmean: 0.7 },
+  anti_nu_mu: { type: "mu", xmean: 0.7 },
+  nu_e:       { type: "e",  xmean: 0.6 },
+  anti_nu_e:  { type: "e",  xmean: 0.6 },
 };
-const g4state = { species: "nu_mu", geom: "lar", events: 1000 };
+// rock material recipes: element mass fractions (each sums to 1)
+const G4_MATS = {
+  till:      { H: .010, O: .500, Mg: .020, Al: .070, Si: .280, K: .020, Ca: .060, Fe: .040 },
+  dolomite:  { C: .130, O: .521, Mg: .132, Ca: .217 },
+  shale:     { H: .010, C: .030, O: .483, Mg: .007, Al: .100, Si: .250, K: .035, Ca: .025, Fe: .060 },
+  sandstone: { O: .533, Si: .467 },
+  granite:   { O: .485, Na: .030, Al: .080, Si: .325, K: .045, Ca: .018, Fe: .017 },
+};
+const G4_ELEMENTS = { H:[1,1.008], C:[6,12.011], N:[7,14.007], O:[8,15.999], Na:[11,22.990],
+                      Mg:[12,24.305], Al:[13,26.982], Si:[14,28.085], K:[19,39.098],
+                      Ca:[20,40.078], Fe:[26,55.845] };
+const UNIT_MAT = { "glacial drift": "till", "Silurian dolomite": "dolomite",
+  "Maquoketa shale": "shale", "Galena–Platteville dolomite": "dolomite",
+  "St. Peter sandstone": "sandstone", "Prairie du Chien dolomite": "dolomite",
+  "Ironton–Galesville sandstone": "sandstone", "Mt. Simon sandstone": "sandstone",
+  "Precambrian basement": "granite" };
+
+const g4state = { dir: "south", species: "nu_mu", events: 1000, autoBias: true, bias: 1 };
+
+// Ordered rock segments along the beam, as the beam meets them.
+function rockSegments() {
+  const b = trace(state.ipLat, state.ipElev, state.tilt, state.detLat);
+  if (g4state.dir === "north") {
+    // sample the traced ray over real terrain; run-length encode by unit
+    const segs = [];
+    const sEnd = b.exitS !== null ? b.exitS : s_of(LAT_END);
+    for (let sPos = b.s0; sPos < sEnd; sPos += 50) {
+      const g = unitAt(terrain(lat_of(sPos)) - b.h(sPos));
+      if (!g) continue;
+      const last = segs[segs.length - 1];
+      if (last && last.g === g) last.L += 50;
+      else segs.push({ g, L: 50 });
+    }
+    // absorb slivers (<100 m, from terrain roll flicker) into their neighbour
+    for (let i = segs.length - 1; i >= 0; i--) {
+      if (segs[i].L < 100 && segs.length > 1) {
+        const nb = segs[i - 1] || segs[i + 1];
+        nb.L += segs[i].L; segs.splice(i, 1);
+      }
+    }
+    return segs;
+  }
+  // south chord: exact shell geometry, descending then ascending
+  const alpha = state.tilt;
+  const grade = terrain(state.ipLat);
+  const rS = R_E + grade, r0 = R_E + state.ipElev;
+  const pImp = r0 * Math.cos(alpha);
+  const q = r => Math.sqrt(Math.max(r * r - pImp * pImp, 0));
+  const u0 = (alpha >= 0 ? -1 : 1) * q(r0), uX = q(rS);
+  const desc = [], asc = [];
+  for (const g of GEOLOGY) {
+    const rB = rS - g.top, rA = Math.max(rS - g.bot, 0);
+    const qB = q(rB), qA = q(rA);
+    const inter = (x, y) => Math.max(0, Math.min(y, uX) - Math.max(x, u0));
+    const dL = inter(-qB, -qA), aL = inter(qA, qB);
+    if (dL > 1) desc.push({ g, L: dL });
+    if (aL > 1) asc.push({ g, L: aL });
+  }
+  // top→bottom then bottom→top, merging the two halves of the perigee unit
+  const ordered = desc.concat(asc.reverse());
+  for (let i = ordered.length - 1; i > 0; i--)
+    if (ordered[i].g === ordered[i - 1].g) {
+      ordered[i - 1] = { g: ordered[i].g, L: ordered[i].L + ordered[i - 1].L };
+      ordered.splice(i, 1);
+    }
+  return ordered;
+}
+
+function pathTotals(segs) {
+  let L = 0, X = 0;
+  for (const sg of segs) { L += sg.L; X += sg.L * 100 * sg.g.rho; }
+  return { L, X };
+}
+
+function suggestedBias(lamCount) {
+  if (!(lamCount > 0)) return 1;
+  const raw = 1 / lamCount;
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  return Math.max(1, Math.round(raw / mag) * mag);   // one significant figure
+}
+
+function gdmlName() {
+  return "corridor_rock_" + g4state.dir + "_" + (state.tilt * 1000).toFixed(1).replace("-", "m") + "mrad.gdml";
+}
+function macName() {
+  return "corridor_" + g4state.species + "_" + g4state.dir + "_" +
+         (state.tilt * 1000).toFixed(1).replace("-", "m") + "mrad.mac";
+}
+
+// GDML: a straight stack of rock boxes along +z, 20 x 20 m across (contains
+// the hadronic/EM showers), inside an air world with room for the gun.
+function generateGdml(segs) {
+  const { L } = pathTotals(segs);
+  const Lcm = L * 100, PAD = 4000;          // cm; 40 m longitudinal padding
+  const XY = 2000;                           // cm; 20 m across
+  const usedEls = new Set(["N", "O"]), usedMats = new Map();
+  for (const sg of segs) {
+    const mk = UNIT_MAT[sg.g.short];
+    usedMats.set(sg.g.short, { mk, rho: sg.g.rho });
+    for (const e in G4_MATS[mk]) usedEls.add(e);
+  }
+  const matId = short => "rock_" + short.replace(/[^A-Za-z]+/g, "_");
+  const out = [];
+  out.push('<?xml version="1.0" encoding="UTF-8"?>');
+  out.push('<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"');
+  out.push('      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">');
+  out.push('  <!-- Rock column along the ' + g4state.dir + ' neutrino beam of the FNAL corridor study.');
+  out.push('       Generated by ' + location.origin + location.pathname + ' -- see the macro header');
+  out.push('       for the full scenario. Segments appear in beam order along +z. -->');
+  out.push('  <define/>');
+  out.push('  <materials>');
+  for (const e of usedEls) {
+    const [Z, A] = G4_ELEMENTS[e];
+    out.push('    <element name="el_' + e + '" formula="' + e + '" Z="' + Z + '"><atom value="' + A + '"/></element>');
+  }
+  out.push('    <material name="Air" state="gas"><D value="0.001205" unit="g/cm3"/>');
+  out.push('      <fraction n="0.755" ref="el_N"/><fraction n="0.245" ref="el_O"/></material>');
+  for (const [short, { mk, rho }] of usedMats) {
+    out.push('    <material name="' + matId(short) + '" state="solid"><D value="' + rho.toFixed(2) + '" unit="g/cm3"/>');
+    for (const [e, f] of Object.entries(G4_MATS[mk]))
+      out.push('      <fraction n="' + f.toFixed(3) + '" ref="el_' + e + '"/>');
+    out.push('    </material>');
+  }
+  out.push('  </materials>');
+  out.push('  <solids>');
+  out.push('    <box name="world_s" x="' + (XY + 1000) + '" y="' + (XY + 1000) + '" z="' + (Lcm + 2 * PAD).toFixed(0) + '" lunit="cm"/>');
+  segs.forEach((sg, i) =>
+    out.push('    <box name="seg' + i + '_s" x="' + XY + '" y="' + XY + '" z="' + (sg.L * 100).toFixed(0) + '" lunit="cm"/>'));
+  out.push('  </solids>');
+  out.push('  <structure>');
+  segs.forEach((sg, i) => {
+    out.push('    <volume name="seg' + i + '_v"><materialref ref="' + matId(sg.g.short) + '"/><solidref ref="seg' + i + '_s"/></volume>');
+  });
+  out.push('    <volume name="world_v">');
+  out.push('      <materialref ref="Air"/><solidref ref="world_s"/>');
+  let z = -Lcm / 2;
+  segs.forEach((sg, i) => {
+    const zc = z + sg.L * 100 / 2;
+    out.push('      <physvol name="seg' + i + '_' + matId(sg.g.short) + '">');
+    out.push('        <volumeref ref="seg' + i + '_v"/><position name="p' + i + '" z="' + zc.toFixed(0) + '" unit="cm"/>');
+    out.push('      </physvol>');
+    z += sg.L * 100;
+  });
+  out.push('    </volume>');
+  out.push('  </structure>');
+  out.push('  <setup name="Default" version="1.0"><world ref="world_v"/></setup>');
+  out.push('</gdml>');
+  return out.join("\n");
+}
 
 function generateMac() {
   const b = trace(state.ipLat, state.ipElev, state.tilt, state.detLat);
   const phys = beamPhysics();
   const sp = G4_SPECIES[g4state.species];
-  const gm = G4_GEOMS[g4state.geom];
-  const Ldet = Math.abs(s_of(state.detLat) - b.s0);
-  const fluxHere = N_DEC_YR * phys.gamma ** 2 / (Math.PI * (Ldet * 100) ** 2);
-  // per-species spectrum-averaged sigma: <E> = xmean * Emu
+  const segs = rockSegments();
+  const { L, X } = pathTotals(segs);
   const sigmaSp = SIGMA_SLOPE * sp.xmean * state.emu * 1000;
-  const perTonne = fluxHere * sigmaSp * N_A * 1e6;
-  const inTarget = gm.mass_t ? perTonne * gm.mass_t : null;
+  const lamCount = X * N_A * sigmaSp;                // interaction lengths at <Enu>
+  const bias = g4state.autoBias ? suggestedBias(lamCount) : g4state.bias;
   const url = location.origin + location.pathname + hashString();
   const wOf = x => sp.type === "mu" ? x * x * (3 - 2 * x) : x * x * (1 - x);
+  const dirTxt = g4state.dir === "north"
+    ? "north beam, IP -> emergence under the corridor"
+    : "south beam, full chord through the Earth (down and back out)";
 
-  const L = [];
-  L.push("# ===========================================================================");
-  L.push("# " + g4state.species + " beam from the FNAL corridor-aligned muon collider study");
-  L.push("# Generated by the corridor beam-geometry tool -- exact configuration:");
-  L.push("#   " + url);
-  L.push("#");
-  L.push("# Scenario: IP at " + state.ipLat.toFixed(4) + " N, " + fmt(state.ipElev, 0) +
-         " m ASL (" + fmt(terrain(state.ipLat) - state.ipElev, 0) + " m below grade),");
-  L.push("#   straight tilted " + (state.tilt * 1000).toFixed(2) + " mrad up toward true north.");
-  L.push("#   Detector at " + state.detLat.toFixed(4) + " N, " + fmt(Ldet / 1000, 2) +
-         " km from the IP, beam depth " + fmt(b.detDepth, 0) + " m;");
-  L.push("#   1/gamma pencil-core radius there: " + fmt(Ldet * 100 / phys.gamma, 1) + " cm.");
-  L.push("#");
-  L.push("# Beam: Emu = " + state.emu.toFixed(2) + " TeV; on-axis " + g4state.species +
-         " spectrum dN/dx ~ " + (sp.type === "mu" ? "x^2(3-2x)" : "x^2(1-x)") +
-         ", <Enu> = " + fmt(sp.xmean * state.emu, 2) + " TeV.");
-  L.push("# Baseline machine: " + (N_DEC_YR / 1e18).toFixed(1) + "e18 decays/yr aimed north;");
-  L.push("#   on-axis core fluence " + fluxHere.toExponential(2) + " nu/cm2/yr;");
-  L.push("#   ~" + perTonne.toExponential(2) + " " + g4state.species + " interactions per tonne-year" +
-         (inTarget ? "; ~" + inTarget.toExponential(2) + "/yr in this " + gm.mass_t + " t target." : "."));
-  L.push("#");
-  L.push("# Run (from a directory containing this macro AND " + gm.file + ",");
-  L.push("# copied from the G4TargetPractice repo's gdml/ directory):");
-  L.push("#   docker run --rm -it --init -v $PWD:/run/ -w /run/ \\");
-  L.push("#     ghcr.io/lawrenceleejr/g4targetpractice:main " + macName());
-  L.push("#");
-  L.push("# +z in the simulation = the beam axis (geographic north, tilted " +
-         (state.tilt * 1000).toFixed(2) + " mrad up).");
-  L.push("# The pencil core is wider than this target, so a parallel on-axis beam");
-  L.push("# with the on-axis energy spectrum is the right approximation here.");
-  L.push("# ===========================================================================");
-  L.push("");
-  L.push("# --- Geometry ---");
-  L.push("/detector/readGDML " + gm.file);
-  L.push("");
-  L.push("# --- Neutrino physics (biased so nu interactions actually happen) ---");
-  L.push("/physics_lists/em/NuDetectorName DefaultRegionForTheWorld");
-  L.push("/physics_lists/em/NeutrinoActivation true");
-  L.push("/physics_lists/em/NuEleCcBias   5e12");
-  L.push("/physics_lists/em/NuEleNcBias   5e12");
-  L.push("/physics_lists/em/NuNucleusBias 5e12");
-  L.push("");
-  L.push("/run/initialize");
-  L.push("");
-  L.push("# --- Beam ---");
-  L.push("/gun/particle    " + g4state.species);
-  L.push("/gun/energyMode  arb");
-  L.push("/gun/position    " + gm.pos);
-  L.push("/gun/direction   0 0 1");
-  L.push("");
-  L.push("# On-axis muon-decay energy spectrum, Enu = x * Emu (20 bins)");
-  L.push("/gun/clearEnergyBins");
+  const Lns = [];
+  Lns.push("# ===========================================================================");
+  Lns.push("# " + g4state.species + " through the rock: " + dirTxt);
+  Lns.push("# FNAL corridor-aligned muon collider study -- exact configuration:");
+  Lns.push("#   " + url);
+  Lns.push("#");
+  Lns.push("# Scenario: IP at " + state.ipLat.toFixed(4) + " N, " + fmt(state.ipElev, 0) +
+           " m ASL (" + fmt(terrain(state.ipLat) - state.ipElev, 0) + " m below grade),");
+  Lns.push("#   straight tilted " + (state.tilt * 1000).toFixed(2) + " mrad; Emu = " +
+           state.emu.toFixed(2) + " TeV, <Enu> = " + fmt(sp.xmean * state.emu, 2) + " TeV for this species.");
+  Lns.push("#");
+  Lns.push("# Rock path (" + gdmlName() + "), segments in beam order along +z:");
+  segs.forEach(sg => Lns.push("#   " + (sg.L / 1000).toFixed(2).padStart(8) + " km  " +
+                              sg.g.short + "  (rho " + sg.g.rho.toFixed(2) + ")"));
+  Lns.push("#   total " + fmt(L / 1000, 1) + " km, " + X.toExponential(2) + " g/cm2 = " +
+           lamCount.toExponential(2) + " nu interaction lengths at <Enu>.");
+  Lns.push("#");
+  Lns.push("# Biasing: " + bias.toExponential(1) + " x cross-section -> ~" +
+           (lamCount * bias).toFixed(2) + " expected interactions per event");
+  Lns.push("#   (each biased interaction carries physical weight 1/bias).");
+  Lns.push("#");
+  Lns.push("# Run (from a directory containing this macro AND " + gdmlName() + "):");
+  Lns.push("#   docker run --rm -it --init -v $PWD:/run/ -w /run/ \\");
+  Lns.push("#     ghcr.io/lawrenceleejr/g4targetpractice:main " + macName());
+  Lns.push("# ===========================================================================");
+  Lns.push("");
+  Lns.push("# --- Geometry: the rock column itself ---");
+  Lns.push("/detector/readGDML " + gdmlName());
+  Lns.push("");
+  Lns.push("# --- Neutrino physics ---");
+  Lns.push("/physics_lists/em/NuDetectorName DefaultRegionForTheWorld");
+  Lns.push("/physics_lists/em/NeutrinoActivation true");
+  Lns.push("/physics_lists/em/NuEleCcBias   " + bias.toExponential(1));
+  Lns.push("/physics_lists/em/NuEleNcBias   " + bias.toExponential(1));
+  Lns.push("/physics_lists/em/NuNucleusBias " + bias.toExponential(1));
+  Lns.push("");
+  Lns.push("/run/initialize");
+  Lns.push("");
+  Lns.push("# --- Beam (enters the first rock segment head-on) ---");
+  Lns.push("/gun/particle    " + g4state.species);
+  Lns.push("/gun/energyMode  arb");
+  Lns.push("/gun/position    0 0 " + (-(L / 2 + 20)).toFixed(0) + " m");
+  Lns.push("/gun/direction   0 0 1");
+  Lns.push("");
+  Lns.push("# On-axis muon-decay energy spectrum, Enu = x * Emu (20 bins)");
+  Lns.push("/gun/clearEnergyBins");
   let wMax = 0;
   for (let i = 1; i <= 20; i++) wMax = Math.max(wMax, wOf(i / 20));
   for (let i = 1; i <= 20; i++) {
     const x = i / 20, w = wOf(x) / wMax;
     if (w < 1e-4) continue;
-    const e = x * state.emu * 1000;
-    L.push("/gun/addEnergyBin " + String(fmt(e, 0)).replace(/,/g, "") + " GeV " + w.toFixed(4));
+    Lns.push("/gun/addEnergyBin " + String(fmt(x * state.emu * 1000, 0)).replace(/,/g, "") +
+             " GeV " + w.toFixed(4));
   }
-  L.push("");
-  L.push("# --- Run ---");
-  L.push("/run/printProgress " + Math.max(1, Math.round(g4state.events / 20)));
-  L.push("/run/beamOn " + g4state.events);
-  L.push("");
-  return L.join("\n");
+  Lns.push("");
+  Lns.push("# --- Run ---");
+  Lns.push("/run/printProgress " + Math.max(1, Math.round(g4state.events / 20)));
+  Lns.push("/run/beamOn " + g4state.events);
+  Lns.push("");
+  return Lns.join("\n");
 }
-function macName() {
-  return "corridor_" + g4state.species + "_" + (state.tilt * 1000).toFixed(1).replace("-", "m") +
-         "mrad_" + g4state.geom + ".mac";
-}
+
 function refreshMacPreview() {
+  const segs = rockSegments();
+  const empty = segs.length === 0;
+  document.getElementById("g4dlmac").disabled = empty;
+  document.getElementById("g4dlgdml").disabled = empty;
+  document.getElementById("g4copy").disabled = empty;
   const pre = document.getElementById("macPreview");
+  const preG = document.getElementById("gdmlPreview");
+  if (empty) {
+    if (pre) pre.textContent = "# beam is above ground for this configuration -- no rock to traverse";
+    if (preG) preG.textContent = "";
+    document.getElementById("g4biasV").textContent = "";
+    return;
+  }
+  const { X } = pathTotals(segs);
+  const sp = G4_SPECIES[g4state.species];
+  const lamCount = X * N_A * SIGMA_SLOPE * sp.xmean * state.emu * 1000;
+  if (g4state.autoBias) {
+    g4state.bias = suggestedBias(lamCount);
+    document.getElementById("g4bias").value = g4state.bias;
+  }
+  document.getElementById("g4biasV").textContent =
+    " → " + (lamCount * g4state.bias).toFixed(2) + " interactions/event expected";
   if (pre) pre.textContent = generateMac();
+  if (preG) preG.textContent = generateGdml(segs);
 }
-document.getElementById("g4species").addEventListener("input", e => { g4state.species = e.target.value; refreshMacPreview(); });
-document.getElementById("g4geom").addEventListener("input", e => { g4state.geom = e.target.value; refreshMacPreview(); });
-document.getElementById("g4events").addEventListener("input", e => { g4state.events = Math.max(1, Math.round(+e.target.value || 1000)); refreshMacPreview(); });
-document.getElementById("g4dl").addEventListener("click", () => {
-  const blob = new Blob([generateMac()], { type: "text/plain" });
+
+const dl = (name, text) => {
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = macName();
-  a.click();
+  a.href = URL.createObjectURL(new Blob([text], { type: "text/plain" }));
+  a.download = name; a.click();
   URL.revokeObjectURL(a.href);
+};
+document.getElementById("g4dir").addEventListener("input", e => { g4state.dir = e.target.value; refreshMacPreview(); });
+document.getElementById("g4species").addEventListener("input", e => { g4state.species = e.target.value; refreshMacPreview(); });
+document.getElementById("g4events").addEventListener("input", e => { g4state.events = Math.max(1, Math.round(+e.target.value || 1000)); refreshMacPreview(); });
+document.getElementById("g4autobias").addEventListener("input", e => {
+  g4state.autoBias = e.target.checked;
+  document.getElementById("g4bias").disabled = e.target.checked;
+  refreshMacPreview();
 });
+document.getElementById("g4bias").addEventListener("input", e => { g4state.bias = Math.max(1, +e.target.value || 1); refreshMacPreview(); });
+document.getElementById("g4dlmac").addEventListener("click", () => dl(macName(), generateMac()));
+document.getElementById("g4dlgdml").addEventListener("click", () => dl(gdmlName(), generateGdml(rockSegments())));
 document.getElementById("g4copy").addEventListener("click", () => {
   const done = () => {
     const n = document.getElementById("g4note");

@@ -26,8 +26,10 @@ contemplated to an underground experiment at **41°55′39.3″ N, 88°13′22.7
   read off detector depth, emergence points on a live map (both beams, with
   rock columns in ν interaction lengths), airspace clearance at Smith Road,
   and per-tonne event rates. Configurations are shareable by URL, and any
-  scenario can be exported as a ready-to-run Geant4 macro for
-  [G4TargetPractice](https://github.com/lawrenceleejr/G4TargetPractice).
+  scenario exports a ready-to-run Geant4 setup for
+  [G4TargetPractice](https://github.com/lawrenceleejr/G4TargetPractice) —
+  a generated GDML of the exact rock column the beam traverses plus a macro
+  with the decay spectrum and auto-tuned interaction biasing.
 * **[Interactive map](map/)** — the rings fitted inside the real site
   boundary, the corridor, the detector, and the plume exit points, over
   OpenStreetMap.
