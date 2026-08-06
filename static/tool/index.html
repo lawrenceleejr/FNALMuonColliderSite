@@ -160,19 +160,19 @@ satisfy it.
   <div id="wrapIpElev">
     <label><span class="lock"><input type="checkbox" id="lockIpElev"> lock</span>
       Height of the straightaway at the IP (elevation ASL; grade ~225 m)</label>
-    <input type="range" id="ipElev" min="-100" max="235" step="1" value="178">
+    <input type="range" id="ipElev" min="-100" max="235" step="1" value="185">
     <span class="val" id="ipElevV"></span>
   </div>
   <div id="wrapTilt">
     <label><span class="lock"><input type="checkbox" id="lockTilt"> lock</span>
       Upward tilt of the straight section (toward north)</label>
-    <input type="range" id="tilt" min="-5" max="70" step="0.05" value="15.38">
+    <input type="range" id="tilt" min="-5" max="70" step="0.05" value="15.42">
     <span class="val" id="tiltV"></span>
   </div>
 
   <div>
     <label>Detector latitude — on the Fermilab site or up the corridor</label>
-    <input type="range" id="detLat" min="41.8207" max="42.0480" step="0.0002" value="41.8695">
+    <input type="range" id="detLat" min="41.8207" max="42.0480" step="0.0002" value="41.8650">
     <span class="val" id="detLatV"></span>
   </div>
   <div>
@@ -249,6 +249,21 @@ elevation; real terrain along the path shifts the southern exit by roughly
 ±5 km per ±100 m of elevation difference, so treat it as a county-level
 answer, not a parcel-level one.
 </p>
+
+<h2 style="font-size:1.15rem">The southern exit up close</h2>
+<p style="font-size:.93rem">
+Terrain cross-section along the meridian where the south beam comes out —
+Champaign–Urbana and the UIUC South Farms. The ground here sits 10–15 m
+lower than Fermilab grade, so the <em>terrain-corrected</em> exit (solid
+marker) lands a bit north of the flat-model prediction (tick). Green shading
+is land inside the UIUC boundary polygon; the orange stretch is the grazing
+strip where the beam has less than 5 m of cover.
+</p>
+<svg id="plotS" viewBox="0 0 980 360" aria-label="terrain cross-section at the southern exit"></svg>
+<p class="note" id="veS" style="margin-bottom:.25rem"></p>
+<p class="note" style="margin-top:0">figure export:
+  <button class="mini" id="figSvgS">SVG (vector)</button>
+  <button class="mini" id="figPngS">PNG 4×</button></p>
 
 <h2 style="font-size:1.15rem">Simulate these neutrinos in Geant4</h2>
 <p style="font-size:.93rem">
@@ -401,6 +416,19 @@ function unitAt(depth) {
 // SRTM elevation profile along lon -88.222972, [lat, m ASL]
 const PROFILE = [[41.8,226],[41.802,226],[41.804,219],[41.806,218],[41.808,222],[41.81,222],[41.812,221],[41.814,225],[41.816,221],[41.818,224],[41.82,225],[41.822,224],[41.824,224],[41.826,224],[41.828,226],[41.83,221],[41.832,225],[41.834,223],[41.836,221],[41.838,222],[41.84,225],[41.842,227],[41.844,225],[41.846,226],[41.848,224],[41.85,224],[41.852,224],[41.854,225],[41.856,226],[41.858,226],[41.86,226],[41.862,226],[41.864,225],[41.866,228],[41.868,230],[41.87,227],[41.872,229],[41.874,230],[41.876,229],[41.878,230],[41.88,231],[41.882,232],[41.884,231],[41.886,235],[41.888,232],[41.89,230],[41.892,235],[41.894,234],[41.896,235],[41.898,236],[41.9,231],[41.902,231],[41.904,233],[41.906,234],[41.908,237],[41.91,235],[41.912,229],[41.914,233],[41.916,232],[41.918,236],[41.92,234],[41.922,235],[41.924,234],[41.926,245],[41.928,235],[41.93,240],[41.932,235],[41.934,237],[41.936,240],[41.938,239],[41.94,238],[41.942,240],[41.944,239],[41.946,238],[41.948,239],[41.95,239],[41.952,239],[41.954,236],[41.956,233],[41.958,240],[41.96,234],[41.962,237],[41.964,236],[41.966,234],[41.968,238],[41.97,244],[41.972,242],[41.974,246],[41.976,238],[41.978,241],[41.98,236],[41.982,242],[41.984,239],[41.986,237],[41.988,239],[41.99,237],[41.992,234],[41.994,239],[41.996,240],[41.998,236],[42,240],[42.002,240],[42.004,246],[42.006,244],[42.008,246],[42.01,248],[42.012,249],[42.014,247],[42.016,247],[42.018,249],[42.02,249],[42.022,252],[42.024,259],[42.026,260],[42.028,260],[42.03,255],[42.032,236],[42.034,243],[42.036,258],[42.038,258],[42.04,262],[42.042,265],[42.044,263],[42.046,260],[42.048,264],[42.05,266],[42.06,266],[42.07,261],[42.08,264],[42.09,261],[42.1,267],[42.11,256],[42.12,244],[42.13,268],[42.14,267],[42.15,240],[42.16,268],[42.17,262],[42.18,262],[42.19,235],[42.2,227],[42.21,242],[42.22,264],[42.23,269],[42.24,232],[42.25,224],[42.26,230],[42.27,232],[42.28,227],[42.29,227],[42.3,232],[42.31,225],[42.32,223],[42.33,234],[42.34,226],[42.35,238],[42.36,223],[42.37,231],[42.38,235],[42.39,234],[42.4,255],[42.41,257],[42.42,264],[42.43,268],[42.44,239],[42.45,258],[42.46,256],[42.47,259],[42.48,260],[42.49,285],[42.5,278],[42.51,273],[42.52,251],[42.53,250],[42.54,239],[42.55,237],[42.56,227],[42.57,232],[42.58,237],[42.59,230],[42.6,250]];
 const LAT_END = PROFILE[PROFILE.length-1][0];
+// SRTM terrain near the southern (UIUC) exit, same meridian
+const PROFILE_S = [[39.98,210],[39.982,211],[39.984,210],[39.986,210],[39.988,210],[39.99,210],[39.992,212],[39.994,212],[39.996,209],[39.998,211],[40,212],[40.002,212],[40.004,211],[40.006,211],[40.008,212],[40.01,212],[40.012,211],[40.014,211],[40.016,211],[40.018,210],[40.02,210],[40.022,210],[40.024,211],[40.026,211],[40.028,209],[40.03,211],[40.032,209],[40.034,211],[40.036,211],[40.038,212],[40.04,210],[40.042,211],[40.044,212],[40.046,212],[40.048,210],[40.05,212],[40.052,212],[40.054,214],[40.056,214],[40.058,212],[40.06,212],[40.062,212],[40.064,211],[40.066,213],[40.068,215],[40.07,213],[40.072,216],[40.074,213],[40.076,213],[40.078,216],[40.08,216],[40.082,216],[40.084,217],[40.086,217],[40.088,220],[40.09,222],[40.092,227],[40.094,231],[40.096,230],[40.098,234],[40.1,228],[40.102,228],[40.104,230],[40.106,229],[40.108,232],[40.11,222],[40.112,222],[40.114,222],[40.116,224],[40.118,223],[40.12,225],[40.122,228],[40.124,224],[40.126,225],[40.128,228],[40.13,226],[40.132,225],[40.134,225],[40.136,228],[40.138,224],[40.14,228],[40.142,219],[40.144,221],[40.146,221],[40.148,223],[40.15,222]];
+// meridian interval inside the UIUC boundary polygon (from OSM rel 12299045)
+const UIUC_BAND = [40.055, 40.095];
+function terrainS(lat) {
+  const p = PROFILE_S;
+  if (lat <= p[0][0]) return p[0][1];
+  if (lat >= p[p.length-1][0]) return p[p.length-1][1];
+  let lo = 0, hi = p.length - 1;
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; (p[m][0] <= lat) ? lo = m : hi = m; }
+  const t = (lat - p[lo][0]) / (p[hi][0] - p[lo][0]);
+  return p[lo][1] + t * (p[hi][1] - p[lo][1]);
+}
 
 const s_of = lat => (lat - 41.80) * MLAT;   // northward ground distance (m)
 const lat_of = s => 41.80 + s / MLAT;
@@ -417,11 +445,11 @@ function terrain(lat) {
 
 // ---- state --------------------------------------------------------------
 const state = {
-  // Default scenario: south beam surfaces on UIUC South Farms (40.0600 N),
-  // north beam clears the 300 ft private-airspace band at Smith Rd, and the
-  // detector sits near-surface (-15 m) just inside the Fermilab fence.
-  ipLat: 41.8491, ipElev: 178, tilt: 15.38e-3,    // machine (lockable / solvable)
-  detLat: 41.8695, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
+  // Default scenario: south beam surfaces on UIUC South Farms (40.0600 N in
+  // the spherical model); north beam emerges 0.5 km past the fence and crosses
+  // Smith Rd a full 300 ft ABOVE the 10 m rooflines; near-surface detector.
+  ipLat: 41.8491, ipElev: 185, tilt: 15.42e-3,    // machine (lockable / solvable)
+  detLat: 41.8650, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
   constraint: 'none', detTarget: 50, exitTarget: 41.9400,
   locks: { ipLat: false, ipElev: false, tilt: false },
 };
@@ -945,6 +973,7 @@ function render() {
   document.getElementById("detTargetWrap").hidden = state.constraint !== 'det';
 
   renderMap(b, south, north, phys);
+  renderSouth();
   writeHash();
   refreshMacPreview();
 }
@@ -1488,39 +1517,172 @@ document.getElementById("g4copy").addEventListener("click", () => {
   else done();
 });
 
-// ---- publication figure exports -------------------------------------------
-function figName(ext) {
-  return "corridor_profile_" + (state.tilt * 1000).toFixed(1).replace("-", "m") + "mrad." + ext;
+// ---- the southern exit up close --------------------------------------------
+// Exact chord height (m ASL) at a latitude south of the IP: the straight beam
+// in polar coordinates is r(phi) = p / cos(phi - phi_perigee).
+function southBeamH(la) {
+  const r0 = R_E + state.ipElev;
+  const pImp = r0 * Math.cos(state.tilt);
+  const dP = Math.acos(Math.min(1, pImp / r0));        // perigee angle from launch
+  const d = (state.ipLat - la) * Math.PI / 180;        // central angle travelled south
+  const c = Math.cos(d - (state.tilt >= 0 ? dP : -dP));
+  if (c <= 0.2) return 1e9;
+  return pImp / c - R_E;
 }
-function plotSvgString() {
-  const clone = svg.cloneNode(true);
+
+const svgS = document.getElementById("plotS");
+const HS = 360;
+function renderSouth() {
+  const S_LAT0 = 39.99, S_LAT1 = 40.145;
+  const XS = la => ML + (la - S_LAT0) / (S_LAT1 - S_LAT0) * (W - ML - MR);
+  let zMin = 1e9, zMax = -1e9;
+  for (const [la, e] of PROFILE_S) if (la >= S_LAT0 && la <= S_LAT1) {
+    zMin = Math.min(zMin, e); zMax = Math.max(zMax, e);
+  }
+  zMin -= 28; zMax += 42;
+  const YS = z => MT + (zMax - z) / (zMax - zMin) * (HS - MT - MB);
+  svgS.textContent = "";
+
+  // UIUC band
+  el("rect", {x: XS(UIUC_BAND[0]), y: MT, width: XS(UIUC_BAND[1]) - XS(UIUC_BAND[0]),
+              height: HS - MT - MB, fill: "#6da55c", opacity: .16}, svgS);
+  el("text", {x: (XS(UIUC_BAND[0]) + XS(UIUC_BAND[1]))/2, y: MT + 15, "text-anchor": "middle",
+              "font-size": 12, fill: "#4a7c3f"}, svgS).textContent = "UIUC land (OSM boundary)";
+
+  for (let z = Math.ceil(zMin/20)*20; z <= zMax; z += 20) {
+    el("line", {x1: ML, y1: YS(z), x2: W-MR, y2: YS(z), stroke: "#8883", "stroke-width": .7}, svgS);
+    el("text", {x: ML-6, y: YS(z)+4, "text-anchor": "end", "font-size": 11, fill: "#888"}, svgS)
+      .textContent = z + " m";
+  }
+
+  // terrain
+  const pts = PROFILE_S.filter(([la]) => la >= S_LAT0 && la <= S_LAT1);
+  const tp = pts.map(([la, e], i) => (i?" L":"M") + XS(la).toFixed(1) + " " + YS(e).toFixed(1)).join("");
+  el("path", {d: tp + ` L ${W-MR} ${HS-MB} L ${ML} ${HS-MB} Z`, fill: "#c9b98a", opacity: .30}, svgS);
+  el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2}, svgS);
+
+  // beam over the real terrain: dashed underground, orange when cover < 5 m,
+  // solid when airborne; terrain-corrected exit = first upward crossing
+  let exitLa = null, segs = [], cur = null, curKind = null;
+  for (let la = S_LAT1; la >= S_LAT0; la -= 0.0004) {   // walk south with the beam
+    const hb = southBeamH(la), t = terrainS(la);
+    if (hb > 5e8) continue;
+    const cover = t - hb;
+    const kind = cover <= 0 ? "air" : cover < 5 ? "graze" : "rock";
+    if (exitLa === null && cover <= 0 && la < S_LAT1 - 0.001) exitLa = la;
+    if (kind !== curKind) { cur = { kind, pts: [] }; segs.push(cur); curKind = kind; }
+    cur.pts.push([XS(la), YS(hb)]);
+  }
+  // the first (northmost) air->rock transition is the true exit crossing;
+  // recompute as the southernmost point where the beam is still underground
+  for (const g of segs) {
+    if (g.pts.length < 2) continue;
+    const d = g.pts.map((q,i) => (i?"L":"M") + q[0].toFixed(1) + " " + q[1].toFixed(1)).join(" ");
+    el("path", {d, fill: "none",
+                stroke: g.kind === "graze" ? "#c7641e" : "#0b6e4f",
+                "stroke-width": g.kind === "graze" ? 4 : 2.2,
+                opacity: g.kind === "graze" ? .85 : 1,
+                "stroke-dasharray": g.kind === "air" ? "none" : "7 5"}, svgS);
+  }
+
+  // exit markers: terrain-corrected (dot) and flat-model (tick), the latter
+  // from the same spherical chord used by the map
+  const dn = chord(-state.tilt);
+  const sphLa = state.ipLat - dn.deltaDeg;
+  if (sphLa >= S_LAT0 && sphLa <= S_LAT1) {
+    el("line", {x1: XS(sphLa), y1: YS(terrainS(sphLa)) - 14, x2: XS(sphLa),
+                y2: YS(terrainS(sphLa)) + 14, stroke: "#999", "stroke-width": 1.6,
+                "stroke-dasharray": "3 3"}, svgS);
+    el("text", {x: XS(sphLa) - 4, y: YS(terrainS(sphLa)) + 42, "text-anchor": "end",
+                "font-size": 10.5, fill: "#999"}, svgS)
+      .textContent = "flat-model exit " + sphLa.toFixed(3) + "°";
+  }
+  if (exitLa !== null) {
+    el("circle", {cx: XS(exitLa), cy: YS(terrainS(exitLa)), r: 7, fill: "#7a2e21",
+                  stroke: "#fff", "stroke-width": 2}, svgS);
+    el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) - 12, "text-anchor": "end",
+                "font-size": 11.5, fill: "#7a2e21", "font-weight": 600}, svgS)
+      .textContent = "emerges " + exitLa.toFixed(4) + "° N";
+    // exact local angle of the chord vs the horizontal: cos(graze) = p / r
+    const rr0 = R_E + state.ipElev;
+    const graze = Math.acos(Math.min(1, rr0 * Math.cos(state.tilt) / (R_E + terrainS(exitLa))));
+    el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) + 24, "text-anchor": "end",
+                "font-size": 11, fill: "#0b6e4f"}, svgS)
+      .textContent = "grazing " + angTxt(graze);
+  }
+
+  // landmarks
+  for (const [la, name] of [[40.0405, "Curtis Rd (Savoy)"], [40.0837, "Windsor Rd"],
+                            [40.1070, "UIUC Main Quad"], [40.1106, "downtown Urbana"]]) {
+    if (la < S_LAT0 || la > S_LAT1) continue;
+    el("line", {x1: XS(la), y1: MT + 20, x2: XS(la), y2: HS - MB, stroke: "#666",
+                "stroke-width": .8, "stroke-dasharray": "2 5"}, svgS);
+    el("text", {x: XS(la) + 3, y: MT + 30, "font-size": 10, fill: "#666",
+                transform: `rotate(90 ${XS(la)+3} ${MT+30})`}, svgS).textContent = name;
+    const hb = southBeamH(la), t = terrainS(la);
+    if (hb < 5e8 && t - hb > 0)
+      el("text", {x: XS(la) + 3, y: HS - MB - 8, "font-size": 9.5, fill: "#888",
+                  "text-anchor": "end", transform: `rotate(90 ${XS(la)+3} ${HS-MB-8})`}, svgS)
+        .textContent = "beam −" + fmt(t - hb, 0) + " m";
+  }
+
+  // x axis: km north of the modelled exit
+  for (let d = -6; d <= 8; d += 2) {
+    const la = sphLa + d / MLAT * 1000;
+    if (la < S_LAT0 || la > S_LAT1) continue;
+    el("line", {x1: XS(la), y1: HS-MB, x2: XS(la), y2: HS-MB+4, stroke: "#aaa"}, svgS);
+    el("text", {x: XS(la), y: HS-MB+17, "text-anchor": "middle", "font-size": 11, fill: "#777"}, svgS)
+      .textContent = d === 0 ? "exit" : (d > 0 ? "+" : "−") + Math.abs(d);
+  }
+  el("text", {x: (ML+W-MR)/2, y: HS-MB+34, "text-anchor": "middle", "font-size": 12, fill: "#777"}, svgS)
+    .textContent = "kilometres north of the flat-model exit →  (south beam arrives from the north, climbing)";
+
+  const veH = (HS-MT-MB)/(zMax-zMin), veW = (W-ML-MR)/((S_LAT1-S_LAT0)*MLAT);
+  document.getElementById("veS").textContent =
+    "Vertical exaggeration ≈ " + Math.round(veH/veW) + "×. Terrain here is 10–15 m below Fermilab grade, " +
+    "which pulls the real exit north of the flat model. Orange: cover < 5 m (radiologically the exit strip).";
+}
+
+// ---- publication figure exports -------------------------------------------
+function figName(base, ext) {
+  return base + "_" + (state.tilt * 1000).toFixed(1).replace("-", "m") + "mrad." + ext;
+}
+function svgString(elmt, w, h) {
+  const clone = elmt.cloneNode(true);
   clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  clone.setAttribute("width", W); clone.setAttribute("height", H);
+  clone.setAttribute("width", w); clone.setAttribute("height", h);
   clone.setAttribute("font-family", "Georgia, 'Times New Roman', serif");
   const bg = document.createElementNS(NS, "rect");
-  bg.setAttribute("width", W); bg.setAttribute("height", H); bg.setAttribute("fill", "#ffffff");
+  bg.setAttribute("width", w); bg.setAttribute("height", h); bg.setAttribute("fill", "#ffffff");
   clone.insertBefore(bg, clone.firstChild);
   return new XMLSerializer().serializeToString(clone);
 }
-document.getElementById("figSvg").addEventListener("click", () => dl(figName("svg"), plotSvgString()));
-document.getElementById("figPng").addEventListener("click", () => {
+function pngFromSvg(str, w, h, name) {
   const SC = 4, img = new Image();
-  const url = URL.createObjectURL(new Blob([plotSvgString()], { type: "image/svg+xml" }));
+  const url = URL.createObjectURL(new Blob([str], { type: "image/svg+xml" }));
   img.onload = () => {
     const c = document.createElement("canvas");
-    c.width = W * SC; c.height = H * SC;
+    c.width = w * SC; c.height = h * SC;
     const ctx = c.getContext("2d");
     ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
     ctx.drawImage(img, 0, 0, c.width, c.height);
     URL.revokeObjectURL(url);
     c.toBlob(bl => {
       const a = document.createElement("a");
-      a.href = URL.createObjectURL(bl); a.download = figName("png"); a.click();
+      a.href = URL.createObjectURL(bl); a.download = name; a.click();
       URL.revokeObjectURL(a.href);
     }, "image/png");
   };
   img.src = url;
-});
+}
+document.getElementById("figSvg").addEventListener("click",
+  () => dl(figName("corridor_profile", "svg"), svgString(svg, W, H)));
+document.getElementById("figPng").addEventListener("click",
+  () => pngFromSvg(svgString(svg, W, H), W, H, figName("corridor_profile", "png")));
+document.getElementById("figSvgS").addEventListener("click",
+  () => dl(figName("uiuc_exit_profile", "svg"), svgString(svgS, W, HS)));
+document.getElementById("figPngS").addEventListener("click",
+  () => pngFromSvg(svgString(svgS, W, HS), W, HS, figName("uiuc_exit_profile", "png")));
 
 // Map figure: composite the CARTO tiles (CORS-enabled), the vector panes,
 // and the marker labels onto one canvas at 3x.
@@ -1621,7 +1783,7 @@ const PRESETS = {
   // 25 m deep and the north beam emerges just NORTH of Smith Rd.
   uiuc:      { ipLat: 41.8491, ipElev: 76, tilt: 14.87e-3, detLat: 41.9276, constraint: "none",
                locks: { ipLat: false, ipElev: false, tilt: false } },
-  default:   { ipLat: 41.8491, ipElev: 178, tilt: 15.38e-3, detLat: 41.8695, constraint: "none",
+  default:   { ipLat: 41.8491, ipElev: 185, tilt: 15.42e-3, detLat: 41.8650, constraint: "none",
                locks: { ipLat: false, ipElev: false, tilt: false } },
 };
 

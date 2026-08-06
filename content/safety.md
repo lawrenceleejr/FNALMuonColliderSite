@@ -161,9 +161,13 @@ default. (Load the *"South exit at UIUC South Farms"* preset in the
 
 *(Two flavours of this scenario ship as presets in the tool: the one below,
 which keeps the north beam underground past Smith Road, and the site default —
-straightaway at 178 m ASL, 15.38 mrad — which additionally lifts the north
-beam above the 300 ft private-airspace ceiling from Smith Road onward, with a
-near-surface detector hall at −15 m just inside the Fermilab fence.)*
+straightaway at 185 m ASL, 15.42 mrad — which instead surfaces the north beam
+at 41.8746° N, 0.5 km past the Fermilab fence at the southern edge of West
+Chicago (Roosevelt Rd corridor), so that it crosses Smith Road a full 300 ft
+above the 10 m rooflines; detector hall −14 m just inside the fence. The
+default's trade: the first ~2 km after emergence pass low over West Chicago's
+Roosevelt Road commercial/residential edge, which inherits the low-overflight
+caveat below.)*
 
 **Geometry.** Straightaway at 76 m ASL (148 m below grade at the IP), tilted
 **14.87 mrad (0.85°)** up to the north — a hair above the 14 mrad LEP
