@@ -97,9 +97,11 @@ travels in a perfectly straight line while the Earth curves away beneath it
 and the terrain rolls above it. The tool shows the whole story downstream:
 the beam's depth where it crosses the <strong>detector</strong> (whose latitude
 you choose — anywhere from inside the Fermilab site to 13 km north), the point
-where it <strong>emerges from the ground</strong>, and how it sits relative to
+where it <strong>emerges from the ground</strong>, how it sits relative to
 the <strong>airspace over private property north of Smith Road</strong>
-(41.935618 N).
+(41.935618 N), <strong>which rock units it tunnels through</strong>, and how
+many <strong>neutrino interaction lengths</strong> of matter each beam
+crosses on its way out of the Earth.
 </p>
 <p class="note">
 Drag the <span style="color:#b3261e">▲ collision point</span> in 2-D to move the
@@ -116,6 +118,20 @@ satisfy it.
 <p class="note" id="ve"></p>
 
 <div class="panel">
+  <div class="span-all" style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center">
+    <label style="margin:0">scenario</label>
+    <select id="preset">
+      <option value="">— pick a starting point —</option>
+      <option value="deep">Baseline deep corridor (horizontal, −100 m)</option>
+      <option value="hall">Near-surface hall on the ROW (11.5 mrad)</option>
+      <option value="airsolve">Clear 300 ft airspace — tilt solves</option>
+      <option value="smith">Emerge exactly at Smith Rd — tilt solves</option>
+      <option value="shallow10">10 m detector, emergence follows</option>
+    </select>
+    <button class="mini" id="resetBtn">reset</button>
+    <button class="mini" id="shareBtn">copy link to this configuration</button>
+    <span class="note" id="shareNote"></span>
+  </div>
   <div class="span-all">
     <label>Constraint — the one unlocked machine parameter adapts to keep this true</label>
     <select id="constraint">
@@ -163,6 +179,11 @@ satisfy it.
     <input type="range" id="houseH" min="4" max="20" step="0.5" value="10">
     <span class="val" id="houseHV"></span>
   </div>
+  <div>
+    <label>Muon beam energy E&mu; (sets &langle;E&nu;&rangle; &asymp; 0.65 E&mu;, &sigma;&nu;, and the beam's 1/&gamma; opening angle)</label>
+    <input type="range" id="emu" min="0.5" max="7.5" step="0.25" value="5">
+    <span class="val" id="emuV"></span>
+  </div>
 </div>
 
 <div class="out" id="out"></div>
@@ -189,10 +210,27 @@ map is live with the controls above.
 </div>
 <div id="map"></div>
 <p class="note" id="mapNote" style="margin:.5rem 0 0"></p>
-<table class="maptable"><thead><tr>
+<div style="overflow-x:auto"><table class="maptable"><thead><tr>
   <th>point</th><th>latitude</th><th>longitude</th><th>ground distance</th>
   <th>rock traversed</th><th>deepest point</th></tr></thead>
-  <tbody id="mapRows"></tbody></table>
+  <tbody id="mapRows"></tbody></table></div>
+
+<h3 style="font-size:1rem;margin-bottom:.2rem">What the south beam passes through</h3>
+<div style="overflow-x:auto"><table class="maptable"><thead><tr>
+  <th>unit</th><th>ρ (g/cm³)</th><th>path</th><th>column (g/cm²)</th>
+  <th>share</th><th>ν interaction lengths</th></tr></thead>
+  <tbody id="rockRows"></tbody></table></div>
+<p class="note">
+Stratigraphy is a rough flat-layer model of northeastern Illinois (glacial
+drift over Silurian dolomite, Maquoketa shale, Galena–Platteville dolomite —
+the unit that hosts Fermilab's deep NuMI/MINOS halls — then the sandstone and
+dolomite section down to the Mt. Simon and Precambrian basement), with unit
+depths good to a few tens of percent; the strata actually dip gently south
+into the Illinois Basin. It is here to set the scale of tunnelling conditions
+and matter traversal, not to site a shaft. One ν interaction length at these
+energies is ~10¹¹ g/cm² — the whole Earth chord is a 10⁻⁴-level perturbation,
+so the beam arrives at the far exit essentially undiminished.
+</p>
 <p class="note">
 Rock traversed assumes a mean crustal density of 2.7 g/cm³. Absorption is
 negligible: even 400 km of rock is ~10⁸ g/cm², and a 3 TeV neutrino has an
@@ -227,6 +265,12 @@ answer, not a parcel-level one.
   <li>An <em>upward</em>-tilted north straight tilts the south-going plume of
   the same straight <em>down</em> by the same angle, pushing the southern
   exit farther away — see the <a href="../safety/">safety assessment</a>.</li>
+  <li><strong>Geology is the flat-layer sketch drawn in the cross-section</strong>:
+  glacial drift over the Silurian dolomite (the shallow-tunnel host), the
+  Maquoketa shale, and the Galena–Platteville dolomite that hosts Fermilab's
+  existing deep halls. Unit depths are rough (±30%-ish) and the strata dip
+  gently south into the Illinois Basin, so read it as tunnelling context, not
+  a site investigation.</li>
   <li>Once airborne the beam keeps climbing relative to the curving ground.
   Open-air showers need hundreds of metres of air to develop, so an overhead
   beam is far more benign than a surface-grazing one — but structures sitting
@@ -238,7 +282,10 @@ answer, not a parcel-level one.
 Terrain: SRTM 30 m via open-elevation along meridian −88.222972° (detector
 longitude), 200 m spacing to 42.05° then 1.1 km spacing to 42.60°; Smith Rd
 point sampled at (41.935618, −88.222542), grade 239 m ASL. Spherical-Earth
-chord geometry. Part of the
+chord geometry. Stratigraphy: illustrative flat-layer model informed by
+Illinois State Geological Survey statewide summaries and Fermilab NuMI/MINOS
+civil-construction experience; σν ≈ 0.35 × 10⁻³⁸ cm²/GeV per nucleon
+(CC+NC, flattened above ~1 TeV). Part of the
 <a href="https://github.com/lawrenceleejr/FNALMuonColliderSite">FNALMuonColliderSite</a> study.
 </footer>
 </main>
@@ -255,6 +302,36 @@ const SITE_S = 41.82065, SITE_N = 41.86990; // on-site corridor extent
 const MLAT = 111059;                        // m per degree latitude at 41.9 N
 const FT = 0.3048;
 const AIR_MARGIN = 2;                       // m of headroom when solving "clears the ceiling"
+const N_A = 6.022e23;
+// Baseline machine (see the design note): 1.8e12 mu/bunch/sign at 5 Hz for
+// 1.2e7 s/yr, 90% chain transmission, 700 m straight in a 10 km ring -> the
+// decays aimed along the corridor in EACH direction, per year:
+const N_DEC_YR = 1.8e12 * 5 * 1.2e7 * 0.90 * (700 / 10000);
+// sigma_nu ~ 0.35e-38 cm^2/GeV per nucleon (CC+NC slope, flattened above ~1 TeV)
+const SIGMA_SLOPE = 0.35e-38;
+
+// Rough stratigraphy for the northern-Illinois corridor: flat layers, depths
+// below LOCAL grade, densities in g/cm^3. Illustrative values assembled from
+// ISGS statewide summaries and the NuMI/MINOS civil-construction experience
+// at Fermilab (whose deep halls sit in the Galena-Platteville dolomite).
+// Real strata dip gently south into the Illinois Basin -- treat unit
+// boundaries as +-30% and see the note under the geology table.
+const GEOLOGY = [
+  { name: "Glacial drift (Quaternary till & outwash)", short: "glacial drift",             top: 0,    bot: 25,   rho: 2.10, color: "#d9c8a0" },
+  { name: "Silurian dolomite (Niagaran–Alexandrian)", short: "Silurian dolomite",     top: 25,   bot: 110,  rho: 2.70, color: "#bcc8d1" },
+  { name: "Maquoketa Group (shale, argillaceous dolomite)", short: "Maquoketa shale",      top: 110,  bot: 170,  rho: 2.55, color: "#b3a28f" },
+  { name: "Galena–Platteville dolomite",          short: "Galena–Platteville dolomite", top: 170, bot: 340, rho: 2.65, color: "#c6cfb6" },
+  { name: "Ancell Group (St. Peter sandstone)",        short: "St. Peter sandstone",       top: 340,  bot: 470,  rho: 2.45, color: "#e2d4ac" },
+  { name: "Prairie du Chien–Eminence dolomites",  short: "Prairie du Chien dolomite", top: 470,  bot: 640,  rho: 2.65, color: "#b9c8c0" },
+  { name: "Ironton–Galesville & Eau Claire ss.",  short: "Ironton–Galesville sandstone", top: 640, bot: 880, rho: 2.50, color: "#dccab0" },
+  { name: "Mt. Simon sandstone",                       short: "Mt. Simon sandstone",       top: 880,  bot: 1400, rho: 2.45, color: "#cfbaa0" },
+  { name: "Precambrian crystalline basement",          short: "Precambrian basement",      top: 1400, bot: 1e9,  rho: 2.65, color: "#c8aaa5" },
+];
+function unitAt(depth) {
+  if (depth <= 0) return null;
+  for (const g of GEOLOGY) if (depth <= g.bot) return g;
+  return GEOLOGY[GEOLOGY.length - 1];
+}
 // SRTM elevation profile along lon -88.222972, [lat, m ASL]
 const PROFILE = [[41.8,226],[41.802,226],[41.804,219],[41.806,218],[41.808,222],[41.81,222],[41.812,221],[41.814,225],[41.816,221],[41.818,224],[41.82,225],[41.822,224],[41.824,224],[41.826,224],[41.828,226],[41.83,221],[41.832,225],[41.834,223],[41.836,221],[41.838,222],[41.84,225],[41.842,227],[41.844,225],[41.846,226],[41.848,224],[41.85,224],[41.852,224],[41.854,225],[41.856,226],[41.858,226],[41.86,226],[41.862,226],[41.864,225],[41.866,228],[41.868,230],[41.87,227],[41.872,229],[41.874,230],[41.876,229],[41.878,230],[41.88,231],[41.882,232],[41.884,231],[41.886,235],[41.888,232],[41.89,230],[41.892,235],[41.894,234],[41.896,235],[41.898,236],[41.9,231],[41.902,231],[41.904,233],[41.906,234],[41.908,237],[41.91,235],[41.912,229],[41.914,233],[41.916,232],[41.918,236],[41.92,234],[41.922,235],[41.924,234],[41.926,245],[41.928,235],[41.93,240],[41.932,235],[41.934,237],[41.936,240],[41.938,239],[41.94,238],[41.942,240],[41.944,239],[41.946,238],[41.948,239],[41.95,239],[41.952,239],[41.954,236],[41.956,233],[41.958,240],[41.96,234],[41.962,237],[41.964,236],[41.966,234],[41.968,238],[41.97,244],[41.972,242],[41.974,246],[41.976,238],[41.978,241],[41.98,236],[41.982,242],[41.984,239],[41.986,237],[41.988,239],[41.99,237],[41.992,234],[41.994,239],[41.996,240],[41.998,236],[42,240],[42.002,240],[42.004,246],[42.006,244],[42.008,246],[42.01,248],[42.012,249],[42.014,247],[42.016,247],[42.018,249],[42.02,249],[42.022,252],[42.024,259],[42.026,260],[42.028,260],[42.03,255],[42.032,236],[42.034,243],[42.036,258],[42.038,258],[42.04,262],[42.042,265],[42.044,263],[42.046,260],[42.048,264],[42.05,266],[42.06,266],[42.07,261],[42.08,264],[42.09,261],[42.1,267],[42.11,256],[42.12,244],[42.13,268],[42.14,267],[42.15,240],[42.16,268],[42.17,262],[42.18,262],[42.19,235],[42.2,227],[42.21,242],[42.22,264],[42.23,269],[42.24,232],[42.25,224],[42.26,230],[42.27,232],[42.28,227],[42.29,227],[42.3,232],[42.31,225],[42.32,223],[42.33,234],[42.34,226],[42.35,238],[42.36,223],[42.37,231],[42.38,235],[42.39,234],[42.4,255],[42.41,257],[42.42,264],[42.43,268],[42.44,239],[42.45,258],[42.46,256],[42.47,259],[42.48,260],[42.49,285],[42.5,278],[42.51,273],[42.52,251],[42.53,250],[42.54,239],[42.55,237],[42.56,227],[42.57,232],[42.58,237],[42.59,230],[42.6,250]];
 const LAT_END = PROFILE[PROFILE.length-1][0];
@@ -275,7 +352,7 @@ function terrain(lat) {
 // ---- state --------------------------------------------------------------
 const state = {
   ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3,     // machine (lockable / solvable)
-  detLat: 41.9276, airFt: 300, houseH: 10,        // probes & context
+  detLat: 41.9276, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
   constraint: 'none', detTarget: 50, exitTarget: 41.9400,
   locks: { ipLat: false, ipElev: false, tilt: false },
 };
@@ -298,9 +375,10 @@ function trace(ipLat, ipElev, th0, detLat) {
   const h  = s => beamH(ipLat, ipElev, th0, s);
   const th = s => th0 + (s - s0) / R_E;
 
-  // first ground crossing north of the IP (150 m scan + bisection)
-  let exitS = null, prev = h0 - terrain(ipLat);
-  for (let s = s0 + 150; s <= s_of(LAT_END); s += 150) {
+  // first ground crossing north of the IP (150 m scan + bisection);
+  // a beam launched above grade is "out" immediately at the IP
+  let exitS = h0 >= terrain(ipLat) ? s0 : null, prev = h0 - terrain(ipLat);
+  for (let s = s0 + 150; exitS === null && s <= s_of(LAT_END); s += 150) {
     const clr = h(s) - terrain(lat_of(s));
     if (clr >= 0 && prev < 0) {
       let lo = s - 150, hi = s;
@@ -370,6 +448,53 @@ function chord(alpha) {
            arcKm: R_E * delta / 1000,
            maxDepth: alpha < 0 ? rS - r0 * Math.cos(alpha) : 0,
            column: t * 100 * 2.7 };                          // g/cm^2
+}
+
+// Column density along the SOUTH chord through concentric spherical shells
+// (layer depths measured from the IP-side grade; exact circle geometry, so the
+// per-layer path lengths sum to the full chord). Returns per-layer segments.
+function columnSouth(alpha) {          // alpha > 0 = down-going (normal case)
+  const grade = terrain(state.ipLat);
+  const rS = R_E + grade, r0 = R_E + state.ipElev;
+  const pImp = r0 * Math.cos(alpha);
+  const q = r => Math.sqrt(Math.max(r * r - pImp * pImp, 0));
+  const u0 = (alpha >= 0 ? -1 : 1) * q(r0);   // launch position along the chord
+  const uX = q(rS);                            // exit at the surface shell
+  const layers = [];
+  let X = 0, len = 0;
+  for (const g of GEOLOGY) {
+    const rB = rS - g.top, rA = Math.max(rS - g.bot, 0);
+    const qB = q(rB), qA = q(rA);
+    const inter = (a, b) => Math.max(0, Math.min(b, uX) - Math.max(a, u0));
+    const L = inter(-qB, -qA) + inter(qA, qB);
+    if (L > 1) { layers.push({ g, L, X: L * 100 * g.rho }); X += L * 100 * g.rho; len += L; }
+  }
+  return { layers, X, len };
+}
+
+// Column density along the NORTH beam's underground stretch, sampled over the
+// real terrain (layer depths follow the local surface).
+function columnNorth(b) {
+  const sEnd = b.exitS !== null ? b.exitS : s_of(LAT_END);
+  const acc = new Map();
+  let X = 0, len = 0;
+  for (let sPos = b.s0; sPos < sEnd; sPos += 50) {
+    const d = terrain(lat_of(sPos)) - b.h(sPos);
+    const g = unitAt(d);
+    if (!g) continue;
+    acc.set(g.short, (acc.get(g.short) || 0) + 50);
+    X += 50 * 100 * g.rho; len += 50;
+  }
+  return { acc, X, len };
+}
+
+// Neutrino cross-section, interaction length, and beam physics at energy Emu
+function beamPhysics() {
+  const gamma = state.emu * 1e12 / 105.658e6;
+  const enu = 0.65 * state.emu * 1000;                 // GeV, on-axis mean
+  const sigma = SIGMA_SLOPE * enu;                     // cm^2 / nucleon
+  const lambda = 1 / (N_A * sigma);                    // g/cm^2
+  return { gamma, enu, sigma, lambda };
 }
 
 // ---- constraint solving -------------------------------------------------
@@ -442,6 +567,12 @@ function render() {
   const ipDepth = terrain(state.ipLat) - state.ipElev;
   const airM = state.airFt * FT;
   const air = airspace(b, airM);
+  const phys = beamPhysics();
+  const south = columnSouth(state.tilt);       // south beam dips by the north tilt
+  const north = columnNorth(b);
+  const lamS = south.X / phys.lambda, lamN = north.X / phys.lambda;
+  const ipUnit = unitAt(terrain(state.ipLat) - state.ipElev);
+  const detUnit = b.detDepth > 0 ? unitAt(b.detDepth) : null;
 
   // vertical window: keep terrain readable and the airspace ceiling in frame
   let zMax = 270, zMin = Math.max(Math.min(b.h0 - 15, 170), -280);
@@ -475,11 +606,28 @@ function render() {
   el("text", {x: (ML + W-MR)/2, y: H-MB+36, "text-anchor": "middle", "font-size": 12, fill: "#777"})
     .textContent = "kilometres north of the collision point →";
 
-  // terrain
-  let tp = "";
-  for (const [la, e] of PROFILE)
-    if (la >= LAT_MIN && la <= LAT_MAX) tp += (tp?" L":"M") + X(la).toFixed(1) + " " + Y(e).toFixed(1);
-  el("path", {d: tp + ` L ${W-MR} ${H-MB} L ${ML} ${H-MB} Z`, fill: "#c9b98a", opacity: .30});
+  // terrain + stratigraphy: each unit is a band a fixed depth below the
+  // local surface (rough flat-layer model -- see the geology note)
+  const winPts = PROFILE.filter(([la]) => la >= LAT_MIN && la <= LAT_MAX);
+  let tp = winPts.map(([la, e], i) => (i?" L":"M") + X(la).toFixed(1) + " " + Y(e).toFixed(1)).join("");
+  for (const g of GEOLOGY) {
+    if (Y(terrain(41.9) - g.top) > H - MB) break;      // band entirely below the window
+    let up = winPts.map(([la, e], i) =>
+      (i?" L":"M") + X(la).toFixed(1) + " " + Math.min(Y(e - g.top), H - MB).toFixed(1)).join("");
+    let dn = "";
+    for (let i = winPts.length - 1; i >= 0; i--) {
+      const [la, e] = winPts[i];
+      dn += " L" + X(la).toFixed(1) + " " + Math.min(Y(e - g.bot), H - MB).toFixed(1);
+    }
+    el("path", {d: up + dn + " Z", fill: g.color, opacity: .42});
+    // label inside the band at the left edge, if it is thick enough on screen
+    const e0 = winPts[0][1];
+    const yTop = Y(e0 - g.top), yBot = Math.min(Y(e0 - g.bot), H - MB);
+    if (yBot - yTop > 15 && yTop < H - MB - 14)
+      el("text", {x: ML + 8, y: Math.min((yTop + yBot) / 2 + 4, H - MB - 6),
+                  "font-size": 10.5, fill: "#6b6257", opacity: .95})
+        .textContent = g.short + " · ρ " + g.rho;
+  }
   el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2});
 
   // private-airspace band: ground -> ground + ceiling, from Smith Rd northward
@@ -619,14 +767,26 @@ function render() {
       : "<span class='flag'>still " + fmt(-b.smithH,0) + " m underground</span>";
   const detTxt = b.detDepth > 0
       ? "<b>−" + fmt(b.detDepth,0) + " m</b>" +
-        (b.detDepth < 15 ? " <span class='flag warn'>very near surface</span>" : "")
+        (b.detDepth < 15 ? " <span class='flag warn'>very near surface</span>"
+                         : detUnit ? " <span class='note'>in " + detUnit.short + "</span>" : "")
       : "<span class='flag bad'>beam is " + fmt(-b.detDepth,0) + " m ABOVE ground here</span>";
+  const coverTxt = b.minCoverLat === null
+      ? "<b>—</b> <span class='note'>beam surfaces before the fence</span>"
+      : "<b class='" + (b.minCover < 5 ? "flag warn" : "") + "'>" + fmt(Math.max(b.minCover,0),1) + " m</b> at " +
+        b.minCoverLat.toFixed(4) + "° N" +
+        (b.minCover < 5 ? "<br><span class='note'>grazing stretch — radiologically an exit strip; SRTM is ±few m, verify with lidar</span>" : "");
   const exitTxt = b.exitLat === null
       ? "<span class='flag'>no exit within the profile (beyond 42.60°)</span>"
       : "<b>" + b.exitLat.toFixed(4) + "° N</b><br><span class='note'>" +
         fmt((b.exitS - b.s0)/1000,2) + " km from IP, " +
         fmt((b.exitS - s_of(state.detLat))/1000,2) + " km past the detector; grazing angle " +
         angTxt(b.th(b.exitS)) + "</span>";
+  // interaction rate per tonne-year in a detector on the beam axis
+  const Ldet = Math.abs(s_of(state.detLat) - b.s0) * 100;   // cm
+  const flux = N_DEC_YR * phys.gamma ** 2 / (Math.PI * Ldet * Ldet);
+  const ratePerTonne = flux * phys.sigma * N_A * 1e6;       // nucleons per tonne = N_A*1e6... per gram *1e6 g
+  const detRateTxt = Ldet < 1e4 ? "detector is at the IP" :
+    fmt(ratePerTonne/1e10, 2) + " × 10¹⁰ interactions / tonne·yr";
   let airTxt;
   if (air.undergroundAll) {
     airTxt = "<b>no incursion</b> — beam stays underground all the way north";
@@ -648,7 +808,8 @@ function render() {
   document.getElementById("out").innerHTML = `
     <div><span class="lbl">Straight-section tilt (= ring-plane pitch)</span>
       <b class="${lep?'flag bad':''}">${fmt(state.tilt*1000,2)} mrad</b> = ${fmt(state.tilt*180/Math.PI,3)}°
-      ${lep ? "<br><span class='note'>beyond LEP-precedent plane tilt (14 mrad)</span>" : ""}</div>
+      ${lep ? "<br><span class='note'>beyond LEP-precedent plane tilt (14 mrad)</span>" : ""}
+      <br><span class="note">IP straight sits ${ipUnit ? "in " + ipUnit.short : "ABOVE grade"}</span></div>
     <div><span class="lbl">Beam depth at the detector (${state.detLat.toFixed(4)}° N)</span>
       ${detTxt}
       <br><span class="note">${fmt(Math.abs(dkm),2)} km ${dkm < 0 ? "south of" : "from"} the IP${
@@ -658,14 +819,21 @@ function render() {
     <div><span class="lbl">Beam at Smith Rd (north end of ComEd corridor)</span>
       <b>${smithTxt}</b></div>
     <div><span class="lbl">Minimum ground cover, fence → emergence</span>
-      <b class="${b.minCover < 5 ? 'flag warn' : ''}">${fmt(Math.max(b.minCover,0),1)} m</b>
-      at ${b.minCoverLat ? b.minCoverLat.toFixed(4) : '—'}° N
-      ${b.minCover < 5 ? "<br><span class='note'>grazing stretch — radiologically an exit strip; SRTM is ±few m, verify with lidar</span>" : ""}</div>
+      ${coverTxt}</div>
     <div><span class="lbl">Private airspace north of Smith Rd (${fmt(state.airFt,0)} ft = ${fmt(airM,0)} m ceiling)</span>
       ${airTxt}</div>
     <div><span class="lbl">South-going plume (same straight, opposite direction)</span>
       <b>tilted ${angTxt(state.tilt)} down</b>
-      <br><span class="note">southern exit pushed farther out — see safety note</span></div>`;
+      <br><span class="note">southern exit pushed farther out — see safety note</span></div>
+    <div><span class="lbl">Rock column, north beam (IP → emergence)</span>
+      <b>${fmt(north.X/1e5,1)} × 10⁵ g/cm²</b> over ${fmt(north.len/1000,2)} km
+      <br><span class="note">${fmt(lamN*1e6,2)} × 10⁻⁶ ν interaction lengths at ⟨Eν⟩ ≈ ${fmt(phys.enu/1000,1)} TeV</span></div>
+    <div><span class="lbl">Rock column, south beam (through the Earth)</span>
+      <b>${fmt(south.X/1e7,2)} × 10⁷ g/cm²</b> over ${fmt(south.len/1000,0)} km
+      <br><span class="note">${fmt(lamS*1e4,2)} × 10⁻⁴ interaction lengths → ${fmt(100*Math.exp(-lamS),3)}% of the beam survives; details in the geology table below the map</span></div>
+    <div><span class="lbl">Beam at the detector (baseline machine, ${fmt(state.emu,2)} TeV μ)</span>
+      <b>${detRateTxt}</b>
+      <br><span class="note">1/γ core radius ${fmt(1e2*Math.abs(s_of(state.detLat)-b.s0)/phys.gamma,1)} cm at ${fmt(Math.abs(dkm),2)} km; ${(6.8e18/1e18).toFixed(1)} × 10¹⁸ decays/yr aimed each way</span></div>`;
 
   // ---- panel sync ----
   for (const k of SOLVE_ORDER) {
@@ -700,13 +868,17 @@ function render() {
     (state.detLat <= SITE_N ? ", on site" : "") + ")";
   document.getElementById("airFtV").textContent =
     fmt(state.airFt,0) + " ft = " + fmt(airM,0) + " m above ground";
+  document.getElementById("emuV").textContent =
+    fmt(state.emu,2) + " TeV  (√s = " + fmt(2*state.emu,0) + " TeV; ⟨Eν⟩ ≈ " + fmt(phys.enu/1000,1) + " TeV)";
+  document.getElementById("emu").value = state.emu;
   document.getElementById("ipLat").value = state.ipLat;
   document.getElementById("ipElev").value = state.ipElev;
   document.getElementById("tilt").value = state.tilt*1000;
   document.getElementById("detLat").value = state.detLat;
   document.getElementById("detTargetWrap").hidden = state.constraint !== 'det';
 
-  renderMap(b);
+  renderMap(b, south, north, phys);
+  writeHash();
 }
 
 // ---- live map of both emergence points ----------------------------------
@@ -816,7 +988,7 @@ function zoomSite() {
                 { padding: [70, 70], maxZoom: 14 });
 }
 
-function renderMap(b) {
+function renderMap(b, south, north, phys) {
   const up = chord(state.tilt), down = chord(-state.tilt);
   // north: prefer the terrain-traced exit; fall back to the spherical chord
   const northLat = b.exitLat !== null ? b.exitLat : state.ipLat + up.deltaDeg;
@@ -843,13 +1015,15 @@ function renderMap(b) {
     mk.north.setLatLng([northLat, LON]).bindPopup(
       "<b>North beam emerges</b><br>" + dms(northLat, "N", "S") +
       "<br>" + km((s_of(northLat) - b.s0)) + " from the IP" +
-      "<br>through " + km(northPath) + " of rock" +
+      "<br>through " + km(northPath) + " of rock = " + north.X.toExponential(1) + " g/cm²" +
       (northTraced ? "<br><i>from the SRTM terrain profile</i>" : "<br><i>spherical-Earth estimate</i>"));
     mk.south.setLatLng([southLat, LON]).bindPopup(
       "<b>South beam emerges</b><br>" + dms(southLat, "N", "S") +
       "<br>" + fmt(down.arcKm, 1) + " km south of the IP" +
       "<br>through " + km(down.t) + " of rock, dipping " + km(down.maxDepth) + " deep" +
-      "<br>tilted " + angTxt(state.tilt) + " down");
+      "<br>" + south.X.toExponential(2) + " g/cm² = " +
+      (south.X / phys.lambda * 1e4).toFixed(2) + " × 10⁻⁴ ν interaction lengths" +
+      "<br>" + fmt(100 * Math.exp(-south.X / phys.lambda), 3) + "% of the beam survives the crossing");
     const span = [[southLat, LON], [northLat, LON]];
     beamCase.setLatLngs(span);
     beamLine.setLatLngs(span);
@@ -876,12 +1050,25 @@ function renderMap(b) {
         <td>—</td><td>${b.detDepth > 0 ? fmt(b.detDepth,0) + " m below grade" : "above ground"}</td></tr>
     <tr><td><span class="swatch" style="background:#7a2e21"></span>north beam emerges</td>
         <td>${dms(northLat,"N","S")}</td><td>${dms(LON,"E","W")}</td>
-        <td>${km(s_of(northLat)-b.s0)} N</td><td>${km(northPath)}</td>
+        <td>${km(s_of(northLat)-b.s0)} N</td>
+        <td>${km(northPath)} · ${north.X.toExponential(1)} g/cm²</td>
         <td>${fmt(terrain(state.ipLat)-state.ipElev,0)} m (at the IP)</td></tr>
     <tr><td><span class="swatch" style="background:#7a2e21"></span><b>south beam emerges</b></td>
         <td><b>${dms(southLat,"N","S")}</b></td><td>${dms(LON,"E","W")}</td>
-        <td><b>${fmt(down.arcKm,1)} km S</b></td><td>${km(down.t)}</td>
+        <td><b>${fmt(down.arcKm,1)} km S</b></td>
+        <td>${km(down.t)} · ${south.X.toExponential(2)} g/cm²</td>
         <td>${km(down.maxDepth)} below the surface</td></tr>`;
+
+  // per-unit breakdown of the south chord
+  document.getElementById("rockRows").innerHTML = south.layers.map(({g, L, X}) => `
+    <tr><td><span class="swatch" style="background:${g.color};border-radius:2px"></span>${g.name}</td>
+        <td>${g.rho.toFixed(2)}</td><td>${fmt(L/1000, L < 10000 ? 2 : 1)} km</td>
+        <td>${X.toExponential(2)}</td>
+        <td>${fmt(100*X/south.X,0)}%</td>
+        <td>${(X/phys.lambda).toExponential(2)}</td></tr>`).join("") +
+    `<tr style="font-weight:600"><td>total</td><td></td><td>${fmt(south.len/1000,1)} km</td>
+        <td>${south.X.toExponential(2)}</td><td>100%</td>
+        <td>${(south.X/phys.lambda).toExponential(2)}</td></tr>`;
 }
 
 // ---- controls -----------------------------------------------------------
@@ -895,6 +1082,7 @@ bind("detLat", t => state.detLat = +t.value);
 bind("airFt",  t => state.airFt  = +t.value);
 bind("detTarget", t => state.detTarget = +t.value);
 bind("constraint", t => state.constraint = t.value);
+bind("emu", t => state.emu = +t.value);
 for (const k of SOLVE_ORDER)
   bind("lock" + capId(k), t => state.locks[k] = t.checked);
 
@@ -933,6 +1121,88 @@ svg.addEventListener("pointermove", e => {
 });
 svg.addEventListener("pointerup", () => dragging = null);
 
+// ---- presets, reset, shareable URLs --------------------------------------
+const DEFAULTS = JSON.parse(JSON.stringify(state));
+const PRESETS = {
+  deep:      { ipLat: 41.8491, ipElev: 125, tilt: 0,       detLat: 41.9276, constraint: "none",
+               locks: { ipLat: false, ipElev: false, tilt: false } },
+  hall:      { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "none",
+               locks: { ipLat: false, ipElev: false, tilt: false } },
+  airsolve:  { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "air",
+               locks: { ipLat: true, ipElev: true, tilt: false } },
+  smith:     { ipLat: 41.8491, ipElev: 125, tilt: 11.5e-3, detLat: 41.9276, constraint: "exit",
+               exitTarget: SMITH_LAT, locks: { ipLat: true, ipElev: true, tilt: false } },
+  shallow10: { ipLat: 41.8491, ipElev: 125, detLat: 41.9276, constraint: "det", detTarget: 10,
+               locks: { ipLat: true, ipElev: true, tilt: false } },
+};
+
+function syncPanel() {
+  for (const k of SOLVE_ORDER)
+    document.getElementById("lock" + capId(k)).checked = state.locks[k];
+  document.getElementById("constraint").value = state.constraint;
+  document.getElementById("detTarget").value = state.detTarget;
+}
+
+function applyPreset(name) {
+  const p = PRESETS[name];
+  if (!p) return;
+  const { locks, ...rest } = p;
+  Object.assign(state, JSON.parse(JSON.stringify(DEFAULTS)), rest);
+  state.locks = Object.assign({}, DEFAULTS.locks, locks);
+  syncPanel(); render(); fitMap();
+}
+
+// state <-> location.hash, so a configuration can be shared by URL
+const HASH_KEYS = ["ipLat","ipElev","tilt","detLat","airFt","houseH","emu",
+                   "constraint","detTarget","exitTarget"];
+let hashTimer = null;
+function writeHash() {
+  clearTimeout(hashTimer);
+  hashTimer = setTimeout(() => {
+    const kv = HASH_KEYS.map(k => k + "=" +
+      (k === "tilt" ? (state.tilt * 1000).toFixed(2) : state[k]));
+    kv.push("locks=" + SOLVE_ORDER.map(k => state.locks[k] ? 1 : 0).join(""));
+    history.replaceState(null, "", "#" + kv.join("&"));
+  }, 250);
+}
+function readHash() {
+  if (!location.hash || location.hash.length < 2) return false;
+  let found = false;
+  for (const part of location.hash.slice(1).split("&")) {
+    const [k, v] = part.split("=");
+    if (k === "locks" && v && v.length === 3) {
+      SOLVE_ORDER.forEach((kk, i) => state.locks[kk] = v[i] === "1");
+      found = true;
+    } else if (k === "constraint" && ["none","air","exit","det"].includes(v)) {
+      state.constraint = v; found = true;
+    } else if (HASH_KEYS.includes(k) && isFinite(+v)) {
+      state[k] = k === "tilt" ? +v / 1000 : +v;
+      found = true;
+    }
+  }
+  return found;
+}
+
+document.getElementById("preset").addEventListener("change", e => {
+  applyPreset(e.target.value); e.target.value = "";
+});
+document.getElementById("resetBtn").addEventListener("click", () => {
+  Object.assign(state, JSON.parse(JSON.stringify(DEFAULTS)));
+  syncPanel(); history.replaceState(null, "", location.pathname); render(); fitMap();
+});
+document.getElementById("shareBtn").addEventListener("click", () => {
+  writeHash();
+  setTimeout(() => {
+    const done = () => {
+      const n = document.getElementById("shareNote");
+      n.textContent = "copied ✓";
+      setTimeout(() => n.textContent = "", 2500);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(done, done);
+    else done();
+  }, 300);
+});
+
 initMap();
 document.getElementById("fitBtn").addEventListener("click", fitMap);
 document.getElementById("zoomIpBtn").addEventListener("click", zoomSite);
@@ -946,6 +1216,7 @@ if (window.matchMedia) {
   };
   mq.addEventListener ? mq.addEventListener("change", onScheme) : mq.addListener(onScheme);
 }
+if (readHash()) syncPanel();
 render();
 fitMap();
 </script>

@@ -20,10 +20,12 @@ contemplated to an underground experiment at **41°55′39.3″ N, 88°13′22.7
 * **[Safety assessment](safety/)** — what the downstream communities see:
   zone-by-zone doses, the two surface-grazing exit strips, mitigation and
   land-use options.
-* **[Interactive beam-geometry tool](tool/)** — pick the collision-point
-  location, detector depth, and where the beam should emerge from the ground;
-  get the required straight-section tilt and the overflight height at the
-  north end of the corridor (Smith Road).
+* **[Interactive beam-geometry tool](tool/)** — ray-trace the beam over the
+  real terrain and (rough) stratigraphy: set the collision point, straightaway
+  height, and tilt — or lock parameters and let a constraint solve the rest;
+  read off detector depth, emergence points on a live map (both beams, with
+  rock columns in ν interaction lengths), airspace clearance at Smith Road,
+  and per-tonne event rates. Configurations are shareable by URL.
 * **[Interactive map](map/)** — the rings fitted inside the real site
   boundary, the corridor, the detector, and the plume exit points, over
   OpenStreetMap.
