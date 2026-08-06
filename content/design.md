@@ -49,7 +49,7 @@ practice, not novel civil engineering.
 
 | Ring | Role | C | Arc radius | Straights | Depth | East-straight location | Ring-plane pitch |
 |---|---|---|---|---|---|---|---|
-| **Collider** | 2 × 5 TeV (√s = 10 TeV) | 10.00 km | 1 369 m | 2 × 700 m | 100 m | lat 41.845990 – 41.852293, **IP at 41.849142** | 0 (horizontal; see Safety §4 for the pitch knob) |
+| **Collider** | 2 × 5 TeV (√s = 10 TeV) | 10.00 km | 1 369 m | 2 × 700 m | 100 m | lat 41.845990 – 41.852293, **IP at 41.849142** | 0 (horizontal; see Safety §2 for the pitch knob) |
 | **RCS3 / RCS4** | 0.75 → 1.5 → ~4.5 TeV | 14.72 km | 2 200 m | 2 × 450 m | 80 m | centred lat 41.840723 | 2.30 mrad down-to-N |
 | **RCS1 / RCS2** | 63 → 314 → 750 GeV | 6.28 km | 841 m | 2 × 500 m | 60 m | centred lat 41.849142 (stacked 40 m above the IP straight) | 4.59 mrad down-to-N |
 
@@ -87,14 +87,14 @@ wherever the fit puts them. The corridor design makes five deliberate edits:
    ~7 m deep and its six straights point at fixed, unhelpful azimuths; its
    plumes would surface ~9.5 km out in six directions through Warrenville /
    Batavia / West Chicago at up to ~0.3 mSv/yr (wobbled). Tevatron reuse
-   remains a documented fallback for a staged programme (see [Safety](../safety/) §5).
+   remains a documented fallback for a staged programme (see [Safety](../safety/) §6).
 3. **The 16.5 km "site filler" for RCS3/4 becomes a 14.72 km racetrack**
    with N–S straights. This is the one real machine cost of alignment: the
    racetrack constraint plus boundary setbacks forfeit **10.8 %** of
    circumference. Options: (a) raise average bending field/packing ~11 %,
    (b) accept ~4.5 TeV per beam (√s ≈ 9 TeV), or (c) keep the
    boundary-hugging 16.5 km shape and give up straight alignment for RCS4
-   only (its wobbled straights contribute ≤0.6 mSv/yr — see [Safety](../safety/) §3).
+   only (its wobbled straights contribute ≤0.6 mSv/yr — see [Safety](../safety/) §2).
 4. **Ring planes pitched** (0 / 2.30 / 4.59 mrad) to focus all straight
    plumes on one detector hall.
 5. **Deep siting** (60–100 m, bedrock) replaces FNAL's traditional ~7–10 m
@@ -145,4 +145,4 @@ facility is needed anywhere along the corridor except at the detector.
 * Geotechnical: Maquoketa/Galena–Platteville profile along the corridor and
   at the hall; groundwater at the NE corner.
 * Land/easement engagement plan for the two collider-straight exit strips
-  ([Safety](../safety/) §4) and the ROW crossing.
+  ([Safety](../safety/) §3) and the ROW crossing.

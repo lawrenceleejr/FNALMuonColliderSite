@@ -149,7 +149,77 @@ This mirrors the IMCC approach exactly — CERN's own 10 TeV siting answer is
 Fermilab has no sea; it has flat, surveyable, largely rural land north and
 south, which is the equivalent asset.
 
-## 4. Honest caveats
+## 4. Scenario study: a deliberate southern exit at UIUC (≈199 km)
+
+The corridor meridian (−88.222972°) happens to run straight down the state
+between Champaign and Urbana — within a few hundred metres of the UIUC Main
+Quad — and through the university's **South Farms** agricultural land south of
+campus. That invites a designed variant: pitch the ring so the south plume
+surfaces there deliberately, on institutional land, instead of at the ~28 km
+default. (Load the *"South exit at UIUC South Farms"* preset in the
+[beam-geometry tool](../tool/) to explore it live.)
+
+**Geometry.** Straightaway at 76 m ASL (148 m below grade at the IP), tilted
+**14.87 mrad (0.85°)** up to the north — a hair above the 14 mrad LEP
+precedent. Then:
+
+| Quantity | Value |
+|---|---|
+| South exit | **40.0600° N, −88.2230°** — South Farms/Savoy area, ~5 km south of downtown Urbana |
+| Chord through the Earth | 198.9 km, dipping to 0.85 km (bottoming in the Ironton–Galesville sandstone) |
+| Exit grazing angle | 16.4 mrad (0.94°) |
+| Beam depth under the UIUC Main Quad / downtown Urbana | **88 m / 93 m** |
+| North side | detector hall stays at −25 m; north beam emerges at 41.943° N, ~800 m **north** of Smith Rd (houses there stay under a buried beam) |
+| Targeting precision | ±0.1 mrad of tilt moves the exit ±1.3 km; ±10 m of terrain/geoid knowledge moves it ±0.6 km — trimming onto a chosen parcel is a survey problem, not a physics one |
+
+**Dose to Urbana-area communities.** Same zone logic as §2. Everywhere north
+of the exit — all of Champaign, Urbana, and campus — the beam is 44–900 m
+underground and delivers no measurable surface dose. The only nonzero-dose
+location is the grazing strip at the exit itself, and 199 km of 1/L² is the
+whole story: **King-raw peak ~25 mSv/yr in an ~8 m-wide core** (vs 1,250 at
+the 28 km default exit), falling to **~0.5 mSv/yr mitigated** (150 m
+effective pencil, ±0.5 mrad segmentation) and **~0.1 mSv/yr** in the
+optimistic case — i.e. at the public limit to the design goal *inside the
+fence line*, on farm fields. Segmentation trades peak against footprint: the
+unsegmented core is ~8 m × ~600 m; fully segmented it stretches toward
+~12 km along the meridian at proportionally lower dose. Either way the land
+action is a fenced strip through research farmland with a single
+institutional owner — about as tractable as exit-zone control gets. South of
+the exit the beam climbs at 0.94° over rural Champaign County (Willard
+Airport is ~5 km west of the meridian, laterally clear of the pencil).
+
+**Groundwater and the Mahomet Aquifer.** Champaign–Urbana drinks from
+aquifer sands in the deep glacial drift, and the beam does pass through that
+interval (50–95 m deep) under the metro area on its way up. Neutrinos do not
+activate anything they pass through; the only activation pathway is the
+hadronic/EM showers from the rare ν interactions in the ground itself.
+Rates: in the on-axis core at exit, ~9 × 10⁴ interactions per litre-year in
+water. With a generous spallation yield (~10⁻² tritium atoms per GeV of
+shower), saturation tritium concentration in stagnant in-core water is
+**~0.1 Bq/L — four orders of magnitude below the 740 Bq/L EPA drinking-water
+limit** — over a core only ~8 m wide, before any dilution or flow. Under
+campus, only the same thin pencil through the aquifer sees these rates at
+all. For calibration: Fermilab's NuMI facility manages *actual* tritiated
+sump water produced by a primary proton beam striking absorbers — a source
+term orders of magnitude harsher than the diffuse ν-interaction wisp here —
+within regulatory limits.
+
+**The opportunity.** The exit fluence is still 1.2 × 10¹³ ν/cm²·yr on axis —
+**~9 × 10⁷ interactions per tonne-year** at ⟨Eν⟩ ≈ 3.3 TeV. A far detector
+on South Farms would sit in the most intense high-energy neutrino beam ever
+delivered to a university campus, which reframes the exit strip from a
+liability into UIUC's stake in the facility.
+
+**Caveats specific to this scenario.** All §5 caveats apply, plus: the
+flat-layer stratigraphy is anchored at Fermilab, and the bedrock section
+genuinely changes over 199 km (the drift thickens over the Mahomet Bedrock
+Valley; Paleozoic units dip and thicken southward into the Illinois Basin),
+so the rock column and the depth-to-aquifer picture near the exit need ISGS
+well-log data before anything firmer than order-of-magnitude; and the dose
+and activation numbers are the same conservative analytic machinery as the
+rest of this note — FLUKA/MARS with a real lattice before public claims.
+
+## 5. Honest caveats
 
 * King's equilibrium model is an **order-of-magnitude** tool, conservative
   by construction but with genuine ±(factor of a few) uncertainty; the
@@ -162,7 +232,7 @@ south, which is the equivalent asset.
 * No credit taken for building shielding, occupancy, or duty factor except
   where stated.
 
-## 5. Fallbacks
+## 6. Fallbacks
 
 * **Tevatron-tunnel RCS1/2** (shallow, misaligned): plumes exit ~9.5 km out
   in six azimuths at ≤ ~0.3 mSv/yr wobbled — acceptable for a staged
