@@ -136,12 +136,18 @@ at 41.8560° N, 1.3 km from the IP, still on DOE land.)
 
 Even a ~10-tonne instrumented target collects ~10¹¹ TeV-scale ν
 interactions per year — roughly seven orders of magnitude beyond FASERν, with
-both a νμ and νe component and known parent kinematics. The IP-adjacent
-region (±~20 m, where the final-focus angular divergence is σθ ≈ 0.59 mrad)
-adds a softer "fan" of ±5 m at the hall, and the wobbled RCS straights add
-lower-energy bands of ±9 m: a hall of order 12 m (E–W) × 25 m (vertical)
-captures everything. Physics case reference: "The Neutrino Slice at Muon
-Colliders", arXiv:2412.14115.
+both a νμ and νe component and known parent kinematics. The beam itself is
+tiny: the 50 %-containment radius is L/γ — the 0.20 m in the table above —
+and 99 % of the *interactions* fall within 3L/γ, under 60 cm; see
+[the beam-size study](../beamsize/), which also shows that the target volume
+is set by mass, not by the beam. Around that core, the final-focus region
+(σθ ≈ 0.59 mrad at the IP itself) throws a faint fan out to ±5 m; it is fed
+by only the innermost few centimetres of the straight, so it carries
+~10⁻⁴ of the flux at ~10⁻⁷ of the core's surface density. The wobbled RCS
+straights add lower-energy bands of ±9 m. A hall of order 12 m (E–W) ×
+25 m (vertical) therefore captures everything, with the instrumentation
+rather than the beam setting its size. Physics case reference: "The Neutrino
+Slice at Muon Colliders", arXiv:2412.14115.
 
 **Civil.** The hall is a ~110 m-deep cavern with a surface shaft on a parcel
 adjacent to the ROW (the given coordinate is 96 m from the line — outside
