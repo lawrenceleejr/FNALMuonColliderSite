@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ if not .IsHome }}{{ .Title }} — {{ end }}{{ .Site.Title }}</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fbfaf7'/><path d='M3 27 L29 5' stroke='%230b6e4f' stroke-width='3.5' stroke-linecap='round'/><circle cx='8' cy='23' r='4.5' fill='%23b3261e'/></svg>">
 <meta name="description" content="{{ .Site.Params.description }}">
 <style>
   :root { color-scheme: light dark; }
@@ -48,6 +49,7 @@
       <a href="{{ "design/" | relURL }}">Design</a>
       <a href="{{ "safety/" | relURL }}">Safety</a>
       <a href="{{ "envelope/" | relURL }}">Envelope</a>
+      <a href="{{ "beamsize/" | relURL }}">Beam size</a>
       <a href="{{ "aquifer/" | relURL }}">Aquifer</a>
       <a href="{{ "paper/" | relURL }}">Paper</a>
       <a href="{{ "tool/" | relURL }}">Beam-geometry tool</a>

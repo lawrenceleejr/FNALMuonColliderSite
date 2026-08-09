@@ -33,6 +33,12 @@ regions matter.** Dose scales like E⁴ × (straight length) for straights and
 E³ for arcs — which is why a 10 TeV machine's straights dominate its entire
 radiological design.
 
+The transverse size of that pencil, and hence the width of the exit strips
+below, follows from the decay kinematics alone — see
+[the beam-size study](../beamsize/), which works it out from ε<sub>N</sub>
+and β* and gives the 50 %-containment radius as L/γ (8.3 m × 534 m on the
+ground at the southern exit, before segmentation).
+
 Model: B.J. King, *Potential Hazards from Neutrino Radiation at Muon
 Colliders*, arXiv:physics/9908017 — Eq. 10 (straights), Eq. 7 (arc disk),
 "equilibrium approximation" (conservative: assumes full shower buildup).

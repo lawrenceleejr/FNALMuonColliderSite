@@ -1,6 +1,6 @@
 ---
 title: "Paper Draft: A Neutrino Corridor for a 10 TeV Muon Collider at Fermilab"
-weight: 5
+weight: 6
 ---
 
 A short Letter-format (REVTeX 4-2, PRL style) writeup of the study's
@@ -41,6 +41,7 @@ concept and results.
 |---|---|
 | Ring fit, meridian alignment, IP2 | [Design note](../design/) §§1–2, 5 |
 | Emergence points, tilt minimality, terrain trace | [Interactive tool](../tool/) (baseline) |
+| Spot size, β* independence, exit footprints, detector sizing | [Beam-size study](../beamsize/) |
 | ±500 ft civic envelope, *Causby*, easements | [Envelope note](../envelope/) |
 | Aquifer activation table, MCL margins | [Aquifer audit](../aquifer/) |
 | Dose framework, exit strips, UIUC scenario | [Safety assessment](../safety/) |

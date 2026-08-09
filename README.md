@@ -20,6 +20,7 @@ Illinois property.
 | [`content/design.md`](content/design.md) | Layout, alignment geometry, detector siting, and the explicit list of edits vs published FNAL siting concepts |
 | [`content/safety.md`](content/safety.md) | Neutrino radiation assessment for downstream communities (zones, doses, exit strips, mitigation) |
 | [`content/envelope.md`](content/envelope.md) | Airspace & land-ownership legal geometry: the ±500 ft civic envelope, Causby, 14 CFR 91.119, subsurface easements, segment-by-segment walk |
+| [`content/beamsize.md`](content/beamsize.md) | Neutrino spot size from the collider optics: the 1/γ profile, containment radii, why β* drops out, exit-strip footprints, detector sizing |
 | [`content/aquifer.md`](content/aquifer.md) | Aquifer radiation audit: activation of every water-bearing unit vs EPA drinking-water limits |
 | [`paper/corridor.tex`](paper/corridor.tex) | Short PRL-format paper draft of the concept |
 | [`tools/corridor_layout.py`](tools/corridor_layout.py) | Parametric generator: fits rings inside the real OSM site boundary, computes plume geometry over real terrain, fluxes, event rates, and King-model doses. Pure stdlib — `python3 tools/corridor_layout.py` |
