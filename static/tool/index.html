@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Corridor Beam-Geometry Tool — FNAL Muon Collider</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fbfaf7'/><path d='M3 27 L29 5' stroke='%230b6e4f' stroke-width='3.5' stroke-linecap='round'/><circle cx='8' cy='23' r='4.5' fill='%23b3261e'/></svg>">
 <link rel="stylesheet" href="../vendor/leaflet.css">
 <style>
   #map { height: 540px; border-radius: 6px; border: 1px solid #d8d2c4;
@@ -205,9 +206,71 @@ curve (the Illinois River valley is the dip around −80 km).
     <input type="range" id="emu" min="0.5" max="7.5" step="0.25" value="5">
     <span class="val" id="emuV"></span>
   </div>
+  <div>
+    <label>Normalised transverse emittance &epsilon;<sub>N</sub> (IMCC 10 TeV: 25 µm·rad)</label>
+    <input type="range" id="epsN" min="5" max="100" step="1" value="25">
+    <span class="val" id="epsNV"></span>
+  </div>
+  <div>
+    <label>IP betatron function &beta;* (IMCC 10 TeV: 1.5 mm)</label>
+    <input type="range" id="betaStar" min="0.1" max="20" step="0.1" value="1.5">
+    <span class="val" id="betaStarV"></span>
+  </div>
 </div>
 
 <div class="out" id="out"></div>
+
+<h2 style="font-size:1.15rem">How big is the beam?</h2>
+<p style="font-size:.93rem">
+Muon decay is isotropic in the muon's rest frame, so boosting by
+&gamma; = E&mu;/m&mu; gives the classic beamed profile
+<code>dN/dΩ ∝ (1 + γ²θ²)⁻²</code> — whose on-axis value is exactly the
+<code>Nγ²/πL²</code> used for the flux above. That makes the whole profile
+<strong>self-similar</strong>: every location sees the same shape, scaled by
+<strong>L/γ</strong>. Two consequences worth stating precisely:
+<strong>half the neutrinos land inside 1/γ</strong>, and because the boost
+also correlates energy with angle (<code>⟨E⟩ ∝ (1+γ²θ²)⁻¹</code>) while
+σν ∝ E, the <em>interaction</em> profile goes as <code>(1+γ²θ²)⁻³</code> —
+<strong>noticeably tighter than the flux</strong>: 75 % of events inside
+1/γ, 99 % inside 3/γ.
+</p>
+<svg id="plotB" viewBox="0 0 980 400" aria-label="radial profile of the neutrino beam"></svg>
+<p class="note" id="veB" style="margin-bottom:.25rem"></p>
+<p class="note" style="margin-top:0">figure export:
+  <button class="mini" id="figSvgB">SVG (vector)</button>
+  <button class="mini" id="figPngB">PNG 4×</button></p>
+
+<h3 style="font-size:1rem;margin-bottom:.2rem">How the spot grows, and what it leaves on the ground</h3>
+<p style="font-size:.93rem">
+Every containment radius is simply proportional to distance, so on log–log
+axes the beam is a straight fan: centimetres while it is still on the
+Fermilab site, metres by the time it reaches Champaign County. What matters
+for land use is the right-hand panel — where the beam <em>meets</em> the
+ground it does so at a grazing angle of a few milliradians, and the circular
+cross-section is stretched along the surface by 1/sin(graze), turning a
+metres-wide spot into a long, narrow strip.
+</p>
+<svg id="plotSpot" viewBox="0 0 980 330" aria-label="neutrino spot size vs distance, and the exit footprints to scale"></svg>
+<p class="note" style="margin-top:.25rem">figure export:
+  <button class="mini" id="figSvgSp">SVG (vector)</button>
+  <button class="mini" id="figPngSp">PNG 4×</button></p>
+<div style="overflow-x:auto"><table class="maptable"><thead><tr>
+  <th>location</th><th>L from IP</th><th>L/γ</th><th>50 % of flux</th>
+  <th>90 %</th><th>99 %</th><th>99 % of <em>events</em></th><th>ground footprint</th></tr></thead>
+  <tbody id="spotRows"></tbody></table></div>
+<div class="out" id="optOut" style="margin-top:.7rem"></div>
+<p class="note">
+β* and the emittance set the muon beam's own angular divergence,
+σ<sub>θ</sub>(s) = √(ε<sub>N</sub>/γβ(s)) with β(s) = β* + s²/β*. It is
+largest exactly at the IP and collapses within centimetres, so it competes
+with the decay cone over only a sliver of the 700 m straight — the far-field
+spot is kinematic, and <strong>changing β* by a factor of 200 barely moves
+it</strong>. What the divergence does produce is a faint wide halo from the
+final-focus region; its surface density is quoted above and is the
+"IP-adjacent fan" that the effective-pencil-length parameter of the
+<a href="../safety/">dose model</a> stands in for. Full derivation and the
+detector-sizing consequences: <a href="../beamsize/">the beam-size study</a>.
+</p>
 
 <h2 style="font-size:1.15rem">Civic-envelope audit — who is within 500 ft of this beam?</h2>
 <p style="font-size:.93rem">
@@ -429,6 +492,7 @@ civil-construction experience; σν ≈ 0.35 × 10⁻³⁸ cm²/GeV per nucleon
 // ---- fixed geography --------------------------------------------------
 const R_E = 6371000;
 const SMITH_LAT = 41.935618, SMITH_GRADE = 239.0;
+const L_STRAIGHT = 700.0;                   // m, IP insertion (FF + matching)
 const LON = -88.222972;      // corridor meridian: both beams stay on it
 const FENCE_LAT = 41.86990;                 // FNAL NE corner on the meridian
 const SITE_S = 41.82065, SITE_N = 41.86990; // on-site corridor extent
@@ -522,6 +586,7 @@ const state = {
   // south beam dives under Aurora and surfaces on UIUC South Farms.
   ipLat: 41.8443, ipElev: 191, tilt: 15.40e-3,    // machine (lockable / solvable)
   detLat: 41.8560, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
+  epsN: 25, betaStar: 1.5,        // normalised emittance (um rad), beta* (mm)
   constraint: 'none', detTarget: 50, exitTarget: 41.9400,
   locks: { ipLat: false, ipElev: false, tilt: false },
 };
@@ -727,6 +792,48 @@ function columnNorth(b) {
     X += 50 * 100 * g.rho; len += 50;
   }
   return { acc, X, len };
+}
+
+// ---- neutrino spot size from the collider beam parameters ----------------
+// Muon decay is isotropic in the muon rest frame (unpolarised beam), so the
+// lab-frame solid-angle distribution is the standard beamed form
+//     dN/dOmega = N gamma^2 / (pi (1 + x^2)^2),      x = gamma * theta
+// whose x -> 0 limit is exactly the peak flux N gamma^2 / (pi L^2) used above.
+// Enclosed fractions follow analytically:
+//     flux:   F(x) = x^2/(1+x^2)          -> HALF the neutrinos inside 1/gamma
+//     energy: <E>(x) = <E>_0/(1+x^2)      (the boost correlates E with angle)
+//     events: sigma ~ E, so density ~ (1+x^2)^-3 and F(x) = 1 - (1+x^2)^-2
+const xForFlux   = f => Math.sqrt(f / (1 - f));            // invert F_flux
+const xForEvents = f => Math.sqrt(1 / Math.sqrt(1 - f) - 1);
+const R50 = xForFlux(0.5), R90 = xForFlux(0.9), R99 = xForFlux(0.99);   // 1, 3, 9.95
+const E50 = xForEvents(0.5), E90 = xForEvents(0.9), E99 = xForEvents(0.99);
+
+// Muon-beam optics: geometric emittance eps_N/gamma, betatron function
+// beta(s) = beta* + s^2/beta*, angular divergence sqrt(eps_g/beta(s)).
+// The divergence is LARGEST at the IP (smallest beta) and falls away fast.
+function optics() {
+  const gamma = state.emu * 1e12 / 105.658e6;
+  const epsG = state.epsN * 1e-6 / gamma;              // m rad
+  const bStar = state.betaStar * 1e-3;                 // m
+  const sigTh = Math.sqrt(epsG / bStar);               // rad, at the IP
+  const sigX = Math.sqrt(epsG * bStar);                // m, at the IP
+  // beta where the muon divergence equals the 1/gamma decay cone, and the
+  // half-length of straight inside which divergence dominates
+  const bCross = epsG * gamma * gamma;
+  const sCross = Math.sqrt(Math.max(bCross - bStar, 0) * bStar);
+  return { gamma, epsG, bStar, sigTh, sigX, bCross, sCross,
+           haloFrac: 2 * sCross / L_STRAIGHT,
+           divDominates: sigTh * gamma };               // sigma_theta in units of 1/gamma
+}
+// Containment radii of the neutrino spot a distance L from the IP. The muon
+// divergence adds in quadrature but is a 1e-4-weight halo, so the core radii
+// are kinematic; `halo` reports the wide, faint component separately.
+function spotAt(L) {
+  const o = optics(), s = L / o.gamma;
+  return { L, o, scale: s,
+           r50: R50 * s, r90: R90 * s, r99: R99 * s,
+           e50: E50 * s, e90: E90 * s, e99: E99 * s,
+           core: 2 * s, halo: L * o.sigTh };
 }
 
 // Neutrino cross-section, interaction length, and beam physics at energy Emu
@@ -1174,12 +1281,53 @@ function render() {
     fmt(state.airFt,0) + " ft = " + fmt(airM,0) + " m above ground";
   document.getElementById("emuV").textContent =
     fmt(state.emu,2) + " TeV  (√s = " + fmt(2*state.emu,0) + " TeV; ⟨Eν⟩ ≈ " + fmt(phys.enu/1000,1) + " TeV)";
+  document.getElementById("epsNV").textContent = fmt(state.epsN,0) + " µm·rad";
+  document.getElementById("betaStarV").textContent = fmt(state.betaStar,2) + " mm";
   document.getElementById("emu").value = state.emu;
+  document.getElementById("epsN").value = state.epsN;
+  document.getElementById("betaStar").value = state.betaStar;
   document.getElementById("ipLat").value = state.ipLat;
   document.getElementById("ipElev").value = state.ipElev;
   document.getElementById("tilt").value = state.tilt*1000;
   document.getElementById("detLat").value = state.detLat;
   document.getElementById("detTargetWrap").hidden = state.constraint !== 'det';
+
+  // ---- beam-spot size ----
+  {
+    const locs = spotLocations(b), o = optics();
+    renderProfile(locs);
+    renderSpots(locs);
+    document.getElementById("spotRows").innerHTML = locs.map(loc => {
+      const sp = spotAt(loc.L);
+      const foot = loc.graze
+        ? mlen(2 * sp.r50) + " × " + mlen(2 * sp.r50 / Math.sin(loc.graze)) +
+          " <span class='note'>(grazing " + fmt(loc.graze * 1000, 2) + " mrad)</span>"
+        : "<span class='note'>—  beam is underground here</span>";
+      return `<tr><td>${loc.name}</td>
+        <td>${fmt(loc.L/1000, loc.L < 10000 ? 2 : 1)} km</td>
+        <td>${mlen(sp.scale)}</td>
+        <td><b>${mlen(sp.r50)}</b></td><td>${mlen(sp.r90)}</td><td>${mlen(sp.r99)}</td>
+        <td>${mlen(sp.e99)}</td><td>${foot}</td></tr>`;
+    }).join("");
+
+    // a 1-tonne tungsten cylinder sized to swallow 99% of the interactions
+    const det = locs[0], spD = det ? spotAt(det.L) : null;
+    const rDet = spD ? Math.max(spD.e99, 0.005) : 0;
+    const lenDet = spD ? 1e6 / 19.3 / (Math.PI * (rDet * 100) ** 2) / 100 : 0;  // m
+    document.getElementById("optOut").innerHTML = `
+      <div><span class="lbl">Muon divergence at the IP (β* = ${fmt(state.betaStar,2)} mm, ε<sub>N</sub> = ${fmt(state.epsN,0)} µm)</span>
+        <b>${fmt(o.sigTh*1e3,3)} mrad</b> = ${fmt(o.divDominates,0)} × the 1/γ cone
+        <br><span class="note">beam waist σ<sub>x</sub>* = ${fmt(o.sigX*1e6,2)} µm — far too small to matter at kilometre range</span></div>
+      <div><span class="lbl">Where β* still beats the decay cone</span>
+        <b>±${fmt(o.sCross*100,1)} cm</b> of the IP
+        <br><span class="note">${(o.haloFrac*100).toExponential(1)} % of the ${fmt(L_STRAIGHT,0)} m straight — beyond it the spot is purely kinematic</span></div>
+      <div><span class="lbl">Final-focus halo at the ${det ? det.short : "detector"}</span>
+        <b>${det ? mlen(spotAt(det.L).halo) : "—"}</b> radius
+        <br><span class="note">carries ${o.haloFrac.toExponential(1)} of the flux over ${det ? fmt((spotAt(det.L).halo/spotAt(det.L).r50)**2,0) : "—"}× the area → ${det ? (o.haloFrac/(spotAt(det.L).halo/spotAt(det.L).r50)**2).toExponential(1) : "—"} of the core's surface density</span></div>
+      <div><span class="lbl">A detector that swallows the beam</span>
+        <b>⌀ ${mlen(2*rDet)} × ${fmt(lenDet,2)} m</b> of tungsten ≈ 1 tonne
+        <br><span class="note">catches 99 % of the interactions — the beam is small enough that "per tonne" is a compact object, not a hall</span></div>`;
+  }
 
   renderMap(b, south, north, phys);
   renderOverview(b);
@@ -1402,6 +1550,8 @@ bind("airFt",  t => state.airFt  = +t.value);
 bind("detTarget", t => state.detTarget = +t.value);
 bind("constraint", t => state.constraint = t.value);
 bind("emu", t => state.emu = +t.value);
+bind("epsN", t => state.epsN = +t.value);
+bind("betaStar", t => state.betaStar = +t.value);
 for (const k of SOLVE_ORDER)
   bind("lock" + capId(k), t => state.locks[k] = t.checked);
 
@@ -1741,6 +1891,24 @@ function southBeamH(la) {
   return pImp / c - R_E;
 }
 
+// Terrain-corrected southern emergence: the first point, walking south with
+// the beam, where the chord breaks the real surface. Shared by the close-up
+// panel and the spot-size table so the two cannot drift apart.
+function southExit() {
+  const S_LAT0 = 39.99, S_LAT1 = 40.145;
+  for (let la = S_LAT1; la >= S_LAT0; la -= 0.0004) {
+    const hb = southBeamH(la);
+    if (hb > 5e8) continue;
+    if (terrainS(la) - hb <= 0 && la < S_LAT1 - 0.001) {
+      // exact local angle of the chord to the horizontal: cos(graze) = p / r
+      const graze = Math.acos(Math.min(1,
+        (R_E + state.ipElev) * Math.cos(state.tilt) / (R_E + terrainS(la))));
+      return { lat: la, L: (state.ipLat - la) * MLAT, graze };
+    }
+  }
+  return null;
+}
+
 const svgS = document.getElementById("plotS");
 const HS = 360;
 function renderSouth() {
@@ -1774,13 +1942,14 @@ function renderSouth() {
 
   // beam over the real terrain: dashed underground, orange when cover < 5 m,
   // solid when airborne; terrain-corrected exit = first upward crossing
-  let exitLa = null, segs = [], cur = null, curKind = null;
+  const sx = southExit();
+  const exitLa = sx ? sx.lat : null;
+  let segs = [], cur = null, curKind = null;
   for (let la = S_LAT1; la >= S_LAT0; la -= 0.0004) {   // walk south with the beam
     const hb = southBeamH(la), t = terrainS(la);
     if (hb > 5e8) continue;
     const cover = t - hb;
     const kind = cover <= 0 ? "air" : cover < 5 ? "graze" : "rock";
-    if (exitLa === null && cover <= 0 && la < S_LAT1 - 0.001) exitLa = la;
     if (kind !== curKind) { cur = { kind, pts: [] }; segs.push(cur); curKind = kind; }
     cur.pts.push([XS(la), YS(hb)]);
   }
@@ -1814,9 +1983,7 @@ function renderSouth() {
     el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) - 12, "text-anchor": "end",
                 "font-size": 11.5, fill: "#7a2e21", "font-weight": 600, stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
       .textContent = "emerges " + exitLa.toFixed(4) + "° N";
-    // exact local angle of the chord vs the horizontal: cos(graze) = p / r
-    const rr0 = R_E + state.ipElev;
-    const graze = Math.acos(Math.min(1, rr0 * Math.cos(state.tilt) / (R_E + terrainS(exitLa))));
+    const graze = sx.graze;
     el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) + 24, "text-anchor": "end",
                 "font-size": 11, fill: "#0b6e4f", stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
       .textContent = "grazing " + angTxt(graze);
@@ -1855,6 +2022,231 @@ function renderSouth() {
   document.getElementById("veS").textContent =
     "Vertical exaggeration ≈ " + Math.round(veH/veW) + "×. Terrain here is 10–15 m below Fermilab grade, " +
     "which pulls the real exit north of the flat model. Orange: cover < 5 m (radiologically the exit strip).";
+}
+
+// ---- beam-spot size ------------------------------------------------------
+// The places where the spot size actually decides something, in beam order.
+function spotLocations(b) {
+  const out = [];
+  const add = (name, short, L, graze) => { if (L > 1) out.push({ name, short, L, graze }); };
+  add("detector hall", "detector", Math.abs(s_of(state.detLat) - b.s0), null);
+  if (b.exitLat !== null)
+    add("north beam leaves the ground", "north exit", b.exitS - b.s0, Math.abs(b.th(b.exitS)));
+  add("Fermilab fence (NE corner)", "fence", s_of(FENCE_LAT) - b.s0, null);
+  add("Smith Road", "Smith Rd", s_of(SMITH_LAT) - b.s0, null);
+  add("under Urbana / UIUC campus", "Urbana", (state.ipLat - 40.110) * MLAT, null);
+  const sx = southExit();
+  if (sx) add("UIUC South Farms exit", "UIUC exit", sx.L, sx.graze);
+  return out;
+}
+
+const svgB = document.getElementById("plotB");
+const HB = 400;
+// Self-similar radial profile in x = gamma*theta: flux (1+x^2)^-2, events
+// (1+x^2)^-3, mean energy (1+x^2)^-1, plus the two cumulative curves.
+function renderProfile(locs) {
+  svgB.textContent = "";
+  const XMAX = 4, MLB = 62, MRB = 62, MTB = 16, MBB = 54;
+  const XB = x => MLB + x / XMAX * (W - MLB - MRB);
+  const YB = f => MTB + (1 - f) * (HB - MTB - MBB);
+  const dens = { flux: x => 1 / (1 + x*x)**2, ev: x => 1 / (1 + x*x)**3,
+                 en: x => 1 / (1 + x*x) };
+  const cum = { flux: x => x*x / (1 + x*x), ev: x => 1 - 1 / (1 + x*x)**2 };
+
+  for (let f = 0; f <= 1.0001; f += 0.25) {
+    el("line", {x1: MLB, y1: YB(f), x2: W - MRB, y2: YB(f), stroke: "#8883",
+                "stroke-width": .7}, svgB);
+    el("text", {x: MLB - 7, y: YB(f) + 4, "text-anchor": "end", "font-size": 11,
+                fill: "#888"}, svgB).textContent = f.toFixed(2);
+    el("text", {x: W - MRB + 7, y: YB(f) + 4, "font-size": 11, fill: "#888"}, svgB)
+      .textContent = (f * 100).toFixed(0) + "%";
+  }
+  for (let x = 0; x <= XMAX + 1e-9; x += 0.5) {
+    el("line", {x1: XB(x), y1: HB - MBB, x2: XB(x), y2: HB - MBB + 4, stroke: "#aaa"}, svgB);
+    el("text", {x: XB(x), y: HB - MBB + 17, "text-anchor": "middle", "font-size": 11,
+                fill: "#777"}, svgB).textContent = x.toFixed(1);
+  }
+  el("text", {x: (MLB + W - MRB) / 2, y: HB - MBB + 36, "text-anchor": "middle",
+              "font-size": 12, fill: "#777"}, svgB)
+    .textContent = "angle from the beam axis, in units of 1/γ   (x = γθ = γr/L)";
+  el("text", {x: 14, y: HB / 2, "font-size": 11.5, fill: "#777", "text-anchor": "middle",
+              transform: `rotate(-90 14 ${HB/2})`}, svgB)
+    .textContent = "relative density on axis";
+  el("text", {x: W - 12, y: HB / 2, "font-size": 11.5, fill: "#777", "text-anchor": "middle",
+              transform: `rotate(90 ${W-12} ${HB/2})`}, svgB)
+    .textContent = "enclosed fraction";
+
+  // containment guides at x = 1 and x = 3
+  for (const [x, lbl] of [[1, "1/γ"], [3, "3/γ"]]) {
+    el("line", {x1: XB(x), y1: MTB, x2: XB(x), y2: HB - MBB, stroke: "#666",
+                "stroke-width": .9, "stroke-dasharray": "3 4"}, svgB);
+    el("text", {x: XB(x) + 5, y: HB - MBB - 7, "font-size": 11, fill: "#666",
+                stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"}, svgB)
+      .textContent = lbl;
+  }
+  const curve = (f, col, dash, wid) => {
+    let d = "";
+    for (let i = 0; i <= 240; i++) {
+      const x = XMAX * i / 240;
+      d += (i ? " L" : "M") + XB(x).toFixed(1) + " " + YB(f(x)).toFixed(1);
+    }
+    el("path", {d, fill: "none", stroke: col, "stroke-width": wid,
+                "stroke-dasharray": dash}, svgB);
+  };
+  curve(dens.en, "#999", "2 3", 1.4);
+  curve(cum.flux, "#0b6e4f", "7 4", 1.6);
+  curve(cum.ev, "#7a2e21", "7 4", 1.6);
+  curve(dens.flux, "#0b6e4f", "none", 2.4);
+  curve(dens.ev, "#7a2e21", "none", 2.4);
+
+  // the two headline containment facts, marked on the cumulative curves
+  for (const [x, f, col, txt] of [[1, cum.flux(1), "#0b6e4f", "half the flux inside 1/γ"],
+                                  [1, cum.ev(1), "#7a2e21", "75 % of interactions inside 1/γ"]]) {
+    el("circle", {cx: XB(x), cy: YB(f), r: 4.5, fill: col, stroke: "#fff",
+                  "stroke-width": 1.8}, svgB);
+    el("text", {x: XB(x) + 10, y: YB(f) + 4, "font-size": 11.5, fill: col,
+                stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"}, svgB)
+      .textContent = txt;
+  }
+
+  const key = [["#0b6e4f", "none", "ν flux density  (1+x²)⁻²"],
+               ["#7a2e21", "none", "interaction density  (1+x²)⁻³"],
+               ["#999", "2 3", "⟨Eν⟩ / ⟨Eν⟩₀  (1+x²)⁻¹"],
+               ["#0b6e4f", "7 4", "enclosed flux"],
+               ["#7a2e21", "7 4", "enclosed interactions"]];
+  el("rect", {x: W - MRB - 220, y: MTB + 4, width: 216, height: key.length * 17 + 8,
+              fill: "#fff", "fill-opacity": .88, rx: 3}, svgB);
+  key.forEach(([col, dash, txt], i) => {
+    const y = MTB + 16 + i * 17, x0 = W - MRB - 214;
+    el("line", {x1: x0, y1: y, x2: x0 + 26, y2: y, stroke: col, "stroke-width": 2.2,
+                "stroke-dasharray": dash}, svgB);
+    el("text", {x: x0 + 32, y: y + 4, "font-size": 11.5, fill: "#555"}, svgB).textContent = txt;
+  });
+
+  const near = locs[0], far = locs[locs.length - 1];
+  document.getElementById("veB").textContent =
+    "One curve describes every location — only the scale L/γ changes: 1 unit of x is " +
+    (near ? mlen(spotAt(near.L).scale) + " at the " + near.short : "") +
+    (far && far !== near ? " and " + mlen(spotAt(far.L).scale) + " at the " + far.short : "") +
+    ". Tails are heavy: 99 % containment needs 10/γ for flux but only 3/γ for interactions.";
+}
+
+// metres or centimetres, whichever reads better
+const mlen = m => m < 1 ? fmt(m * 100, m < 0.1 ? 2 : 1) + " cm" : fmt(m, m < 10 ? 2 : 1) + " m";
+
+const svgSp = document.getElementById("plotSpot");
+const HSP = 330;
+// Left: how the spot grows with range (log-log, so the 150x span from the
+// on-site detector to Champaign County fits in one frame; every containment
+// radius is proportional to L, so the bands are a straight fan).
+// Right: what that circular cross-section becomes ON THE GROUND at the two
+// grazing exits, drawn to scale -- the shape that sets the exit-strip land.
+function renderSpots(locs) {
+  svgSp.textContent = "";
+  const PL = 62, PR = 372, PT = 20, PB = 56;          // main plot box
+  const L0 = 1000, L1 = 300000, Y0 = 0.01, Y1 = 100;  // m
+  const XG = L => PL + Math.log10(L / L0) / Math.log10(L1 / L0) * (W - PL - PR);
+  const YG = r => PT + (1 - Math.log10(r / Y0) / Math.log10(Y1 / Y0)) * (HSP - PT - PB);
+
+  for (const km of [1, 2, 5, 10, 20, 50, 100, 200]) {  // x grid: 1 -> 300 km
+    const L = km * 1000;
+    el("line", {x1: XG(L), y1: PT, x2: XG(L), y2: HSP - PB, stroke: "#8883",
+                "stroke-width": .7}, svgSp);
+    el("text", {x: XG(L), y: HSP - PB + 16, "text-anchor": "middle", "font-size": 11,
+                fill: "#777"}, svgSp).textContent = km + " km";
+  }
+  for (let e = -2; e <= 2; e++) {                     // y grid: 1 cm -> 100 m
+    const r = Math.pow(10, e);
+    el("line", {x1: PL, y1: YG(r), x2: W - PR, y2: YG(r), stroke: "#8883",
+                "stroke-width": .7}, svgSp);
+    el("text", {x: PL - 7, y: YG(r) + 4, "text-anchor": "end", "font-size": 11,
+                fill: "#888"}, svgSp).textContent = mlen(r);
+  }
+  el("text", {x: (PL + W - PR) / 2, y: HSP - PB + 34, "text-anchor": "middle",
+              "font-size": 12, fill: "#777"}, svgSp)
+    .textContent = "distance from the collision point →";
+  el("text", {x: 14, y: (PT + HSP - PB) / 2, "font-size": 11.5, fill: "#777",
+              "text-anchor": "middle",
+              transform: `rotate(-90 14 ${(PT + HSP - PB) / 2})`}, svgSp)
+    .textContent = "spot radius";
+
+  // containment fan: r = x * L / gamma, so each is a straight line here
+  const g = optics().gamma;
+  const band = (xa, xb, op) => el("path", {
+    d: `M${XG(L0)} ${YG(xa*L0/g)} L${XG(L1)} ${YG(xa*L1/g)} L${XG(L1)} ${YG(xb*L1/g)} L${XG(L0)} ${YG(xb*L0/g)} Z`,
+    fill: "#0b6e4f", "fill-opacity": op}, svgSp);
+  band(R90, R99, .10); band(R50, R90, .18);
+  const line = (x, col, dash, w) => el("path", {
+    d: `M${XG(L0)} ${YG(x*L0/g)} L${XG(L1)} ${YG(x*L1/g)}`,
+    fill: "none", stroke: col, "stroke-width": w, "stroke-dasharray": dash}, svgSp);
+  line(R99, "#0b6e4f", "4 4", 1.2);
+  line(R50, "#0b6e4f", "none", 2.4);
+  line(E99, "#7a2e21", "5 4", 1.8);
+  // curve labels go in the empty stretch between the on-site cluster and
+  // Champaign County, where no location marker can collide with them
+  const LLBL = 40000;
+  // the fan lines are parallel, so one rotation lays every label along its own
+  const ang = Math.atan2(YG(R50 * L1 / g) - YG(R50 * L0 / g),
+                         XG(L1) - XG(L0)) * 180 / Math.PI;
+  for (const [x, col, txt] of [[R99, "#0b6e4f", "99 % of flux"],
+                               [R50, "#0b6e4f", "50 % of flux   (r = L/γ)"],
+                               [E99, "#7a2e21", "99 % of interactions"]]) {
+    const lx = XG(LLBL), ly = YG(x * LLBL / g) - 7;
+    el("text", {x: lx, y: ly, "text-anchor": "middle", "font-size": 11, fill: col,
+                stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke",
+                transform: `rotate(${ang.toFixed(2)} ${lx.toFixed(1)} ${ly.toFixed(1)})`},
+       svgSp).textContent = txt;
+  }
+
+  // the study's locations, on the 50 % line; labels alternate above/below and
+  // flip their anchor near the frame edges so nothing runs off or overlaps
+  locs.forEach((loc, i) => {
+    if (loc.L < L0 || loc.L > L1) return;
+    const sp = spotAt(loc.L), x = XG(loc.L), y = YG(sp.r50);
+    el("line", {x1: x, y1: y, x2: x, y2: HSP - PB, stroke: "#666", "stroke-width": .8,
+                "stroke-dasharray": "2 4"}, svgSp);
+    el("circle", {cx: x, cy: y, r: 4, fill: "#0b6e4f", stroke: "#fff", "stroke-width": 1.6}, svgSp);
+    const near = x < PL + 80, far = x > W - PR - 80;
+    const SLOT = [-11, 20, -28, 37];              // 4 slots: neighbours never share one
+    el("text", {x: x + (near ? 8 : far ? -8 : 0), y: y + SLOT[i % 4],
+                "text-anchor": near ? "start" : far ? "end" : "middle",
+                "font-size": 11, fill: "#333",
+                stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke"}, svgSp)
+      .textContent = loc.short + " · " + mlen(sp.r50);
+  });
+
+  // ---- to-scale ground footprints at the grazing exits ----
+  const gz = locs.filter(l => l.graze);
+  const x0 = W - PR + 34, wBox = PR - 52;
+  el("text", {x: x0, y: PT + 6, "font-size": 12, "font-weight": 600, fill: "#333"}, svgSp)
+    .textContent = "Footprint on the ground, to scale";
+  el("text", {x: x0, y: PT + 21, "font-size": 10.5, fill: "#777"}, svgSp)
+    .textContent = "the 50 % core, stretched by 1/sin(graze)";
+  gz.slice(0, 2).forEach((loc, i) => {
+    const sp = spotAt(loc.L);
+    const len = 2 * sp.r50 / Math.sin(loc.graze), wid = 2 * sp.r50;
+    const k = wBox / len, yc = PT + 66 + i * 118;
+    el("ellipse", {cx: x0 + wBox / 2, cy: yc, rx: wBox / 2, ry: Math.max(wid * k / 2, 1.1),
+                   fill: "#c7641e", "fill-opacity": .35, stroke: "#c7641e",
+                   "stroke-width": 1.2}, svgSp);
+    el("text", {x: x0, y: yc - 16, "font-size": 11.5, "font-weight": 600, fill: "#7a2e21"}, svgSp)
+      .textContent = loc.short;
+    el("text", {x: x0, y: yc + 26, "font-size": 11, fill: "#555"}, svgSp)
+      .textContent = mlen(wid) + " wide × " + mlen(len) + " long";
+    el("text", {x: x0, y: yc + 40, "font-size": 10.5, fill: "#777"}, svgSp)
+      .textContent = "grazing " + fmt(loc.graze * 1000, 2) + " mrad → ×" +
+                     fmt(1 / Math.sin(loc.graze), 0) + " elongation";
+    el("line", {x1: x0, y1: yc + 50, x2: x0 + wBox, y2: yc + 50, stroke: "#555",
+                "stroke-width": 1.2}, svgSp);
+    for (const sx of [x0, x0 + wBox])
+      el("line", {x1: sx, y1: yc + 46, x2: sx, y2: yc + 54, stroke: "#555",
+                  "stroke-width": 1.2}, svgSp);
+    el("text", {x: x0 + wBox / 2, y: yc + 64, "text-anchor": "middle", "font-size": 10.5,
+                fill: "#555"}, svgSp).textContent = mlen(len);
+  });
+  if (!gz.length)
+    el("text", {x: x0, y: PT + 60, "font-size": 11, fill: "#999"}, svgSp)
+      .textContent = "no grazing exit in this configuration";
 }
 
 // dimension line with end ticks and a boxed label, for any SVG panel
@@ -2023,6 +2415,14 @@ document.getElementById("figSvgS").addEventListener("click",
   () => dl(figName("uiuc_exit_profile", "svg"), svgString(svgS, W, HS)));
 document.getElementById("figPngS").addEventListener("click",
   () => pngFromSvg(svgString(svgS, W, HS), W, HS, figName("uiuc_exit_profile", "png")));
+document.getElementById("figSvgB").addEventListener("click",
+  () => dl(figName("beam_profile", "svg"), svgString(svgB, W, HB)));
+document.getElementById("figPngB").addEventListener("click",
+  () => pngFromSvg(svgString(svgB, W, HB), W, HB, figName("beam_profile", "png")));
+document.getElementById("figSvgSp").addEventListener("click",
+  () => dl(figName("beam_spots", "svg"), svgString(svgSp, W, HSP)));
+document.getElementById("figPngSp").addEventListener("click",
+  () => pngFromSvg(svgString(svgSp, W, HSP), W, HSP, figName("beam_spots", "png")));
 
 // Map figure: composite the CARTO tiles (CORS-enabled), the vector panes,
 // and the marker labels onto one canvas at 3x.
@@ -2147,7 +2547,7 @@ function applyPreset(name) {
 
 // state <-> location.hash, so a configuration can be shared by URL
 const HASH_KEYS = ["ipLat","ipElev","tilt","detLat","airFt","houseH","emu",
-                   "constraint","detTarget","exitTarget"];
+                   "epsN","betaStar","constraint","detTarget","exitTarget"];
 let hashTimer = null;
 function hashString() {
   const kv = HASH_KEYS.map(k => k + "=" +
