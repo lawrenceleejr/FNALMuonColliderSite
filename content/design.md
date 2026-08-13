@@ -95,7 +95,7 @@ wherever the fit puts them. The corridor design makes five deliberate edits:
    with its straight on the corridor. *Rationale:* the Tevatron tunnel is
    ~7 m deep and its six straights point at fixed, unhelpful azimuths; its
    plumes would surface ~9.5 km out in six directions through Warrenville /
-   Batavia / West Chicago at up to ~0.3 mSv/yr (wobbled). Tevatron reuse
+   Batavia / West Chicago at up to ~0.5 mSv/yr (wobbled). Tevatron reuse
    remains a documented fallback for a staged programme (see [Safety](../safety/) §6).
 3. **The 16.5 km "site filler" for RCS3/4 becomes a 14.72 km racetrack**
    with N–S straights. This is the one real machine cost of alignment: the
@@ -103,7 +103,7 @@ wherever the fit puts them. The corridor design makes five deliberate edits:
    circumference. Options: (a) raise average bending field/packing ~11 %,
    (b) accept ~4.5 TeV per beam (√s ≈ 9 TeV), or (c) keep the
    boundary-hugging 16.5 km shape and give up straight alignment for RCS4
-   only (its wobbled straights contribute ≤0.6 mSv/yr — see [Safety](../safety/) §2).
+   only (its wobbled straights contribute ≤0.8 mSv/yr — see [Safety](../safety/) §2).
 4. **Ring planes pitched** (0 / 2.16 / 4.32 mrad in the deep reference;
    15.40 mrad for the collider in the civic-envelope configuration, §5) to
    focus all straight plumes on one detector hall.
@@ -128,14 +128,14 @@ at 41.8560° N, 1.3 km from the IP, still on DOE land.)
 
 | Quantity | Value |
 |---|---|
-| Decays aimed north in the IP straight | 6.2 × 10¹⁸ /yr (one muon sign → pure νμ + ν̄e *or* ν̄μ + νe beam, selectable by circulation direction) |
+| Decays aimed north in the IP straight | 6.2 × 10¹⁸ /yr — each emitting **one νμ and one ν̄e** (or the CP mirror, selectable by circulation direction) |
 | Pencil-core radius at detector (1/γ = 21 µrad) | **0.20 m** |
-| Core fluence | 5.2 × 10¹⁵ ν/cm²/yr |
-| On-axis mean Eν | ≈ 3.2 TeV |
-| Interaction rate | **3.5 × 10⁷ per kg-year** (3.5 × 10¹⁰ per tonne-year) |
+| Core fluence | 5.2 × 10¹⁵ ν/cm²/yr **per species** (⟨Eνμ⟩ = 0.7 Eμ, ⟨Eν̄e⟩ = 0.6 Eμ on axis) |
+| On-axis mean Eν | ≈ 3.2 TeV (blend) |
+| Interaction rate (CSMS σ, both species) | **1.2 × 10⁸ per kg-year** (1.2 × 10¹¹ per tonne-year) |
 
-Even a ~10-tonne instrumented target collects ~10¹¹ TeV-scale ν
-interactions per year — roughly seven orders of magnitude beyond FASERν, with
+Even a ~10-tonne instrumented target collects ~10¹² TeV-scale ν
+interactions per year — some eight orders of magnitude beyond FASERν, with
 both a νμ and νe component and known parent kinematics. The beam itself is
 tiny: the 50 %-containment radius is L/γ — the 0.20 m in the table above —
 and 99 % of the *interactions* fall within 3L/γ, under 60 cm; see

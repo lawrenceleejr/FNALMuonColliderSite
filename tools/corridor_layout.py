@@ -59,7 +59,11 @@ BOUNDARY_MARGIN = 150.0  # m tunnel setback from the site boundary
 # Dose-model knobs (see content/safety.md for provenance)
 L_PENCIL = 150.0        # m of effectively field-free, collinear straight per direction
 L_PENCIL_OPT = 30.0     # m optimistic value (strong FF-divergence + in-insertion dogleg credit)
-XSEC_FLATTEN = 0.5      # sigma_nu growth flattening above ~1 TeV vs the linear extrapolation
+# sigma_nu propagator suppression vs the linear low-energy extrapolation,
+# flux-weighted over the two species at <E_nu> ~ 3-3.5 TeV (CSMS 1106.3723:
+# x0.77 for nu, x0.99 for nubar). The old 0.5 halved a CC-only slope and was
+# ~1.7x too generous a dose credit.
+XSEC_FLATTEN = 0.84
 SEG_SPREAD = 0.5e-3     # rad: +-0.5 mrad vertical segmentation of the non-IP part of the insertion
 WOBBLE = 1.0e-3         # rad: +-1 mrad IMCC mover system (arcs, utility and RCS straights)
 SHOWER_W = 2.0          # m: transverse washout scale of hadronic/EM showers in soil
@@ -239,10 +243,23 @@ PITCH_RCS12 = convergence_pitch(DEPTH_RCS12)
 N_COLL = N_MU_YEAR * CHAIN_TRANSMISSION            # muons/yr/sign decaying in collider
 N_DEC_NORTH = N_COLL * LS_COLLIDER / C_COLLIDER    # decays/yr aimed north (one sign)
 L_CM = DET_RANGE * 100.0
-FLUX_CORE = N_DEC_NORTH * GAMMA**2 / (math.pi * L_CM**2)   # nu/cm^2/yr on axis
+FLUX_CORE = N_DEC_NORTH * GAMMA**2 / (math.pi * L_CM**2)   # per SPECIES, on axis
 E_NU_MEAN = 0.65 * E_MU * 1000.0                   # GeV, on-axis mean (numu .70, nue .60)
-SIGMA_NU = 0.35e-38 * E_NU_MEAN                    # cm^2/nucleon (flattened slope)
-RATE_PER_KG = FLUX_CORE * SIGMA_NU * 6.022e26      # interactions/kg/yr
+# CSMS (arXiv:1106.3723) CC+NC totals per nucleon, isoscalar, log-log interp.
+# Each decay emits ONE numu (at <E> = 0.7 Emu on axis) AND ONE nubar_e (0.6 Emu),
+# so the rate is Phi * [sigma_nu(0.7 Emu) + sigma_nubar(0.6 Emu)].
+_SIG_NU  = [(1e3, 8.2e-36), (2e3, 15.8e-36), (5e3, 35.6e-36), (1e4, 62e-36)]
+_SIG_NUB = [(1e3, 4.8e-36), (2e3, 9.4e-36), (5e3, 22.8e-36), (1e4, 42e-36)]
+def sigma_csms(tab, E_gev):
+    import bisect
+    xs = [math.log(e) for e, s in tab]; ys = [math.log(s) for e, s in tab]
+    x = math.log(E_gev)
+    i = 0 if x <= xs[0] else len(xs)-2 if x >= xs[-1] else bisect.bisect(xs, x)-1
+    t = (x - xs[i]) / (xs[i+1] - xs[i])
+    return math.exp(ys[i] + t*(ys[i+1] - ys[i]))
+SIGMA_SUM = (sigma_csms(_SIG_NU, 0.7*E_MU*1e3) +
+             sigma_csms(_SIG_NUB, 0.6*E_MU*1e3))   # cm^2 per decay
+RATE_PER_KG = FLUX_CORE * SIGMA_SUM * 6.022e26     # interactions/kg/yr, both species
 PENCIL_RADIUS_DET = DET_RANGE / GAMMA              # m
 
 # ----------------------------------------------------------------------
@@ -289,7 +306,7 @@ DOSE_UTILITY_RAW = dose_ss_raw(LS_COLLIDER, x_u)
 DOSE_UTILITY = DOSE_UTILITY_RAW * XSEC_FLATTEN / dilution(SEG_SPREAD + WOBBLE, x_u)
 # RCS straights: bound decays at top energy; decay fractions per ring (assumption)
 RCS_DECAY_FRac = {'RCS1': 0.09, 'RCS2': 0.09, 'RCS3': 0.07, 'RCS4': 0.07}
-RCS_TOP_E = {'RCS1': 0.314, 'RCS2': 0.75, 'RCS3': 1.5, 'RCS4': 5.0}
+RCS_TOP_E = {'RCS1': 0.314, 'RCS2': 0.75, 'RCS3': 1.5, 'RCS4': 4.5}  # TeV (RCS4 tops at ~4.5 in the 14.72 km racetrack)
 RCS_C = {'RCS1': C_RCS12, 'RCS2': C_RCS12, 'RCS3': C_RCS34, 'RCS4': C_RCS34}
 RCS_LS = {'RCS1': LS_RCS12, 'RCS2': LS_RCS12, 'RCS3': LS_RCS34, 'RCS4': LS_RCS34}
 def rcs_dose_bound(name):

@@ -1488,7 +1488,7 @@
    "properties": {
     "name": "Plume exit (N, pitch 0 mrad down-N)",
     "exit_km": 38.2,
-    "dose_mitigated_mSv_yr": 15.5
+    "dose_mitigated_mSv_yr": 26.05
    },
    "geometry": {
     "type": "Point",
@@ -1503,7 +1503,7 @@
    "properties": {
     "name": "Plume exit (S, pitch 0 mrad down-N)",
     "exit_km": 27.9,
-    "dose_mitigated_mSv_yr": 39.11
+    "dose_mitigated_mSv_yr": 65.71
    },
    "geometry": {
     "type": "Point",
@@ -1518,7 +1518,7 @@
    "properties": {
     "name": "Plume exit (N, pitch 1 mrad down-N)",
     "exit_km": 43.9,
-    "dose_mitigated_mSv_yr": 10.27
+    "dose_mitigated_mSv_yr": 17.25
    },
    "geometry": {
     "type": "Point",
@@ -1533,7 +1533,7 @@
    "properties": {
     "name": "Plume exit (S, pitch 1 mrad down-N)",
     "exit_km": 23.7,
-    "dose_mitigated_mSv_yr": 63.04
+    "dose_mitigated_mSv_yr": 105.91
    },
    "geometry": {
     "type": "Point",
@@ -1548,7 +1548,7 @@
    "properties": {
     "name": "Plume exit (N, pitch 2 mrad down-N)",
     "exit_km": 51.2,
-    "dose_mitigated_mSv_yr": 7.04
+    "dose_mitigated_mSv_yr": 11.82
    },
    "geometry": {
     "type": "Point",
@@ -1563,7 +1563,7 @@
    "properties": {
     "name": "Plume exit (S, pitch 2 mrad down-N)",
     "exit_km": 20.7,
-    "dose_mitigated_mSv_yr": 94.06
+    "dose_mitigated_mSv_yr": 158.02
    },
    "geometry": {
     "type": "Point",
@@ -1578,7 +1578,7 @@
    "properties": {
     "name": "Plume exit (N, pitch 5 mrad down-N)",
     "exit_km": 80.8,
-    "dose_mitigated_mSv_yr": 2.83
+    "dose_mitigated_mSv_yr": 4.76
    },
    "geometry": {
     "type": "Point",
@@ -1593,7 +1593,7 @@
    "properties": {
     "name": "Plume exit (S, pitch 5 mrad down-N)",
     "exit_km": 14.5,
-    "dose_mitigated_mSv_yr": 263.95
+    "dose_mitigated_mSv_yr": 443.44
    },
    "geometry": {
     "type": "Point",

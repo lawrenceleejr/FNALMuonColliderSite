@@ -47,7 +47,7 @@ Illinois property.
   the IP straight; RCS planes pitched 2.16 / 4.32 mrad so all plumes
   converge on the detector hall.
 * Detector: ~5 × 10¹⁵ ν/cm²·yr core fluence, ⟨Eν⟩ ≈ 3.2 TeV,
-  ≈ 3.5 × 10¹⁰ interactions per tonne-year (deep-hall reference).
+  ≈ 1.2 × 10¹¹ interactions per tonne-year (deep-hall reference; CSMS σ, both species).
 * Aquifers: every potable-aquifer crossing beyond the fence ≥ ~45× below the EPA tritium
   MCL in the stagnant worst case; whole-chord production ≈ 0.06 Ci/yr —
   see `content/aquifer.md`.

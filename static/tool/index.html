@@ -29,8 +29,9 @@
   }
   .maprow { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .55rem 0; }
   .maptable { width: 100%; border-collapse: collapse; font-size: .85rem; margin-top: .6rem; }
-  .maptable th, .maptable td { border-bottom: 1px solid #d8d2c4; padding: .32em .5em; text-align: left; }
-  .maptable th { color: #777; font-weight: normal; font-size: .78rem; }
+  .maptable th, .maptable td { border-bottom: 1px solid #d8d2c4; padding: .32em .5em;
+                               text-align: left; white-space: nowrap; }
+  .maptable th { color: #5d5a55; font-weight: normal; font-size: .78rem; }
   .maptable td { font-variant-numeric: tabular-nums; }
   .swatch { display: inline-block; width: 11px; height: 11px; border-radius: 50%;
             margin-right: .4em; vertical-align: -1px; }
@@ -44,7 +45,11 @@
     a { color: #8ab8e8; }
     .panel, .out, select, input[type=number] { background: #22252b !important;
       border-color: #3a3d44 !important; color: #d8d4cc; }
-    #plot { background: #101216 !important; }
+    button.mini { background: #2a2d33 !important; border-color: #4a4d54 !important;
+      color: #d8d4cc; }
+    #plot, #plotO, #plotB, #plotSpot, #plotS { background: #101216 !important; }
+    .panel label, .maptable th { color: #a9a49a; }
+    .grouphead { color: #a9a49a; border-color: #3a3d44; }
     .warn { background: #4a3216 !important; }
     .bad  { background: #582222 !important; }
     .solving { background: #14312a !important; }
@@ -52,15 +57,22 @@
   main { max-width: 62rem; margin: 0 auto; padding: 1rem 1.2rem 4rem; }
   h1 { font-size: 1.45rem; line-height: 1.3; }
   a { color: #1c5a96; }
-  #plot { width: 100%; height: auto; background: #fff; border-radius: 6px;
-        touch-action: none; display: block; }
+  #plot, #plotO, #plotB, #plotSpot, #plotS { width: 100%; height: auto; background: #fff;
+        border-radius: 6px; display: block; min-width: 640px; }
+  #plot { touch-action: none; }
+  .figwrap { overflow-x: auto; }
   .panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
            gap: .8rem 1.4rem; background: #f2efe7; border: 1px solid #d8d2c4;
            border-radius: 6px; padding: .9rem 1.1rem; margin: .9rem 0; }
   .panel > div { border-left: 3px solid transparent; padding-left: .5rem; }
   .panel > div.reactive { border-left-color: #0b6e4f; }
-  .panel label { display: block; font-size: .82rem; color: #666; }
+  .panel label { display: block; font-size: .82rem; color: #5d5a55; }
   .panel input[type=range] { width: 100%; }
+  input[type=range] { accent-color: #0b6e4f; }
+  input[type=checkbox] { accent-color: #0b6e4f; }
+  .grouphead { grid-column: 1 / -1; font-size: .72rem; letter-spacing: .09em;
+               text-transform: uppercase; color: #5d5a55; border-bottom: 1px solid #d8d2c4;
+               padding-bottom: .15rem; margin-top: .25rem; }
   .panel input[type=range]:disabled { opacity: .5; }
   .panel .val { font-variant-numeric: tabular-nums; font-weight: 600; }
   .lock { float: right; font-size: .74rem; color: #888; font-weight: normal;
@@ -115,7 +127,7 @@ machine parameters you want held fixed, and the remaining one solves itself to
 satisfy it.
 </p>
 
-<svg id="plot" viewBox="0 0 980 500" aria-label="corridor elevation profile with beam ray"></svg>
+<div class="figwrap"><svg id="plot" viewBox="0 0 980 500" aria-label="corridor elevation profile with beam ray"></svg></div>
 <p class="note" id="ve" style="margin-bottom:.25rem"></p>
 <p class="note" style="margin-top:0">figure export:
   <button class="mini" id="figSvg">SVG (vector)</button>
@@ -131,7 +143,7 @@ away</strong> from it on both sides — by s²/2R, more than 3 km over the
 ~200 km run to Champaign–Urbana. Real SRTM terrain rides on top of the
 curve (the Illinois River valley is the dip around −80 km).
 </p>
-<svg id="plotO" viewBox="0 0 980 430" aria-label="whole-chord overview with Earth curvature"></svg>
+<div class="figwrap"><svg id="plotO" viewBox="0 0 980 430" aria-label="whole-chord overview with Earth curvature"></svg></div>
 <p class="note" id="veO" style="margin-bottom:.25rem"></p>
 <p class="note" style="margin-top:0">figure export:
   <button class="mini" id="figSvgO">SVG (vector)</button>
@@ -167,25 +179,27 @@ curve (the Illinois River valley is the dip around −80 km).
     <div class="note" id="solveNote" style="margin-top:.35rem"></div>
   </div>
 
+  <div class="grouphead">Machine geometry — sets the beam line</div>
   <div id="wrapIpLat">
-    <label><span class="lock"><input type="checkbox" id="lockIpLat"> lock</span>
+    <label><span class="lock"><input type="checkbox" id="lockIpLat"> 🔒 lock</span>
       Collision point (IP) latitude — N–S along the on-site corridor</label>
     <input type="range" id="ipLat" min="41.8207" max="41.8695" step="0.0002" value="41.8443">
     <span class="val" id="ipLatV"></span>
   </div>
   <div id="wrapIpElev">
-    <label><span class="lock"><input type="checkbox" id="lockIpElev"> lock</span>
+    <label><span class="lock"><input type="checkbox" id="lockIpElev"> 🔒 lock</span>
       Height of the straightaway at the IP (elevation ASL; grade ~225 m)</label>
     <input type="range" id="ipElev" min="-100" max="235" step="1" value="191">
     <span class="val" id="ipElevV"></span>
   </div>
   <div id="wrapTilt">
-    <label><span class="lock"><input type="checkbox" id="lockTilt"> lock</span>
+    <label><span class="lock"><input type="checkbox" id="lockTilt"> 🔒 lock</span>
       Upward tilt of the straight section (toward north)</label>
     <input type="range" id="tilt" min="-5" max="70" step="0.05" value="15.40">
     <span class="val" id="tiltV"></span>
   </div>
 
+  <div class="grouphead">Civic &amp; context parameters</div>
   <div>
     <label>Detector latitude — on the Fermilab site or up the corridor</label>
     <input type="range" id="detLat" min="41.8207" max="42.0480" step="0.0002" value="41.8560">
@@ -201,6 +215,7 @@ curve (the Illinois River valley is the dip around −80 km).
     <input type="range" id="houseH" min="4" max="20" step="0.5" value="10">
     <span class="val" id="houseHV"></span>
   </div>
+  <div class="grouphead">Beam &amp; optics — sets rates and spot size</div>
   <div>
     <label>Muon beam energy E&mu; (sets &langle;E&nu;&rangle; &asymp; 0.65 E&mu;, &sigma;&nu;, and the beam's 1/&gamma; opening angle)</label>
     <input type="range" id="emu" min="0.5" max="7.5" step="0.25" value="5">
@@ -234,7 +249,7 @@ also correlates energy with angle (<code>⟨E⟩ ∝ (1+γ²θ²)⁻¹</code>) w
 <strong>noticeably tighter than the flux</strong>: 75 % of events inside
 1/γ, 99 % inside 3/γ.
 </p>
-<svg id="plotB" viewBox="0 0 980 400" aria-label="radial profile of the neutrino beam"></svg>
+<div class="figwrap"><svg id="plotB" viewBox="0 0 980 400" aria-label="radial profile of the neutrino beam"></svg></div>
 <p class="note" id="veB" style="margin-bottom:.25rem"></p>
 <p class="note" style="margin-top:0">figure export:
   <button class="mini" id="figSvgB">SVG (vector)</button>
@@ -250,13 +265,16 @@ ground it does so at a grazing angle of a few milliradians, and the circular
 cross-section is stretched along the surface by 1/sin(graze), turning a
 metres-wide spot into a long, narrow strip.
 </p>
-<svg id="plotSpot" viewBox="0 0 980 330" aria-label="neutrino spot size vs distance, and the exit footprints to scale"></svg>
+<div class="figwrap"><svg id="plotSpot" viewBox="0 0 980 330" aria-label="neutrino spot size vs distance, and the exit footprints to scale"></svg></div>
 <p class="note" style="margin-top:.25rem">figure export:
   <button class="mini" id="figSvgSp">SVG (vector)</button>
   <button class="mini" id="figPngSp">PNG 4×</button></p>
+<p class="note" style="margin:.4rem 0 .15rem">the 90 %-flux and 99 %-interaction radii
+  coincide at 3L/γ — the energy–angle correlation at work</p>
 <div style="overflow-x:auto"><table class="maptable"><thead><tr>
-  <th>location</th><th>L from IP</th><th>L/γ</th><th>50 % of flux</th>
-  <th>90 %</th><th>99 %</th><th>99 % of <em>events</em></th><th>ground footprint</th></tr></thead>
+  <th>location</th><th>L from IP</th><th>L/γ (= 50 % of flux)</th>
+  <th>3L/γ (= 90 % flux · 99 % of interactions)</th><th>99 % of flux</th>
+  <th>ground footprint</th></tr></thead>
   <tbody id="spotRows"></tbody></table></div>
 <div class="out" id="optOut" style="margin-top:.7rem"></div>
 <p class="note">
@@ -289,7 +307,7 @@ what sits above or below it, and whether that stretch keeps the rule.
 <div id="envVerdict" style="font-size:.95rem;margin:.4rem 0"></div>
 <div style="overflow-x:auto"><table class="maptable"><thead><tr>
   <th>beam</th><th>from → to (°N)</th><th>length</th>
-  <th>beam vs surface</th><th>land at the surface</th><th>class</th></tr></thead>
+  <th>beam vs surface</th><th>land at the surface</th><th>class</th><th>status</th></tr></thead>
   <tbody id="envRows"></tbody></table></div>
 <p class="note">
 Land classes are a coarse meridian strip-map assembled from the OSM
@@ -329,7 +347,7 @@ map is live with the controls above.
   <span id="mapFigNote"></span></p>
 <div style="overflow-x:auto"><table class="maptable"><thead><tr>
   <th>point</th><th>latitude</th><th>longitude</th><th>ground distance</th>
-  <th>rock traversed</th><th>deepest point</th></tr></thead>
+  <th>rock traversed</th><th>deepest point below surface</th></tr></thead>
   <tbody id="mapRows"></tbody></table></div>
 
 <h3 style="font-size:1rem;margin-bottom:.2rem">What the south beam passes through</h3>
@@ -338,13 +356,17 @@ map is live with the controls above.
   <th>share</th><th>ν interaction lengths</th></tr></thead>
   <tbody id="rockRows"></tbody></table></div>
 <p class="note">
-Stratigraphy is a rough flat-layer model of northeastern Illinois (glacial
-drift over Silurian dolomite, Maquoketa shale, Galena–Platteville dolomite —
-the unit that hosts Fermilab's deep NuMI/MINOS halls — then the sandstone and
-dolomite section down to the Mt. Simon and Precambrian basement), with unit
-depths good to a few tens of percent; the strata actually dip gently south
-into the Illinois Basin. It is here to set the scale of tunnelling conditions
-and matter traversal, not to site a shaft. One ν interaction length at these
+Stratigraphy is a <strong>dipping, latitude-dependent model</strong>: unit
+tops are elevations interpolated between control columns at seven latitudes,
+anchored to NuMI/MINOS construction geology at the Fermilab end, ISGS drift
+and bedrock mapping (including the buried Mahomet Bedrock Valley) at the
+Champaign end, and the gas-storage fields for the deep mid-corridor — with a
++60 m step at the Sandwich Fault Zone (41.55–41.62° N) carried explicitly.
+The strata fall away SE into the Illinois Basin, so the chord bottoms in the
+brackish Mt. Simon and exits through drift over Pennsylvanian shale, not
+through Fermilab's column. Mid-corridor tops are good to ±75–150 m — scale
+of tunnelling conditions and matter traversal, not a shaft siting; details
+and error bars in the <a href="../aquifer/">aquifer audit</a>. One ν interaction length at these
 energies is ~10¹¹ g/cm² — the whole Earth chord is a 10⁻⁴-level perturbation,
 so the beam arrives at the far exit essentially undiminished.
 </p>
@@ -368,7 +390,7 @@ marker) lands a bit north of the flat-model prediction (tick). Green shading
 is land inside the UIUC boundary polygon; the orange stretch is the grazing
 strip where the beam has less than 5 m of cover.
 </p>
-<svg id="plotS" viewBox="0 0 980 360" aria-label="terrain cross-section at the southern exit"></svg>
+<div class="figwrap"><svg id="plotS" viewBox="0 0 980 360" aria-label="terrain cross-section at the southern exit"></svg></div>
 <p class="note" id="veS" style="margin-bottom:.25rem"></p>
 <p class="note" style="margin-top:0">figure export:
   <button class="mini" id="figSvgS">SVG (vector)</button>
@@ -392,17 +414,17 @@ interaction happens per simulated event.
   <div>
     <label>Beam direction — which rock path to simulate</label>
     <select id="g4dir">
-      <option value="south">south chord — down through the Earth and back out</option>
-      <option value="north">north beam — IP to emergence, under the corridor</option>
+      <option value="south">south chord — through the Earth</option>
+      <option value="north">north beam — under the corridor</option>
     </select>
   </div>
   <div>
     <label>Beam species (each decay makes one of each pair)</label>
     <select id="g4species">
-      <option value="nu_mu">ν_μ — μ⁻ circulating this way</option>
-      <option value="anti_nu_e">ν̄_e — μ⁻ circulating this way</option>
-      <option value="anti_nu_mu">ν̄_μ — μ⁺ circulating this way</option>
-      <option value="nu_e">ν_e — μ⁺ circulating this way</option>
+      <option value="nu_mu">ν_μ (μ⁻ beam)</option>
+      <option value="anti_nu_e">ν̄_e (μ⁻ beam)</option>
+      <option value="anti_nu_mu">ν̄_μ (μ⁺ beam)</option>
+      <option value="nu_e">ν_e (μ⁺ beam)</option>
     </select>
   </div>
   <div>
@@ -455,16 +477,18 @@ interaction happens per simulated event.
   <li>An <em>upward</em>-tilted north straight tilts the south-going plume of
   the same straight <em>down</em> by the same angle, pushing the southern
   exit farther away — see the <a href="../safety/">safety assessment</a>.</li>
-  <li><strong>Geology is the flat-layer sketch drawn in the cross-section</strong>:
-  glacial drift over the Silurian dolomite (the shallow-tunnel host), the
-  Maquoketa shale, and the Galena–Platteville dolomite that hosts Fermilab's
-  existing deep halls. Unit depths are rough (±30%-ish) and the strata dip
-  gently south into the Illinois Basin, so read it as tunnelling context, not
-  a site investigation. Units washed <span style="color:#2b6cb0">blue</span>
-  are used as water-supply aquifers along the corridor (drift sand-and-gravel,
-  Silurian, St.&nbsp;Peter, Ironton–Galesville; Mt.&nbsp;Simon is brackish at
-  depth) — the <a href="../aquifer/">aquifer radiation audit</a> works through
-  what the beam does to each of them.</li>
+  <li><strong>Geology dips.</strong> The cross-section and the rock tables
+  use a latitude-dependent model of the Illinois Basin's flank: at Fermilab,
+  thin drift over the Silurian, Maquoketa, and the Galena–Platteville that
+  hosts the existing deep halls; 200 km south, ~90 m of drift over
+  Pennsylvanian shale, with the whole Cambro-Ordovician section fallen
+  400–650 m and the chord bottoming in the brackish Mt.&nbsp;Simon.
+  Mid-corridor unit tops are good to ±75–150 m. Units washed
+  <span style="color:#2b6cb0">blue</span> are within their potable reach at
+  that latitude (drift, Silurian north of ~41.3°, St.&nbsp;Peter and
+  Ironton–Galesville in the Fox Valley) — the
+  <a href="../aquifer/">aquifer radiation audit</a> works through what the
+  beam does to each of them.</li>
   <li>Once airborne the beam keeps climbing relative to the curving ground.
   Open-air showers need hundreds of metres of air to develop, so an overhead
   beam is far more benign than a surface-grazing one — but structures sitting
@@ -478,10 +502,12 @@ longitude): 55 m spacing over the north climb-out (41.86–42.00°) and the
 UIUC exit zone (40.03–40.10°), 200 m spacing elsewhere to 42.05° / across
 39.98–40.15°, then 1.1 km spacing to 42.60°; Smith Rd
 point sampled at (41.935618, −88.222542), grade 239 m ASL. Spherical-Earth
-chord geometry. Stratigraphy: illustrative flat-layer model informed by
-Illinois State Geological Survey statewide summaries and Fermilab NuMI/MINOS
-civil-construction experience; σν ≈ 0.35 × 10⁻³⁸ cm²/GeV per nucleon
-(CC+NC, flattened above ~1 TeV). Part of the
+chord geometry. Stratigraphy: dipping latitude-dependent model (control
+columns at 7 latitudes; ±75–150 m mid-corridor) anchored to Fermilab
+NuMI/MINOS construction geology, ISGS bedrock/drift mapping incl. the
+Mahomet Bedrock Valley, the Sandwich Fault Zone, and the
+Herscher/Ancona/Manlove gas-storage records; σν from CSMS
+(arXiv:1106.3723) CC+NC totals per species. Part of the
 <a href="https://github.com/lawrenceleejr/FNALMuonColliderSite">FNALMuonColliderSite</a> study.
 </footer>
 </main>
@@ -489,6 +515,37 @@ civil-construction experience; σν ≈ 0.35 × 10⁻³⁸ cm²/GeV per nucleon
 <script src="../vendor/leaflet.js"></script>
 <script>
 "use strict";
+// ---- theme palette --------------------------------------------------------
+// Every SVG panel re-renders from render(), so theming is just swapping the
+// neutral tokens below and re-rendering. Semantic hues (green beam, red IP /
+// airspace, dark-red emergence, purple envelope, orange grazing, blue
+// detector, geology fills) are identical in both themes.
+const PALETTES = {
+  light: { ink:'#333', muted:'#5d5a55', faint:'#8a877f', grid:'#8883', halo:'#fff',
+           box:'#fff', terrain:'#7a5c3e', terrainFill:'#c9b98a', axis:'#aaa' },
+  dark:  { ink:'#d5d1c8', muted:'#b3afa6', faint:'#93908a', grid:'#77777733', halo:'#101216',
+           box:'#22252b', terrain:'#a08256', terrainFill:'#5a4d38', axis:'#666' },
+};
+let PAL = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ? PALETTES.dark : PALETTES.light;
+
+// 'a.b × 10ⁿ' with a normalized mantissa (1 ≤ m < 10) and a unicode-superscript
+// exponent — the page-wide scientific-notation format (P1.7/P2.7). e-notation
+// survives only inside the G4 macro/GDML previews.
+const SUPD = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴",
+               "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
+function fmtSci(v, sig = 2) {
+  if (!isFinite(v)) return String(v);
+  if (v === 0) return "0";
+  const neg = v < 0 ? "−" : "", a = Math.abs(v);
+  let e = Math.floor(Math.log10(a));
+  let m = a / Math.pow(10, e);
+  m = +m.toPrecision(sig);
+  if (m >= 10) { m /= 10; e += 1; }
+  const sup = String(e).split("").map(c => SUPD[c]).join("");
+  return neg + m.toFixed(Math.max(sig - 1, 0)) + " × 10" + sup;
+}
+
 // ---- fixed geography --------------------------------------------------
 const R_E = 6371000;
 const SMITH_LAT = 41.935618, SMITH_GRADE = 239.0;
@@ -504,35 +561,127 @@ const N_A = 6.022e23;
 // 1.2e7 s/yr, 90% chain transmission, 700 m straight in an 11 km ring -> the
 // decays aimed along the corridor in EACH direction, per year:
 const N_DEC_YR = 1.8e12 * 5 * 1.2e7 * 0.90 * (700 / 11000);
-// sigma_nu ~ 0.35e-38 cm^2/GeV per nucleon (CC+NC slope, flattened above ~1 TeV)
-const SIGMA_SLOPE = 0.35e-38;
+// Neutrino cross-sections: CSMS (arXiv:1106.3723) CC+NC totals per nucleon
+// (isoscalar), log-log interpolated. Each muon decay emits ONE nu_mu-type
+// (on-axis <E> = 0.7 Emu) AND ONE nu_e-type (0.6 Emu), so total rates use
+// sigma_nu + sigma_nubar; attenuation uses the per-neutrino mean.
+const SIG_NU  = [[1e3, 8.2e-36], [2e3, 15.8e-36], [5e3, 35.6e-36], [1e4, 62e-36]];
+const SIG_NUB = [[1e3, 4.8e-36], [2e3, 9.4e-36], [5e3, 22.8e-36], [1e4, 42e-36]];
+function sigmaCSMS(tab, E) {
+  const lx = tab.map(p => Math.log(p[0])), ly = tab.map(p => Math.log(p[1]));
+  const x = Math.log(Math.max(E, 1));
+  let i = x <= lx[0] ? 0 : x >= lx[lx.length-1] ? lx.length - 2
+        : lx.findIndex(v => v > x) - 1;
+  const t = (x - lx[i]) / (lx[i+1] - lx[i]);
+  return Math.exp(ly[i] + t * (ly[i+1] - ly[i]));
+}
 
-// Rough stratigraphy for the northern-Illinois corridor: flat layers, depths
-// below LOCAL grade, densities in g/cm^3. Illustrative values assembled from
-// ISGS statewide summaries and the NuMI/MINOS civil-construction experience
-// at Fermilab (whose deep halls sit in the Galena-Platteville dolomite).
-// Real strata dip gently south into the Illinois Basin -- treat unit
-// boundaries as +-30% and see the note under the geology table.
-// Units flagged aq:true are used as water-supply aquifers somewhere along the
-// corridor (sand-and-gravel lenses in the drift incl. the Mahomet valley near
-// Champaign; the Silurian is the shallow private-well aquifer in Kane/DuPage;
-// St. Peter + Ironton-Galesville are the deep municipal "sandstone aquifers";
-// Mt. Simon is brackish at depth and used mainly for gas storage/injection).
-const GEOLOGY = [
-  { name: "Glacial drift (Quaternary till & outwash)", short: "glacial drift",             top: 0,    bot: 25,   rho: 2.10, color: "#d9c8a0", aq: true,  aqNote: "sand & gravel lenses; Mahomet valley aquifer near Champaign" },
-  { name: "Silurian dolomite (Niagaran–Alexandrian)", short: "Silurian dolomite",     top: 25,   bot: 110,  rho: 2.70, color: "#bcc8d1", aq: true,  aqNote: "shallow private-well aquifer (typ. wells 50–120 m)" },
-  { name: "Maquoketa Group (shale, argillaceous dolomite)", short: "Maquoketa shale",      top: 110,  bot: 170,  rho: 2.55, color: "#b3a28f", aq: false, aqNote: "regional aquitard" },
-  { name: "Galena–Platteville dolomite",          short: "Galena–Platteville dolomite", top: 170, bot: 340, rho: 2.65, color: "#c6cfb6", aq: false, aqNote: "tight; hosts the deep FNAL/NuMI halls" },
-  { name: "Ancell Group (St. Peter sandstone)",        short: "St. Peter sandstone",       top: 340,  bot: 470,  rho: 2.45, color: "#e2d4ac", aq: true,  aqNote: "deep municipal sandstone aquifer" },
-  { name: "Prairie du Chien–Eminence dolomites",  short: "Prairie du Chien dolomite", top: 470,  bot: 640,  rho: 2.65, color: "#b9c8c0", aq: false, aqNote: "minor/leaky" },
-  { name: "Ironton–Galesville & Eau Claire ss.",  short: "Ironton–Galesville sandstone", top: 640, bot: 880, rho: 2.50, color: "#dccab0", aq: true,  aqNote: "deep municipal sandstone aquifer" },
-  { name: "Mt. Simon sandstone",                       short: "Mt. Simon sandstone",       top: 880,  bot: 1400, rho: 2.45, color: "#cfbaa0", aq: true,  aqNote: "brackish at depth; storage/injection horizon" },
-  { name: "Precambrian crystalline basement",          short: "Precambrian basement",      top: 1400, bot: 1e9,  rho: 2.65, color: "#c8aaa5", aq: false, aqNote: "" },
+// ---- dip-aware stratigraphy along meridian -88.223 ------------------------
+// Unit TOPS are elevations (m ASL), linearly interpolated in latitude from
+// control columns at 41.85/41.60/41.30/41.00/40.70/40.40/40.10 N, anchored to
+// NuMI/MINOS construction geology (Fermilab end), ISGS drift/bedrock mapping
+// and the Mahomet Bedrock Valley studies (Champaign end), and gas-storage
+// field records (Herscher/Ancona/Manlove) for the deep mid-corridor. The
+// strata dip SE into the Illinois Basin; younger cover (Pennsylvanian,
+// New Albany, Devonian) appears southward. Mid-corridor tops carry
+// +-75-150 m uncertainty; a +60 m up-to-south step at the Sandwich Fault
+// Zone (41.55-41.62 N) is carried explicitly on the pre-Pennsylvanian tops.
+// aq: [latMin, latMax] where the unit is actually used for water supply
+// (potable reach) -- null = never an aquifer on this corridor.
+const GEO_LATS = [41.85, 41.60, 41.30, 41.00, 40.70, 40.40, 40.10];
+const GEO_UNITS = [
+  { name: "Pennsylvanian (Bond–Mattoon sh., ss., coal)", short: "Pennsylvanian",
+    tops: [null,null,150,178,175,120,130], rho: 2.40, aq: null, color: "#b8ab98",
+    note: "Champaign-County bedrock" },
+  { name: "New Albany Shale (Dev.–Miss.)", short: "New Albany Shale",
+    tops: [null,null,null,null,85,-5,-20], rho: 2.35, aq: null, color: "#8f8578",
+    note: "clipped once on the ascent" },
+  { name: "Devonian carbonate", short: "Devonian carbonate",
+    tops: [null,null,null,null,60,-45,-55], rho: 2.70, aq: null, color: "#c2cbc4",
+    note: "" },
+  { name: "Silurian dolomite (Niagaran–Alexandrian)", short: "Silurian dolomite",
+    tops: [203,168,110,155,20,-80,-95], rho: 2.70, aq: [41.30, 90],
+    color: "#bcc8d1", note: "shallow domestic-well aquifer N of ~41.3° (wells 30–90 m; karstic)" },
+  { name: "Maquoketa Group (shale)", short: "Maquoketa shale",
+    tops: [170,160,88,80,-80,-160,-215], rho: 2.55, aq: null, color: "#b3a28f",
+    note: "regional aquitard" },
+  { name: "Galena–Platteville dolomite", short: "Galena–Platteville",
+    tops: [110,100,20,-10,-160,-250,-310], rho: 2.68, aq: null, color: "#c6cfb6",
+    note: "tight; hosts the NuMI/MINOS halls" },
+  { name: "Ancell (St. Peter sandstone)", short: "St. Peter sandstone",
+    tops: [0,-10,-95,-125,-290,-385,-420], rho: 2.30, aq: [40.90, 90],
+    color: "#e2d4ac", note: "deep municipal aquifer (Fox Valley wellfields)" },
+  { name: "Prairie du Chien–Franconia", short: "Prairie du Chien–Franconia",
+    tops: [-60,-75,-165,-200,-370,-470,-505], rho: 2.65, aq: null, color: "#b9c8c0",
+    note: "" },
+  { name: "Ironton–Galesville sandstone", short: "Ironton–Galesville",
+    tops: [-170,-190,-250,-290,-470,-580,-640], rho: 2.40, aq: [41.00, 90],
+    color: "#dccab0", note: "best deep municipal aquifer; only ~40–60 m thick" },
+  { name: "Eau Claire (shaly)", short: "Eau Claire",
+    tops: [-215,-235,-300,-340,-520,-630,-690], rho: 2.60, aq: null, color: "#a89a88",
+    note: "aquitard sealing the Mt. Simon" },
+  { name: "Mt. Simon sandstone", short: "Mt. Simon",
+    tops: [-330,-355,-420,-470,-670,-800,-975], rho: 2.50, aq: null, color: "#cfbaa0",
+    note: "brackish; the gas-storage horizon (Herscher/Ancona/Manlove)" },
+  { name: "Precambrian crystalline basement", short: "Precambrian basement",
+    tops: [-1150,-1200,-1300,-1400,-1600,-1800,-2000], rho: 2.70, aq: null,
+    color: "#c8aaa5", note: "" },
 ];
-function unitAt(depth) {
-  if (depth <= 0) return null;
-  for (const g of GEOLOGY) if (depth <= g.bot) return g;
-  return GEOLOGY[GEOLOGY.length - 1];
+// bedrock surface (base of the glacial drift), m ASL: thin over the
+// 41.2-41.4 bedrock high, notched 100-150 m deep over the Mahomet Bedrock
+// Valley (40.25-40.5 N), 80-105 m deep at Champaign-Urbana
+const BEDROCK_ELEV = [[40.05,135],[40.10,130],[40.20,115],[40.35,105],[40.45,120],
+  [40.55,150],[40.70,175],[41.00,180],[41.30,150],[41.60,168],[41.85,203],[41.87,204]];
+const DRIFT = { name: "Glacial drift (till, outwash; basal Mahomet-class sands S of ~40.5°)",
+  short: "glacial drift", rho: 2.00, aq: [0, 90], color: "#d9c8a0",
+  note: "water table 3–8 m; hosts the Mahomet aquifer system southward" };
+const SFZ = [41.55, 41.62];   // Sandwich Fault Zone band; S side thrown up ~60 m
+
+function lerpPts(pts, la) {
+  if (la <= pts[0][0]) return pts[0][1];
+  if (la >= pts[pts.length-1][0]) return pts[pts.length-1][1];
+  for (let i = 0; i < pts.length-1; i++)
+    if (pts[i][0] <= la && la <= pts[i+1][0]) {
+      const t = (la - pts[i][0]) / (pts[i+1][0] - pts[i][0]);
+      return pts[i][1] + t * (pts[i+1][1] - pts[i][1]);
+    }
+}
+const GEO_CTRL = GEO_UNITS.map(u => {
+  const asc = [];                      // ascending latitude (GEO_LATS descends)
+  for (let i = GEO_LATS.length - 1; i >= 0; i--)
+    if (u.tops[i] !== null) asc.push([GEO_LATS[i], u.tops[i]]);
+  const noSfz = ["Pennsylvanian", "New Albany Shale", "Devonian carbonate",
+                 "Precambrian basement"].includes(u.short);
+  if (!noSfz && asc.length && asc[0][0] <= SFZ[0] && asc[asc.length-1][0] >= SFZ[1]) {
+    const base = la => lerpPts(asc, la);
+    return asc.concat([[SFZ[1], base(SFZ[1])], [SFZ[0], base(SFZ[0]) + 60]])
+              .sort((a, b) => a[0] - b[0]);
+  }
+  return asc;
+});
+function bedrockElev(la) { return lerpPts(BEDROCK_ELEV, la); }
+// which unit is at (lat, elev m ASL)? null above ground. Control columns are
+// CLAMPED beyond both ends (units continue north of 41.85 and south of
+// 40.10); a unit is absent only NORTH of its northernmost control, where it
+// pinches out against the sub-drift unconformity (Penn/New Albany/Devonian).
+function unitAtLL(la, elev) {
+  if (elev >= terrainAll(la)) return null;
+  if (elev > bedrockElev(la)) return DRIFT;
+  let pick = GEO_UNITS[GEO_UNITS.length - 1];
+  for (let i = 0; i < GEO_UNITS.length; i++) {
+    const c = GEO_CTRL[i];
+    if (!c.length) continue;
+    const northEdge = c[c.length - 1][0];
+    if (northEdge < 41.8 && la > northEdge + 0.01) continue;   // pinched out up north
+    if (elev <= lerpPts(c, la)) pick = GEO_UNITS[i];
+  }
+  return pick;
+}
+const isAquiferAt = (u, la) => !!(u.aq && la >= u.aq[0] && la <= u.aq[1]);
+// legacy helper: unit at DEPTH below local grade, at latitude la
+function unitAt(depth, la) {
+  la = la === undefined ? state.ipLat : la;
+  return depth <= 0 ? null : unitAtLL(la, terrainAll(la) - depth);
 }
 // SRTM elevation profile along lon -88.222972, [lat, m ASL]
 const PROFILE = [[41.8,226],[41.802,226],[41.804,219],[41.806,218],[41.808,222],[41.81,222],[41.812,221],[41.814,225],[41.816,221],[41.818,224],[41.82,225],[41.822,224],[41.824,224],[41.826,224],[41.828,226],[41.83,221],[41.832,225],[41.834,223],[41.836,221],[41.838,222],[41.84,225],[41.842,227],[41.844,225],[41.846,226],[41.848,224],[41.85,224],[41.852,224],[41.854,225],[41.856,226],[41.858,226],[41.86,226],[41.8605,226],[41.861,226],[41.8615,226],[41.862,226],[41.8625,225],[41.863,225],[41.8635,225],[41.864,225],[41.8645,225],[41.865,228],[41.8655,228],[41.866,228],[41.8665,228],[41.867,230],[41.8675,230],[41.868,230],[41.8685,230],[41.869,227],[41.8695,227],[41.87,227],[41.8705,227],[41.871,229],[41.8715,229],[41.872,229],[41.8725,229],[41.873,230],[41.8735,230],[41.874,230],[41.8745,230],[41.875,229],[41.8755,229],[41.876,229],[41.8765,229],[41.877,229],[41.8775,230],[41.878,230],[41.8785,230],[41.879,230],[41.8795,231],[41.88,231],[41.8805,231],[41.881,231],[41.8815,232],[41.882,232],[41.8825,232],[41.883,232],[41.8835,231],[41.884,231],[41.8845,231],[41.885,231],[41.8855,235],[41.886,235],[41.8865,235],[41.887,235],[41.8875,232],[41.888,232],[41.8885,232],[41.889,232],[41.8895,232],[41.89,230],[41.8905,230],[41.891,230],[41.8915,230],[41.892,235],[41.8925,235],[41.893,235],[41.8935,235],[41.894,234],[41.8945,234],[41.895,234],[41.8955,234],[41.896,235],[41.8965,235],[41.897,235],[41.8975,235],[41.898,236],[41.8985,236],[41.899,236],[41.8995,236],[41.9,231],[41.9005,231],[41.901,231],[41.9015,231],[41.902,231],[41.9025,233],[41.903,233],[41.9035,233],[41.904,233],[41.9045,234],[41.905,234],[41.9055,234],[41.906,234],[41.9065,237],[41.907,237],[41.9075,237],[41.908,237],[41.9085,235],[41.909,235],[41.9095,235],[41.91,235],[41.9105,229],[41.911,229],[41.9115,229],[41.912,229],[41.9125,233],[41.913,233],[41.9135,233],[41.914,233],[41.9145,233],[41.915,232],[41.9155,232],[41.916,232],[41.9165,232],[41.917,236],[41.9175,236],[41.918,236],[41.9185,236],[41.919,234],[41.9195,234],[41.92,234],[41.9205,234],[41.921,235],[41.9215,235],[41.922,235],[41.9225,235],[41.923,234],[41.9235,234],[41.924,234],[41.9245,234],[41.925,245],[41.9255,245],[41.926,245],[41.9265,245],[41.927,245],[41.9275,235],[41.928,235],[41.9285,235],[41.929,235],[41.9295,240],[41.93,240],[41.9305,240],[41.931,240],[41.9315,235],[41.932,235],[41.9325,235],[41.933,235],[41.9335,237],[41.934,237],[41.9345,237],[41.935,237],[41.9355,240],[41.936,240],[41.9365,240],[41.937,240],[41.9375,239],[41.938,239],[41.9385,239],[41.939,239],[41.9395,239],[41.94,238],[41.9405,238],[41.941,238],[41.9415,238],[41.942,240],[41.9425,240],[41.943,240],[41.9435,240],[41.944,239],[41.9445,239],[41.945,239],[41.9455,239],[41.946,238],[41.9465,238],[41.947,238],[41.9475,238],[41.948,239],[41.9485,239],[41.949,239],[41.9495,239],[41.95,239],[41.9505,239],[41.951,239],[41.9515,239],[41.952,239],[41.9525,236],[41.953,236],[41.9535,236],[41.954,236],[41.9545,233],[41.955,233],[41.9555,233],[41.956,233],[41.9565,240],[41.957,240],[41.9575,240],[41.958,240],[41.9585,234],[41.959,234],[41.9595,234],[41.96,234],[41.9605,237],[41.961,237],[41.9615,237],[41.962,237],[41.9625,236],[41.963,236],[41.9635,236],[41.964,236],[41.9645,236],[41.965,234],[41.9655,234],[41.966,234],[41.9665,234],[41.967,238],[41.9675,238],[41.968,238],[41.9685,238],[41.969,244],[41.9695,244],[41.97,244],[41.9705,244],[41.971,242],[41.9715,242],[41.972,242],[41.9725,242],[41.973,246],[41.9735,246],[41.974,246],[41.9745,246],[41.975,238],[41.9755,238],[41.976,238],[41.9765,238],[41.977,238],[41.9775,241],[41.978,241],[41.9785,241],[41.979,241],[41.9795,236],[41.98,236],[41.9805,236],[41.981,236],[41.9815,242],[41.982,242],[41.9825,242],[41.983,242],[41.9835,239],[41.984,239],[41.9845,239],[41.985,239],[41.9855,237],[41.986,237],[41.9865,237],[41.987,237],[41.9875,239],[41.988,239],[41.9885,239],[41.989,239],[41.9895,239],[41.99,237],[41.9905,237],[41.991,237],[41.9915,237],[41.992,234],[41.9925,234],[41.993,234],[41.9935,234],[41.994,239],[41.9945,239],[41.995,239],[41.9955,239],[41.996,240],[41.9965,240],[41.997,240],[41.9975,240],[41.998,236],[41.9985,236],[41.999,236],[41.9995,236],[42,240],[42.002,240],[42.004,246],[42.006,244],[42.008,246],[42.01,248],[42.012,249],[42.014,247],[42.016,247],[42.018,249],[42.02,249],[42.022,252],[42.024,259],[42.026,260],[42.028,260],[42.03,255],[42.032,236],[42.034,243],[42.036,258],[42.038,258],[42.04,262],[42.042,265],[42.044,263],[42.046,260],[42.048,264],[42.05,266],[42.06,266],[42.07,261],[42.08,264],[42.09,261],[42.1,267],[42.11,256],[42.12,244],[42.13,268],[42.14,267],[42.15,240],[42.16,268],[42.17,262],[42.18,262],[42.19,235],[42.2,227],[42.21,242],[42.22,264],[42.23,269],[42.24,232],[42.25,224],[42.26,230],[42.27,232],[42.28,227],[42.29,227],[42.3,232],[42.31,225],[42.32,223],[42.33,234],[42.34,226],[42.35,238],[42.36,223],[42.37,231],[42.38,235],[42.39,234],[42.4,255],[42.41,257],[42.42,264],[42.43,268],[42.44,239],[42.45,258],[42.46,256],[42.47,259],[42.48,260],[42.49,285],[42.5,278],[42.51,273],[42.52,251],[42.53,250],[42.54,239],[42.55,237],[42.56,227],[42.57,232],[42.58,237],[42.59,230],[42.6,250]];
@@ -756,37 +905,47 @@ function chord(alpha) {
            column: t * 100 * 2.7 };                          // g/cm^2
 }
 
-// Column density along the SOUTH chord through concentric spherical shells
-// (layer depths measured from the IP-side grade; exact circle geometry, so the
-// per-layer path lengths sum to the full chord). Returns per-layer segments.
+// Column density along the SOUTH chord, sampled through the dipping
+// stratigraphy: walk the exact polar chord r(φ) = p/cos(φ−φP), classify each
+// step by (latitude, elevation), and accumulate per-unit path in the order
+// the beam meets the units. aqHere records whether any crossing of the unit
+// happened inside its potable reach.
 function columnSouth(alpha) {          // alpha > 0 = down-going (normal case)
-  const grade = terrain(state.ipLat);
-  const rS = R_E + grade, r0 = R_E + state.ipElev;
-  const pImp = r0 * Math.cos(alpha);
-  const q = r => Math.sqrt(Math.max(r * r - pImp * pImp, 0));
-  const u0 = (alpha >= 0 ? -1 : 1) * q(r0);   // launch position along the chord
-  const uX = q(rS);                            // exit at the surface shell
-  const layers = [];
-  let X = 0, len = 0;
-  for (const g of GEOLOGY) {
-    const rB = rS - g.top, rA = Math.max(rS - g.bot, 0);
-    const qB = q(rB), qA = q(rA);
-    const inter = (a, b) => Math.max(0, Math.min(b, uX) - Math.max(a, u0));
-    const L = inter(-qB, -qA) + inter(qA, qB);
-    if (L > 1) { layers.push({ g, L, X: L * 100 * g.rho }); X += L * 100 * g.rho; len += L; }
+  const r0 = R_E + state.ipElev;
+  const p = r0 * Math.cos(alpha);
+  const dP = Math.acos(Math.min(1, p / r0));
+  const sgn = alpha >= 0 ? 1 : -1;
+  const acc = new Map();
+  let X = 0, len = 0, prevR = null;
+  const N = 22000, dphi = (2.2 * Math.PI / 180) / N;
+  for (let i = 0; i < N; i++) {
+    const c = Math.cos(i * dphi - sgn * dP);
+    if (c <= 0.2) break;
+    const r = p / c, la = state.ipLat - i * dphi * 180 / Math.PI;
+    const elev = r - R_E;
+    const ds = prevR === null ? 0 : Math.sqrt((r - prevR) ** 2 + (r * dphi) ** 2);
+    prevR = r;
+    if (i > 400 && elev >= terrainAll(la)) break;         // emerged
+    const u = unitAtLL(la, elev);
+    if (!u || !ds) continue;
+    const e = acc.get(u.short) || { g: u, L: 0, X: 0, aqHere: false };
+    e.L += ds; e.X += ds * 100 * u.rho;
+    if (isAquiferAt(u, la)) e.aqHere = true;
+    acc.set(u.short, e);
+    X += ds * 100 * u.rho; len += ds;
   }
-  return { layers, X, len };
+  return { layers: [...acc.values()], X, len };
 }
 
 // Column density along the NORTH beam's underground stretch, sampled over the
-// real terrain (layer depths follow the local surface).
+// real terrain and the same dipping stratigraphy.
 function columnNorth(b) {
   const sEnd = b.exitS !== null ? b.exitS : s_of(LAT_END);
   const acc = new Map();
   let X = 0, len = 0;
   for (let sPos = b.s0; sPos < sEnd; sPos += 50) {
-    const d = terrain(lat_of(sPos)) - b.h(sPos);
-    const g = unitAt(d);
+    const la = lat_of(sPos);
+    const g = unitAtLL(la, b.h(sPos));
     if (!g) continue;
     acc.set(g.short, (acc.get(g.short) || 0) + 50);
     X += 50 * 100 * g.rho; len += 50;
@@ -839,10 +998,13 @@ function spotAt(L) {
 // Neutrino cross-section, interaction length, and beam physics at energy Emu
 function beamPhysics() {
   const gamma = state.emu * 1e12 / 105.658e6;
-  const enu = 0.65 * state.emu * 1000;                 // GeV, on-axis mean
-  const sigma = SIGMA_SLOPE * enu;                     // cm^2 / nucleon
+  const enu = 0.65 * state.emu * 1000;                 // GeV, on-axis blend (display)
+  const sigNu = sigmaCSMS(SIG_NU, 0.7 * state.emu * 1000);   // the nu of the pair
+  const sigNub = sigmaCSMS(SIG_NUB, 0.6 * state.emu * 1000); // the nubar of the pair
+  const sigSum = sigNu + sigNub;                       // cm^2 per DECAY (both species)
+  const sigma = sigSum / 2;                            // mean per neutrino (attenuation)
   const lambda = 1 / (N_A * sigma);                    // g/cm^2
-  return { gamma, enu, sigma, lambda };
+  return { gamma, enu, sigma, sigSum, lambda };
 }
 
 // ---- constraint solving -------------------------------------------------
@@ -908,6 +1070,8 @@ function el(tag, attrs, parent) {
 }
 const fmt = (v, dp) => v.toLocaleString("en-US", {maximumFractionDigits: dp, minimumFractionDigits: dp});
 const angTxt = th => fmt(th*1000, 2) + " mrad = " + fmt(th*180/Math.PI, 3) + "°";
+// last-rendered vertical exaggeration of each profile panel (for export captions)
+const VE = { plot: 0, O: 0, S: 0 };
 
 function render() {
   const sol = solve();
@@ -919,8 +1083,8 @@ function render() {
   const south = columnSouth(state.tilt);       // south beam dips by the north tilt
   const north = columnNorth(b);
   const lamS = south.X / phys.lambda, lamN = north.X / phys.lambda;
-  const ipUnit = unitAt(terrain(state.ipLat) - state.ipElev);
-  const detUnit = b.detDepth > 0 ? unitAt(b.detDepth) : null;
+  const ipUnit = unitAtLL(state.ipLat, state.ipElev);
+  const detUnit = b.detDepth > 0 ? unitAt(b.detDepth, state.detLat) : null;
 
   // vertical window: keep terrain readable and the airspace ceiling in frame
   let zMax = 270, zMin = Math.max(Math.min(b.h0 - 15, 170), -280);
@@ -931,14 +1095,20 @@ function render() {
   yMap = { zMin, zMax };
 
   svg.textContent = "";
+  // clip anything data-like to the plot window so nothing draws outside the frame
+  {
+    const defs = el("defs", {});
+    const cp = el("clipPath", {id: "clipPlot"}, defs);
+    el("rect", {x: ML, y: MT, width: W - ML - MR, height: H - MT - MB}, cp);
+  }
   el("rect", {x: X(SITE_S), y: MT, width: X(SITE_N) - X(SITE_S), height: H - MT - MB,
               fill: "#8a6d3b", opacity: .10});
   el("text", {x: (X(SITE_S)+X(SITE_N))/2, y: MT + 16, "text-anchor": "middle",
               "font-size": 12, fill: "#8a6d3b"}).textContent = "Fermilab site";
 
   for (let z = Math.ceil(zMin/50)*50; z <= zMax; z += 50) {
-    el("line", {x1: ML, y1: Y(z), x2: W-MR, y2: Y(z), stroke: "#8883", "stroke-width": .7});
-    el("text", {x: ML-6, y: Y(z)+4, "text-anchor": "end", "font-size": 11, fill: "#888"})
+    el("line", {x1: ML, y1: Y(z), x2: W-MR, y2: Y(z), stroke: PAL.grid, "stroke-width": .7});
+    el("text", {x: ML-6, y: Y(z)+4, "text-anchor": "end", "font-size": 11, fill: PAL.faint})
       .textContent = z + " m";
   }
 
@@ -946,42 +1116,51 @@ function render() {
   const dMin = (s_of(LAT_MIN) - b.s0) / 1000, dMax = (s_of(LAT_MAX) - b.s0) / 1000;
   for (let d = Math.ceil(dMin/2)*2; d <= dMax; d += 2) {
     const la = lat_of(b.s0 + d*1000), zero = Math.abs(d) < 1e-9;
-    el("line", {x1: X(la), y1: H-MB, x2: X(la), y2: H-MB+4, stroke: "#aaa", "stroke-width": 1});
+    el("line", {x1: X(la), y1: H-MB, x2: X(la), y2: H-MB+4, stroke: PAL.axis, "stroke-width": 1});
     el("text", {x: X(la), y: H-MB+17, "text-anchor": "middle", "font-size": 11.5,
-                fill: zero ? "#b3261e" : "#777", "font-weight": zero ? 600 : 400})
+                fill: zero ? "#b3261e" : PAL.faint, "font-weight": zero ? 600 : 400})
       .textContent = zero ? "IP" : (d > 0 ? "+" : "−") + Math.abs(d);
   }
-  el("text", {x: (ML + W-MR)/2, y: H-MB+36, "text-anchor": "middle", "font-size": 12, fill: "#777"})
+  el("text", {x: (ML + W-MR)/2, y: H-MB+36, "text-anchor": "middle", "font-size": 12, fill: PAL.faint})
     .textContent = "kilometres north of the collision point →";
 
-  // terrain + stratigraphy: each unit is a band a fixed depth below the
-  // local surface (rough flat-layer model -- see the geology note)
+  // terrain + stratigraphy: unit tops are ELEVATIONS from the dip-aware
+  // model (near-horizontal in this on-site window; the dip is southward)
   const winPts = PROFILE.filter(([la]) => la >= LAT_MIN && la <= LAT_MAX);
   let tp = winPts.map(([la, e], i) => (i?" L":"M") + X(la).toFixed(1) + " " + Y(e).toFixed(1)).join("");
-  for (const g of GEOLOGY) {
-    if (Y(terrain(41.9) - g.top) > H - MB) break;      // band entirely below the window
-    let up = winPts.map(([la, e], i) =>
-      (i?" L":"M") + X(la).toFixed(1) + " " + Math.min(Y(e - g.top), H - MB).toFixed(1)).join("");
-    let dn = "";
-    for (let i = winPts.length - 1; i >= 0; i--) {
-      const [la, e] = winPts[i];
-      dn += " L" + X(la).toFixed(1) + " " + Math.min(Y(e - g.bot), H - MB).toFixed(1);
+  {
+    const laLbl = LAT_MIN + 0.70 * (LAT_MAX - LAT_MIN);
+    const bandStack = [];       // [unit, topElev(la) fn] visible in the window
+    bandStack.push([DRIFT, la => terrain(la)]);
+    GEO_UNITS.forEach((u, i) => {
+      const c = GEO_CTRL[i];
+      if (!c.length || c[c.length-1][0] < LAT_MIN) return;   // absent up here
+      bandStack.push([u, la => Math.min(lerpPts(c, la), bedrockElev(la))]);
+    });
+    for (let k = 0; k < bandStack.length; k++) {
+      const [u, topF] = bandStack[k];
+      const botF = k + 1 < bandStack.length ? bandStack[k+1][1] : () => -1e9;
+      if (Y(topF(41.93)) > H - MB) break;    // band entirely below the window
+      let up = winPts.map(([la], i) =>
+        (i?" L":"M") + X(la).toFixed(1) + " " + Math.min(Y(topF(la)), H - MB).toFixed(1)).join("");
+      let dn = "";
+      for (let i = winPts.length - 1; i >= 0; i--)
+        dn += " L" + X(winPts[i][0]).toFixed(1) + " " +
+              Math.min(Y(botF(winPts[i][0])), H - MB).toFixed(1);
+      el("path", {d: up + dn + " Z", fill: u.color, opacity: .42});
+      // blue wash where the unit is inside its potable reach at this latitude
+      if (isAquiferAt(u, laLbl))
+        el("path", {d: up + dn + " Z", fill: "#2b6cb0", opacity: .10});
+      const yTop = Y(topF(laLbl)), yBot = Math.min(Y(botF(laLbl)), H - MB);
+      if (yBot - yTop > 15 && yTop < H - MB - 14)
+        el("text", {x: X(laLbl), y: Math.min((yTop + yBot) / 2 + 4, H - MB - 6),
+                    "font-size": 11, fill: isAquiferAt(u, laLbl) ? "#3d5a80" : PAL.muted,
+                    opacity: .95})
+          .textContent = u.short + " · ρ " + u.rho +
+                         (isAquiferAt(u, laLbl) ? " · aquifer" : "");
     }
-    el("path", {d: up + dn + " Z", fill: g.color, opacity: .42});
-    // aquifer units get a translucent blue wash so the water-bearing horizons
-    // read at a glance (see the aquifer audit page)
-    if (g.aq) el("path", {d: up + dn + " Z", fill: "#2b6cb0", opacity: .10});
-    // label inside the band, a third of the way across (clear of the IP
-    // annotations at the left edge), if it is thick enough on screen
-    const laLbl = LAT_MIN + 0.56 * (LAT_MAX - LAT_MIN);
-    const e0 = terrain(laLbl);
-    const yTop = Y(e0 - g.top), yBot = Math.min(Y(e0 - g.bot), H - MB);
-    if (yBot - yTop > 15 && yTop < H - MB - 14)
-      el("text", {x: X(laLbl), y: Math.min((yTop + yBot) / 2 + 4, H - MB - 6),
-                  "font-size": 10.5, fill: g.aq ? "#3d5a80" : "#6b6257", opacity: .95})
-        .textContent = g.short + " · ρ " + g.rho + (g.aq ? " · aquifer" : "");
   }
-  el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2});
+  el("path", {d: tp, fill: "none", stroke: PAL.terrain, "stroke-width": 2});
 
   // private-airspace band: ground -> ground + ceiling, from Smith Rd northward
   {
@@ -994,9 +1173,10 @@ function render() {
     });
     for (let i = las.length - 1; i >= 0; i--)
       dn += " L" + X(las[i]).toFixed(1) + " " + Y(terrain(las[i])).toFixed(1);
-    el("path", {d: up + dn + " Z", fill: "#b3261e", opacity: .13});
+    el("path", {d: up + dn + " Z", fill: "#b3261e", opacity: .13,
+                "clip-path": "url(#clipPlot)"});
     el("path", {d: up, fill: "none", stroke: "#b3261e", "stroke-width": 1.2,
-                "stroke-dasharray": "5 4", opacity: .8});
+                "stroke-dasharray": "5 4", opacity: .8, "clip-path": "url(#clipPlot)"});
     el("text", {x: X(SMITH_LAT) + 7, y: Y(terrain(SMITH_LAT) + airM) - 6,
                 "font-size": 11, fill: "#b3261e"})
       .textContent = fmt(state.airFt, 0) + " ft over private property →";
@@ -1011,16 +1191,25 @@ function render() {
     const dn = winPts.map(([la, e], i) =>
       (i?" L":"M") + X(la).toFixed(1) + " " + Math.min(Y(e - SHELL_M), H - MB).toFixed(1)).join("");
     el("path", {d: up, fill: "none", stroke: "#6b4fa0", "stroke-width": 1.1,
-                "stroke-dasharray": "9 5", opacity: .7});
+                "stroke-dasharray": "9 5", opacity: .7, "clip-path": "url(#clipPlot)"});
     el("path", {d: dn, fill: "none", stroke: "#6b4fa0", "stroke-width": 1.1,
-                "stroke-dasharray": "9 5", opacity: .5});
-    el("text", {x: W - MR - 8, y: Y(winPts[winPts.length-1][1] + SHELL_M) - 5,
-                "text-anchor": "end", "font-size": 10.5, fill: "#6b4fa0",
-                stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"})
-      .textContent = "navigable airspace ≥ 500 ft AGL";
-    el("text", {x: W - MR - 8, y: Math.min(Y(winPts[winPts.length-1][1] - SHELL_M), H - MB) - 5,
-                "text-anchor": "end", "font-size": 10.5, fill: "#6b4fa0", opacity: .85,
-                stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"})
+                "stroke-dasharray": "9 5", opacity: .5, "clip-path": "url(#clipPlot)"});
+    const clampY = y => Math.min(Math.max(y, MT + 12), H - MB - 6);
+    // top label follows the +500 ft line; if the line's right end has left the
+    // top of the window, letter it where the line crosses y = MT+14 instead
+    let lxTop = W - MR - 8, lyTop = Y(winPts[winPts.length-1][1] + SHELL_M) - 5, upTxt = "";
+    if (lyTop < MT + 12) {
+      for (let i = winPts.length - 1; i >= 0; i--)
+        if (Y(winPts[i][1] + SHELL_M) >= MT + 14) { lxTop = X(winPts[i][0]); break; }
+      lyTop = MT + 24; upTxt = " ↑";
+    }
+    el("text", {x: lxTop, y: clampY(lyTop),
+                "text-anchor": "end", "font-size": 11, fill: "#6b4fa0",
+                stroke: PAL.halo, "stroke-width": 3, "paint-order": "stroke"})
+      .textContent = "navigable airspace ≥ 500 ft AGL" + upTxt;
+    el("text", {x: W - MR - 8, y: clampY(Math.min(Y(winPts[winPts.length-1][1] - SHELL_M), H - MB) - 5),
+                "text-anchor": "end", "font-size": 11, fill: "#6b4fa0", opacity: .85,
+                stroke: PAL.halo, "stroke-width": 3, "paint-order": "stroke"})
       .textContent = "civic-envelope floor: −500 ft";
   }
 
@@ -1037,7 +1226,7 @@ function render() {
     for (const g of runs) if (g.length > 1)
       el("path", {d: g.map((q,i) => (i?"L":"M") + q[0].toFixed(1) + " " + q[1].toFixed(1)).join(" "),
                   fill: "none", stroke: "#b3261e", "stroke-width": 7, opacity: .5,
-                  "stroke-linecap": "round"});
+                  "stroke-linecap": "round", "clip-path": "url(#clipPlot)"});
   }
 
   // beam ray: dashed underground, solid airborne
@@ -1051,7 +1240,8 @@ function render() {
   for (const g of segs) {
     const d = g.pts.map((p,i) => (i?"L":"M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
     el("path", {d, fill: "none", stroke: "#0b6e4f", "stroke-width": 2.2,
-                "stroke-dasharray": g.airborne ? "none" : "7 5"});
+                "stroke-dasharray": g.airborne ? "none" : "7 5",
+                "clip-path": "url(#clipPlot)"});
   }
 
   // fence marker
@@ -1074,19 +1264,23 @@ function render() {
     const yArm = Y(b.h(s_of(invX(xI + RR))));
     el("path", {d: `M ${xI} ${yI} L ${xI+RR} ${yI} L ${xI+RR} ${yArm} Z`,
                 fill: "#0b6e4f", opacity: .16});
-    el("line", {x1: xI, y1: yI, x2: xI+RR+14, y2: yI, stroke: "#666",
+    el("line", {x1: xI, y1: yI, x2: xI+RR+14, y2: yI, stroke: PAL.muted,
                 "stroke-width": 1, "stroke-dasharray": "4 3"});
-    el("text", {x: xI+RR+18, y: yI+4, "font-size": 10, fill: "#999"})
-      .textContent = "horizontal (wedge exaggerated by the vertical scale)";
     el("text", {x: xI+12, y: yI-10, "font-size": 13.5, fill: "#0b6e4f", "font-weight": 600})
       .textContent = angTxt(state.tilt);
   }
   el("path", {d: `M ${xI} ${yI-9} L ${xI-8} ${yI+7} L ${xI+8} ${yI+7} Z`, fill: "#b3261e",
-              stroke: "#fff", "stroke-width": 1.5, id: "hIP", style: "cursor:move"});
-  el("text", {x: xI - 12, y: yI - 48, "text-anchor": "end", "font-size": 11.5, fill: "#b3261e",
-              stroke: "#fff", "stroke-width": 2.5, "paint-order": "stroke"})
-    .textContent = "IP " + fmt(state.ipElev,0) + " m ASL (" +
+              stroke: PAL.halo, "stroke-width": 1.5, id: "hIP", style: "cursor:move"});
+  {
+    const ipLbl = "IP " + fmt(state.ipElev,0) + " m ASL (" +
       (ipDepth >= 0 ? "−" + fmt(ipDepth,0) + " m" : "above ground!") + ")";
+    // anchored end left of the marker unless that would run off the left margin
+    const flip = xI - 12 - 8 * ipLbl.length < ML;
+    el("text", {x: flip ? xI + 12 : xI - 12, y: yI - 48,
+                "text-anchor": flip ? "start" : "end", "font-size": 11.5, fill: "#b3261e",
+                stroke: PAL.halo, "stroke-width": 2.5, "paint-order": "stroke"})
+      .textContent = ipLbl;
+  }
 
   // IP <-> detector dimension line
   const dkm = (s_of(state.detLat) - b.s0) / 1000;
@@ -1095,14 +1289,14 @@ function render() {
     const yBottom = H - MB - 12;
     const yDim = Math.abs(yI - yBottom) < 26 ? yBottom - 56 : yBottom;
     const x1 = Math.min(xI, xD), x2 = Math.max(xI, xD);
-    el("line", {x1, y1: yDim, x2, y2: yDim, stroke: "#444", "stroke-width": 1});
+    el("line", {x1, y1: yDim, x2, y2: yDim, stroke: PAL.muted, "stroke-width": 1});
     for (const x of [x1, x2])
-      el("line", {x1: x, y1: yDim-5, x2: x, y2: yDim+5, stroke: "#444", "stroke-width": 1});
+      el("line", {x1: x, y1: yDim-5, x2: x, y2: yDim+5, stroke: PAL.muted, "stroke-width": 1});
     const txt = fmt(Math.abs(dkm), 2) + " km IP → detector" + (dkm < 0 ? " (south)" : "");
     const wid = txt.length * 6.1, mid = (x1 + x2) / 2;
-    el("rect", {x: mid - wid/2, y: yDim-9, width: wid, height: 16, fill: "#fff",
+    el("rect", {x: mid - wid/2, y: yDim-9, width: wid, height: 16, fill: PAL.box,
                 "fill-opacity": .82, rx: 2});
-    el("text", {x: mid, y: yDim+3.5, "text-anchor": "middle", "font-size": 11.5, fill: "#333"})
+    el("text", {x: mid, y: yDim+3.5, "text-anchor": "middle", "font-size": 11.5, fill: PAL.ink})
       .textContent = txt;
   }
 
@@ -1123,15 +1317,22 @@ function render() {
   const markLat = state.constraint === 'exit' ? state.exitTarget : b.exitLat;
   if (markLat !== null && markLat <= LAT_MAX) {
     const xE = X(markLat), yE = Y(terrain(markLat));
-    const c = el("circle", {cx: xE, cy: yE, r: 8, fill: "#7a2e21", stroke: "#fff",
+    const c = el("circle", {cx: xE, cy: yE, r: 8, fill: "#7a2e21", stroke: PAL.halo,
                             "stroke-width": 2, opacity: exitDraggable ? 1 : .45,
                             style: exitDraggable ? "cursor:ew-resize" : "cursor:default"});
     if (exitDraggable) c.setAttribute("id", "hExit");
     const left = xE > W - 130;
-    el("text", {x: left ? xE - 12 : xE + 12, y: yE + 20, "text-anchor": left ? "end" : "start",
-                "font-size": 11.5, fill: "#7a2e21"}).textContent = "emerges here";
+    // avoid the Smith-Rd band label and the geology label column: when the
+    // exit sits near either, drop the text a row so it never shares a line
+    const xGeo = X(LAT_MIN + 0.70 * (LAT_MAX - LAT_MIN));
+    const busy = Math.abs(xE - xGeo) < 130 || Math.abs(xE - (X(SMITH_LAT) + 7)) < 130 ||
+                 Math.abs(xE - X(state.ipLat)) < 200;   // IP annotation cluster
+    el("text", {x: left ? xE - 12 : xE + 12, y: yE + (busy ? 34 : 20),
+                "text-anchor": left ? "end" : "start", "font-size": 11.5, fill: "#7a2e21",
+                stroke: PAL.halo, "stroke-width": 2.5, "paint-order": "stroke"})
+      .textContent = "emerges here";
   } else if (exitDraggable) {
-    el("circle", {cx: W-MR-10, cy: Y(b.h(sB)), r: 8, fill: "#7a2e21", stroke: "#fff",
+    el("circle", {cx: W-MR-10, cy: Y(b.h(sB)), r: 8, fill: "#7a2e21", stroke: PAL.halo,
                   "stroke-width": 2, id: "hExit", style: "cursor:ew-resize"});
     el("text", {x: W-MR-22, y: Y(b.h(sB)) + 22, "text-anchor": "end", "font-size": 11.5,
                 fill: "#7a2e21"}).textContent =
@@ -1139,6 +1340,7 @@ function render() {
   }
 
   const veH = (H-MT-MB) / (zMax-zMin), veW = (W-ML-MR) / ((LAT_MAX-LAT_MIN)*MLAT);
+  VE.plot = Math.round(veH/veW);
   document.getElementById("ve").textContent =
     "Vertical exaggeration ≈ " + Math.round(veH/veW) + "×. Dashed beam = underground, solid = airborne. " +
     "The beam is a true straight line in space; it plots as a parabola because heights follow the curved geoid.";
@@ -1157,7 +1359,7 @@ function render() {
                          : detUnit ? " <span class='note'>in " + detUnit.short + "</span>" : "")
       : "<span class='flag bad'>beam is " + fmt(-b.detDepth,0) + " m ABOVE ground here</span>";
   const coverTxt = b.minCoverLat === null
-      ? "<b>—</b> <span class='note'>beam surfaces before the fence</span>"
+      ? "<b>n/a</b><br><span class='note'>beam surfaces before the fence — there is no covered stretch to measure</span>"
       : "<b class='" + (b.minCover < 5 ? "flag warn" : "") + "'>" + fmt(Math.max(b.minCover,0),1) + " m</b> at " +
         b.minCoverLat.toFixed(4) + "° N" +
         (b.minCover < 5 ? "<br><span class='note'>grazing stretch — radiologically an exit strip; SRTM is ±few m, verify with lidar</span>" : "");
@@ -1167,12 +1369,16 @@ function render() {
         fmt((b.exitS - b.s0)/1000,2) + " km from IP, " +
         fmt((b.exitS - s_of(state.detLat))/1000,2) + " km past the detector; grazing angle " +
         angTxt(b.th(b.exitS)) + "</span>";
-  // interaction rate per tonne-year in a detector on the beam axis
+  // interaction rate per tonne-year on axis: per-species flux Ngamma^2/piL^2,
+  // each decay contributing BOTH its nu (sigma at 0.7 Emu) and nubar (0.6 Emu);
+  // finite-line-source factor L^2/((L-a)(L+a)) for the 700 m straight
   const Ldet = Math.abs(s_of(state.detLat) - b.s0) * 100;   // cm
-  const flux = N_DEC_YR * phys.gamma ** 2 / (Math.PI * Ldet * Ldet);
-  const ratePerTonne = flux * phys.sigma * N_A * 1e6;       // nucleons per tonne = N_A*1e6... per gram *1e6 g
+  const aHalf = L_STRAIGHT / 2 * 100;
+  const lineFac = Ldet > aHalf * 1.5 ? Ldet * Ldet / ((Ldet - aHalf) * (Ldet + aHalf)) : 1;
+  const flux = N_DEC_YR * phys.gamma ** 2 / (Math.PI * Ldet * Ldet) * lineFac;
+  const ratePerTonne = flux * phys.sigSum * N_A * 1e6;      // both species
   const detRateTxt = Ldet < 1e4 ? "detector is at the IP" :
-    fmt(ratePerTonne/1e10, 2) + " × 10¹⁰ interactions / tonne·yr";
+    fmtSci(ratePerTonne, 2) + " interactions / tonne·yr";
   let airTxt;
   if (air.undergroundAll) {
     airTxt = "<b>no incursion</b> — beam stays underground all the way north";
@@ -1212,22 +1418,40 @@ function render() {
       <b>tilted ${angTxt(state.tilt)} down</b>
       <br><span class="note">southern exit pushed farther out — see safety note</span></div>
     <div><span class="lbl">Rock column, north beam (IP → emergence)</span>
-      <b>${fmt(north.X/1e5,1)} × 10⁵ g/cm²</b> over ${fmt(north.len/1000,2)} km
-      <br><span class="note">${fmt(lamN*1e6,2)} × 10⁻⁶ ν interaction lengths at ⟨Eν⟩ ≈ ${fmt(phys.enu/1000,1)} TeV</span></div>
+      <b>${fmtSci(north.X, 2)} g/cm²</b> over ${fmt(north.len/1000,2)} km
+      <br><span class="note">${fmtSci(lamN, 3)} ν interaction lengths at ⟨Eν⟩ ≈ ${fmt(phys.enu/1000,1)} TeV</span></div>
     <div><span class="lbl">Rock column, south beam (through the Earth)</span>
-      <b>${fmt(south.X/1e7,2)} × 10⁷ g/cm²</b> over ${fmt(south.len/1000,0)} km
-      <br><span class="note">${fmt(lamS*1e4,2)} × 10⁻⁴ interaction lengths → ${fmt(100*Math.exp(-lamS),3)}% of the beam survives; details in the geology table below the map</span></div>
+      <b>${fmtSci(south.X, 3)} g/cm²</b> over ${fmt(south.len/1000,0)} km
+      <br><span class="note">${fmtSci(lamS, 3)} interaction lengths → ${fmt(100*Math.exp(-lamS),3)}% of the beam survives; details in the geology table below the map</span></div>
     <div><span class="lbl">Beam at the detector (baseline machine, ${fmt(state.emu,2)} TeV μ)</span>
       <b>${detRateTxt}</b>
-      <br><span class="note">1/γ core radius ${fmt(1e2*Math.abs(s_of(state.detLat)-b.s0)/phys.gamma,1)} cm at ${fmt(Math.abs(dkm),2)} km; ${(N_DEC_YR/1e18).toFixed(1)} × 10¹⁸ decays/yr aimed each way</span></div>`;
+      <br><span class="note">1/γ core radius ${fmt(1e2*Math.abs(s_of(state.detLat)-b.s0)/phys.gamma,1)} cm at ${fmt(Math.abs(dkm),2)} km; ${fmtSci(N_DEC_YR, 2)} decays/yr aimed each way</span></div>`;
 
   // ---- civic-envelope audit ----
   {
     const env = envelopeAudit(b);
-    const clsChip = c => c === "inst"
-      ? "<span style='color:#0b6e4f;font-weight:600'>institutional ✓</span>"
-      : c === "res" ? "<span style='color:#b3261e;font-weight:600'>residential / urban</span>"
-                    : "<span style='color:#9a7b1c;font-weight:600'>rural private</span>";
+    // land class as a neutral chip — the compliance verdict lives in the
+    // status column, not in the colour of the class word
+    const chip = (txt, hue) =>
+      `<span style='background:${hue}22;border:1px solid ${hue}55;border-radius:3px;` +
+      `padding:0 .35em'>${txt}</span>`;
+    const clsChip = c => c === "inst" ? chip("institutional", "#0b6e4f")
+      : c === "res" ? chip("residential / urban", "#64748b")
+                    : chip("rural private", "#64748b");
+    // why this stretch keeps (or breaks) the ±500 ft rule, from dMin/dMax
+    const statusCell = g => {
+      if (g.dMin < 0.5) {                       // the beam touches the surface here
+        if (g.cls === "inst") {
+          const who = g.who.includes("Fermilab") ? "DOE"
+            : g.who.includes("UIUC") ? "UIUC" : "easement";
+          return `<span style='color:#0b6e4f'>pierces surface on ${who} land ✓</span>`;
+        }
+        return "<span style='color:#b3261e'>at the surface over private land ✗</span>";
+      }
+      return g.status === "over"
+        ? `<span style='color:#0b6e4f'>overflight ≥${fmt(g.dMin / FT, 0)} ft AGL ✓</span>`
+        : `<span style='color:#0b6e4f'>underground ≥${fmt(g.dMin, 0)} m ✓</span>`;
+    };
     document.getElementById("envRows").innerHTML = env.map(g => {
       const len = Math.abs(g.a - g.b) * MLAT / 1000;
       const vs = g.status === "under"
@@ -1236,7 +1460,8 @@ function render() {
       return `<tr><td>${g.dir === "N" ? "north ↑" : "south ↓"}</td>
         <td>${g.a.toFixed(4)} → ${g.b.toFixed(4)}</td>
         <td>${fmt(len, len < 10 ? 1 : 0)} km</td>
-        <td>${vs}</td><td>${g.who}</td><td>${clsChip(g.cls)}</td></tr>`;
+        <td>${vs}</td><td>${g.who}</td><td>${clsChip(g.cls)}</td>
+        <td>${statusCell(g)}</td></tr>`;
     }).join("");
     const bad = env.filter(g => g.cls !== "inst");
     const badLen = bad.reduce((t, g) => t + Math.abs(g.a - g.b) * MLAT, 0);
@@ -1305,9 +1530,8 @@ function render() {
         : "<span class='note'>—  beam is underground here</span>";
       return `<tr><td>${loc.name}</td>
         <td>${fmt(loc.L/1000, loc.L < 10000 ? 2 : 1)} km</td>
-        <td>${mlen(sp.scale)}</td>
         <td><b>${mlen(sp.r50)}</b></td><td>${mlen(sp.r90)}</td><td>${mlen(sp.r99)}</td>
-        <td>${mlen(sp.e99)}</td><td>${foot}</td></tr>`;
+        <td>${foot}</td></tr>`;
     }).join("");
 
     // a 1-tonne tungsten cylinder sized to swallow 99% of the interactions
@@ -1320,10 +1544,10 @@ function render() {
         <br><span class="note">beam waist σ<sub>x</sub>* = ${fmt(o.sigX*1e6,2)} µm — far too small to matter at kilometre range</span></div>
       <div><span class="lbl">Where β* still beats the decay cone</span>
         <b>±${fmt(o.sCross*100,1)} cm</b> of the IP
-        <br><span class="note">${(o.haloFrac*100).toExponential(1)} % of the ${fmt(L_STRAIGHT,0)} m straight — beyond it the spot is purely kinematic</span></div>
+        <br><span class="note">${fmtSci(o.haloFrac*100, 2)} % of the ${fmt(L_STRAIGHT,0)} m straight — beyond it the spot is purely kinematic</span></div>
       <div><span class="lbl">Final-focus halo at the ${det ? det.short : "detector"}</span>
         <b>${det ? mlen(spotAt(det.L).halo) : "—"}</b> radius
-        <br><span class="note">carries ${o.haloFrac.toExponential(1)} of the flux over ${det ? fmt((spotAt(det.L).halo/spotAt(det.L).r50)**2,0) : "—"}× the area → ${det ? (o.haloFrac/(spotAt(det.L).halo/spotAt(det.L).r50)**2).toExponential(1) : "—"} of the core's surface density</span></div>
+        <br><span class="note">carries ${fmtSci(o.haloFrac, 2)} of the flux over ${det ? fmt((spotAt(det.L).halo/spotAt(det.L).r50)**2,0) : "—"}× the area → ${det ? fmtSci(o.haloFrac/(spotAt(det.L).halo/spotAt(det.L).r50)**2, 2) : "—"} of the core's surface density</span></div>
       <div><span class="lbl">A detector that swallows the beam</span>
         <b>⌀ ${mlen(2*rDet)} × ${fmt(lenDet,2)} m</b> of tungsten ≈ 1 tonne
         <br><span class="note">catches 99 % of the interactions — the beam is small enough that "per tonne" is a compact object, not a hall</span></div>`;
@@ -1481,14 +1705,14 @@ function renderMap(b, south, north, phys) {
     mk.north.setLatLng([northLat, LON]).bindPopup(
       "<b>North beam emerges</b><br>" + dms(northLat, "N", "S") +
       "<br>" + km((s_of(northLat) - b.s0)) + " from the IP" +
-      "<br>through " + km(northPath) + " of rock = " + north.X.toExponential(1) + " g/cm²" +
+      "<br>through " + km(northPath) + " of rock = " + fmtSci(north.X, 2) + " g/cm²" +
       (northTraced ? "<br><i>from the SRTM terrain profile</i>" : "<br><i>spherical-Earth estimate</i>"));
     mk.south.setLatLng([southLat, LON]).bindPopup(
       "<b>South beam emerges</b><br>" + dms(southLat, "N", "S") +
       "<br>" + fmt(down.arcKm, 1) + " km south of the IP" +
       "<br>through " + km(down.t) + " of rock, dipping " + km(down.maxDepth) + " deep" +
-      "<br>" + south.X.toExponential(2) + " g/cm² = " +
-      (south.X / phys.lambda * 1e4).toFixed(2) + " × 10⁻⁴ ν interaction lengths" +
+      "<br>" + fmtSci(south.X, 3) + " g/cm² = " +
+      fmtSci(south.X / phys.lambda, 3) + " ν interaction lengths" +
       "<br>" + fmt(100 * Math.exp(-south.X / phys.lambda), 3) + "% of the beam survives the crossing");
     const span = [[southLat, LON], [northLat, LON]];
     beamCase.setLatLngs(span);
@@ -1509,33 +1733,34 @@ function renderMap(b, south, north, phys) {
   document.getElementById("mapRows").innerHTML = `
     <tr><td><span class="swatch" style="background:#b3261e"></span>IP (collision point)</td>
         <td>${dms(state.ipLat,"N","S")}</td><td>${dms(LON,"E","W")}</td>
-        <td>—</td><td>—</td><td>${fmt(terrain(state.ipLat)-state.ipElev,0)} m below grade</td></tr>
+        <td>—</td><td>—</td><td>${fmt(terrain(state.ipLat)-state.ipElev,0)} m</td></tr>
     <tr><td><span class="swatch" style="background:#1c5a96"></span>detector</td>
         <td>${dms(state.detLat,"N","S")}</td><td>${dms(LON,"E","W")}</td>
         <td>${km(Math.abs(s_of(state.detLat)-b.s0))} ${s_of(state.detLat) < b.s0 ? "S" : "N"}</td>
-        <td>—</td><td>${b.detDepth > 0 ? fmt(b.detDepth,0) + " m below grade" : "above ground"}</td></tr>
+        <td>—</td><td>${b.detDepth > 0 ? fmt(b.detDepth,0) + " m" : "above ground"}</td></tr>
     <tr><td><span class="swatch" style="background:#7a2e21"></span>north beam emerges</td>
         <td>${dms(northLat,"N","S")}</td><td>${dms(LON,"E","W")}</td>
         <td>${km(s_of(northLat)-b.s0)} N</td>
-        <td>${km(northPath)} · ${north.X.toExponential(1)} g/cm²</td>
+        <td>${km(northPath)} · ${fmtSci(north.X, 2)} g/cm²</td>
         <td>${fmt(terrain(state.ipLat)-state.ipElev,0)} m (at the IP)</td></tr>
     <tr><td><span class="swatch" style="background:#7a2e21"></span><b>south beam emerges</b></td>
         <td><b>${dms(southLat,"N","S")}</b></td><td>${dms(LON,"E","W")}</td>
         <td><b>${fmt(down.arcKm,1)} km S</b></td>
-        <td>${km(down.t)} · ${south.X.toExponential(2)} g/cm²</td>
-        <td>${km(down.maxDepth)} below the surface</td></tr>`;
+        <td>${km(down.t)} · ${fmtSci(south.X, 3)} g/cm²</td>
+        <td>${fmt(down.maxDepth,0)} m</td></tr>`;
 
-  // per-unit breakdown of the south chord
-  document.getElementById("rockRows").innerHTML = south.layers.map(({g, L, X}) => `
+  // per-unit breakdown of the south chord, in the order the beam meets them
+  document.getElementById("rockRows").innerHTML = south.layers.map(({g, L, X, aqHere}) => `
     <tr><td><span class="swatch" style="background:${g.color};border-radius:2px"></span>${g.name}${
-          g.aq ? ' <span style="color:#2b6cb0;font-size:11px" title="' + g.aqNote + '">💧 aquifer</span>' : ''}</td>
+          aqHere ? ' <span style="color:#2b6cb0;font-size:11px" title="' + g.note + '">💧 aquifer</span>'
+                 : g.note ? ' <span class="note" style="font-size:11px">· ' + g.note + '</span>' : ''}</td>
         <td>${g.rho.toFixed(2)}</td><td>${fmt(L/1000, L < 10000 ? 2 : 1)} km</td>
-        <td>${X.toExponential(2)}</td>
+        <td>${fmtSci(X, 3)}</td>
         <td>${fmt(100*X/south.X,0)}%</td>
-        <td>${(X/phys.lambda).toExponential(2)}</td></tr>`).join("") +
+        <td>${fmtSci(X/phys.lambda, 3)}</td></tr>`).join("") +
     `<tr style="font-weight:600"><td>total</td><td></td><td>${fmt(south.len/1000,1)} km</td>
-        <td>${south.X.toExponential(2)}</td><td>100%</td>
-        <td>${(south.X/phys.lambda).toExponential(2)}</td></tr>`;
+        <td>${fmtSci(south.X, 3)}</td><td>100%</td>
+        <td>${fmtSci(south.X/phys.lambda, 3)}</td></tr>`;
 }
 
 // ---- controls -----------------------------------------------------------
@@ -1608,10 +1833,16 @@ const G4_MATS = {
 const G4_ELEMENTS = { H:[1,1.008], C:[6,12.011], N:[7,14.007], O:[8,15.999], Na:[11,22.990],
                       Mg:[12,24.305], Al:[13,26.982], Si:[14,28.085], K:[19,39.098],
                       Ca:[20,40.078], Fe:[26,55.845] };
-const UNIT_MAT = { "glacial drift": "till", "Silurian dolomite": "dolomite",
-  "Maquoketa shale": "shale", "Galena–Platteville dolomite": "dolomite",
-  "St. Peter sandstone": "sandstone", "Prairie du Chien dolomite": "dolomite",
-  "Ironton–Galesville sandstone": "sandstone", "Mt. Simon sandstone": "sandstone",
+const G4_MATS_EXTRA = {   // carbonate for the Devonian/limestone units
+  limestone: { C: .120, O: .480, Ca: .400 },
+};
+Object.assign(G4_MATS, G4_MATS_EXTRA);
+const UNIT_MAT = { "glacial drift": "till", "Pennsylvanian": "shale",
+  "New Albany Shale": "shale", "Devonian carbonate": "limestone",
+  "Silurian dolomite": "dolomite", "Maquoketa shale": "shale",
+  "Galena–Platteville": "dolomite", "St. Peter sandstone": "sandstone",
+  "Prairie du Chien–Franconia": "dolomite", "Ironton–Galesville": "sandstone",
+  "Eau Claire": "shale", "Mt. Simon": "sandstone",
   "Precambrian basement": "granite" };
 
 const g4state = { dir: "south", species: "nu_mu", events: 1000, autoBias: true, bias: 1 };
@@ -1624,7 +1855,7 @@ function rockSegments() {
     const segs = [];
     const sEnd = b.exitS !== null ? b.exitS : s_of(LAT_END);
     for (let sPos = b.s0; sPos < sEnd; sPos += 50) {
-      const g = unitAt(terrain(lat_of(sPos)) - b.h(sPos));
+      const g = unitAtLL(lat_of(sPos), b.h(sPos));
       if (!g) continue;
       const last = segs[segs.length - 1];
       if (last && last.g === g) last.L += 50;
@@ -1639,28 +1870,35 @@ function rockSegments() {
     }
     return segs;
   }
-  // south chord: exact shell geometry, descending then ascending
+  // south chord: walk the exact polar chord through the dipping stratigraphy
+  // and run-length encode the units in the order the beam meets them
   const alpha = state.tilt;
-  const grade = terrain(state.ipLat);
-  const rS = R_E + grade, r0 = R_E + state.ipElev;
-  const pImp = r0 * Math.cos(alpha);
-  const q = r => Math.sqrt(Math.max(r * r - pImp * pImp, 0));
-  const u0 = (alpha >= 0 ? -1 : 1) * q(r0), uX = q(rS);
-  const desc = [], asc = [];
-  for (const g of GEOLOGY) {
-    const rB = rS - g.top, rA = Math.max(rS - g.bot, 0);
-    const qB = q(rB), qA = q(rA);
-    const inter = (x, y) => Math.max(0, Math.min(y, uX) - Math.max(x, u0));
-    const dL = inter(-qB, -qA), aL = inter(qA, qB);
-    if (dL > 1) desc.push({ g, L: dL });
-    if (aL > 1) asc.push({ g, L: aL });
+  const r0 = R_E + state.ipElev;
+  const p = r0 * Math.cos(alpha);
+  const dP = Math.acos(Math.min(1, p / r0));
+  const sgn = alpha >= 0 ? 1 : -1;
+  const ordered = [];
+  let prevR = null;
+  const N = 22000, dphi = (2.2 * Math.PI / 180) / N;
+  for (let i = 0; i < N; i++) {
+    const c = Math.cos(i * dphi - sgn * dP);
+    if (c <= 0.2) break;
+    const r = p / c, la = state.ipLat - i * dphi * 180 / Math.PI;
+    const elev = r - R_E;
+    const ds = prevR === null ? 0 : Math.sqrt((r - prevR) ** 2 + (r * dphi) ** 2);
+    prevR = r;
+    if (i > 400 && elev >= terrainAll(la)) break;
+    const g = unitAtLL(la, elev);
+    if (!g || !ds) continue;
+    const last = ordered[ordered.length - 1];
+    if (last && last.g === g) last.L += ds;
+    else ordered.push({ g, L: ds });
   }
-  // top→bottom then bottom→top, merging the two halves of the perigee unit
-  const ordered = desc.concat(asc.reverse());
-  for (let i = ordered.length - 1; i > 0; i--)
-    if (ordered[i].g === ordered[i - 1].g) {
-      ordered[i - 1] = { g: ordered[i].g, L: ordered[i].L + ordered[i - 1].L };
-      ordered.splice(i, 1);
+  // absorb interpolation slivers (<200 m) into their neighbour
+  for (let i = ordered.length - 1; i >= 0; i--)
+    if (ordered[i].L < 200 && ordered.length > 1) {
+      const nb = ordered[i - 1] || ordered[i + 1];
+      nb.L += ordered[i].L; ordered.splice(i, 1);
     }
   return ordered;
 }
@@ -1753,7 +1991,8 @@ function generateMac() {
   const sp = G4_SPECIES[g4state.species];
   const segs = rockSegments();
   const { L, X } = pathTotals(segs);
-  const sigmaSp = SIGMA_SLOPE * sp.xmean * state.emu * 1000;
+  const sigmaSp = sigmaCSMS(g4state.species.startsWith('anti') ? SIG_NUB : SIG_NU,
+                            sp.xmean * state.emu * 1000);
   const lamCount = X * N_A * sigmaSp;                // interaction lengths at <Enu>
   const bias = g4state.autoBias ? suggestedBias(lamCount) : g4state.bias;
   const url = location.origin + location.pathname + hashString();
@@ -1840,7 +2079,8 @@ function refreshMacPreview() {
   }
   const { X } = pathTotals(segs);
   const sp = G4_SPECIES[g4state.species];
-  const lamCount = X * N_A * SIGMA_SLOPE * sp.xmean * state.emu * 1000;
+  const lamCount = X * N_A * sigmaCSMS(
+    g4state.species.startsWith('anti') ? SIG_NUB : SIG_NU, sp.xmean * state.emu * 1000);
   if (g4state.autoBias) {
     g4state.bias = suggestedBias(lamCount);
     document.getElementById("g4bias").value = g4state.bias;
@@ -1925,20 +2165,23 @@ function renderSouth() {
   // UIUC band
   el("rect", {x: XS(UIUC_BAND[0]), y: MT, width: XS(UIUC_BAND[1]) - XS(UIUC_BAND[0]),
               height: HS - MT - MB, fill: "#6da55c", opacity: .16}, svgS);
-  el("text", {x: (XS(UIUC_BAND[0]) + XS(UIUC_BAND[1]))/2, y: MT + 15, "text-anchor": "middle",
-              "font-size": 12, fill: "#4a7c3f"}, svgS).textContent = "UIUC land (OSM boundary)";
+  // band label sits at the bottom of the panel: the top rows belong to the
+  // horizontal landmark lane
+  el("text", {x: (XS(UIUC_BAND[0]) + XS(UIUC_BAND[1]))/2, y: HS - MB - 8, "text-anchor": "middle",
+              "font-size": 12, fill: "#4a7c3f", stroke: PAL.halo, "stroke-width": 3,
+              "paint-order": "stroke"}, svgS).textContent = "UIUC land (OSM boundary)";
 
   for (let z = Math.ceil(zMin/20)*20; z <= zMax; z += 20) {
-    el("line", {x1: ML, y1: YS(z), x2: W-MR, y2: YS(z), stroke: "#8883", "stroke-width": .7}, svgS);
-    el("text", {x: ML-6, y: YS(z)+4, "text-anchor": "end", "font-size": 11, fill: "#888"}, svgS)
+    el("line", {x1: ML, y1: YS(z), x2: W-MR, y2: YS(z), stroke: PAL.grid, "stroke-width": .7}, svgS);
+    el("text", {x: ML-6, y: YS(z)+4, "text-anchor": "end", "font-size": 11, fill: PAL.faint}, svgS)
       .textContent = z + " m";
   }
 
   // terrain
   const pts = PROFILE_S.filter(([la]) => la >= S_LAT0 && la <= S_LAT1);
   const tp = pts.map(([la, e], i) => (i?" L":"M") + XS(la).toFixed(1) + " " + YS(e).toFixed(1)).join("");
-  el("path", {d: tp + ` L ${W-MR} ${HS-MB} L ${ML} ${HS-MB} Z`, fill: "#c9b98a", opacity: .30}, svgS);
-  el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2}, svgS);
+  el("path", {d: tp + ` L ${W-MR} ${HS-MB} L ${ML} ${HS-MB} Z`, fill: PAL.terrainFill, opacity: .30}, svgS);
+  el("path", {d: tp, fill: "none", stroke: PAL.terrain, "stroke-width": 2}, svgS);
 
   // beam over the real terrain: dashed underground, orange when cover < 5 m,
   // solid when airborne; terrain-corrected exit = first upward crossing
@@ -1971,54 +2214,98 @@ function renderSouth() {
   const sphLa = state.ipLat - dn.deltaDeg;
   if (sphLa >= S_LAT0 && sphLa <= S_LAT1) {
     el("line", {x1: XS(sphLa), y1: YS(terrainS(sphLa)) - 14, x2: XS(sphLa),
-                y2: YS(terrainS(sphLa)) + 14, stroke: "#999", "stroke-width": 1.6,
+                y2: YS(terrainS(sphLa)) + 14, stroke: PAL.faint, "stroke-width": 1.6,
                 "stroke-dasharray": "3 3"}, svgS);
     el("text", {x: XS(sphLa) - 4, y: YS(terrainS(sphLa)) + 42, "text-anchor": "end",
-                "font-size": 10.5, fill: "#999"}, svgS)
-      .textContent = "flat-model exit " + sphLa.toFixed(3) + "°";
+                "font-size": 11, fill: PAL.faint, stroke: PAL.halo, "stroke-width": 3,
+                "paint-order": "stroke"}, svgS)
+      .textContent = "flat-model exit " + sphLa.toFixed(3) + "° N";
   }
   if (exitLa !== null) {
     el("circle", {cx: XS(exitLa), cy: YS(terrainS(exitLa)), r: 7, fill: "#7a2e21",
-                  stroke: "#fff", "stroke-width": 2}, svgS);
+                  stroke: PAL.halo, "stroke-width": 2}, svgS);
     el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) - 12, "text-anchor": "end",
-                "font-size": 11.5, fill: "#7a2e21", "font-weight": 600, stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
+                "font-size": 11.5, fill: "#7a2e21", "font-weight": 600, stroke: PAL.halo, "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
       .textContent = "emerges " + exitLa.toFixed(4) + "° N";
     const graze = sx.graze;
     el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) + 24, "text-anchor": "end",
-                "font-size": 11, fill: "#0b6e4f", stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
+                "font-size": 11, fill: "#0b6e4f", stroke: PAL.halo, "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
       .textContent = "grazing " + angTxt(graze);
     el("text", {x: XS(exitLa) - 10, y: YS(terrainS(exitLa)) + 38, "text-anchor": "end",
-                "font-size": 11, fill: "#7a2e21", "font-weight": 600, stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
+                "font-size": 11, fill: "#7a2e21", "font-weight": 600, stroke: PAL.halo, "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgS)
       .textContent = "IP → here  " + fmt((state.ipLat - exitLa) * MLAT / 1000, 1) + " km";
+  } else {
+    // terrain-corrected exit is outside this window: point at it from the
+    // window edge instead of pinning a marker at the border
+    const north = sphLa > S_LAT1;
+    const laEdge = north ? S_LAT1 : S_LAT0;
+    const hbE = southBeamH(laEdge);
+    if (hbE < 5e8 && isFinite(sphLa)) {
+      const yE = Math.min(Math.max(YS(hbE), MT + 44), HS - MB - 10);
+      const xE = north ? W - MR - 4 : ML + 4;
+      const dkm = Math.abs(sphLa - laEdge) * MLAT / 1000;
+      el("text", {x: xE, y: yE + 4, "text-anchor": north ? "end" : "start",
+                  "font-size": 14, fill: "#7a2e21", "font-weight": 700}, svgS)
+        .textContent = north ? "▸" : "◂";
+      el("text", {x: north ? xE - 14 : xE + 14, y: yE + 4,
+                  "text-anchor": north ? "end" : "start", "font-size": 11,
+                  fill: "#7a2e21", "font-weight": 600, stroke: PAL.halo,
+                  "stroke-width": 3, "paint-order": "stroke"}, svgS)
+        .textContent = "exit → " + (north ? "+" : "−") + fmt(dkm, 1) + " km";
+    }
   }
 
-  // landmarks
-  for (const [la, name] of [[40.0405, "Curtis Rd (Savoy)"], [40.0837, "Windsor Rd"],
-                            [40.1070, "UIUC Main Quad"], [40.1106, "downtown Urbana"]]) {
-    if (la < S_LAT0 || la > S_LAT1) continue;
-    el("line", {x1: XS(la), y1: MT + 20, x2: XS(la), y2: HS - MB, stroke: "#666",
-                "stroke-width": .8, "stroke-dasharray": "2 5"}, svgS);
-    el("text", {x: XS(la) + 3, y: MT + 30, "font-size": 10, fill: "#666",
-                transform: `rotate(90 ${XS(la)+3} ${MT+30})`}, svgS).textContent = name;
-    const hb = southBeamH(la), t = terrainS(la);
-    if (hb < 5e8 && t - hb > 0)
-      el("text", {x: XS(la) + 3, y: HS - MB - 8, "font-size": 9.5, fill: "#888",
-                  "text-anchor": "end", transform: `rotate(90 ${XS(la)+3} ${HS-MB-8})`}, svgS)
-        .textContent = "beam −" + fmt(t - hb, 0) + " m";
+  // landmarks: horizontal labels in a staggered two-row lane at the top,
+  // each with a thin tick line dropping to its latitude; the beam-depth
+  // annotations sit horizontally just under the beam line at each landmark
+  {
+    let li = 0, lastDepthX = -1e9;
+    for (const [la, name] of [[40.0405, "Curtis Rd (Savoy)"], [40.0837, "Windsor Rd"],
+                              [40.1070, "UIUC Main Quad"], [40.1106, "downtown Urbana"]]) {
+      if (la < S_LAT0 || la > S_LAT1) continue;
+      const ly = MT + 12 + (li % 2) * 14;
+      el("line", {x1: XS(la), y1: ly + 5, x2: XS(la), y2: HS - MB, stroke: PAL.muted,
+                  "stroke-width": .8, "stroke-dasharray": "2 5", opacity: .75}, svgS);
+      el("text", {x: XS(la), y: ly, "text-anchor": "middle", "font-size": 11,
+                  fill: PAL.muted, stroke: PAL.halo, "stroke-width": 3,
+                  "paint-order": "stroke"}, svgS).textContent = name;
+      const hb = southBeamH(la), t = terrainS(la);
+      if (hb < 5e8 && t - hb > 0 && XS(la) - lastDepthX > 72) {
+        el("text", {x: XS(la), y: YS(hb) + 14, "text-anchor": "middle", "font-size": 10.5,
+                    fill: PAL.muted, stroke: PAL.halo, "stroke-width": 3,
+                    "paint-order": "stroke"}, svgS)
+          .textContent = "beam −" + fmt(t - hb, 0) + " m";
+        lastDepthX = XS(la);
+      }
+      li++;
+    }
   }
 
-  // x axis: km north of the modelled exit
-  for (let d = -6; d <= 8; d += 2) {
-    const la = sphLa + d / MLAT * 1000;
-    if (la < S_LAT0 || la > S_LAT1) continue;
-    el("line", {x1: XS(la), y1: HS-MB, x2: XS(la), y2: HS-MB+4, stroke: "#aaa"}, svgS);
-    el("text", {x: XS(la), y: HS-MB+17, "text-anchor": "middle", "font-size": 11, fill: "#777"}, svgS)
-      .textContent = d === 0 ? "exit" : (d > 0 ? "+" : "−") + Math.abs(d);
+  // x axis, computed from the window so there are always ticks: km north of
+  // the flat-model exit when it is in frame, absolute latitude otherwise
+  if (sphLa >= S_LAT0 && sphLa <= S_LAT1) {
+    const dMin = (S_LAT0 - sphLa) * MLAT / 1000, dMax = (S_LAT1 - sphLa) * MLAT / 1000;
+    for (let d = Math.ceil(dMin / 2) * 2; d <= dMax; d += 2) {
+      const la = sphLa + d / MLAT * 1000;
+      el("line", {x1: XS(la), y1: HS-MB, x2: XS(la), y2: HS-MB+4, stroke: PAL.axis}, svgS);
+      el("text", {x: XS(la), y: HS-MB+17, "text-anchor": "middle", "font-size": 11, fill: PAL.faint}, svgS)
+        .textContent = d === 0 ? "exit" : (d > 0 ? "+" : "−") + Math.abs(d);
+    }
+    el("text", {x: (ML+W-MR)/2, y: HS-MB+34, "text-anchor": "middle", "font-size": 12, fill: PAL.faint}, svgS)
+      .textContent = "kilometres north of the flat-model exit →  (south beam arrives from the north, climbing)";
+  } else {
+    for (let n = Math.ceil(S_LAT0 / 0.02); n * 0.02 <= S_LAT1 + 1e-9; n++) {
+      const la = n * 0.02;
+      el("line", {x1: XS(la), y1: HS-MB, x2: XS(la), y2: HS-MB+4, stroke: PAL.axis}, svgS);
+      el("text", {x: XS(la), y: HS-MB+17, "text-anchor": "middle", "font-size": 11, fill: PAL.faint}, svgS)
+        .textContent = la.toFixed(2) + "°";
+    }
+    el("text", {x: (ML+W-MR)/2, y: HS-MB+34, "text-anchor": "middle", "font-size": 12, fill: PAL.faint}, svgS)
+      .textContent = "latitude °N   (south beam arrives from the north, climbing)";
   }
-  el("text", {x: (ML+W-MR)/2, y: HS-MB+34, "text-anchor": "middle", "font-size": 12, fill: "#777"}, svgS)
-    .textContent = "kilometres north of the flat-model exit →  (south beam arrives from the north, climbing)";
 
   const veH = (HS-MT-MB)/(zMax-zMin), veW = (W-ML-MR)/((S_LAT1-S_LAT0)*MLAT);
+  VE.S = Math.round(veH/veW);
   document.getElementById("veS").textContent =
     "Vertical exaggeration ≈ " + Math.round(veH/veW) + "×. Terrain here is 10–15 m below Fermilab grade, " +
     "which pulls the real exit north of the flat model. Orange: cover < 5 m (radiologically the exit strip).";
@@ -2054,34 +2341,34 @@ function renderProfile(locs) {
   const cum = { flux: x => x*x / (1 + x*x), ev: x => 1 - 1 / (1 + x*x)**2 };
 
   for (let f = 0; f <= 1.0001; f += 0.25) {
-    el("line", {x1: MLB, y1: YB(f), x2: W - MRB, y2: YB(f), stroke: "#8883",
+    el("line", {x1: MLB, y1: YB(f), x2: W - MRB, y2: YB(f), stroke: PAL.grid,
                 "stroke-width": .7}, svgB);
     el("text", {x: MLB - 7, y: YB(f) + 4, "text-anchor": "end", "font-size": 11,
-                fill: "#888"}, svgB).textContent = f.toFixed(2);
-    el("text", {x: W - MRB + 7, y: YB(f) + 4, "font-size": 11, fill: "#888"}, svgB)
+                fill: PAL.faint}, svgB).textContent = f.toFixed(2);
+    el("text", {x: W - MRB + 7, y: YB(f) + 4, "font-size": 11, fill: PAL.faint}, svgB)
       .textContent = (f * 100).toFixed(0) + "%";
   }
   for (let x = 0; x <= XMAX + 1e-9; x += 0.5) {
-    el("line", {x1: XB(x), y1: HB - MBB, x2: XB(x), y2: HB - MBB + 4, stroke: "#aaa"}, svgB);
+    el("line", {x1: XB(x), y1: HB - MBB, x2: XB(x), y2: HB - MBB + 4, stroke: PAL.axis}, svgB);
     el("text", {x: XB(x), y: HB - MBB + 17, "text-anchor": "middle", "font-size": 11,
-                fill: "#777"}, svgB).textContent = x.toFixed(1);
+                fill: PAL.faint}, svgB).textContent = x.toFixed(1);
   }
   el("text", {x: (MLB + W - MRB) / 2, y: HB - MBB + 36, "text-anchor": "middle",
-              "font-size": 12, fill: "#777"}, svgB)
+              "font-size": 12, fill: PAL.faint}, svgB)
     .textContent = "angle from the beam axis, in units of 1/γ   (x = γθ = γr/L)";
-  el("text", {x: 14, y: HB / 2, "font-size": 11.5, fill: "#777", "text-anchor": "middle",
+  el("text", {x: 14, y: HB / 2, "font-size": 11.5, fill: PAL.faint, "text-anchor": "middle",
               transform: `rotate(-90 14 ${HB/2})`}, svgB)
     .textContent = "relative density on axis";
-  el("text", {x: W - 12, y: HB / 2, "font-size": 11.5, fill: "#777", "text-anchor": "middle",
+  el("text", {x: W - 12, y: HB / 2, "font-size": 11.5, fill: PAL.faint, "text-anchor": "middle",
               transform: `rotate(90 ${W-12} ${HB/2})`}, svgB)
     .textContent = "enclosed fraction";
 
   // containment guides at x = 1 and x = 3
   for (const [x, lbl] of [[1, "1/γ"], [3, "3/γ"]]) {
-    el("line", {x1: XB(x), y1: MTB, x2: XB(x), y2: HB - MBB, stroke: "#666",
+    el("line", {x1: XB(x), y1: MTB, x2: XB(x), y2: HB - MBB, stroke: PAL.muted,
                 "stroke-width": .9, "stroke-dasharray": "3 4"}, svgB);
-    el("text", {x: XB(x) + 5, y: HB - MBB - 7, "font-size": 11, fill: "#666",
-                stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"}, svgB)
+    el("text", {x: XB(x) + 5, y: HB - MBB - 7, "font-size": 11, fill: PAL.muted,
+                stroke: PAL.halo, "stroke-width": 3, "paint-order": "stroke"}, svgB)
       .textContent = lbl;
   }
   const curve = (f, col, dash, wid) => {
@@ -2093,34 +2380,38 @@ function renderProfile(locs) {
     el("path", {d, fill: "none", stroke: col, "stroke-width": wid,
                 "stroke-dasharray": dash}, svgB);
   };
-  curve(dens.en, "#999", "2 3", 1.4);
+  curve(dens.en, PAL.faint, "2 3", 1.4);
   curve(cum.flux, "#0b6e4f", "7 4", 1.6);
   curve(cum.ev, "#7a2e21", "7 4", 1.6);
   curve(dens.flux, "#0b6e4f", "none", 2.4);
   curve(dens.ev, "#7a2e21", "none", 2.4);
 
   // the two headline containment facts, marked on the cumulative curves
-  for (const [x, f, col, txt] of [[1, cum.flux(1), "#0b6e4f", "half the flux inside 1/γ"],
+  for (const [x, f, col, txt] of [[1, cum.flux(1), "#0b6e4f", "50 % of flux inside 1/γ"],
                                   [1, cum.ev(1), "#7a2e21", "75 % of interactions inside 1/γ"]]) {
-    el("circle", {cx: XB(x), cy: YB(f), r: 4.5, fill: col, stroke: "#fff",
+    el("circle", {cx: XB(x), cy: YB(f), r: 4.5, fill: col, stroke: PAL.halo,
                   "stroke-width": 1.8}, svgB);
     el("text", {x: XB(x) + 10, y: YB(f) + 4, "font-size": 11.5, fill: col,
-                stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"}, svgB)
+                stroke: PAL.halo, "stroke-width": 3, "paint-order": "stroke"}, svgB)
       .textContent = txt;
   }
 
   const key = [["#0b6e4f", "none", "ν flux density  (1+x²)⁻²"],
                ["#7a2e21", "none", "interaction density  (1+x²)⁻³"],
-               ["#999", "2 3", "⟨Eν⟩ / ⟨Eν⟩₀  (1+x²)⁻¹"],
+               [PAL.faint, "2 3", "⟨Eν⟩ / ⟨Eν⟩₀  (1+x²)⁻¹"],
                ["#0b6e4f", "7 4", "enclosed flux"],
                ["#7a2e21", "7 4", "enclosed interactions"]];
-  el("rect", {x: W - MRB - 220, y: MTB + 4, width: 216, height: key.length * 17 + 8,
-              fill: "#fff", "fill-opacity": .88, rx: 3}, svgB);
+  // legend box in the empty lower-right corner, between the cumulative curves
+  // (top right) and the density tails hugging the axis
+  const legH = key.length * 17 + 8, legY = HB - MBB - legH - 14;
+  el("rect", {x: W - MRB - 220, y: legY, width: 216, height: legH,
+              fill: PAL.box, "fill-opacity": .92, rx: 3,
+              stroke: PAL.grid, "stroke-width": 1}, svgB);
   key.forEach(([col, dash, txt], i) => {
-    const y = MTB + 16 + i * 17, x0 = W - MRB - 214;
+    const y = legY + 12 + i * 17, x0 = W - MRB - 214;
     el("line", {x1: x0, y1: y, x2: x0 + 26, y2: y, stroke: col, "stroke-width": 2.2,
                 "stroke-dasharray": dash}, svgB);
-    el("text", {x: x0 + 32, y: y + 4, "font-size": 11.5, fill: "#555"}, svgB).textContent = txt;
+    el("text", {x: x0 + 32, y: y + 4, "font-size": 11.5, fill: PAL.muted}, svgB).textContent = txt;
   });
 
   const near = locs[0], far = locs[locs.length - 1];
@@ -2128,7 +2419,7 @@ function renderProfile(locs) {
     "One curve describes every location — only the scale L/γ changes: 1 unit of x is " +
     (near ? mlen(spotAt(near.L).scale) + " at the " + near.short : "") +
     (far && far !== near ? " and " + mlen(spotAt(far.L).scale) + " at the " + far.short : "") +
-    ". Tails are heavy: 99 % containment needs 10/γ for flux but only 3/γ for interactions.";
+    ". Tails are heavy: 99 % containment needs 9.95/γ for flux but only 3/γ for interactions.";
 }
 
 // metres or centimetres, whichever reads better
@@ -2150,22 +2441,23 @@ function renderSpots(locs) {
 
   for (const km of [1, 2, 5, 10, 20, 50, 100, 200]) {  // x grid: 1 -> 300 km
     const L = km * 1000;
-    el("line", {x1: XG(L), y1: PT, x2: XG(L), y2: HSP - PB, stroke: "#8883",
+    el("line", {x1: XG(L), y1: PT, x2: XG(L), y2: HSP - PB, stroke: PAL.grid,
                 "stroke-width": .7}, svgSp);
     el("text", {x: XG(L), y: HSP - PB + 16, "text-anchor": "middle", "font-size": 11,
-                fill: "#777"}, svgSp).textContent = km + " km";
+                fill: PAL.faint}, svgSp).textContent = km + " km";
   }
   for (let e = -2; e <= 2; e++) {                     // y grid: 1 cm -> 100 m
     const r = Math.pow(10, e);
-    el("line", {x1: PL, y1: YG(r), x2: W - PR, y2: YG(r), stroke: "#8883",
+    el("line", {x1: PL, y1: YG(r), x2: W - PR, y2: YG(r), stroke: PAL.grid,
                 "stroke-width": .7}, svgSp);
     el("text", {x: PL - 7, y: YG(r) + 4, "text-anchor": "end", "font-size": 11,
-                fill: "#888"}, svgSp).textContent = mlen(r);
+                fill: PAL.faint}, svgSp)
+      .textContent = ["1 cm", "10 cm", "1 m", "10 m", "100 m"][e + 2];
   }
   el("text", {x: (PL + W - PR) / 2, y: HSP - PB + 34, "text-anchor": "middle",
-              "font-size": 12, fill: "#777"}, svgSp)
+              "font-size": 12, fill: PAL.faint}, svgSp)
     .textContent = "distance from the collision point →";
-  el("text", {x: 14, y: (PT + HSP - PB) / 2, "font-size": 11.5, fill: "#777",
+  el("text", {x: 14, y: (PT + HSP - PB) / 2, "font-size": 11.5, fill: PAL.faint,
               "text-anchor": "middle",
               transform: `rotate(-90 14 ${(PT + HSP - PB) / 2})`}, svgSp)
     .textContent = "spot radius";
@@ -2193,7 +2485,7 @@ function renderSpots(locs) {
                                [E99, "#7a2e21", "99 % of interactions"]]) {
     const lx = XG(LLBL), ly = YG(x * LLBL / g) - 7;
     el("text", {x: lx, y: ly, "text-anchor": "middle", "font-size": 11, fill: col,
-                stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke",
+                stroke: PAL.halo, "stroke-width": 3.5, "paint-order": "stroke",
                 transform: `rotate(${ang.toFixed(2)} ${lx.toFixed(1)} ${ly.toFixed(1)})`},
        svgSp).textContent = txt;
   }
@@ -2203,55 +2495,77 @@ function renderSpots(locs) {
   locs.forEach((loc, i) => {
     if (loc.L < L0 || loc.L > L1) return;
     const sp = spotAt(loc.L), x = XG(loc.L), y = YG(sp.r50);
-    el("line", {x1: x, y1: y, x2: x, y2: HSP - PB, stroke: "#666", "stroke-width": .8,
+    el("line", {x1: x, y1: y, x2: x, y2: HSP - PB, stroke: PAL.muted, "stroke-width": .8,
                 "stroke-dasharray": "2 4"}, svgSp);
-    el("circle", {cx: x, cy: y, r: 4, fill: "#0b6e4f", stroke: "#fff", "stroke-width": 1.6}, svgSp);
+    el("circle", {cx: x, cy: y, r: 4, fill: "#0b6e4f", stroke: PAL.halo, "stroke-width": 1.6}, svgSp);
     const near = x < PL + 80, far = x > W - PR - 80;
     const SLOT = [-11, 20, -28, 37];              // 4 slots: neighbours never share one
     el("text", {x: x + (near ? 8 : far ? -8 : 0), y: y + SLOT[i % 4],
                 "text-anchor": near ? "start" : far ? "end" : "middle",
-                "font-size": 11, fill: "#333",
-                stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke"}, svgSp)
+                "font-size": 11, fill: PAL.ink,
+                stroke: PAL.halo, "stroke-width": 3.5, "paint-order": "stroke"}, svgSp)
       .textContent = loc.short + " · " + mlen(sp.r50);
   });
 
   // ---- to-scale ground footprints at the grazing exits ----
+  // BOTH exit ellipses share one metre scale (k = usable width / longest
+  // footprint), so their relative size is honest — the short one reads as
+  // the small tick it really is.
   const gz = locs.filter(l => l.graze);
   const x0 = W - PR + 34, wBox = PR - 52;
-  el("text", {x: x0, y: PT + 6, "font-size": 12, "font-weight": 600, fill: "#333"}, svgSp)
-    .textContent = "Footprint on the ground, to scale";
-  el("text", {x: x0, y: PT + 21, "font-size": 10.5, fill: "#777"}, svgSp)
+  el("text", {x: x0, y: PT + 6, "font-size": 12, "font-weight": 600, fill: PAL.ink}, svgSp)
+    .textContent = "Footprint on the ground, to one shared scale";
+  el("text", {x: x0, y: PT + 21, "font-size": 11, fill: PAL.faint}, svgSp)
     .textContent = "the 50 % core, stretched by 1/sin(graze)";
-  gz.slice(0, 2).forEach((loc, i) => {
+  el("text", {x: x0, y: PT + 35, "font-size": 10.5, fill: "#c7641e"}, svgSp)
+    .textContent = "orange = 50 %-flux core on the ground (same orange";
+  el("text", {x: x0, y: PT + 47, "font-size": 10.5, fill: "#c7641e"}, svgSp)
+    .textContent = "as the <5 m-cover strip in the exit close-up)";
+  const shown = gz.slice(0, 2).map(loc => {
     const sp = spotAt(loc.L);
-    const len = 2 * sp.r50 / Math.sin(loc.graze), wid = 2 * sp.r50;
-    const k = wBox / len, yc = PT + 66 + i * 118;
-    el("ellipse", {cx: x0 + wBox / 2, cy: yc, rx: wBox / 2, ry: Math.max(wid * k / 2, 1.1),
-                   fill: "#c7641e", "fill-opacity": .35, stroke: "#c7641e",
-                   "stroke-width": 1.2}, svgSp);
-    el("text", {x: x0, y: yc - 16, "font-size": 11.5, "font-weight": 600, fill: "#7a2e21"}, svgSp)
-      .textContent = loc.short;
-    el("text", {x: x0, y: yc + 26, "font-size": 11, fill: "#555"}, svgSp)
-      .textContent = mlen(wid) + " wide × " + mlen(len) + " long";
-    el("text", {x: x0, y: yc + 40, "font-size": 10.5, fill: "#777"}, svgSp)
-      .textContent = "grazing " + fmt(loc.graze * 1000, 2) + " mrad → ×" +
-                     fmt(1 / Math.sin(loc.graze), 0) + " elongation";
-    el("line", {x1: x0, y1: yc + 50, x2: x0 + wBox, y2: yc + 50, stroke: "#555",
+    return { loc, wid: 2 * sp.r50, len: 2 * sp.r50 / Math.sin(loc.graze) };
+  });
+  if (shown.length) {
+    const maxLen = Math.max(...shown.map(s => s.len));
+    const k = wBox / maxLen;
+    shown.forEach((s, i) => {
+      const yc = PT + 90 + i * 96;
+      const rx = Math.max(s.len * k / 2, 1.1);
+      el("ellipse", {cx: x0 + rx, cy: yc, rx, ry: Math.max(s.wid * k / 2, 1.1),
+                     fill: "#c7641e", "fill-opacity": .35, stroke: "#c7641e",
+                     "stroke-width": 1.2}, svgSp);
+      el("text", {x: x0, y: yc - 14, "font-size": 11.5, "font-weight": 600, fill: "#7a2e21"}, svgSp)
+        .textContent = s.loc.short;
+      el("text", {x: x0, y: yc + 24, "font-size": 11, fill: PAL.muted}, svgSp)
+        .textContent = mlen(s.wid) + " wide × " + mlen(s.len) + " long";
+      el("text", {x: x0, y: yc + 38, "font-size": 11, fill: PAL.faint}, svgSp)
+        .textContent = "grazing " + fmt(s.loc.graze * 1000, 2) + " mrad → ×" +
+                       fmt(1 / Math.sin(s.loc.graze), 0) + " elongation";
+      if (shown.length === 2 && s.len === maxLen) {
+        const other = shown.find(o => o !== s);
+        el("text", {x: x0 + wBox, y: yc - 14, "text-anchor": "end", "font-size": 11,
+                    fill: "#c7641e", "font-weight": 600}, svgSp)
+          .textContent = "×" + fmt(s.len / other.len, 0) + " longer";
+      }
+    });
+    // one shared metre scale under the pair (= the longest footprint)
+    const yS = PT + 90 + (shown.length - 1) * 96 + 54;
+    el("line", {x1: x0, y1: yS, x2: x0 + wBox, y2: yS, stroke: PAL.muted,
                 "stroke-width": 1.2}, svgSp);
     for (const sx of [x0, x0 + wBox])
-      el("line", {x1: sx, y1: yc + 46, x2: sx, y2: yc + 54, stroke: "#555",
+      el("line", {x1: sx, y1: yS - 4, x2: sx, y2: yS + 4, stroke: PAL.muted,
                   "stroke-width": 1.2}, svgSp);
-    el("text", {x: x0 + wBox / 2, y: yc + 64, "text-anchor": "middle", "font-size": 10.5,
-                fill: "#555"}, svgSp).textContent = mlen(len);
-  });
-  if (!gz.length)
-    el("text", {x: x0, y: PT + 60, "font-size": 11, fill: "#999"}, svgSp)
+    el("text", {x: x0 + wBox / 2, y: yS + 14, "text-anchor": "middle", "font-size": 11,
+                fill: PAL.muted}, svgSp).textContent = mlen(maxLen);
+  } else {
+    el("text", {x: x0, y: PT + 74, "font-size": 11, fill: PAL.faint}, svgSp)
       .textContent = "no grazing exit in this configuration";
+  }
 }
 
 // dimension line with end ticks and a boxed label, for any SVG panel
 function dimLine(parent, x1, x2, y, label, color) {
-  const col = color || "#444";
+  const col = color || PAL.muted;
   const lo = Math.min(x1, x2), hi = Math.max(x1, x2);
   el("line", {x1: lo, y1: y, x2: hi, y2: y, stroke: col, "stroke-width": 1}, parent);
   for (const x of [lo, hi])
@@ -2265,7 +2579,7 @@ function dimLine(parent, x1, x2, y, label, color) {
     return;
   }
   const mid = (lo + hi) / 2;
-  el("rect", {x: mid - wid/2, y: y-9, width: wid, height: 16, fill: "#fff",
+  el("rect", {x: mid - wid/2, y: y-9, width: wid, height: 16, fill: PAL.box,
               "fill-opacity": .85, rx: 2}, parent);
   el("text", {x: mid, y: y+3.5, "text-anchor": "middle", "font-size": 11.5, fill: col}, parent)
     .textContent = label;
@@ -2297,12 +2611,12 @@ function renderOverview(b) {
   let tp = "";
   for (let x = X0; x <= X1; x += 0.8)
     tp += (tp ? " L" : "M") + XO(x).toFixed(1) + " " + YO(tangentH(x)).toFixed(1);
-  el("path", {d: tp + ` L ${W-MR} ${HO-MB} L ${ML} ${HO-MB} Z`, fill: "#c9b98a", opacity: .35}, svgO);
-  el("path", {d: tp, fill: "none", stroke: "#7a5c3e", "stroke-width": 2}, svgO);
+  el("path", {d: tp + ` L ${W-MR} ${HO-MB} L ${ML} ${HO-MB} Z`, fill: PAL.terrainFill, opacity: .35}, svgO);
+  el("path", {d: tp, fill: "none", stroke: PAL.terrain, "stroke-width": 2}, svgO);
   // tangent plane reference
-  el("line", {x1: ML, y1: YO(0), x2: W-MR, y2: YO(0), stroke: "#999",
+  el("line", {x1: ML, y1: YO(0), x2: W-MR, y2: YO(0), stroke: PAL.faint,
               "stroke-width": .8, "stroke-dasharray": "5 5"}, svgO);
-  el("text", {x: ML+5, y: YO(0)-5, "font-size": 10, fill: "#999"}, svgO)
+  el("text", {x: ML+5, y: YO(0)-5, "font-size": 10, fill: PAL.faint}, svgO)
     .textContent = "horizontal tangent plane at the IP";
 
   // the beam: a genuinely straight line in this frame
@@ -2315,15 +2629,15 @@ function renderOverview(b) {
   const mark = (xkm, color, name, above) => {
     const y = YO(tangentH(xkm));
     el("circle", {cx: XO(xkm), cy: YO(yAt(xkm)), r: 6.5, fill: color,
-                  stroke: "#fff", "stroke-width": 2}, svgO);
+                  stroke: PAL.halo, "stroke-width": 2}, svgO);
     el("text", {x: XO(xkm), y: (above ? YO(yAt(xkm)) - 12 : YO(yAt(xkm)) + 22),
                 "text-anchor": "middle", "font-size": 11.5, fill: color, "font-weight": 600,
-                stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgO).textContent = name;
+                stroke: PAL.halo, "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgO).textContent = name;
   };
   mark(-dn.arcKm, "#7a2e21", "south exit (UIUC)", true);
   const dDet = (s_of(state.detLat) - sIP) / 1000;
   el("rect", {x: XO(dDet)-4, y: YO(yAt(dDet))-6, width: 8, height: 12, fill: "#1c5a96",
-              stroke: "#fff", "stroke-width": 1.5, rx: 1.5}, svgO);
+              stroke: PAL.halo, "stroke-width": 1.5, rx: 1.5}, svgO);
   if (northLat) mark((s_of(northLat)-sIP)/1000, "#7a2e21", "north exit", true);
   mark(0, "#b3261e", "IP", false);        // drawn last: sits on top of its neighbours
 
@@ -2331,9 +2645,9 @@ function renderOverview(b) {
   const xDeep = -Math.tan(state.tilt) * R_E / 1000;   // perigee (~ -tilt*R)
   if (xDeep > X0 && xDeep < 0) {
     el("line", {x1: XO(xDeep), y1: YO(yAt(xDeep)), x2: XO(xDeep), y2: YO(tangentH(xDeep)),
-                stroke: "#888", "stroke-width": 1, "stroke-dasharray": "3 3"}, svgO);
+                stroke: PAL.faint, "stroke-width": 1, "stroke-dasharray": "3 3"}, svgO);
     el("text", {x: XO(xDeep), y: YO(yAt(xDeep)) + 18, "text-anchor": "middle",
-                "font-size": 10.5, fill: "#666", stroke: "#fff", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgO)
+                "font-size": 10.5, fill: PAL.muted, stroke: PAL.halo, "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"}, svgO)
       .textContent = "deepest: " + fmt(dn.maxDepth/1000, 2) + " km below the surface";
   }
 
@@ -2351,19 +2665,19 @@ function renderOverview(b) {
       const xkm = (s_of(la) - sIP) / 1000;
       if (xkm < X0 || xkm > X1) return;
       el("text", {x: XO(xkm), y: HO - MB + dy, "text-anchor": "middle", "font-size": 10,
-                  fill: "#999"}, svgO).textContent = name;
+                  fill: PAL.faint}, svgO).textContent = name;
     });
   for (let x = Math.ceil(X0/50)*50; x <= X1; x += 50) {
-    el("line", {x1: XO(x), y1: HO-MB, x2: XO(x), y2: HO-MB+4, stroke: "#aaa"}, svgO);
-    el("text", {x: XO(x), y: HO-MB+16, "text-anchor": "middle", "font-size": 11, fill: "#777"}, svgO)
+    el("line", {x1: XO(x), y1: HO-MB, x2: XO(x), y2: HO-MB+4, stroke: PAL.axis}, svgO);
+    el("text", {x: XO(x), y: HO-MB+16, "text-anchor": "middle", "font-size": 11, fill: PAL.faint}, svgO)
       .textContent = x === 0 ? "IP" : (x > 0 ? "+" : "−") + Math.abs(x);
   }
-  el("text", {x: (ML+W-MR)/2, y: HO-MB+44, "text-anchor": "middle", "font-size": 12, fill: "#777"}, svgO)
+  el("text", {x: (ML+W-MR)/2, y: HO-MB+44, "text-anchor": "middle", "font-size": 12, fill: PAL.faint}, svgO)
     .textContent = "kilometres north of the collision point →";
   for (let z = Math.ceil(yMin/1000)*1000; z <= yMax; z += 1000) {
-    el("text", {x: ML-6, y: YO(z)+4, "text-anchor": "end", "font-size": 11, fill: "#888"}, svgO)
+    el("text", {x: ML-6, y: YO(z)+4, "text-anchor": "end", "font-size": 11, fill: PAL.faint}, svgO)
       .textContent = (z/1000) + " km";
-    el("line", {x1: ML, y1: YO(z), x2: W-MR, y2: YO(z), stroke: "#8883", "stroke-width": .7}, svgO);
+    el("line", {x1: ML, y1: YO(z), x2: W-MR, y2: YO(z), stroke: PAL.grid, "stroke-width": .7}, svgO);
   }
   const veH = (HO-MT-MB)/(yMax-yMin), veW = (W-ML-MR)/((X1-X0)*1000);
   document.getElementById("veO").textContent =
@@ -2376,6 +2690,10 @@ function figName(base, ext) {
   return base + "_" + (state.tilt * 1000).toFixed(1).replace("-", "m") + "mrad." + ext;
 }
 function svgString(elmt, w, h) {
+  // exports are always light-palette publication figures: if the live page is
+  // dark, re-render light, serialize, and restore the dark render
+  const wasDark = PAL === PALETTES.dark;
+  if (wasDark) { PAL = PALETTES.light; render(); }
   const clone = elmt.cloneNode(true);
   clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   clone.setAttribute("width", w); clone.setAttribute("height", h);
@@ -2383,7 +2701,9 @@ function svgString(elmt, w, h) {
   const bg = document.createElementNS(NS, "rect");
   bg.setAttribute("width", w); bg.setAttribute("height", h); bg.setAttribute("fill", "#ffffff");
   clone.insertBefore(bg, clone.firstChild);
-  return new XMLSerializer().serializeToString(clone);
+  const out = new XMLSerializer().serializeToString(clone);
+  if (wasDark) { PAL = PALETTES.dark; render(); }
+  return out;
 }
 function pngFromSvg(str, w, h, name) {
   const SC = 4, img = new Image();

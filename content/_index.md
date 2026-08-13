@@ -59,7 +59,7 @@ easement, or University of Illinois land.
 | Second IP | west straight, meridian −88.2598°; south exit on UIUC Willard Airport with a +0.13 mrad trim |
 | North beam | emerges **on site** at 41.8640° N (655 m inside the fence); crosses Smith Rd 380 ft above grade (350 ft above a 10 m roofline); navigable airspace (500 ft AGL) at 9.3 km |
 | South beam | 74–152 m under Aurora, perigee 789 m in the brackish Mt. Simon (the gas-storage horizon), surfaces 198 km away at **40.067° N on UIUC South Farms**; Urbana passage 66–119 m deep |
-| Detector | on-site, e.g. 15 m deep at 41.8560° N (1.3 km from IP): ~10¹⁰ interactions per tonne-year at ⟨Eν⟩ ≈ 3.2 TeV |
+| Detector | on-site, e.g. 15 m deep at 41.8560° N (1.3 km from IP): ~7 × 10¹² interactions per tonne-year on axis (CSMS σ, both species; a one-tonne cylinder collects ~7 × 10¹¹/yr) |
 | Beam size | r = L/γ: **2.7 cm** at the detector, 4.2 m at the UIUC exit; 99 % of interactions within 3L/γ, so a ⌀16 cm × 2.4 m tungsten cylinder (1 t) catches the beam |
 | Aquifers | dip-aware stratigraphy: chord bottoms in the brackish Mt. Simon; every potable-aquifer crossing beyond the fence ≥ ~45× below the EPA tritium MCL in the stagnant worst case; whole-chord production ≈ 0.06 Ci/yr |
 | RCS chain | RCS1/2 C = 6.28 km, RCS3/4 C = 14.72 km, straights co-aligned on the meridian, planes pitched 4.32 / 2.16 mrad |
