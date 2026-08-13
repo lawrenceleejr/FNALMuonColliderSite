@@ -11,6 +11,9 @@
   body { font: 17px/1.65 Georgia, 'Times New Roman', serif; margin: 0;
          color: #1e2229; background: #fbfaf7; }
   @media (prefers-color-scheme: dark) {
+    .moneyfig { --mf-ink:#d5d1c8; --mf-muted:#b3afa6; --mf-faint:#8d8a82;
+                --mf-earth:#3a3427; --mf-terr:#a08256; --mf-halo:#191b1f;
+                --mf-box:#22252b; --mf-grid:#4a4d54; --mf-ribbase:#8a94a626; }
     body { color: #d8d4cc; background: #191b1f; }
     a { color: #8ab8e8; }
     th { border-bottom-color: #555 !important; }
@@ -39,6 +42,7 @@
                padding-left: 1em; color: #555; }
   footer { max-width: 47rem; margin: 2rem auto; padding: 0 1.2rem;
            font-size: .82rem; color: #888; border-top: 1px solid #d8d2c4; }
+  .moneyfig { width:100%; height:auto; display:block; }
 </style>
 </head>
 <body>
@@ -52,7 +56,7 @@
       <a href="{{ "beamsize/" | relURL }}">Beam size</a>
       <a href="{{ "aquifer/" | relURL }}">Aquifer</a>
       <a href="{{ "paper/" | relURL }}">Paper</a>
-      <a href="{{ "tool/" | relURL }}">Beam-geometry tool</a>
+      <a href="{{ "tool/" | relURL }}">Tool</a>
       <a href="{{ "map/" | relURL }}">Map</a>
       <a href="https://github.com/lawrenceleejr/FNALMuonColliderSite">GitHub</a>
     </nav>
