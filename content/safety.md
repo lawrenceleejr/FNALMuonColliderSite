@@ -183,7 +183,7 @@ precedent. Then:
 | Quantity | Value |
 |---|---|
 | South exit | **40.0600° N, −88.2230°** — South Farms/Savoy area, ~5 km south of downtown Urbana |
-| Chord through the Earth | 198.9 km, dipping to 0.85 km (bottoming in the Ironton–Galesville sandstone) |
+| Chord through the Earth | 198.9 km, dipping to 0.85 km (bottoming in the brackish upper Mt. Simon sandstone — the region's gas-storage horizon, sealed beneath the Eau Claire aquitard) |
 | Exit grazing angle | 16.4 mrad (0.94°) |
 | Beam depth under the UIUC Main Quad / downtown Urbana | **88 m / 93 m** |
 | North side | detector hall stays at −25 m; north beam emerges at 41.943° N, ~800 m **north** of Smith Rd (houses there stay under a buried beam) |
@@ -206,8 +206,12 @@ the exit the beam climbs at 0.94° over rural Champaign County (Willard
 Airport is ~5 km west of the meridian, laterally clear of the pencil).
 
 **Groundwater and the Mahomet Aquifer.** Champaign–Urbana drinks from
-aquifer sands in the deep glacial drift, and the beam does pass through that
-interval (50–95 m deep) under the metro area on its way up. Neutrinos do not
+wells in the Mahomet aquifer system — sands in the deep glacial drift.
+Where the corridor crosses the buried Mahomet Bedrock Valley's main trunk
+(~40.25–40.5° N) the beam is 350–550 m *beneath* the valley fill; it meets
+basal-drift sands of the same family only on the final climb-out, at
+~66–100 m depth under northwest Urbana (the same picture, unit by unit, as
+the [aquifer audit](../aquifer/) §5). Neutrinos do not
 activate anything they pass through; the only activation pathway is the
 hadronic/EM showers from the rare ν interactions in the ground itself.
 Rates: in the on-axis core at exit, ~9 × 10⁴ interactions per litre-year in
@@ -228,7 +232,8 @@ delivered to a university campus, which reframes the exit strip from a
 liability into UIUC's stake in the facility.
 
 **Caveats specific to this scenario.** All §5 caveats apply, plus: the
-flat-layer stratigraphy is anchored at Fermilab, and the bedrock section
+stratigraphy is an interpolated dipping model (±75–150 m on mid-corridor
+unit tops — see the [aquifer audit](../aquifer/) §1), and the bedrock section
 genuinely changes over 199 km (the drift thickens over the Mahomet Bedrock
 Valley; Paleozoic units dip and thicken southward into the Illinois Basin),
 so the rock column and the depth-to-aquifer picture near the exit need ISGS

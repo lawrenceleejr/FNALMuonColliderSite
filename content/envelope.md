@@ -51,7 +51,7 @@ so that the argument never has to leave settled airspace law.
   modern trend that the *ad coelum* maxim's downward branch, too, reaches
   only as deep as the owner's **reasonable use**. The practical envelope of
   reasonable use along this corridor:
-  * **private wells** in the Silurian dolomite aquifer: typically 50–120 m;
+  * **private wells** in the Silurian dolomite aquifer: typically 30–90 m;
   * **foundations, geothermal loops, utilities**: < 150 m everywhere;
   * **Chicago's TARP ("Deep Tunnel")** runs 45–110 m beneath thousands of
     private parcels under recorded subsurface easements acquired at nominal

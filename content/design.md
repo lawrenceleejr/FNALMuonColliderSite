@@ -219,6 +219,10 @@ mitigation of Safety §2) — only the collider ring is tilted.
 * MARS/FLUKA confirmation of everything in the [safety assessment](../safety/) (the analytic model is
   deliberately conservative).
 * Geotechnical: Maquoketa/Galena–Platteville profile along the corridor and
-  at the hall; groundwater at the NE corner.
+  at the hall; groundwater at the NE corner; the Sandwich Fault Zone
+  crossing at ~41.55–41.65° N (30–150 m throw, right where the south chord
+  runs 300–500 m deep); well-log control on the dipping stratigraphic model
+  (the south exit path is drift over Pennsylvanian shale, not dolomite —
+  see the [aquifer audit](../aquifer/) §1).
 * Land/easement engagement plan for the two collider-straight exit strips
   ([Safety](../safety/) §3) and the ROW crossing.
