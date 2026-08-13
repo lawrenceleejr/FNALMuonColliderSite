@@ -51,8 +51,8 @@
   "core_flux_nu_cm2_yr": 5150243854418151.0,
   "pencil_core_radius_at_detector_m": 0.2,
   "mean_onaxis_Enu_GeV": 3250.0,
-  "events_per_kg_per_year": 35279299.1588607,
-  "events_per_tonne_per_year": 35279299158.860695
+  "events_per_kg_per_year": 123630016.73677501,
+  "events_per_tonne_per_year": 123630016736.77501
  },
  "dose": {
   "model": "King physics/9908017 eq.10/eq.7 equilibrium approximation",
@@ -70,8 +70,8 @@
      "footprint_len_km": 6.704344519843133,
      "core_width_m": 40.22471719647956,
      "dose_raw_Sv": 0.623661563788744,
-     "dose_mitigated_mSv": 15.504436258493483,
-     "dose_optimistic_mSv": 3.1008872516986967
+     "dose_mitigated_mSv": 26.047452914269055,
+     "dose_optimistic_mSv": 5.20949058285381
     },
     {
      "side": "S",
@@ -81,8 +81,8 @@
      "footprint_len_km": 6.827549802485654,
      "core_width_m": 29.909331973482495,
      "dose_raw_Sv": 1.1698728396544902,
-     "dose_mitigated_mSv": 39.11397421686633,
-     "dose_optimistic_mSv": 7.822794843373266
+     "dose_mitigated_mSv": 65.71147668433544,
+     "dose_optimistic_mSv": 13.142295336867086
     }
    ],
    "1_mrad": [
@@ -94,8 +94,8 @@
      "footprint_len_km": 5.817565260891541,
      "core_width_m": 45.94684062717215,
      "dose_raw_Sv": 0.4718263854304778,
-     "dose_mitigated_mSv": 10.268962544324495,
-     "dose_optimistic_mSv": 2.053792508864899
+     "dose_mitigated_mSv": 17.25185707446515,
+     "dose_optimistic_mSv": 3.4503714148930302
     },
     {
      "side": "S",
@@ -105,8 +105,8 @@
      "footprint_len_km": 9.44673141371445,
      "core_width_m": 25.7104987488824,
      "dose_raw_Sv": 1.6208997768228677,
-     "dose_mitigated_mSv": 63.04427590667902,
-     "dose_optimistic_mSv": 12.608855181335805
+     "dose_mitigated_mSv": 105.91438352322075,
+     "dose_optimistic_mSv": 21.182876704644148
     }
    ],
    "2_mrad": [
@@ -118,8 +118,8 @@
      "footprint_len_km": 5.317731621778745,
      "core_width_m": 53.39945185219774,
      "dose_raw_Sv": 0.3471512644515592,
-     "dose_mitigated_mSv": 7.038396500888228,
-     "dose_optimistic_mSv": 1.4076793001776455
+     "dose_mitigated_mSv": 11.82450612149222,
+     "dose_optimistic_mSv": 2.3649012242984444
     },
     {
      "side": "S",
@@ -129,8 +129,8 @@
      "footprint_len_km": 18.21559942064261,
      "core_width_m": 22.67146039494719,
      "dose_raw_Sv": 2.132530355908682,
-     "dose_mitigated_mSv": 94.06232852930644,
-     "dose_optimistic_mSv": 18.81246570586129
+     "dose_mitigated_mSv": 158.02471192923483,
+     "dose_optimistic_mSv": 31.60494238584696
     }
    ],
    "5_mrad": [
@@ -142,8 +142,8 @@
      "footprint_len_km": 4.762252238279383,
      "core_width_m": 84.19189636400625,
      "dose_raw_Sv": 0.13965348114201706,
-     "dose_mitigated_mSv": 2.8314359579237256,
-     "dose_optimistic_mSv": 0.566287191584745
+     "dose_mitigated_mSv": 4.756812409311859,
+     "dose_optimistic_mSv": 0.9513624818623718
     },
     {
      "side": "S",
@@ -153,18 +153,18 @@
      "footprint_len_km": 6.039686301374829,
      "core_width_m": 16.475606164535293,
      "dose_raw_Sv": 4.348745813767728,
-     "dose_mitigated_mSv": 263.9505806547293,
-     "dose_optimistic_mSv": 52.79011613094586
+     "dose_mitigated_mSv": 443.4369754999452,
+     "dose_optimistic_mSv": 88.68739509998905
     }
    ]
   },
   "utility_straight_raw_Sv": 2.91,
-  "utility_straight_dogleg_wobbled_mSv": 24.945,
+  "utility_straight_dogleg_wobbled_mSv": 41.907,
   "rcs_straights_wobbled_mSv": {
    "RCS1": 0.0,
-   "RCS2": 0.0005,
-   "RCS3": 0.0055,
-   "RCS4": 0.685
+   "RCS2": 0.0009,
+   "RCS3": 0.0093,
+   "RCS4": 0.7551
   },
   "arc_exit_annulus_raw_mSv": 0.3077,
   "arc_exit_annulus_wobbled_mSv": 0.0078,

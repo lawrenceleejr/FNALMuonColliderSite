@@ -14,11 +14,14 @@ recomputed live in the [interactive tool](../tool/), where ε<sub>N</sub> and
 
 **Headline:** the far-field spot is set by the decay kinematics alone —
 **r = L/γ**, about 2.7 cm at the on-site detector and 4.2 m at the UIUC
-exit. β\* and the emittance control the muon beam's own divergence, which
-beats the decay cone over only **±4 cm of the 700 m straight**; changing β\*
-by a factor of 200 barely moves the spot. A one-tonne tungsten cylinder
-16 cm across intercepts 99 % of the interactions at the detector, and the
-grazing exit that the safety case turns on is an **8.3 m × 534 m** strip.
+exit. The muon beam's own divergence matters only inside the final-focus
+drift (±L\* ≈ ±6 m of the 700 m straight): decays there feed a **wide,
+faint halo carrying ~1.7 % of the flux at ~2 × 10⁻⁵ of the core's surface
+density**, and no plausible β\* changes the core. A one-tonne tungsten
+cylinder 16 cm across intercepts 99 % of the interactions that a
+perfectly-aimed beam delivers to it — about **7 × 10¹¹ per year** at
+1.3 km — and the grazing exit that the safety case turns on is an
+**8.3 m × 534 m** strip.
 
 ## 1. The profile is a single universal curve
 
@@ -64,35 +67,45 @@ detector only has to cover 3/γ, not 10/γ.
 
 ## 2. Where β\* comes in — and why it drops out
 
-The muon beam has its own angular spread. With normalised emittance
-ε<sub>N</sub> and betatron function β(s) = β\* + s²/β\* along the straight,
-the RMS divergence is
+The muon beam has its own angular spread, and getting its reach right
+requires respecting a fact an earlier revision of this page fumbled: **a
+drift conserves angles**. In the field-free drift around the IP the beam's
+angular divergence is
 
 <div style="text-align:center;font-size:1.05rem;margin:.7rem 0">
-σ<sub>θ</sub>(s) = √( ε<sub>N</sub> / (γ β(s)) )
+σ<sub>θ</sub>\* = √( ε<sub>N</sub> / (γ β\*) )
 </div>
 
-which is *largest at the interaction point*, where β is smallest. For the
-IMCC 10 TeV parameters (ε<sub>N</sub> = 25 µm·rad, β\* = 1.5 mm):
+*everywhere between the final-focus quadrupoles* — the familiar
+β(s) = β\* + s²/β\* describes the growth of the beam *envelope*, not a
+shrinking angular spread. For the IMCC 10 TeV parameters
+(ε<sub>N</sub> = 25 µm·rad, β\* = 1.5 mm):
 
-* σ<sub>θ</sub>\* = **0.59 mrad** — 28 times the 1/γ = 21 µrad decay cone;
+* σ<sub>θ</sub>\* = **0.59 mrad** — 28 times the 1/γ = 21 µrad decay cone —
+  for every decay inside the ±L\* ≈ ±6 m final-focus drift;
 * beam waist σ<sub>x</sub>\* = 0.89 µm, utterly negligible at kilometre range;
-* but β grows as s²/β\*, so σ<sub>θ</sub> falls below 1/γ within
-  **s = ±4.2 cm of the IP** — 1.2 × 10⁻⁴ of the 700 m insertion.
+* beyond the quads the beam is recollimated: in the matching sections the
+  divergence is µrad-scale, far below 1/γ.
 
-Past the first final-focus quadrupole (s ≈ 6 m, β ≈ 24 km) the divergence is
-0.15 µrad, less than 1 % of the decay cone. **The far-field spot is
-kinematic.** The tool's β\* slider spans 0.1–20 mm — a factor of 200 — and
-moves the divergence-dominated region only from ±1 cm to ±15 cm. No
-plausible optics choice changes the beam size at the fence, at Smith Road,
-or in Champaign County.
+The right picture is therefore **two populations**: a *collinear core* from
+the (700 − 2L\*) ≈ 688 m of recollimated straight, and a *final-focus halo*
+from the ±L\* drift, carrying weight 2L\*/L<sub>s</sub> ≈ **1.7 %** of the
+flux, spread over the 0.59 mrad divergence. At the detector the halo is a
+77 cm-radius wash — ~800× the core's area — so its surface density is
+**~2 × 10⁻⁵ of the core's**: irrelevant to rates and siting, but ~140×
+brighter than this page previously claimed. Two same-order effects belong
+in the same bucket and await a real lattice: the **beam–beam deflection**
+of the outgoing beam at the IP (maximum kick ~0.5 mrad at the design
+disruption — comparable to σ<sub>θ</sub>\* itself) and dispersive angles in
+the chromatic-correction sections. This halo, not any property of the
+core, is the "IP-adjacent fan" that the effective-pencil-length parameter
+of the [safety assessment](../safety/) stands in for.
 
-What the divergence *does* make is a faint wide halo from the final-focus
-region: at the detector it is a 77 cm-radius wash carrying 1.2 × 10⁻⁴ of the
-flux spread over ~800× the core area, so about **1.5 × 10⁻⁷ of the core's
-surface density**. That is the "IP-adjacent fan" that the effective-pencil-length
-parameter of the [safety assessment](../safety/) stands in for, and it is
-the one place where a real lattice — not this analytic model — is needed.
+**The far-field core is kinematic.** β\* sets the halo's angular width
+(σ<sub>θ</sub>\* ∝ 1/√β\*) but its *weight* is fixed by geometry
+(2L\*/L<sub>s</sub>); the tool's β\* slider spans 0.1–20 mm — a factor of
+200 — and the core containment radii at the fence, Smith Road, and
+Champaign County do not move.
 
 ## 3. The spot at each location
 
@@ -130,7 +143,7 @@ dose in the same proportion).
 At the detector, 99 % of *interactions* fall within 8.2 cm of the axis. A
 cylinder of tungsten 16 cm in diameter and 2.4 m long weighs one tonne and
 swallows essentially the whole beam. The study's headline rate —
-~10¹⁰ interactions per tonne-year — therefore describes **an object you
+~7 × 10¹¹ interactions per year in one tonne — therefore describes **an object you
 could carry on a truck**, not a cavern; the hall is sized by the
 instrumentation and the access, not by the beam.
 

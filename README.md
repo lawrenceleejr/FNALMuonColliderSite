@@ -39,7 +39,7 @@ Illinois property.
 * North beam: emerges on site at 41.8640° N, crosses the fence 27 ft up,
   crosses Smith Rd 380 ft above grade (350 ft above a 10 m roofline), and
   enters navigable airspace 9.3 km out.
-* South beam: 74–152 m under Aurora, perigee 789 m, exits at 40.067° N on
+* South beam: 74–152 m under Aurora, perigee 789 m in the brackish Mt. Simon, exits at 40.067° N on
   UIUC South Farms; Urbana passage 66–119 m deep. IP2's south exit lands on
   UIUC's Willard Airport with a +0.13 mrad trim.
 * RCS3/4 racetrack C = 14.72 km (10.8 % below the 16.5 km site-filler bound —
@@ -47,8 +47,8 @@ Illinois property.
   the IP straight; RCS planes pitched 2.16 / 4.32 mrad so all plumes
   converge on the detector hall.
 * Detector: ~5 × 10¹⁵ ν/cm²·yr core fluence, ⟨Eν⟩ ≈ 3.2 TeV,
-  ≈ 3.5 × 10¹⁰ interactions per tonne-year (deep-hall reference).
-* Aquifers: every municipal-aquifer crossing ≥ 120× below the EPA tritium
+  ≈ 1.2 × 10¹¹ interactions per tonne-year (deep-hall reference; CSMS σ, both species).
+* Aquifers: every potable-aquifer crossing beyond the fence ≥ ~45× below the EPA tritium
   MCL in the stagnant worst case; whole-chord production ≈ 0.06 Ci/yr —
   see `content/aquifer.md`.
 * Airspace/land: the ±500 ft civic envelope holds everywhere except four

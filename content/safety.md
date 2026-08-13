@@ -47,7 +47,11 @@ Beam: 1.8 × 10¹² μ/bunch/sign, 5 Hz, 1.2 × 10⁷ s/yr, 90 % transmission �
 
 Corrections applied (each labelled in the output):
 
-* **σν flattening** above ~1 TeV vs the linear low-energy extrapolation: ×0.5.
+* **σν propagator suppression** above ~1 TeV vs the linear low-energy
+  extrapolation: **×0.84**, flux-weighted over the two species at
+  ⟨Eν⟩ ≈ 3–3.5 TeV (CSMS, arXiv:1106.3723: ×0.77 for ν, ×0.99 for ν̄).
+  An earlier revision used ×0.5, which halved a CC-only slope — a ~1.7×
+  too generous dose credit, corrected throughout this page.
 * **Vertical segmentation** of insertion straights (deliberate ±0.5 mrad
   vertical doglegs splitting the non-IP part of each insertion): peak
   dilution = smeared band ÷ pencil/shower width at the exit range (~×20–40).
@@ -93,7 +97,7 @@ Bounding each RCS's decays at its top energy:
 | RCS1 straights (0.31 TeV) | < 0.0001 mSv |
 | RCS2 straights (0.75 TeV) | 0.0005 mSv |
 | RCS3 straights (1.5 TeV) | 0.005 mSv |
-| RCS4 straights (4.5–5 TeV) | **0.64 mSv** → < 0.1 mSv with the same ±0.5 mrad segmentation used on the collider insertions |
+| RCS4 straights (4.5 TeV) | **0.76 mSv** → ~0.1 mSv with the same ±0.5 mrad segmentation used on the collider insertions |
 
 These land inside the *same* corridor strips as the collider plume (that is
 the point of the alignment) — they add no new exposure geography.
@@ -104,13 +108,13 @@ fixed location in each direction; with the baseline horizontal ring:
 
 | Direction | Exit | Location (meridian −88.2230) | Hot-core size | Peak dose, King raw | Mitigated (150 m pencil) | Optimistic (30 m pencil) |
 |---|---|---|---|---|---|---|
-| North | 37.8 km | lat 42.19 — Fox River valley between Cary and Fox River Grove (McHenry Co.) | ~4 m wide (E–W) × ~7 km (N–S) | 0.70 Sv/yr | **18 mSv/yr** | 3.5 mSv/yr |
-| South | 28.3 km | lat 41.59 — Wheatland/Na-Au-Say townships between Oswego and Plainfield | ~4 m wide × ~7 km | 1.25 Sv/yr | **41 mSv/yr** | 8.3 mSv/yr |
+| North | 38.2 km | lat 42.19 — Fox River valley between Cary and Fox River Grove (McHenry Co.) | ~4 m wide (E–W) × ~7 km (N–S) | 0.62 Sv/yr | **26 mSv/yr** | 5.2 mSv/yr |
+| South | 27.9 km | lat 41.59 — Wheatland/Na-Au-Say townships between Oswego and Plainfield | ~4 m wide × ~7 km | 1.17 Sv/yr | **66 mSv/yr** | 13 mSv/yr |
 
 The collider's *west* (utility) straight produces the same pair of strips on
 meridian −88.2560 (through Crystal Lake to the north, Yorkville farmland to
 the south); with full in-straight doglegs plus wobble its peak is
-~28 mSv/yr raw-mitigated and it should be designed shorter and more
+~42 mSv/yr raw-mitigated and it should be designed shorter and more
 aggressively segmented than the IP side — or accepted as two further
 easement strips.
 
@@ -119,10 +123,10 @@ easement strips.
 
 | Ring pitch (down-N) | North exit → dose | South exit → dose |
 |---|---|---|
-| 0 mrad | 37.8 km (Cary/Fox River Grove) → 18 mSv | 28.3 km (rural Wheatland Twp) → 41 mSv |
-| +1 mrad | 43.7 km (near Island Lake) → 12 mSv | 24.0 km (Wolf's Crossing/Oswego) → 67 mSv |
-| +2 mrad | 51.0 km (**Moraine Hills State Park**) → 8 mSv | 20.9 km (south Oswego) → 101 mSv |
-| +5 mrad | 81.3 km (near WI border, Richmond) → 3 mSv | 14.6 km (Normantown) → 284 mSv |
+| 0 mrad | 38.2 km (Cary/Fox River Grove) → 26 mSv | 27.9 km (rural Wheatland Twp) → 66 mSv |
+| +1 mrad | 43.9 km (near Island Lake) → 17 mSv | 23.7 km (Wolf's Crossing/Oswego) → 106 mSv |
+| +2 mrad | 51.2 km (**Moraine Hills State Park**) → 12 mSv | 20.7 km (south Oswego) → 158 mSv |
+| +5 mrad | 80.8 km (near WI border, Richmond) → 5 mSv | 14.5 km (Normantown) → 443 mSv |
 
 The south side is the binding constraint (terrain falls toward the Illinois
 River valley, pulling exits closer). The baseline recommendation is
@@ -183,7 +187,7 @@ precedent. Then:
 | Quantity | Value |
 |---|---|
 | South exit | **40.0600° N, −88.2230°** — South Farms/Savoy area, ~5 km south of downtown Urbana |
-| Chord through the Earth | 198.9 km, dipping to 0.85 km (bottoming in the Ironton–Galesville sandstone) |
+| Chord through the Earth | 198.9 km, dipping to 0.85 km (bottoming in the brackish upper Mt. Simon sandstone — the region's gas-storage horizon, sealed beneath the Eau Claire aquitard) |
 | Exit grazing angle | 16.4 mrad (0.94°) |
 | Beam depth under the UIUC Main Quad / downtown Urbana | **88 m / 93 m** |
 | North side | detector hall stays at −25 m; north beam emerges at 41.943° N, ~800 m **north** of Smith Rd (houses there stay under a buried beam) |
@@ -194,10 +198,12 @@ of the exit — all of Champaign, Urbana, and campus — the beam is 44–900 m
 underground and delivers no measurable surface dose. The only nonzero-dose
 location is the grazing strip at the exit itself, and 199 km of 1/L² is the
 whole story: **King-raw peak ~25 mSv/yr in an ~8 m-wide core** (vs 1,250 at
-the 28 km default exit), falling to **~0.5 mSv/yr mitigated** (150 m
-effective pencil, ±0.5 mrad segmentation) and **~0.1 mSv/yr** in the
-optimistic case — i.e. at the public limit to the design goal *inside the
-fence line*, on farm fields. Segmentation trades peak against footprint: the
+the 28 km default exit), falling to **~0.8 mSv/yr mitigated** (150 m
+effective pencil, ±0.5 mrad segmentation, the corrected ×0.84 σν factor)
+and **~0.16 mSv/yr** in the optimistic case — i.e. just under the 1 mSv/yr
+public limit in the baseline mitigation and approaching the 0.1 mSv/yr
+design goal in the optimistic one, *inside the fence line*, on farm
+fields. Segmentation trades peak against footprint: the
 unsegmented core is ~8 m × ~600 m; fully segmented it stretches toward
 ~12 km along the meridian at proportionally lower dose. Either way the land
 action is a fenced strip through research farmland with a single
@@ -206,8 +212,12 @@ the exit the beam climbs at 0.94° over rural Champaign County (Willard
 Airport is ~5 km west of the meridian, laterally clear of the pencil).
 
 **Groundwater and the Mahomet Aquifer.** Champaign–Urbana drinks from
-aquifer sands in the deep glacial drift, and the beam does pass through that
-interval (50–95 m deep) under the metro area on its way up. Neutrinos do not
+wells in the Mahomet aquifer system — sands in the deep glacial drift.
+Where the corridor crosses the buried Mahomet Bedrock Valley's main trunk
+(~40.25–40.5° N) the beam is 350–550 m *beneath* the valley fill; it meets
+basal-drift sands of the same family only on the final climb-out, at
+~66–100 m depth under northwest Urbana (the same picture, unit by unit, as
+the [aquifer audit](../aquifer/) §5). Neutrinos do not
 activate anything they pass through; the only activation pathway is the
 hadronic/EM showers from the rare ν interactions in the ground itself.
 Rates: in the on-axis core at exit, ~9 × 10⁴ interactions per litre-year in
@@ -221,14 +231,16 @@ sump water produced by a primary proton beam striking absorbers — a source
 term orders of magnitude harsher than the diffuse ν-interaction wisp here —
 within regulatory limits.
 
-**The opportunity.** The exit fluence is still 1.2 × 10¹³ ν/cm²·yr on axis —
-**~9 × 10⁷ interactions per tonne-year** at ⟨Eν⟩ ≈ 3.3 TeV. A far detector
+**The opportunity.** The exit fluence is still 1.1 × 10¹³ ν/cm²·yr per
+species on axis — **~2.7 × 10⁸ interactions per tonne-year** (both species,
+CSMS σ) at ⟨Eν⟩ ≈ 3.3 TeV. A far detector
 on South Farms would sit in the most intense high-energy neutrino beam ever
 delivered to a university campus, which reframes the exit strip from a
 liability into UIUC's stake in the facility.
 
 **Caveats specific to this scenario.** All §5 caveats apply, plus: the
-flat-layer stratigraphy is anchored at Fermilab, and the bedrock section
+stratigraphy is an interpolated dipping model (±75–150 m on mid-corridor
+unit tops — see the [aquifer audit](../aquifer/) §1), and the bedrock section
 genuinely changes over 199 km (the drift thickens over the Mahomet Bedrock
 Valley; Paleozoic units dip and thicken southward into the Illinois Basin),
 so the rock column and the depth-to-aquifer picture near the exit need ISGS
@@ -252,7 +264,7 @@ rest of this note — FLUKA/MARS with a real lattice before public claims.
 ## 6. Fallbacks
 
 * **Tevatron-tunnel RCS1/2** (shallow, misaligned): plumes exit ~9.5 km out
-  in six azimuths at ≤ ~0.3 mSv/yr wobbled — acceptable for a staged
+  in six azimuths at ≤ ~0.5 mSv/yr wobbled — acceptable for a staged
   low-energy programme but the aligned deep racetrack is the baseline.
 * If Zone-D easements prove impossible, the machine can run at reduced
   μ-current (linear dose scaling) or √s = 3 TeV (E⁴: ×123 lower straight
