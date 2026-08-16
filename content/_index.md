@@ -113,7 +113,10 @@ easement, or University of Illinois land.
 * **[Beam-size study](beamsize/)** — how wide the neutrino beam actually is,
   from ε<sub>N</sub> and β*: a universal 1/γ profile, 2.7 cm at the on-site
   detector and 4.2 m at the UIUC exit, why β* drops out of the siting
-  argument, and what a one-tonne detector looks like.
+  argument, what a one-tonne detector looks like — and ντ appearance along
+  the line: a baseline-independent 6.6 ντ CC per tonne-year, ~8 × 10¹¹
+  oscillation-made ντ delivered to ground level per year, with the far site
+  23 000× ahead on signal-to-background.
 * **[Aquifer radiation audit](aquifer/)** — activation of every
   water-bearing unit the beams cross, against EPA drinking-water limits:
   the only place any standard could be approached is a centimetres-wide

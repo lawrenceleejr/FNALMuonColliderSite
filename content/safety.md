@@ -236,7 +236,11 @@ species on axis — **~2.7 × 10⁸ interactions per tonne-year** (both species,
 CSMS σ) at ⟨Eν⟩ ≈ 3.3 TeV. A far detector
 on South Farms would sit in the most intense high-energy neutrino beam ever
 delivered to a university campus, which reframes the exit strip from a
-liability into UIUC's stake in the facility.
+liability into UIUC's stake in the facility. The 197 km baseline also makes
+it the line's only viable ντ-appearance site: ~4 × 10¹¹ oscillation-made ντ
+cross the exit plane per year, giving **6.6 ντ CC per tonne-year** against a
+νμ CC background 23 000× smaller relative to any on-site location — see the
+[beam-size study](../beamsize/) §5.
 
 **Caveats specific to this scenario.** All §5 caveats apply, plus: the
 stratigraphy is an interpolated dipping model (±75–150 m on mid-corridor
