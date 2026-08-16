@@ -159,20 +159,76 @@ IMCC's ±1 mrad mover system resolves, but it does mean the detector's
 position is a survey deliverable, and that the beam should be steerable onto
 it rather than the other way round.
 
-## 5. Caveats
+## 5. ντ appearance: the corridor as an oscillation experiment
+
+The beam contains **no ντ at production** — a muon decay makes exactly one
+μ-type and one e-type neutrino — so every ντ at a detector is
+oscillation-made, driven by Δm²₃₁ = 2.5 × 10⁻³ eV² with the near-maximal
+atmospheric amplitude (P ≈ 0.95 sin²Δ₃₁ for νμ→ντ; the e-type channel adds
+~5 % through sin²2θ₁₃). At these energies and baselines the phase
+Δ₃₁ = 1.267 Δm²L/E is at most ~10⁻⁴, so P ∝ (L/E)² — which produces the
+punchline of this section:
+
+**The ντ event rate per tonne is the same at every detector on the line.**
+The flux falls as 1/L² and the appearance probability grows as L², and they
+cancel *exactly* in the small-phase regime. On axis, with the CSMS
+cross-sections, the Michel spectrum, and the τ-mass threshold factor:
+
+| location | L | ντ CC per tonne-yr | νμ CC per tonne-yr (background) | S/B | ντ crossing this plane per year |
+|---|---|---|---|---|---|
+| on-site detector | 1.3 km | **6.6** | 4.1 × 10¹² | 1.6 × 10⁻¹² | 1.7 × 10⁷ |
+| north exit | 2.2 km | **6.6** | 1.4 × 10¹² | 4.6 × 10⁻¹² | 4.8 × 10⁷ |
+| Smith Road | 10.1 km | **6.6** | 6.7 × 10¹⁰ | 1.0 × 10⁻¹⁰ | 1.0 × 10⁹ |
+| UIUC South Farms exit | 197.4 km | **6.6** | 1.8 × 10⁸ | 3.8 × 10⁻⁸ | **4.0 × 10¹¹** |
+
+**Production over a year:** by the time the south beam surfaces at the
+South Farms, **~4 × 10¹¹ of its 6.2 × 10¹⁸ forward-beamed neutrinos
+(6 × 10⁻⁸) have become ντ**; with the second IP's south beam to Willard,
+the machine delivers **~8 × 10¹¹ oscillation-made ντ per year** to ground
+level. (Each straight's two exits carry opposite muon signs — μ⁻ decays aim
+one way, μ⁺ the other — so each exit plane is a single-sign beam: ντ south
+of IP1, ν̄τ from the CP-mirror channel likewise.) The near detector, 150×
+closer, intercepts a beam in which only 1.7 × 10⁷ ντ/yr yet exist.
+
+Three physics notes worth the ink:
+
+1. **What "same rate, 23 000× better S/B" buys.** Six-ish ντ CC per
+   tonne-year is DONUT's and OPERA's entire careers in a tonne — a
+   100-tonne far detector on the South Farms would make **~660 ντ CC/yr**,
+   two orders of magnitude beyond the world sample. But it sits under
+   1.8 × 10⁸ νμ CC/tonne-yr: even emulsion-grade τ identification
+   (~10⁻⁵–10⁻⁶ mis-ID per CC, charm-dominated) leaves the signal a factor
+   ~10–100 under the fakes. The honest statement is that the far site is
+   where ντ appearance *could* be attacked — the near site cannot at all —
+   and that it needs τ-ID progress, kinematic rejection, or sign-selected
+   charm vetoes beyond demonstrated performance.
+2. **The oscillated flux is not a pencil.** Off axis the energy drops as
+   (1+γ²θ²)⁻¹, so P grows as (1+γ²θ²)² — exactly cancelling the beamed
+   flux profile: the ντ surface density is nearly **flat in solid angle**
+   out to several 1/γ rather than peaked. The per-tonne numbers above are
+   on-axis σ-weighted rates and barely change with detector radius.
+3. **A free sterile-neutrino lever arm.** L/E ≈ 0.06 km/GeV at the far
+   site puts the *first oscillation maximum* at Δm² ≈ 20 eV² — the corridor
+   is, incidentally, an eV²–10 eV²-scale sterile-search geometry with a
+   known-flavour TeV beam, something no accelerator facility currently
+   offers.
+
+## 6. Caveats
 
 * Unpolarised muons are assumed. Polarisation changes the rest-frame
   angular distribution of each species (and hence the flavour composition
   off-axis) without moving the 1/γ scale.
 * The two flavours in each beam have different *energy* spectra (⟨E⟩ ≈
   0.7 E<sub>μ</sub> for ν<sub>μ</sub>, 0.6 for ν<sub>e</sub>), so their
-  interaction profiles differ slightly through σν ∝ E; the ~0.65 blend used
-  here is adequate for sizing.
+  interaction profiles differ slightly through σν ∝ E.
 * Decays are taken as uniform along the straight and the beam as parallel
   outside the final focus. A real lattice has β varying through the
   insertion, which redistributes the small halo but not the core.
-* σν ≈ 0.35 × 10⁻³⁸ cm²/GeV per nucleon, flattened above ~1 TeV, as
-  elsewhere in this study.
+* Cross-sections: CSMS (arXiv:1106.3723) CC+NC per nucleon, log-log
+  interpolated, as elsewhere in this study; ντ CC includes a τ-mass
+  threshold factor (negligible above ~1 TeV). Oscillations: vacuum,
+  two-channel (νμ→ντ dominant, νe→ντ at the 5 % level); matter effects are
+  irrelevant at Δ₃₁ ≲ 10⁻⁴.
 
 *Live recomputation, with ε<sub>N</sub> and β\* as inputs and
 publication-quality figure export: [the beam-geometry tool](../tool/).*
