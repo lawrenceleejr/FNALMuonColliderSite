@@ -1,0 +1,118 @@
+{
+ "cycle_s": 0.2,
+ "rep_rate_Hz": 5,
+ "chain_time_ms": 7.04,
+ "store_time_ms": 193.0,
+ "chain_survival_to_collider": 0.725,
+ "store_decay_fraction": 0.844,
+ "stages": [
+  {
+   "stage": "RCS1",
+   "E_GeV": [
+    63.0,
+    314.0
+   ],
+   "ramp_ms": 0.292,
+   "turns": 14,
+   "T_rev_us": 20.96,
+   "decays_north_per_cycle": 12391674618.818216,
+   "survival": 0.9135,
+   "at_deep_hall_r50cm": {
+    "fluence": 1166277985500.5942,
+    "rate_per_t_yr": 461663.9148709348,
+    "mean_E_GeV": 100.1919599579282
+   }
+  },
+  {
+   "stage": "RCS2",
+   "E_GeV": [
+    314.0,
+    750.0
+   ],
+   "ramp_ms": 0.937,
+   "turns": 45,
+   "T_rev_us": 20.96,
+   "decays_north_per_cycle": 11342205371.415491,
+   "survival": 0.9133,
+   "at_deep_hall_r50cm": {
+    "fluence": 10285991964761.252,
+    "rate_per_t_yr": 12672826.726068879,
+    "mean_E_GeV": 308.6755541100206
+   }
+  },
+  {
+   "stage": "RCS3",
+   "E_GeV": [
+    750.0,
+    1500.0
+   ],
+   "ramp_ms": 1.575,
+   "turns": 32,
+   "T_rev_us": 49.11,
+   "decays_north_per_cycle": 3099999260.3708296,
+   "survival": 0.9325,
+   "at_deep_hall_r50cm": {
+    "fluence": 9435363586626.818,
+    "rate_per_t_yr": 22677667.39746436,
+    "mean_E_GeV": 602.9928828164029
+   }
+  },
+  {
+   "stage": "RCS4",
+   "E_GeV": [
+    1500.0,
+    5000.0
+   ],
+   "ramp_ms": 4.231,
+   "turns": 86,
+   "T_rev_us": 49.11,
+   "decays_north_per_cycle": 2889650673.974164,
+   "survival": 0.9325,
+   "at_deep_hall_r50cm": {
+    "fluence": 25224788823137.086,
+    "rate_per_t_yr": 123921459.47640757,
+    "mean_E_GeV": 1258.0776002317557
+   }
+  },
+  {
+   "stage": "collider",
+   "E_GeV": [
+    5000.0,
+    5000.0
+   ],
+   "ramp_ms": 193.0,
+   "turns": 5260,
+   "T_rev_us": 36.69,
+   "decays_north_per_cycle": 70117281603.50209,
+   "survival": 0.1562,
+   "at_deep_hall_r50cm": {
+    "fluence": 64573400024808.15,
+    "rate_per_t_yr": 410305237.38917994,
+    "mean_E_GeV": 1674.7074473731066
+   }
+  }
+ ],
+ "hall": {
+  "range_from_IP_km": 9.253,
+  "depth_m": 107.3,
+  "stage_distances_km": {
+   "rcs12": 9.253,
+   "rcs34": 9.643,
+   "coll": 9.253
+  }
+ },
+ "near_hall_rcs_offsets_m": {
+  "rcs12": 50.5,
+  "rcs34": 68.4
+ },
+ "pulse_trains_us": {
+  "rcs12": 20.96,
+  "rcs34": 49.11,
+  "collider": 36.69
+ },
+ "notes": [
+  "RCS plumes are 1/gamma pencils (FODO straights); collider plume smeared by sigma_theta per arXiv:2608.02718",
+  "RCS decay fractions match the dose model (9/9/7/7%); the implied chain survival 0.72 is less generous than the CHAIN_TRANSMISSION=0.90 used for collider normalisation",
+  "wobble/segmentation mitigations OFF in these maps; they spread the RCS bands vertically at the hall (see safety)"
+ ]
+}
