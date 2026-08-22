@@ -47,19 +47,44 @@
   "gamma": 47322,
   "one_over_gamma_urad": 21.1,
   "muons_per_year_per_sign": 1.08e+20,
-  "decays_aimed_north_per_year": 6.185454545454545e+18,
-  "core_flux_nu_cm2_yr": 5150243854418151.0,
-  "pencil_core_radius_at_detector_m": 0.2,
-  "mean_onaxis_Enu_GeV": 3250.0,
-  "events_per_kg_per_year": 123630016.73677501,
-  "events_per_tonne_per_year": 123630016736.77501
+  "store_decay_fraction": 0.854,
+  "decays_aimed_north_per_year": 5.281968631556216e+18,
+  "plume_model": "two-component per MINT arXiv:2608.02718",
+  "sigma_theta_mrad": 0.15,
+  "pencil_frac": [
+   0.0,
+   0.4857142857142857
+  ],
+  "onaxis_density_dilution": 100.8,
+  "core_flux_nu_cm2_yr": [
+   43641959241883.664,
+   2158599954989656.2
+  ],
+  "core_r50_r99_at_detector_m": [
+   1.68,
+   4.6
+  ],
+  "dedicated_pencil_r50_at_detector_m": 0.2,
+  "mean_fluence_Enu_GeV": 1625.0,
+  "events_per_kg_per_year": [
+   552864.0851500256,
+   51562085.09811736
+  ],
+  "events_per_tonne_per_year": [
+   552864085.1500256,
+   51562085098.117355
+  ]
  },
  "dose": {
-  "model": "King physics/9908017 eq.10/eq.7 equilibrium approximation",
-  "assumed_pencil_length_m": [
-   30.0,
-   150.0
-  ],
+  "model": "King physics/9908017 eq.10/eq.7 equilibrium approximation; IP-straight plume smeared by SIG_THETA per arXiv:2608.02718",
+  "plume": {
+   "sigma_theta_mrad": 0.15,
+   "onaxis_dilution": 100.8,
+   "pencil_frac_scenarios": [
+    0.0,
+    0.4857142857142857
+   ]
+  },
   "exits_by_pitch": {
    "0_mrad": [
     {
@@ -67,22 +92,24 @@
      "exit_km": 38.22471719647955,
      "exit_lat": 42.18842876674106,
      "graze_mrad": 5.9997986495808435,
-     "footprint_len_km": 6.704344519843133,
-     "core_width_m": 40.22471719647956,
-     "dose_raw_Sv": 0.623661563788744,
-     "dose_mitigated_mSv": 26.047452914269055,
-     "dose_optimistic_mSv": 5.20949058285381
+     "footprint_len_km": 2.6269045198431322,
+     "core_width_m": 15.76089819073264,
+     "dose_raw_Sv": 2.4853065146113757,
+     "dose_mitigated_mSv": 22.689244465730557,
+     "dose_segmented_mSv": 6.6240399314542255,
+     "dose_dedicated_mSv": 1122.245722540145
     },
     {
      "side": "S",
      "exit_km": 27.909331973482495,
      "exit_lat": 41.59300332869039,
      "graze_mrad": 4.380683091113247,
-     "footprint_len_km": 6.827549802485654,
-     "core_width_m": 29.909331973482495,
-     "dose_raw_Sv": 1.1698728396544902,
-     "dose_mitigated_mSv": 65.71147668433544,
-     "dose_optimistic_mSv": 13.142295336867086
+     "footprint_len_km": 2.750109802485654,
+     "core_width_m": 12.047359510453697,
+     "dose_raw_Sv": 4.661971746338184,
+     "dose_mitigated_mSv": 42.56079321529321,
+     "dose_segmented_mSv": 12.832523361471383,
+     "dose_dedicated_mSv": 2105.1237825886997
     }
    ],
    "1_mrad": [
@@ -91,22 +118,24 @@
      "exit_km": 43.94684062717214,
      "exit_lat": 42.23994682579025,
      "graze_mrad": 7.897950184770389,
-     "footprint_len_km": 5.817565260891541,
-     "core_width_m": 45.94684062717215,
-     "dose_raw_Sv": 0.4718263854304778,
-     "dose_mitigated_mSv": 17.25185707446515,
-     "dose_optimistic_mSv": 3.4503714148930302
+     "footprint_len_km": 2.2563908620423976,
+     "core_width_m": 17.82086262578197,
+     "dose_raw_Sv": 1.880239632457318,
+     "dose_mitigated_mSv": 17.165374340818616,
+     "dose_segmented_mSv": 4.952455117120146,
+     "dose_dedicated_mSv": 849.0264168504912
     },
     {
      "side": "S",
      "exit_km": 23.7104987488824,
      "exit_lat": 41.630806731679286,
      "graze_mrad": 2.7216290611964213,
-     "footprint_len_km": 9.44673141371445,
-     "core_width_m": 25.7104987488824,
-     "dose_raw_Sv": 1.6208997768228677,
-     "dose_mitigated_mSv": 105.91438352322075,
-     "dose_optimistic_mSv": 21.182876704644148
+     "footprint_len_km": 3.871129868434812,
+     "core_width_m": 10.535779549597663,
+     "dose_raw_Sv": 6.459325071112718,
+     "dose_mitigated_mSv": 58.96946906165247,
+     "dose_segmented_mSv": 18.141805681055992,
+     "dose_dedicated_mSv": 2916.7227015803624
     }
    ],
    "2_mrad": [
@@ -115,22 +144,24 @@
      "exit_km": 51.23413342445338,
      "exit_lat": 42.30555659202237,
      "graze_mrad": 10.04177262979962,
-     "footprint_len_km": 5.317731621778745,
-     "core_width_m": 53.39945185219774,
-     "dose_raw_Sv": 0.3471512644515592,
-     "dose_mitigated_mSv": 11.82450612149222,
-     "dose_optimistic_mSv": 2.3649012242984444
+     "footprint_len_km": 2.0359242124376973,
+     "core_width_m": 20.444288032803215,
+     "dose_raw_Sv": 1.3834062401660034,
+     "dose_mitigated_mSv": 12.629606124640036,
+     "dose_segmented_mSv": 3.6022459772913487,
+     "dose_dedicated_mSv": 624.6801858982805
     },
     {
      "side": "S",
      "exit_km": 20.67146039494719,
      "exit_lat": 41.65816814030095,
      "graze_mrad": 1.2446178613949441,
-     "footprint_len_km": 18.21559942064261,
-     "core_width_m": 22.67146039494719,
-     "dose_raw_Sv": 2.132530355908682,
-     "dose_mitigated_mSv": 158.02471192923483,
-     "dose_optimistic_mSv": 31.60494238584696
+     "footprint_len_km": 7.586043905555783,
+     "core_width_m": 9.441725742180989,
+     "dose_raw_Sv": 8.498185384311508,
+     "dose_mitigated_mSv": 77.58294784411845,
+     "dose_segmented_mSv": 24.325453722445477,
+     "dose_dedicated_mSv": 3837.3746420521757
     }
    ],
    "5_mrad": [
@@ -139,35 +170,37 @@
      "exit_km": 80.77796123283088,
      "exit_lat": 42.57154887338545,
      "graze_mrad": 17.67900819852941,
-     "footprint_len_km": 4.762252238279383,
-     "core_width_m": 84.19189636400625,
-     "dose_raw_Sv": 0.13965348114201706,
-     "dose_mitigated_mSv": 4.756812409311859,
-     "dose_optimistic_mSv": 0.9513624818623718
+     "footprint_len_km": 1.7580209078925841,
+     "core_width_m": 31.080066043819112,
+     "dose_raw_Sv": 0.5565225221863771,
+     "dose_mitigated_mSv": 5.0806914488558155,
+     "dose_segmented_mSv": 1.4116843432985213,
+     "dose_dedicated_mSv": 251.2989912306955
     },
     {
      "side": "S",
      "exit_km": 14.475606164535293,
      "exit_lat": 41.71395134525427,
      "graze_mrad": 2.7278910430803185,
-     "footprint_len_km": 6.039686301374829,
-     "core_width_m": 16.475606164535293,
-     "dose_raw_Sv": 4.348745813767728,
-     "dose_mitigated_mSv": 443.4369754999452,
-     "dose_optimistic_mSv": 88.68739509998905
+     "footprint_len_km": 2.6435140206662506,
+     "core_width_m": 7.211218219232705,
+     "dose_raw_Sv": 17.329857937191907,
+     "dose_mitigated_mSv": 158.21041830520957,
+     "dose_segmented_mSv": 52.607510936865424,
+     "dose_dedicated_mSv": 7825.336161919292
     }
    ]
   },
-  "utility_straight_raw_Sv": 2.91,
-  "utility_straight_dogleg_wobbled_mSv": 41.907,
+  "utility_straight_raw_Sv": 2.49,
+  "utility_straight_dogleg_wobbled_mSv": 39.194,
   "rcs_straights_wobbled_mSv": {
    "RCS1": 0.0,
    "RCS2": 0.0009,
-   "RCS3": 0.0093,
-   "RCS4": 0.7551
+   "RCS3": 0.0102,
+   "RCS4": 0.827
   },
-  "arc_exit_annulus_raw_mSv": 0.3077,
-  "arc_exit_annulus_wobbled_mSv": 0.0078,
+  "arc_exit_annulus_raw_mSv": 0.2627,
+  "arc_exit_annulus_wobbled_mSv": 0.0067,
   "limits_mSv_yr": {
    "DOE_public": 1.0,
    "FNAL_design_goal": 0.1

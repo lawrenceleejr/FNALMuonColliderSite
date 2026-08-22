@@ -56,15 +56,30 @@ DEPTH_RCS34 = 80.0
 DEPTH_RCS12 = 60.0
 BOUNDARY_MARGIN = 150.0  # m tunnel setback from the site boundary
 
-# Dose-model knobs (see content/safety.md for provenance)
-L_PENCIL = 150.0        # m of effectively field-free, collinear straight per direction
-L_PENCIL_OPT = 30.0     # m optimistic value (strong FF-divergence + in-insertion dogleg credit)
+# Forward-plume model. MINT (arXiv:2608.02718), decaying muons along the real
+# IMCC hybrid v0.6+v0.9 interaction-region lattice, finds the IP-straight plume
+# is set by the muon beam divergence, sigma_theta ~ 0.1-0.2 mrad >> 1/gamma =
+# 21 urad, and that the energy-angle ("prism") correlation is washed out. The
+# plume is therefore modelled as two components: a divergence-smeared component
+# (weight 1 - PENCIL_FRAC, effective divergence SIG_THETA) and an optional true
+# 1/gamma pencil (weight PENCIL_FRAC) from a dedicated dispersion-free waisted
+# drift (beta* ~ l gives sigma_theta = sqrt(eps_N/(gamma*l)) ~ 1 urad) that the
+# current lattice does NOT have. PENCIL_FRAC = 0 is the honest baseline;
+# PENCIL_FRAC_DED is the design ask (everything but the +-180 m FF/chicanes).
+TAU_MU = 2.19698e-6     # s
+SIG_THETA = 0.15e-3     # rad: effective divergence of the smeared component (MINT)
+PENCIL_FRAC = 0.0       # baseline: current IMCC-class insertion, no dedicated drift
+PENCIL_FRAC_DED = 340.0 / LS_COLLIDER   # dedicated-drift scenario
+DIV_SUPP = 2 * GAMMA**2 * SIG_THETA**2  # on-axis density dilution of the smeared component (~101)
+# Fraction of stored muons that decay within the 0.2 s store (the rest are
+# dumped and make no corridor neutrinos); 1 - exp(-0.2/(gamma*tau)) = 0.854.
+F_STORE = 1.0 - math.exp(-0.2 / (GAMMA * TAU_MU))
 # sigma_nu propagator suppression vs the linear low-energy extrapolation,
-# flux-weighted over the two species at <E_nu> ~ 3-3.5 TeV (CSMS 1106.3723:
-# x0.77 for nu, x0.99 for nubar). The old 0.5 halved a CC-only slope and was
-# ~1.7x too generous a dose credit.
-XSEC_FLATTEN = 0.84
-SEG_SPREAD = 0.5e-3     # rad: +-0.5 mrad vertical segmentation of the non-IP part of the insertion
+# flux-weighted over the two species (CSMS 1106.3723). With the prism washed
+# out the fluence-mean energies drop to 0.35/0.30 E_mu (half the on-axis
+# values), where the suppression is milder: x0.92.
+XSEC_FLATTEN = 0.92
+SEG_SPREAD = 0.5e-3     # rad: optional further +-0.5 mrad vertical segmentation
 WOBBLE = 1.0e-3         # rad: +-1 mrad IMCC mover system (arcs, utility and RCS straights)
 SHOWER_W = 2.0          # m: transverse washout scale of hadronic/EM showers in soil
 
@@ -240,16 +255,26 @@ PITCH_RCS12 = convergence_pitch(DEPTH_RCS12)
 # ----------------------------------------------------------------------
 # Neutrino flux and event rate at the detector
 # ----------------------------------------------------------------------
-N_COLL = N_MU_YEAR * CHAIN_TRANSMISSION            # muons/yr/sign decaying in collider
+N_COLL = N_MU_YEAR * CHAIN_TRANSMISSION * F_STORE  # muons/yr/sign decaying in the collider
 N_DEC_NORTH = N_COLL * LS_COLLIDER / C_COLLIDER    # decays/yr aimed north (one sign)
 L_CM = DET_RANGE * 100.0
-FLUX_CORE = N_DEC_NORTH * GAMMA**2 / (math.pi * L_CM**2)   # per SPECIES, on axis
-E_NU_MEAN = 0.65 * E_MU * 1000.0                   # GeV, on-axis mean (numu .70, nue .60)
+FLUX_NAIVE = N_DEC_NORTH * GAMMA**2 / (math.pi * L_CM**2)  # per SPECIES: 1/gamma-pencil limit
+
+def onaxis_factor(f):
+    """On-axis density vs the 1/gamma-pencil limit for pencil fraction f."""
+    return f + (1.0 - f) / DIV_SUPP
+
+FLUX_CORE = FLUX_NAIVE * onaxis_factor(PENCIL_FRAC)        # baseline (f = 0)
+FLUX_CORE_DED = FLUX_NAIVE * onaxis_factor(PENCIL_FRAC_DED)
+# With the prism washed out, any point inside the smeared core sees the
+# angle-integrated spectrum: <E> = 0.35 E_mu (numu) / 0.30 E_mu (nubar_e) --
+# half the on-axis means a true pencil would deliver there.
+E_NU_MEAN = 0.325 * E_MU * 1000.0                  # GeV, fluence-weighted blend
 # CSMS (arXiv:1106.3723) CC+NC totals per nucleon, isoscalar, log-log interp.
 # Each decay emits ONE numu (at <E> = 0.7 Emu on axis) AND ONE nubar_e (0.6 Emu),
 # so the rate is Phi * [sigma_nu(0.7 Emu) + sigma_nubar(0.6 Emu)].
-_SIG_NU  = [(1e3, 8.2e-36), (2e3, 15.8e-36), (5e3, 35.6e-36), (1e4, 62e-36)]
-_SIG_NUB = [(1e3, 4.8e-36), (2e3, 9.4e-36), (5e3, 22.8e-36), (1e4, 42e-36)]
+_SIG_NU  = [(1e1, 8.2e-38), (1e3, 8.2e-36), (2e3, 15.8e-36), (5e3, 35.6e-36), (1e4, 62e-36)]
+_SIG_NUB = [(1e1, 4.8e-38), (1e3, 4.8e-36), (2e3, 9.4e-36), (5e3, 22.8e-36), (1e4, 42e-36)]
 def sigma_csms(tab, E_gev):
     import bisect
     xs = [math.log(e) for e, s in tab]; ys = [math.log(s) for e, s in tab]
@@ -257,10 +282,22 @@ def sigma_csms(tab, E_gev):
     i = 0 if x <= xs[0] else len(xs)-2 if x >= xs[-1] else bisect.bisect(xs, x)-1
     t = (x - xs[i]) / (xs[i+1] - xs[i])
     return math.exp(ys[i] + t*(ys[i+1] - ys[i]))
-SIGMA_SUM = (sigma_csms(_SIG_NU, 0.7*E_MU*1e3) +
-             sigma_csms(_SIG_NUB, 0.6*E_MU*1e3))   # cm^2 per decay
-RATE_PER_KG = FLUX_CORE * SIGMA_SUM * 6.022e26     # interactions/kg/yr, both species
-PENCIL_RADIUS_DET = DET_RANGE / GAMMA              # m
+SIGMA_SOFT = (sigma_csms(_SIG_NU, 0.35*E_MU*1e3) +
+              sigma_csms(_SIG_NUB, 0.30*E_MU*1e3))  # cm^2 per decay, smeared spectrum
+SIGMA_HARD = (sigma_csms(_SIG_NU, 0.7*E_MU*1e3) +
+              sigma_csms(_SIG_NUB, 0.6*E_MU*1e3))   # cm^2 per decay, on-axis pencil spectrum
+
+def rate_per_kg(f):
+    return FLUX_NAIVE * 6.022e26 * (f * SIGMA_HARD + (1 - f) / DIV_SUPP * SIGMA_SOFT)
+
+RATE_PER_KG = rate_per_kg(PENCIL_FRAC)             # interactions/kg/yr, both species
+RATE_PER_KG_DED = rate_per_kg(PENCIL_FRAC_DED)
+# Containment radii of the smeared core: r50 = 1.20 sigma_theta L and r99 =
+# 3.0 sigma_theta L (Gaussian), with the kinematic 1/gamma and 9.95/gamma
+# profile added in quadrature (matches a full convolution MC to ~5%).
+R50_DET = DET_RANGE * math.hypot(1.0/GAMMA, 1.20*SIG_THETA)
+R99_DET = DET_RANGE * math.hypot(9.95/GAMMA, 3.0*SIG_THETA)
+R50_KIN_DET = DET_RANGE / GAMMA                    # dedicated-pencil core, 50% flux
 
 # ----------------------------------------------------------------------
 # Dose model (King, physics/9908017)
@@ -286,21 +323,29 @@ def exit_report(pitch):
             continue
         lat = IP_LAT + (1 if north else -1) * x / MLAT
         graze = abs(-x/R_EARTH + (1 if north else -1)*(-pitch))   # rad, approx
-        raw = dose_ss_raw(L_PENCIL, x)
-        seg = raw * XSEC_FLATTEN / dilution(SEG_SPREAD, x)
-        opt = dose_ss_raw(L_PENCIL_OPT, x) * XSEC_FLATTEN / dilution(SEG_SPREAD, x)
-        core_w = max(2*x/GAMMA, SHOWER_W) + 2*SEG_SPREAD*x
+        raw = dose_ss_raw(LS_COLLIDER, x)          # all 700 m as a 1/gamma pencil
+        # baseline: every decay smeared into SIG_THETA (the MINT lattice result)
+        base = raw * XSEC_FLATTEN / DIV_SUPP
+        # optional +-SEG_SPREAD vertical segmentation on top of the smeared plume
+        w_div = 2 * 1.20 * SIG_THETA * x + SHOWER_W
+        seg = base / ((2*SEG_SPREAD*x + w_div) / w_div)
+        # dedicated-drift scenario: PENCIL_FRAC_DED of the decays in a sharp pencil
+        ded = XSEC_FLATTEN * (dose_ss_raw(LS_COLLIDER*PENCIL_FRAC_DED, x)
+                              + dose_ss_raw(LS_COLLIDER*(1-PENCIL_FRAC_DED), x) / DIV_SUPP)
         rows.append(dict(side='N' if north else 'S', exit_km=x/1000, exit_lat=lat,
-                         graze_mrad=graze*1000, footprint_len_km=(core_w/graze)/1000 if graze > 0 else None,
-                         core_width_m=core_w,
-                         dose_raw_Sv=raw, dose_mitigated_mSv=seg*1000, dose_optimistic_mSv=opt*1000))
+                         graze_mrad=graze*1000, footprint_len_km=(w_div/graze)/1000 if graze > 0 else None,
+                         core_width_m=w_div,
+                         dose_raw_Sv=raw, dose_mitigated_mSv=base*1000,
+                         dose_segmented_mSv=seg*1000, dose_dedicated_mSv=ded*1000))
     return rows
 
 PITCHES = [0.0, 1e-3, 2e-3, 5e-3]
 EXITS = {p: exit_report(p) for p in PITCHES}
 
-# Collider utility straight (west, full 700 m collinear for the closed orbit):
-# mitigated by in-straight vertical dogleg (+-SEG_SPREAD) plus the +-1 mrad mover.
+# Collider utility straight (west): a FODO straight with no final focus is a
+# TRUE 1/gamma pencil (its divergence ~ sqrt(eps_N/(gamma*beta)) << 1/gamma),
+# so unlike the IP straight it gets no free divergence smearing and NEEDS the
+# in-straight vertical dogleg (+-SEG_SPREAD) plus the +-1 mrad mover.
 x_u = exit_range(DEPTH_COLLIDER, 0.0, True)
 DOSE_UTILITY_RAW = dose_ss_raw(LS_COLLIDER, x_u)
 DOSE_UTILITY = DOSE_UTILITY_RAW * XSEC_FLATTEN / dilution(SEG_SPREAD + WOBBLE, x_u)
@@ -467,16 +512,24 @@ summary = {
   "beam_physics": {
     "gamma": round(GAMMA), "one_over_gamma_urad": round(1e6/GAMMA, 1),
     "muons_per_year_per_sign": N_MU_YEAR,
+    "store_decay_fraction": round(F_STORE, 3),
     "decays_aimed_north_per_year": N_DEC_NORTH,
-    "core_flux_nu_cm2_yr": FLUX_CORE,
-    "pencil_core_radius_at_detector_m": round(PENCIL_RADIUS_DET, 2),
-    "mean_onaxis_Enu_GeV": E_NU_MEAN,
-    "events_per_kg_per_year": RATE_PER_KG,
-    "events_per_tonne_per_year": RATE_PER_KG*1000,
+    "plume_model": "two-component per MINT arXiv:2608.02718",
+    "sigma_theta_mrad": SIG_THETA*1e3,
+    "pencil_frac": [PENCIL_FRAC, PENCIL_FRAC_DED],
+    "onaxis_density_dilution": round(DIV_SUPP, 1),
+    "core_flux_nu_cm2_yr": [FLUX_CORE, FLUX_CORE_DED],
+    "core_r50_r99_at_detector_m": [round(R50_DET, 2), round(R99_DET, 2)],
+    "dedicated_pencil_r50_at_detector_m": round(R50_KIN_DET, 2),
+    "mean_fluence_Enu_GeV": E_NU_MEAN,
+    "events_per_kg_per_year": [RATE_PER_KG, RATE_PER_KG_DED],
+    "events_per_tonne_per_year": [RATE_PER_KG*1000, RATE_PER_KG_DED*1000],
   },
   "dose": {
-    "model": "King physics/9908017 eq.10/eq.7 equilibrium approximation",
-    "assumed_pencil_length_m": [L_PENCIL_OPT, L_PENCIL],
+    "model": "King physics/9908017 eq.10/eq.7 equilibrium approximation; "
+             "IP-straight plume smeared by SIG_THETA per arXiv:2608.02718",
+    "plume": {"sigma_theta_mrad": SIG_THETA*1e3, "onaxis_dilution": round(DIV_SUPP, 1),
+              "pencil_frac_scenarios": [PENCIL_FRAC, PENCIL_FRAC_DED]},
     "exits_by_pitch": {("%.0f_mrad" % (p*1000)): EXITS[p] for p in PITCHES},
     "utility_straight_raw_Sv": round(DOSE_UTILITY_RAW, 2),
     "utility_straight_dogleg_wobbled_mSv": round(DOSE_UTILITY*1000, 3),
@@ -511,10 +564,14 @@ print("RCS1/2    C=%.2f km  R=%.0f m  Ls=%.0f m  depth %g m  pitch %.2f mrad dow
 print()
 print("Detector: range %.2f km from IP, hall depth %.0f m below grade" %
       (DET_RANGE/1000, DET_DEPTH))
-print("  pencil core radius %.2f m; core flux %.2e nu/cm2/yr; <Enu> ~ %.0f GeV" %
-      (PENCIL_RADIUS_DET, FLUX_CORE, E_NU_MEAN))
+print("  plume: sigma_theta %.2f mrad (arXiv:2608.02718), on-axis dilution /%.0f, store factor %.3f"
+      % (SIG_THETA*1e3, DIV_SUPP, F_STORE))
+print("  core r50/r99 %.2f/%.2f m; core flux %.2e nu/cm2/yr/species; <Enu> ~ %.0f GeV" %
+      (R50_DET, R99_DET, FLUX_CORE, E_NU_MEAN))
 print("  interaction rate %.2e /kg/yr  (%.2e per tonne-year)" %
       (RATE_PER_KG, RATE_PER_KG*1000))
+print("  dedicated-drift scenario (f=%.2f): core r50 %.2f m, flux %.2e, %.2e per tonne-year" %
+      (PENCIL_FRAC_DED, R50_KIN_DET, FLUX_CORE_DED, RATE_PER_KG_DED*1000))
 print()
 print("PLUME EXITS AND PEAK ANNUAL DOSE (King eq.10; corrections as labelled)")
 for p in PITCHES:
@@ -524,10 +581,11 @@ for p in PITCHES:
             print("   %s: no exit within 150 km" % row['side'])
         else:
             print("   %s: exit %6.1f km (lat %.4f)  graze %.2f mrad  core %4.0f m wide x %4.1f km"
-                  "  raw %7.2f Sv/yr -> mitigated %8.1f mSv/yr (optimistic %6.1f)"
+                  "  raw %7.2f Sv/yr -> smeared %7.2f mSv/yr (+seg %6.2f; dedicated-drift %7.1f)"
                   % (row['side'], row['exit_km'], row['exit_lat'], row['graze_mrad'],
                      row['core_width_m'], row['footprint_len_km'] or -1,
-                     row['dose_raw_Sv'], row['dose_mitigated_mSv'], row['dose_optimistic_mSv']))
+                     row['dose_raw_Sv'], row['dose_mitigated_mSv'],
+                     row['dose_segmented_mSv'], row['dose_dedicated_mSv']))
 print()
 print("Wobbled sources (+-1 mrad mover):")
 print("  collider utility straight (700 m, raw %.1f Sv/yr): dogleg+wobble -> %.1f mSv/yr"
