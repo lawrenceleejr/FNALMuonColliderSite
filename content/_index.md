@@ -130,6 +130,11 @@ easement, or University of Illinois land.
   their 63 GeV → 5 TeV chirp — 7 ms of every 0.2 s cycle, converged on the
   deep hall by the ring pitches — carries **~40 % of the collider's
   interaction rate**, each ~5 ps pulse energy-tagged by its turn number.
+* **[Co-tilted chain variant](uiuc-chain/)** — re-pitch every ring
+  up-to-north like the collider so the whole chain's south pencils exit at
+  UIUC: ντ CC doubles (0.14 → 0.29 per tonne-year, S/B improved), CC-able
+  plane-crossing ν̄τ ×9, every north beam emerging **on site** — and RCS3/4
+  fitting through a 25 µrad tilt window as the price.
 * **[Safety assessment](safety/)** — the King-model dose framework,
   zone-by-zone numbers for the downstream communities, exit-strip
   management, and the UIUC scenario.

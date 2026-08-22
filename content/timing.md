@@ -22,9 +22,11 @@ civic-envelope baseline's on-site detector), the **on-site convergence
 hall** (9.25 km, 107 m deep — the deep reference layout's hall, where the
 RCS pitches converge the whole chain), and the **UIUC far hall**
 (197.4 km — the South Farms exit of the *south* beam, so its flavours are
-the CP mirror, ν̄μ + νe). The far hall is collider-only: the south-going
+the CP mirror, ν̄μ + νe). The far hall is collider-only *in the baseline*: the south-going
 RCS plumes, pitched down-to-north, leave the ground 11.5 and 21 km south
-and pass 3.4–3.9 km *above* the surface at the exit. Its pulses arrive a
+and pass 3.4–3.9 km *above* the surface at the exit (the
+[co-tilted chain variant](../uiuc-chain/) re-pitches every ring to put the
+chirp on the far hall too). Its pulses arrive a
 fixed 658 µs of flight later — an offset, not a structure.
 
 **Headline:** the acceleration chain is not a sideshow. Because the RCS
