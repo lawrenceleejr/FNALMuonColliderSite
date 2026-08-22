@@ -55,12 +55,25 @@ those pages); and only 84 % of stored muons decay before the next injection
 <div style="margin:1.2rem 0"><img src="../figs/chain_timing_te.svg" alt="Fluence map in time and neutrino energy over one 5 Hz cycle at the deep hall" style="max-width:100%"></div>
 
 The map above is the cycle as the hall experiences it: fluence through a
-0.5 m-radius on-axis disc, per cycle. Left of ~0.5 ms the log-time axis
-resolves **individual turns** — each vertical stripe is one ~5 ps pulse.
-The four chirp segments climb through the RCS energies; at 7.0 ms the store
-takes over at 5 TeV and fades as e^(−t/104 ms). The muon beam is 1.5 mm
-long, so each pulse is ~5 ps of neutrinos after 9.25 km of flight — a duty
-factor of order 10⁻⁷.
+0.5 m-radius on-axis disc, per cycle, with the **fluence-weighted ⟨Eν⟩(t)
+profile drawn over the colour map** — it climbs the chirp and locks onto the
+store's 1.67 TeV plateau. Left of ~0.5 ms the log-time axis resolves
+**individual turns** — each vertical stripe is one ~5 ps pulse. The four
+chirp segments climb through the RCS energies; at 7.0 ms the store takes
+over at 5 TeV and fades as e^(−t/104 ms). The muon beam is 1.5 mm long, so
+each pulse is ~5 ps of neutrinos after 9.25 km of flight — a duty factor of
+order 10⁻⁷.
+
+**Across cycles** the picture interleaves: each bunch stores for the full
+0.2 s (dumped 85 % decayed when its successor arrives), and the *next*
+bunch's 7 ms chirp runs concurrently through the last 7 ms of the store.
+Wall-clock, the hall sees a sawtooth store with a chirp column inside each
+overlap window; the mean-energy profile dives from 1.67 TeV to ~250 GeV
+during the overlap — the chirp's instantaneous rate is ~15× the store's —
+and snaps back at each injection. (The single-cycle figures on this page
+follow one bunch, chain-first; same physics, bunch-centric phase.)
+
+<div style="margin:1.2rem 0"><img src="../figs/chain_timing_multirep.svg" alt="Three wall-clock cycles: sawtooth store with the chirp in each overlap window" style="max-width:100%"></div>
 
 ## 2. Time gating is essentially perfect
 
@@ -126,7 +139,37 @@ hall — the two halls split the programme rather than duplicating it.)
 
 <div style="margin:1.2rem 0"><img src="../figs/chain_flux_er_near.svg" alt="Fluence map in radius and energy at the near hall" style="max-width:100%"></div>
 
-## 4. What the chirp is for
+## 4. Flavor vs time — and flavor evolution
+
+The north-aimed flux is one muon sign: **exactly one νμ and one ν̄e per
+decay** (CP mirror selectable by circulation direction), at every instant of
+the cycle. Because σν ∝ E for both species, the *interacting* flavor shares
+barely move either: cycle-averaged **48 % νμ CC : 24 % ν̄e CC : 29 % NC** at
+the deep hall, time-invariant to a couple of per cent through the whole
+chirp. The per-flavor interaction rates carry the timing structure instead —
+and the near hall's version makes the two-hall split visible: it is silent
+for the first 7 ms of every (bunch-centric) cycle.
+
+<div style="margin:1.2rem 0"><img src="../figs/chain_flavor_deep.svg" alt="Per-flavor interaction rates vs time at the deep hall" style="max-width:100%"></div>
+<div style="margin:1.2rem 0"><img src="../figs/chain_flavor_near.svg" alt="Per-flavor interaction rates vs time at the near hall" style="max-width:100%"></div>
+
+The one genuinely time-dependent flavor is the one the beam is born
+without: **ντ from oscillation**. The appearance probability scales as
+(L/E)², so as the chirp sweeps the parent energy down to tens of GeV the
+oscillated fraction of the arriving fluence swings **~560×** through the
+cycle at the deep hall — from a 1.1 × 10⁻⁹ minimum at the RCS4 chirp end,
+through 1.4 × 10⁻⁸ in the store, to 6.5 × 10⁻⁷ (47× the store) during the
+RCS1 turns. Two subtleties the figure encodes: the RCS4 chirp end dips
+*below* the store (same parent energy, but a pencil's on-axis prism spectrum
+is harder than the smeared store's, and ⟨P⟩ is dominated by the soft tail);
+and the near hall sits ~15× lower throughout, its (1.3/9.25)² baseline
+penalty partly offset by the same tail. Absolute rates stay tiny — this is
+the corridor's oscillation *window*, not yet an experiment — but the
+time-tagged (L/E)-scan structure is unique to a chirped beam.
+
+<div style="margin:1.2rem 0"><img src="../figs/chain_flavor_osc.svg" alt="Mean oscillation probability vs time in the cycle at both halls" style="max-width:100%"></div>
+
+## 5. What the chirp is for
 
 A turn-tagged 63 GeV → 5 TeV sweep, five times a second, in a flavour-pure
 beam with known parent kinematics, is an instrument in its own right:
@@ -143,7 +186,7 @@ beam with known parent kinematics, is an instrument in its own right:
    decay physics, no lattice divergence to model — so the chirp bands give
    the flux normalisation a handle the smeared 5 TeV component lacks.
 
-## 5. Caveats
+## 6. Caveats
 
 * Linear-in-time ramps, no injection/extraction gaps, no transfer-line
   decays; bunch-to-bunch transfer assumed instantaneous. Real ramp shapes
