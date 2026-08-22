@@ -92,8 +92,8 @@ ax.plot(T_CTR * 1e3, prof, **MEAN_LINE)
 ax.text(0.55, 62, "fluence-weighted $\\langle E_\\nu\\rangle(t)$",
         color="w", fontsize=8.5, rotation=27,
         path_effects=[pe.withStroke(linewidth=2.6, foreground="#2a2a2a")])
-ax.set_title("One machine cycle at the deep hall (9.25 km): the chain chirp,"
-             " then the store", fontsize=10, loc="left")
+ax.set_title("One machine cycle at the on-site convergence hall (9.25 km): chirp,"
+             " then store", fontsize=10, loc="left")
 save(fig, "chain_timing_te")
 
 # ----------------------------------------------------------------------
@@ -158,7 +158,7 @@ ax.text(1.6, 1300, "collider store (smeared,\n$\\sigma_\\theta$ = 0.15 mrad: no 
         color="0.15", ha="center", fontsize=8.5)
 ax.text(3.6, 45, "RCS2$-$3", color="w", ha="center", fontsize=8.5)
 ax.text(16, 8.5, "RCS1", color="w", ha="center", fontsize=8.5)
-ax.set_title("Fluence at the deep hall: every stage converged on one axis",
+ax.set_title("Fluence at the convergence hall (9.25 km): every stage on one axis",
              fontsize=10, loc="left")
 save(fig, "chain_flux_er")
 
@@ -216,7 +216,7 @@ def flavor_fig(prefix, title, name):
     ax.set_title(title, fontsize=10, loc="left")
     return fig, ax
 
-fig, ax = flavor_fig("DEEP", "Flavor composition vs time at the deep hall "
+fig, ax = flavor_fig("DEEP", "Flavor composition vs time, on-site convergence hall "
                      "(9.25 km): shares barely move", "chain_flavor_deep")
 ax.set_ylim(3e2, 3e7)
 ax.text(0.02, 0.05, "cycle-averaged shares 48% : 24% : 29% "
@@ -237,28 +237,91 @@ save(fig, "chain_flavor_near")
 
 # oscillation flavor evolution
 fig, ax = plt.subplots(figsize=(6.6, 3.6))
-for key, col, lab in (("DEEP_POSC", "#6d3580", "deep hall (9.25 km)"),
-                      ("NEAR_POSC", "0.45", "near hall (1.3 km)")):
+for key, col, lab, dy in (("FAR_POSC", "#b5541c", "UIUC far hall (197.4 km)", 1.5),
+                      ("DEEP_POSC", "#6d3580", "convergence hall (9.25 km)", 1.4),
+                      ("NEAR_POSC", "0.45", "near hall (1.3 km)", 0.55)):
     y = fv[key]
     ym = np.ma.masked_invalid(y)
     ax.plot(T_CTR * 1e3, ym, drawstyle="steps-mid", color=col, lw=1.7)
     m = np.isfinite(y)
     i = np.where(m)[0][-1]
-    ax.text(210, y[i] * (1.4 if key.startswith("DEEP") else 0.55), lab,
-            color=col, fontsize=9, va="center")
+    ax.text(210, y[i] * dy, lab, color=col, fontsize=9, va="center")
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlim(2e-2, 320)
-ax.set_ylim(2e-10, 3e-6)
+ax.set_ylim(2e-10, 3e-5)
 ax.set_xlabel("time in the 5 Hz cycle  [ms]  (bunch-centric)")
 ax.set_ylabel(r"$\langle P(\nu_\mu\to\nu_\tau)\rangle$ of the arriving fluence")
-ax.text(0.13, 9e-7, "RCS1: 47× the store's oscillated\nfraction, 560× the RCS4-end dip",
+ax.text(0.13, 9e-7, "RCS1: 47$\\times$ the store's oscillated\nfraction, 560$\\times$ the RCS4-end dip",
         fontsize=8, color="#6d3580", ha="center")
 ax.text(30, 2.1e-9, "5 TeV store", fontsize=8, color="0.35")
-ax.text(0.98, 0.97, "vacuum $\\Delta m^2_{31}=2.5\\times10^{-3}$ eV$^2$, amp. 0.95;\n"
+ax.text(2.6, 8.6e-6, "far hall: south beam, $\\bar\\nu_\\mu\\to\\bar\\nu_\\tau$ (CP mirror)",
+        fontsize=7.5, color="#b5541c", ha="center")
+ax.text(0.02, 0.04, "vacuum $\\Delta m^2_{31}=2.5\\times10^{-3}$ eV$^2$, amp. 0.95;  "
         "$\\nu_e\\to\\nu_\\tau$ adds ~5% with the same shape;\n"
         "means are dominated by the soft tail of the accepted spectrum",
-        transform=ax.transAxes, ha="right", va="top", fontsize=7.5, color="0.35")
+        transform=ax.transAxes, ha="left", va="bottom", fontsize=7.5, color="0.35")
 ax.set_title("Flavor evolution through the cycle: the chirp is the corridor's "
              "oscillation window", fontsize=10, loc="left")
 save(fig, "chain_flavor_osc")
+
+# ----------------------------------------------------------------------
+# Total on-axis flux vs time, three sites
+# ----------------------------------------------------------------------
+SITES = (("NEAR", "0.45", "near hall (1.3 km)"),
+         ("DEEP", "#6d3580", "convergence hall (9.25 km)"),
+         ("FAR", "#b5541c", "UIUC far hall (197.4 km)"))
+
+fig, ax = plt.subplots(figsize=(6.6, 3.8))
+for key, col, lab in SITES:
+    y = fv[key + "_FLUX"]
+    ax.plot(T_CTR * 1e3, np.ma.masked_where(~(y > 0), y),
+            drawstyle="steps-mid", color=col, lw=1.6)
+    i = np.where(y > 0)[0][-1]
+    ax.text(210, y[i], lab, color=col, fontsize=9, va="center")
+ax.set_xscale("log")
+ax.set_yscale("log")
+ax.set_xlim(2e-2, 320)
+ax.set_ylim(3, 3e6)
+ax.set_xlabel("time in the 5 Hz cycle  [ms]  (bunch-centric)")
+ax.set_ylabel(r"$\nu$ / cm$^2$ / ms on axis (per cycle)")
+ax.text(0.3, 5e5, "chirp: only the convergence hall\nis on the RCS pencils' axis",
+        fontsize=7.8, color="#6d3580", ha="center")
+ax.text(30, 1.1e4, r"5 TeV store: $\propto 1/L^2$", fontsize=8, color="0.35")
+ax.set_title("Total on-axis flux vs time at the three sites", fontsize=10,
+             loc="left")
+save(fig, "chain_flux_total_t")
+
+# ----------------------------------------------------------------------
+# Oscillated nutau arrivals vs time, three sites: the (L/E)^2 cancellation
+# ----------------------------------------------------------------------
+fig, ax = plt.subplots(figsize=(6.6, 3.8))
+for key, col, lab in SITES:
+    y = fv[key + "_NUTAU"]
+    ax.plot(T_CTR * 1e3, np.ma.masked_where(~(y > 0), y),
+            drawstyle="steps-mid", color=col, lw=1.6)
+dy = {"NEAR": 2.6, "DEEP": 1.0, "FAR": 0.38}
+for key, col, lab in SITES:
+    y = fv[key + "_NUTAU"]
+    i = np.where(y > 0)[0][-1]
+    ax.text(210, y[i] * dy[key], lab, color=col, fontsize=9, va="center")
+ax.set_xscale("log")
+ax.set_yscale("log")
+ax.set_xlim(2e-2, 320)
+ax.set_ylim(3e-6, 0.3)
+ax.set_xlabel("time in the 5 Hz cycle  [ms]  (bunch-centric)")
+ax.set_ylabel(r"oscillation-made $\nu_\tau$ / cm$^2$ / ms (per cycle)")
+ax.text(0.35, 6e-2, "chirp: (L/E) blows up as E falls\n"
+        "$-$ 30% of the hall's $\\nu_\\tau$ in 3.5% of the cycle",
+        fontsize=7.8, color="#6d3580", ha="center")
+ax.text(35, 2.5e-3, "store: flux $\\propto 1/L^2$ and P $\\propto L^2$ cancel $-$\n"
+        "all three sites receive the same $\\nu_\\tau$ areal density\n"
+        "(0.006$-$0.011 /cm$^2$/cycle; residual spread is\nthe soft-tail acceptance)",
+        fontsize=7.8, color="0.35", ha="center", va="center")
+ax.text(0.98, 0.97, "oscillation only ($\\nu_\\mu\\to\\nu_\\tau$ vacuum; "
+        "$\\nu_e$ channel ~5%);\nrock-produced $\\nu_\\tau$ not included "
+        "(beam-size study sec. 5)",
+        transform=ax.transAxes, ha="right", va="top", fontsize=7.2, color="0.35")
+ax.set_title(r"$\nu_\tau$ arrivals vs time: the (L/E)$^2$ cancellation, live",
+             fontsize=10, loc="left")
+save(fig, "chain_nutau_t")
