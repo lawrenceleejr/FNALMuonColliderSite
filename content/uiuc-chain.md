@@ -16,8 +16,10 @@ with the corridor terrain model
 
 **Headline:** the geometry closes — every ring has a feasible (depth, tilt)
 pair that exits south at UIUC, emerges north *inside the Fermilab fence*,
-and keeps the whole ring underground — but for the big RCS3/4 ring it
-closes by **25 µrad of tilt**, the tightest tolerance in the whole study.
+and keeps the whole ring underground — but for the big RCS3/4 ring the *planar* solution
+closes by **25 µrad of tilt**, the tightest tolerance in the whole study —
+a tolerance §1 shows dissolves entirely if the ring is allowed one pair of
+vertical achromats (tilted straight, level arcs).
 The payoff at the far hall: **on-axis flux ×2.0** and **ντ CC ×2.1 per
 tonne-year** with slightly *improved* S/B, plus a ×9 jump in CC-able
 oscillated ν̄τ crossing the plane. The costs: one new ~3 mSv/yr pencil
@@ -63,13 +65,47 @@ offset by tens of metres.
 
 Two structural notes. First, RCS3/4's whole existence squeezes through a
 **25 µrad tilt window**: 15.300 mrad puts its north arc at 6 m cover;
-15.325 mrad puts its north emergence at the fence. Widening it means one
-of: relaxing apex cover (local cut-and-cover over ~100 m of arc), a
-slightly smaller RCS3/4 ring, or accepting the emergence a few tens of
-metres outside the fence and buying that sliver. Second, the collider's
+15.325 mrad puts its north emergence at the fence. Second, the collider's
 own north arc apex sits at **5.9 m cover in the published baseline** — the
 civic envelope already lives with a shallow north arc; this variant adds
 two more of the same species, not a new species.
+
+### Do the straights need different depths?
+
+RCS1/2 doesn't: it already sits at collider depth (32.6 vs 33.6 m).
+RCS3/4's ~11 m offset is pure planar-ring arithmetic — its arc-apex lift
+(L<sub>s</sub>/2 + R)·θ = 37.3 m exceeds the collider's 29 m — and scanning
+the exit family shows the offset is **irreducible under planarity**: the
+straight depth trades 1 m for 1 m of apex cover, and even with the north
+arc *at grade* (zero cover) the planar RCS3/4 straight cannot come
+shallower than 36.4 m, still 2.8 m below the collider:
+
+| required apex cover | planar RCS3/4 straight depth | offset vs collider | fence margin |
+|---|---|---|---|
+| 8 m | 44.3 m | +10.7 m | 269 m |
+| 6 m | 42.3 m | +8.7 m | 404 m |
+| 4 m | 40.3 m | +6.7 m | 539 m |
+| 0 m (arc at grade) | 36.4 m | +2.8 m | 808 m |
+
+The escape hatch is to drop planarity where nothing needs it: only the
+**east straight** must lie on the UIUC line — the arcs radiate sideways
+and can sit wherever civil engineering likes. A **bent ring** (tilted
+straight, level arcs, joined by vertical achromats at the straight's two
+ends) detaches the apex constraint entirely: the straight then sits at
+**any point on the exit family** — e.g. 39.7 m / 15.34 mrad to cross the
+near-hall plane at exactly the collider beam's depth (fence margin 582 m),
+or ~34 m for a ~1 km margin — and the 25 µrad window opens into a
+±40 µrad-plus comfort zone set only by siting preference. The hardware is
+standard geometry-matching: 15.4 mrad of vertical bend per end,
+B·L = 257 T·m at 5 TeV (~32 m of 8 T per bend, achromat pairs to close
+vertical dispersion), ~120 m of vertical dipoles per ring = 0.8 %
+(RCS3/4) / 1.9 % (RCS1/2) of the circumference. Decays inside the
+achromats spray over the 15.4 mrad vertical fan — self-segmenting, so
+dose-benign. The cost is real lattice work (ramped vertical bends with
+closed dispersion in a rapid-cycling ring, where the IMCC baseline is
+planar), but vertical doglegs are already contemplated for the mover and
+segmentation systems; this is more of the same hardware doing geometry
+instead of mitigation.
 
 ## 2. What the far hall gains
 
@@ -151,5 +187,6 @@ Three readings of that table:
 one measurement this corridor can do that nothing else can — the co-tilted
 chain is the better design: twice the CC rate, nine times the plane-level
 oscillated sample, no new off-site land, one dose knob it already had, and
-one genuinely hard tolerance (RCS3/4's 25 µrad window) as the price of
-admission.
+one genuinely hard tolerance (RCS3/4's 25 µrad planar window) as the
+price of admission — or ~120 m of vertical achromat per ring to buy the
+tolerance away and put every straight at the same depth.
