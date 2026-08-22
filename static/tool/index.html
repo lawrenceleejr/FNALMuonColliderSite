@@ -217,7 +217,7 @@ curve (the Illinois River valley is the dip around −80 km).
   </div>
   <div class="grouphead">Beam &amp; optics — sets rates and spot size</div>
   <div>
-    <label>Muon beam energy E&mu; (sets &langle;E&nu;&rangle; &asymp; 0.65 E&mu;, &sigma;&nu;, and the beam's 1/&gamma; opening angle)</label>
+    <label>Muon beam energy E&mu; (sets &langle;E&nu;&rangle; &asymp; 0.33 E&mu; fluence-mean, &sigma;&nu;, and the beam's 1/&gamma; opening angle)</label>
     <input type="range" id="emu" min="0.5" max="7.5" step="0.25" value="5">
     <span class="val" id="emuV"></span>
   </div>
@@ -230,6 +230,16 @@ curve (the Illinois River valley is the dip around −80 km).
     <label>IP betatron function &beta;* (IMCC 10 TeV: 1.5 mm)</label>
     <input type="range" id="betaStar" min="0.1" max="20" step="0.1" value="1.5">
     <span class="val" id="betaStarV"></span>
+  </div>
+  <div>
+    <label>Effective plume divergence &sigma;<sub>&theta;</sub> (MINT, arXiv:2608.02718, on the IMCC lattice: 0.1&ndash;0.2 mrad)</label>
+    <input type="range" id="sigTh" min="0.02" max="0.60" step="0.01" value="0.15">
+    <span class="val" id="sigThV"></span>
+  </div>
+  <div>
+    <label>Pencil fraction f &mdash; share of straight decays in a dedicated dispersion-free drift (0 = today's lattice; 0.49 = all but the &plusmn;180 m FF/chicanes)</label>
+    <input type="range" id="pencilF" min="0" max="1" step="0.01" value="0">
+    <span class="val" id="pencilFV"></span>
   </div>
 </div>
 
@@ -272,22 +282,24 @@ metres-wide spot into a long, narrow strip.
 <p class="note" style="margin:.4rem 0 .15rem">the 90 %-flux and 99 %-interaction radii
   coincide at 3L/γ — the energy–angle correlation at work</p>
 <div style="overflow-x:auto"><table class="maptable"><thead><tr>
-  <th>location</th><th>L from IP</th><th>L/γ (= 50 % of flux)</th>
-  <th>3L/γ (= 90 % flux · 99 % of interactions)</th><th>99 % of flux</th>
+  <th>location</th><th>L from IP</th><th>50 % of flux</th>
+  <th>90 % of flux</th><th>99 % of flux</th>
   <th>ground footprint</th></tr></thead>
   <tbody id="spotRows"></tbody></table></div>
 <div class="out" id="optOut" style="margin-top:.7rem"></div>
 <p class="note">
-β* and the emittance set the muon beam's own angular divergence,
-σ<sub>θ</sub>(s) = √(ε<sub>N</sub>/γβ(s)) with β(s) = β* + s²/β*. It is
-largest exactly at the IP and collapses within centimetres, so it competes
-with the decay cone over only a sliver of the 700 m straight — the far-field
-spot is kinematic, and <strong>changing β* by a factor of 200 barely moves
-it</strong>. What the divergence does produce is a faint wide halo from the
-final-focus region; its surface density is quoted above and is the
-"IP-adjacent fan" that the effective-pencil-length parameter of the
-<a href="../safety/">dose model</a> stands in for. Full derivation and the
-detector-sizing consequences: <a href="../beamsize/">the beam-size study</a>.
+An earlier revision of this tool treated the far-field spot as kinematic
+(r = L/γ) with the divergence confined to a ~10⁻⁴-weight halo. MINT
+(<a href="https://arxiv.org/abs/2608.02718">arXiv:2608.02718</a>), decaying
+muons along the real IMCC lattice, shows otherwise: a drift conserves
+angles, the final-focus drifts are ~150 m long, and the whole IP-straight
+plume carries σ<sub>θ</sub> ≈ 0.1–0.2 mrad ≈ 7×(1/γ), washing out the
+energy–radius prism. The spot table above is the two-component mixture —
+smeared plume (weight 1−f) plus optional dedicated-drift pencil (weight f)
+— and the σ<sub>θ</sub> and f sliders drive every rate, spot and exit-strip
+number on this page. Full story and the detector-sizing consequences:
+<a href="../beamsize/">the beam-size study</a>; the dose trade that f
+creates: <a href="../safety/">the safety assessment</a>.
 </p>
 
 <h2 style="font-size:1.15rem">Civic-envelope audit — who is within 500 ft of this beam?</h2>
@@ -559,8 +571,9 @@ const AIR_MARGIN = 2;                       // m of headroom when solving "clear
 const N_A = 6.022e23;
 // Baseline machine (see the design note): 1.8e12 mu/bunch/sign at 5 Hz for
 // 1.2e7 s/yr, 90% chain transmission, 700 m straight in an 11 km ring -> the
-// decays aimed along the corridor in EACH direction, per year:
-const N_DEC_YR = 1.8e12 * 5 * 1.2e7 * 0.90 * (700 / 11000);
+// decays aimed along the corridor in EACH direction, per year (0.854 =
+// fraction of stored muons decaying within the 0.2 s store):
+const N_DEC_YR = 1.8e12 * 5 * 1.2e7 * 0.90 * 0.854 * (700 / 11000);
 // Neutrino cross-sections: CSMS (arXiv:1106.3723) CC+NC totals per nucleon
 // (isoscalar), log-log interpolated. Each muon decay emits ONE nu_mu-type
 // (on-axis <E> = 0.7 Emu) AND ONE nu_e-type (0.6 Emu), so total rates use
@@ -736,6 +749,7 @@ const state = {
   ipLat: 41.8443, ipElev: 191, tilt: 15.40e-3,    // machine (lockable / solvable)
   detLat: 41.8560, airFt: 300, houseH: 10, emu: 5.0,   // probes & context
   epsN: 25, betaStar: 1.5,        // normalised emittance (um rad), beta* (mm)
+  sigTh: 0.15, pencilF: 0,        // smeared-plume divergence (mrad, MINT 2608.02718); dedicated-drift pencil fraction f
   constraint: 'none', detTarget: 50, exitTarget: 41.9400,
   locks: { ipLat: false, ipElev: false, tilt: false },
 };
@@ -967,44 +981,70 @@ const xForEvents = f => Math.sqrt(1 / Math.sqrt(1 - f) - 1);
 const R50 = xForFlux(0.5), R90 = xForFlux(0.9), R99 = xForFlux(0.99);   // 1, 3, 9.95
 const E50 = xForEvents(0.5), E90 = xForEvents(0.9), E99 = xForEvents(0.99);
 
-// Muon-beam optics: geometric emittance eps_N/gamma, betatron function
-// beta(s) = beta* + s^2/beta*, angular divergence sqrt(eps_g/beta(s)).
-// The divergence is LARGEST at the IP (smallest beta) and falls away fast.
+// Muon-beam optics. A field-free drift CONSERVES angles: sigma_theta =
+// sqrt(eps_g/beta*) everywhere between the final-focus quads (beta(s) =
+// beta* + s^2/beta* is the envelope, not a shrinking angular spread), and
+// MINT (arXiv:2608.02718), decaying muons along the real IMCC v0.6+v0.9
+// lattice, finds the ~150 m FF drifts plus dispersive matching sections give
+// the whole IP-straight plume an effective divergence sigThEff ~ 0.15 mrad
+// >> 1/gamma — with the energy-angle "prism" washed out. A dedicated
+// dispersion-free drift (waist beta* ~ l, sigma = sqrt(eps/l) ~ 1 urad)
+// would radiate a true 1/gamma pencil: state.pencilF is the fraction of the
+// straight's decays in such a drift.
 function optics() {
   const gamma = state.emu * 1e12 / 105.658e6;
   const epsG = state.epsN * 1e-6 / gamma;              // m rad
   const bStar = state.betaStar * 1e-3;                 // m
-  const sigTh = Math.sqrt(epsG / bStar);               // rad, at the IP
-  const sigX = Math.sqrt(epsG * bStar);                // m, at the IP
-  // beta where the muon divergence equals the 1/gamma decay cone, and the
-  // half-length of straight inside which divergence dominates
-  const bCross = epsG * gamma * gamma;
-  const sCross = Math.sqrt(Math.max(bCross - bStar, 0) * bStar);
-  return { gamma, epsG, bStar, sigTh, sigX, bCross, sCross,
-           haloFrac: 2 * sCross / L_STRAIGHT,
-           divDominates: sigTh * gamma };               // sigma_theta in units of 1/gamma
+  const sigThIP = Math.sqrt(epsG / bStar);             // rad, in the FF drift
+  const sigX = Math.sqrt(epsG * bStar);                // m, at the waist
+  const sigEff = state.sigTh * 1e-3;                   // rad, smeared component
+  const f = state.pencilF;
+  const dilution = 2 * gamma * gamma * sigEff * sigEff;   // on-axis density /
+  return { gamma, epsG, bStar, sigThIP, sigX, sigEff, f, dilution,
+           axisFac: f + (1 - f) / dilution,            // vs the pencil formula
+           divDominates: sigThIP * gamma };
 }
-// Containment radii of the neutrino spot a distance L from the IP. The muon
-// divergence adds in quadrature but is a 1e-4-weight halo, so the core radii
-// are kinematic; `halo` reports the wide, faint component separately.
+// Containment radii of the two-component spot a distance L from the IP:
+// pencil (weight f, boosted-decay profile) + smeared (weight 1-f, near-
+// Gaussian: Rayleigh with s_r = 1.02 sigEff L matches a convolution MC to
+// ~4%). Mixture quantiles by bisection; kinematic form when sigEff < 2/gamma.
 function spotAt(L) {
   const o = optics(), s = L / o.gamma;
-  return { L, o, scale: s,
-           r50: R50 * s, r90: R90 * s, r99: R99 * s,
-           e50: E50 * s, e90: E90 * s, e99: E99 * s,
-           core: 2 * s, halo: L * o.sigTh };
+  const sr = 1.02 * o.sigEff * L;
+  const Fkin = r => { const x = r / s; return x * x / (1 + x * x); };
+  const Fsm = o.sigEff * o.gamma < 2 ? Fkin
+            : r => 1 - Math.exp(-r * r / (2 * sr * sr));
+  const Fmix = r => o.f * Fkin(r) + (1 - o.f) * Fsm(r);
+  const quant = q => {
+    let lo = 0, hi = Math.max(20 * s, 6 * sr);
+    while (Fmix(hi) < q) hi *= 2;
+    for (let i = 0; i < 60; i++) {
+      const m = (lo + hi) / 2;
+      (Fmix(m) < q) ? lo = m : hi = m;
+    }
+    return (lo + hi) / 2;
+  };
+  return { L, o, scale: s, sr,
+           r50: quant(0.5), r90: quant(0.9), r99: quant(0.99),
+           r50kin: R50 * s, r99kin: R99 * s, e99kin: E99 * s };
 }
 
 // Neutrino cross-section, interaction length, and beam physics at energy Emu
 function beamPhysics() {
   const gamma = state.emu * 1e12 / 105.658e6;
-  const enu = 0.65 * state.emu * 1000;                 // GeV, on-axis blend (display)
-  const sigNu = sigmaCSMS(SIG_NU, 0.7 * state.emu * 1000);   // the nu of the pair
-  const sigNub = sigmaCSMS(SIG_NUB, 0.6 * state.emu * 1000); // the nubar of the pair
-  const sigSum = sigNu + sigNub;                       // cm^2 per DECAY (both species)
-  const sigma = sigSum / 2;                            // mean per neutrino (attenuation)
+  // With the prism washed out, any point in the smeared core (and the beam
+  // as a whole) sees the angle-integrated spectrum: <E> = 0.35/0.30 Emu per
+  // species. The on-axis pencil spectrum (0.7/0.6 Emu) applies only to the
+  // dedicated-drift component.
+  const enu = 0.325 * state.emu * 1000;                // GeV, fluence blend (display)
+  const sigSoft = sigmaCSMS(SIG_NU, 0.35 * state.emu * 1000) +
+                  sigmaCSMS(SIG_NUB, 0.30 * state.emu * 1000);  // per DECAY
+  const sigHard = sigmaCSMS(SIG_NU, 0.70 * state.emu * 1000) +
+                  sigmaCSMS(SIG_NUB, 0.60 * state.emu * 1000);
+  const sigSum = sigSoft;                              // cm^2 per DECAY (both species)
+  const sigma = sigSoft / 2;                           // mean per neutrino (attenuation)
   const lambda = 1 / (N_A * sigma);                    // g/cm^2
-  return { gamma, enu, sigma, sigSum, lambda };
+  return { gamma, enu, sigma, sigSum, sigSoft, sigHard, lambda };
 }
 
 // ---- constraint solving -------------------------------------------------
@@ -1375,8 +1415,10 @@ function render() {
   const Ldet = Math.abs(s_of(state.detLat) - b.s0) * 100;   // cm
   const aHalf = L_STRAIGHT / 2 * 100;
   const lineFac = Ldet > aHalf * 1.5 ? Ldet * Ldet / ((Ldet - aHalf) * (Ldet + aHalf)) : 1;
-  const flux = N_DEC_YR * phys.gamma ** 2 / (Math.PI * Ldet * Ldet) * lineFac;
-  const ratePerTonne = flux * phys.sigSum * N_A * 1e6;      // both species
+  const fluxNaive = N_DEC_YR * phys.gamma ** 2 / (Math.PI * Ldet * Ldet) * lineFac;
+  const oR = optics();
+  const ratePerTonne = fluxNaive * N_A * 1e6 *
+    (oR.f * phys.sigHard + (1 - oR.f) / oR.dilution * phys.sigSoft);
   const detRateTxt = Ldet < 1e4 ? "detector is at the IP" :
     fmtSci(ratePerTonne, 2) + " interactions / tonne·yr";
   let airTxt;
@@ -1425,7 +1467,7 @@ function render() {
       <br><span class="note">${fmtSci(lamS, 3)} interaction lengths → ${fmt(100*Math.exp(-lamS),3)}% of the beam survives; details in the geology table below the map</span></div>
     <div><span class="lbl">Beam at the detector (baseline machine, ${fmt(state.emu,2)} TeV μ)</span>
       <b>${detRateTxt}</b>
-      <br><span class="note">1/γ core radius ${fmt(1e2*Math.abs(s_of(state.detLat)-b.s0)/phys.gamma,1)} cm at ${fmt(Math.abs(dkm),2)} km; ${fmtSci(N_DEC_YR, 2)} decays/yr aimed each way</span></div>`;
+      <br><span class="note">core r₅₀ ${mlen(spotAt(Math.abs(s_of(state.detLat)-b.s0)).r50)} at ${fmt(Math.abs(dkm),2)} km (σθ = ${fmt(state.sigTh,2)} mrad, f = ${fmt(state.pencilF,2)}, on-axis density ×${fmtSci(optics().axisFac,2)} vs the pencil formula); ${fmtSci(N_DEC_YR, 2)} decays/yr aimed each way</span></div>`;
 
   // ---- civic-envelope audit ----
   {
@@ -1508,9 +1550,15 @@ function render() {
     fmt(state.emu,2) + " TeV  (√s = " + fmt(2*state.emu,0) + " TeV; ⟨Eν⟩ ≈ " + fmt(phys.enu/1000,1) + " TeV)";
   document.getElementById("epsNV").textContent = fmt(state.epsN,0) + " µm·rad";
   document.getElementById("betaStarV").textContent = fmt(state.betaStar,2) + " mm";
+  document.getElementById("sigThV").textContent = fmt(state.sigTh,2) + " mrad = " +
+    fmt(state.sigTh*1e-3*state.emu*1e12/105.658e6,1) + "×(1/γ)";
+  document.getElementById("pencilFV").textContent = fmt(state.pencilF,2) +
+    (state.pencilF === 0 ? "  (today's lattice)" : "");
   document.getElementById("emu").value = state.emu;
   document.getElementById("epsN").value = state.epsN;
   document.getElementById("betaStar").value = state.betaStar;
+  document.getElementById("sigTh").value = state.sigTh;
+  document.getElementById("pencilF").value = state.pencilF;
   document.getElementById("ipLat").value = state.ipLat;
   document.getElementById("ipElev").value = state.ipElev;
   document.getElementById("tilt").value = state.tilt*1000;
@@ -1534,23 +1582,23 @@ function render() {
         <td>${foot}</td></tr>`;
     }).join("");
 
-    // a 1-tonne tungsten cylinder sized to swallow 99% of the interactions
+    // a 2.4 m tungsten cylinder sized to swallow 99% of the flux
     const det = locs[0], spD = det ? spotAt(det.L) : null;
-    const rDet = spD ? Math.max(spD.e99, 0.005) : 0;
-    const lenDet = spD ? 1e6 / 19.3 / (Math.PI * (rDet * 100) ** 2) / 100 : 0;  // m
+    const rDet = spD ? Math.max(spD.r99, 0.005) : 0;
+    const massDet = spD ? Math.PI * (rDet * 100) ** 2 * 240 * 19.3 / 1e6 : 0;  // t
     document.getElementById("optOut").innerHTML = `
-      <div><span class="lbl">Muon divergence at the IP (β* = ${fmt(state.betaStar,2)} mm, ε<sub>N</sub> = ${fmt(state.epsN,0)} µm)</span>
-        <b>${fmt(o.sigTh*1e3,3)} mrad</b> = ${fmt(o.divDominates,0)} × the 1/γ cone
-        <br><span class="note">beam waist σ<sub>x</sub>* = ${fmt(o.sigX*1e6,2)} µm — far too small to matter at kilometre range</span></div>
-      <div><span class="lbl">Where β* still beats the decay cone</span>
-        <b>±${fmt(o.sCross*100,1)} cm</b> of the IP
-        <br><span class="note">${fmtSci(o.haloFrac*100, 2)} % of the ${fmt(L_STRAIGHT,0)} m straight — beyond it the spot is purely kinematic</span></div>
-      <div><span class="lbl">Final-focus halo at the ${det ? det.short : "detector"}</span>
-        <b>${det ? mlen(spotAt(det.L).halo) : "—"}</b> radius
-        <br><span class="note">carries ${fmtSci(o.haloFrac, 2)} of the flux over ${det ? fmt((spotAt(det.L).halo/spotAt(det.L).r50)**2,0) : "—"}× the area → ${det ? fmtSci(o.haloFrac/(spotAt(det.L).halo/spotAt(det.L).r50)**2, 2) : "—"} of the core's surface density</span></div>
-      <div><span class="lbl">A detector that swallows the beam</span>
-        <b>⌀ ${mlen(2*rDet)} × ${fmt(lenDet,2)} m</b> of tungsten ≈ 1 tonne
-        <br><span class="note">catches 99 % of the interactions — the beam is small enough that "per tonne" is a compact object, not a hall</span></div>`;
+      <div><span class="lbl">Muon divergence in the FF drift (β* = ${fmt(state.betaStar,2)} mm, ε<sub>N</sub> = ${fmt(state.epsN,0)} µm)</span>
+        <b>${fmt(o.sigThIP*1e3,3)} mrad</b> = ${fmt(o.divDominates,0)} × the 1/γ cone
+        <br><span class="note">constant along the ~150 m drift (a drift conserves angles); waist σ<sub>x</sub>* = ${fmt(o.sigX*1e6,2)} µm</span></div>
+      <div><span class="lbl">Smeared-plume divergence (MINT, arXiv:2608.02718)</span>
+        <b>${fmt(o.sigEff*1e3,2)} mrad</b> = ${fmt(o.sigEff*o.gamma,1)} × the 1/γ cone
+        <br><span class="note">on-axis density ÷${fmt(o.dilution,0)} vs the pencil formula; energy–radius prism washed out</span></div>
+      <div><span class="lbl">Pencil fraction f (dedicated dispersion-free drift)</span>
+        <b>${fmt(o.f,2)}</b> → on-axis density ×${fmtSci(o.axisFac,2)} of the pencil formula
+        <br><span class="note">f > 0 requires a purpose-built waisted drift (σθ = √(ε/ℓ) ≈ 1 µrad at ℓ = 350 m) — and re-sharpens the exit strips: see the safety note</span></div>
+      <div><span class="lbl">A tungsten cylinder that swallows the beam (99 % of flux)</span>
+        <b>⌀ ${mlen(2*rDet)} × 2.4 m ≈ ${fmt(massDet, massDet < 3 ? 1 : 0)} t</b>
+        <br><span class="note">at f = 0 the beam is no longer smaller than a 1 t target — the better model is a low-density tracking target sized to the core (see the beam-size study)</span></div>`;
   }
 
   renderMap(b, south, north, phys);
@@ -1777,6 +1825,8 @@ bind("constraint", t => state.constraint = t.value);
 bind("emu", t => state.emu = +t.value);
 bind("epsN", t => state.epsN = +t.value);
 bind("betaStar", t => state.betaStar = +t.value);
+bind("sigTh", t => state.sigTh = +t.value);
+bind("pencilF", t => state.pencilF = +t.value);
 for (const k of SOLVE_ORDER)
   bind("lock" + capId(k), t => state.locks[k] = t.checked);
 
@@ -2416,10 +2466,12 @@ function renderProfile(locs) {
 
   const near = locs[0], far = locs[locs.length - 1];
   document.getElementById("veB").textContent =
-    "One curve describes every location — only the scale L/γ changes: 1 unit of x is " +
-    (near ? mlen(spotAt(near.L).scale) + " at the " + near.short : "") +
-    (far && far !== near ? " and " + mlen(spotAt(far.L).scale) + " at the " + far.short : "") +
-    ". Tails are heavy: 99 % containment needs 9.95/γ for flux but only 3/γ for interactions.";
+    "This is the boosted-decay KERNEL — the profile of the dedicated-drift pencil component and of " +
+    "the RCS beams (which are true FODO pencils; see the timing study). The collider core is this " +
+    "kernel convolved with σθ: its 50 % radius is " +
+    (near ? mlen(spotAt(near.L).r50) + " at the " + near.short : "") +
+    (far && far !== near ? " and " + mlen(spotAt(far.L).r50) + " at the " + far.short : "") +
+    " — " + fmt(spotAt((near||far).L).r50/((near||far).L/optics().gamma),0) + "× the kernel's L/γ scale.";
 }
 
 // metres or centimetres, whichever reads better
@@ -2462,27 +2514,31 @@ function renderSpots(locs) {
               transform: `rotate(-90 14 ${(PT + HSP - PB) / 2})`}, svgSp)
     .textContent = "spot radius";
 
-  // containment fan: r = x * L / gamma, so each is a straight line here
+  // containment fan: every mixture quantile scales linearly with L, so each
+  // is still a straight line here; slopes from the two-component model
   const g = optics().gamma;
+  const spRef = spotAt(10000);
+  const X50 = spRef.r50 / 10000 * g, X90 = spRef.r90 / 10000 * g,
+        X99 = spRef.r99 / 10000 * g;                   // in units of 1/gamma
   const band = (xa, xb, op) => el("path", {
     d: `M${XG(L0)} ${YG(xa*L0/g)} L${XG(L1)} ${YG(xa*L1/g)} L${XG(L1)} ${YG(xb*L1/g)} L${XG(L0)} ${YG(xb*L0/g)} Z`,
     fill: "#0b6e4f", "fill-opacity": op}, svgSp);
-  band(R90, R99, .10); band(R50, R90, .18);
+  band(X90, X99, .10); band(X50, X90, .18);
   const line = (x, col, dash, w) => el("path", {
     d: `M${XG(L0)} ${YG(x*L0/g)} L${XG(L1)} ${YG(x*L1/g)}`,
     fill: "none", stroke: col, "stroke-width": w, "stroke-dasharray": dash}, svgSp);
-  line(R99, "#0b6e4f", "4 4", 1.2);
-  line(R50, "#0b6e4f", "none", 2.4);
-  line(E99, "#7a2e21", "5 4", 1.8);
+  line(X99, "#0b6e4f", "4 4", 1.2);
+  line(X50, "#0b6e4f", "none", 2.4);
+  line(1, "#7a2e21", "5 4", 1.8);                      // the 1/gamma kernel
   // curve labels go in the empty stretch between the on-site cluster and
   // Champaign County, where no location marker can collide with them
   const LLBL = 40000;
   // the fan lines are parallel, so one rotation lays every label along its own
-  const ang = Math.atan2(YG(R50 * L1 / g) - YG(R50 * L0 / g),
+  const ang = Math.atan2(YG(X50 * L1 / g) - YG(X50 * L0 / g),
                          XG(L1) - XG(L0)) * 180 / Math.PI;
-  for (const [x, col, txt] of [[R99, "#0b6e4f", "99 % of flux"],
-                               [R50, "#0b6e4f", "50 % of flux   (r = L/γ)"],
-                               [E99, "#7a2e21", "99 % of interactions"]]) {
+  for (const [x, col, txt] of [[X99, "#0b6e4f", "99 % of flux"],
+                               [X50, "#0b6e4f", "50 % of flux"],
+                               [1, "#7a2e21", "1/γ kernel (pencil component)"]]) {
     const lx = XG(LLBL), ly = YG(x * LLBL / g) - 7;
     el("text", {x: lx, y: ly, "text-anchor": "middle", "font-size": 11, fill: col,
                 stroke: PAL.halo, "stroke-width": 3.5, "paint-order": "stroke",
@@ -2867,7 +2923,7 @@ function applyPreset(name) {
 
 // state <-> location.hash, so a configuration can be shared by URL
 const HASH_KEYS = ["ipLat","ipElev","tilt","detLat","airFt","houseH","emu",
-                   "epsN","betaStar","constraint","detTarget","exitTarget"];
+                   "epsN","betaStar","sigTh","pencilF","constraint","detTarget","exitTarget"];
 let hashTimer = null;
 function hashString() {
   const kv = HASH_KEYS.map(k => k + "=" +
