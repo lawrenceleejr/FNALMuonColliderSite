@@ -4,231 +4,222 @@ weight: 4
 ---
 
 Everything else in this study treats the neutrino beam as a line. It is not
-quite one, and the width matters in three separate places: it sets how small
-a detector can be and still catch the whole beam, it sets how wide the
-surface-grazing exit strips are, and it decides whether β* and the beam
-emittance have any bearing on the siting argument at all. This page works
-the width out from the collider's beam parameters. Every number is
-recomputed live in the [interactive tool](../tool/), where ε<sub>N</sub> and
-β* are sliders.
+one, and the width matters in three separate places: it sets how small a
+detector can be and still catch the beam, it sets how wide the
+surface-grazing exit strips are, and it decides whether the machine optics
+have any bearing on the siting argument at all. This page works the width
+out from the collider's beam parameters — and it has been rewritten, because
+the first simulation of this exact beam on a real lattice,
+**MINT ([arXiv:2608.02718](https://arxiv.org/abs/2608.02718), Choi, Hostert,
+Li & Liu)**, contradicts the assumption an earlier revision of this page was
+built on. That revision claimed the far-field spot was set by the decay
+kinematics alone, r = L/γ, with the muon beam's divergence confined to a
+1.7 %-weight halo from a ±6 m final-focus drift. MINT, decaying muons along
+the IMCC hybrid v0.6+v0.9 interaction-region lattice — the same
+ε<sub>N</sub> = 25 µm·rad and β\* = 1.5 mm this study assumes — finds the
+opposite:
 
-**Headline:** the far-field spot is set by the decay kinematics alone —
-**r = L/γ**, about 2.7 cm at the on-site detector and 4.2 m at the UIUC
-exit. The muon beam's own divergence matters only inside the final-focus
-drift (±L\* ≈ ±6 m of the 700 m straight): decays there feed a **wide,
-faint halo carrying ~1.7 % of the flux at ~2 × 10⁻⁵ of the core's surface
-density**, and no plausible β\* changes the core. A one-tonne tungsten
-cylinder 16 cm across intercepts 99 % of the interactions that a
-perfectly-aimed beam delivers to it — about **7 × 10¹¹ per year** at
-1.3 km — and the grazing exit that the safety case turns on is an
-**8.3 m × 534 m** strip.
+> "the resulting neutrino flux spot size is dominated by the muon beam
+> divergence rather than the decay kinematics, θ<sub>μ</sub> ∼ O(0.1 mrad)
+> ≫ 1/γ ∼ 0.02 mrad, washing out neutrino energy-angle correlations (the
+> so-called prism effect)."
 
-## 1. The profile is a single universal curve
+**Headline:** on the current IMCC-class lattice the spot is set by the
+optics, not the boost: **σ<sub>θ</sub> ≈ 0.15 mrad ≈ 7 × (1/γ)**, so the
+50 %-containment radius at the on-site detector is **24 cm, not 2.7 cm**,
+the on-axis flux density is **~100× lower** than the pencil formula gives,
+and the energy–radius "prism" is gone. The 1/γ pencil is still achievable —
+but only from a **dedicated dispersion-free drift** built beyond the final
+focus and chicanes, which becomes this study's one explicit machine-design
+ask (§4). The siting geometry is untouched (it is centreline, not width),
+and the [safety case comes out stronger](../safety/), because the smearing
+that costs detector rate is exactly the plume dilution the dose model was
+hoping for.
 
-Muon decay is isotropic in the muon rest frame (for an unpolarised beam,
-per neutrino species). Boosting to the lab by γ = E<sub>μ</sub>/m<sub>μ</sub>
-= 47 300 at E<sub>μ</sub> = 5 TeV gives the standard beamed distribution
+## 1. The decay kernel is still universal — it is just no longer the answer
 
-<div style="text-align:center;font-size:1.05rem;margin:.7rem 0">
-dN/dΩ = N γ² / [ π (1 + γ²θ²)² ]
-</div>
+Muon decay is isotropic in the rest frame (per species, unpolarised beam).
+Boosting by γ = 47 300 gives the beamed profile dN/dΩ = Nγ²/[π(1+γ²θ²)²]:
+half the neutrinos inside 1/γ = 21 µrad, 99 % inside 9.95/γ. That kernel is
+exact and this study keeps using it — for the **RCS plumes**, which come
+from FODO straights with no final focus and really are 1/γ pencils (see
+[the timing study](../timing/)), and as the kernel under the collider
+plume's convolution.
 
-Its on-axis value, N γ²/π, is exactly the peak flux
-Φ = Nγ²/πL² used everywhere else in this study — the flux formula and this
-profile are the same statement, and that is a useful internal check.
+What changed is the convolution. Each decaying muon points not along the
+axis but along its own trajectory, and near the IP the trajectory spread is
+enormous compared to 1/γ.
 
-Writing **x = γθ = γr/L**, the profile depends on nothing but x. The beam is
-therefore **self-similar**: the same picture at every distance, scaled by
-L/γ. Integrating:
+## 2. Where the divergence actually comes from
 
-| quantity | formula | 
-|---|---|
-| enclosed flux | F(x) = x²/(1+x²) |
-| mean neutrino energy | ⟨E⟩(x) = ⟨E⟩₀ / (1+x²) |
-| enclosed interactions (σν ∝ E) | F(x) = 1 − (1+x²)⁻² |
+The physics an earlier revision of this page got right: **a field-free drift
+conserves angles** — σ<sub>θ</sub> = √(ε<sub>N</sub>/γβ\*) everywhere
+between the final-focus quadrupoles, and β(s) = β\* + s²/β\* describes the
+envelope, not a shrinking angular spread. With β\* = 1.5 mm that is
+σ<sub>θ</sub>\* = 0.59 mrad = 28 × (1/γ).
 
-So **exactly half the neutrinos land inside 1/γ** — a clean statement of
-what the "1/γ cone" means. The tails are heavy: 90 % needs 3/γ and 99 %
-needs 9.95/γ.
+What it got wrong, in two places, both settled by MINT's Appendix B:
 
-The interaction profile is *tighter* than the flux profile, and this is a
-real effect rather than a detail. The boost correlates energy with angle,
-so off-axis neutrinos are softer; since σν grows with E, the interaction
-density goes as (1+x²)⁻³ instead of (1+x²)⁻². The result:
+* **The final-focus drift is ~150 m long, not ±6 m.** "In the current
+  design, the angular divergence for the longest drift section, ∼150 m, is
+  about 0.1 − 0.2 mrad, which is the more appropriate scale for the angular
+  divergence of the neutrino beam." All 150 m of drift radiates at that
+  divergence — angles are conserved, so there is no "±L\* only" bookkeeping
+  to hide behind.
+* **The matching sections are not µrad-quiet.** The interaction region is
+  dispersion-free, but "in the matching sections … the dispersive
+  contribution can dominate the local angular spread" — larger, not smaller.
 
-| containment | flux | interactions |
-|---|---|---|
-| 50 % | 1.00 L/γ | 0.64 L/γ |
-| 90 % | 3.00 L/γ | 1.47 L/γ |
-| 99 % | 9.95 L/γ | 3.00 L/γ |
+Two independent checks pin the effective number. MINT's on-axis flux at
+5 km (2 × 10¹⁴ ν/cm²/yr from 6.1 × 10¹⁸ forward neutrinos) implies a
+Gaussian σ<sub>θ</sub> = 0.14 mrad; their 60 %-containment radius of 1.3 m
+at 5 km implies 0.15–0.20 mrad. The pure-pencil formula Φ = Nγ²/πL²
+evaluated for their own straight overshoots their simulated peak by 87× —
+which is just 2γ²σ<sub>θ</sub>² for that σ. **This study now takes
+σ<sub>θ</sub> = 0.15 mrad, an on-axis density dilution of 2γ²σ<sub>θ</sub>²
+≈ 101, and no energy–radius correlation inside the smeared core.** Beyond
+the core, MINT finds a chicane plateau out to ~3 mrad and an arc plateau
+beyond, together carrying O(1 %) of the flux at ~10⁻⁴ of the core density —
+at 197 km, 3 mrad is a 590 m-radius faint halo this study previously did
+not know it had.
 
-**75 % of all interactions happen inside 1/γ**, and 99 % inside 3/γ. A
-detector only has to cover 3/γ, not 10/γ.
-
-## 2. Where β\* comes in — and why it drops out
-
-The muon beam has its own angular spread, and getting its reach right
-requires respecting a fact an earlier revision of this page fumbled: **a
-drift conserves angles**. In the field-free drift around the IP the beam's
-angular divergence is
-
-<div style="text-align:center;font-size:1.05rem;margin:.7rem 0">
-σ<sub>θ</sub>\* = √( ε<sub>N</sub> / (γ β\*) )
-</div>
-
-*everywhere between the final-focus quadrupoles* — the familiar
-β(s) = β\* + s²/β\* describes the growth of the beam *envelope*, not a
-shrinking angular spread. For the IMCC 10 TeV parameters
-(ε<sub>N</sub> = 25 µm·rad, β\* = 1.5 mm):
-
-* σ<sub>θ</sub>\* = **0.59 mrad** — 28 times the 1/γ = 21 µrad decay cone —
-  for every decay inside the ±L\* ≈ ±6 m final-focus drift;
-* beam waist σ<sub>x</sub>\* = 0.89 µm, utterly negligible at kilometre range;
-* beyond the quads the beam is recollimated: in the matching sections the
-  divergence is µrad-scale, far below 1/γ.
-
-The right picture is therefore **two populations**: a *collinear core* from
-the (700 − 2L\*) ≈ 688 m of recollimated straight, and a *final-focus halo*
-from the ±L\* drift, carrying weight 2L\*/L<sub>s</sub> ≈ **1.7 %** of the
-flux, spread over the 0.59 mrad divergence. At the detector the halo is a
-77 cm-radius wash — ~800× the core's area — so its surface density is
-**~2 × 10⁻⁵ of the core's**: irrelevant to rates and siting, but ~140×
-brighter than this page previously claimed. Two same-order effects belong
-in the same bucket and await a real lattice: the **beam–beam deflection**
-of the outgoing beam at the IP (maximum kick ~0.5 mrad at the design
-disruption — comparable to σ<sub>θ</sub>\* itself) and dispersive angles in
-the chromatic-correction sections. This halo, not any property of the
-core, is the "IP-adjacent fan" that the effective-pencil-length parameter
-of the [safety assessment](../safety/) stands in for.
-
-**The far-field core is kinematic.** β\* sets the halo's angular width
-(σ<sub>θ</sub>\* ∝ 1/√β\*) but its *weight* is fixed by geometry
-(2L\*/L<sub>s</sub>); the tool's β\* slider spans 0.1–20 mm — a factor of
-200 — and the core containment radii at the fence, Smith Road, and
-Champaign County do not move.
+The prism's loss matters twice over. The spot no longer selects energy by
+radius, and the *spectrum* at any point inside the core is the
+angle-integrated one: fluence-mean energies **0.35 E<sub>μ</sub> (νμ) and
+0.30 E<sub>μ</sub> (ν̄e)** — half the on-axis means the pencil would deliver
+— which softens per-fluence interaction rates by a further ~1.8× on top of
+the density dilution.
 
 ## 3. The spot at each location
 
 Baseline configuration (IP at 41.8443° N, 191 m ASL, 15.40 mrad),
-E<sub>μ</sub> = 5 TeV:
+E<sub>μ</sub> = 5 TeV, σ<sub>θ</sub> = 0.15 mrad. The "dedicated drift"
+column is the §4 scenario — what a purpose-built pencil would restore.
 
-| location | L from IP | L/γ | 50 % flux | 99 % flux | 99 % of events | on the ground |
-|---|---|---|---|---|---|---|
-| detector hall | 1.30 km | 2.7 cm | **2.7 cm** | 27 cm | 8.2 cm | — |
-| north beam leaves the ground | 2.18 km | 4.6 cm | **4.6 cm** | 46 cm | 14 cm | 9.2 cm × 5.9 m |
-| Fermilab fence | 2.84 km | 6.0 cm | **6.0 cm** | 60 cm | 18 cm | — |
-| Smith Road | 10.1 km | 21 cm | **21 cm** | 2.1 m | 64 cm | — |
-| under Urbana | 193 km | 4.1 m | **4.1 m** | 40 m | 12 m | — |
-| UIUC South Farms exit | 197 km | 4.2 m | **4.2 m** | 42 m | 13 m | 8.3 m × 534 m |
+| location | L from IP | r₅₀ (current lattice) | r₉₉ | r₅₀ (dedicated drift) |
+|---|---|---|---|---|
+| detector hall | 1.30 km | **24 cm** | 65 cm | 2.7 cm |
+| north beam leaves the ground | 2.18 km | **40 cm** | 1.08 m | 4.6 cm |
+| Fermilab fence | 2.84 km | **52 cm** | 1.41 m | 6.0 cm |
+| Smith Road | 10.1 km | **1.8 m** | 5.0 m | 21 cm |
+| under Urbana | 193 km | **35 m** | 96 m | 4.1 m |
+| UIUC South Farms exit | 197.4 km | **36 m** | 98 m | 4.2 m |
 
-Two consequences are worth pulling out.
+(r₅₀ = 1.20 σ<sub>θ</sub>L and r₉₉ = 3.0 σ<sub>θ</sub>L in quadrature with
+the kinematic 1/γ and 9.95/γ — a convolution MC reproduces these to ~5 %.
+With the prism washed out, interaction containment ≈ flux containment; the
+old "99 % of events inside 3L/γ" tightening is gone with the correlation
+that produced it.)
 
-**The north emergence is smaller than a parking space.** Where the beam
-breaks the surface inside the Fermilab fence, at a grazing angle of
-15.7 mrad, the 50 %-flux core paints a streak **9 cm wide and 5.9 m long**.
-The "surface-grazing exit" that dominates muon-collider siting discussions
-is, at this range, a patch of lawn.
+On the ground, at the two grazing emergences:
 
-**The southern exit strip is long and thin.** At 197 km and 15.6 mrad the
-same core becomes **8.3 m × 534 m** — the 1/sin(graze) = ×64 elongation is
-the entire reason exit strips are a land-use question at all. Taking the
-99 % contour instead gives roughly 83 m × 5.3 km, which is the scale that
-matches the footprint lengths quoted in the
-[safety assessment](../safety/) (that model additionally spreads the plume
-with ±0.5 mrad segmentation, which widens the strip and lowers the peak
-dose in the same proportion).
+* **The north emergence is still a lawn-scale object.** At 2.18 km and
+  15.7 mrad grazing, the 50 %-flux streak is **0.8 m × 50 m** (99 %:
+  2.2 m × 140 m) — a mowing strip, not a parking space, but still 655 m
+  inside the fence and entirely on DOE land.
+* **The southern exit strip is now a field, not a sidewalk.** At 197 km the
+  50 % core is **72 m × 4.6 km ≈ 0.33 km²** (99 %: 196 m × 12.6 km). The
+  land action at the UIUC South Farms is still single-owner and fenceable,
+  but the [safety assessment](../safety/) §4 now describes a strip of
+  research farmland measured in tens of hectares, not a sidewalk — with the
+  compensation that the same smearing has already diluted the peak dose by
+  the 101 the old model had to assume mitigations for.
 
-## 4. What this means for the detector
+## 4. Flux, rates, and the dedicated-drift ask
 
-At the detector, 99 % of *interactions* fall within 8.2 cm of the axis. A
-cylinder of tungsten 16 cm in diameter and 2.4 m long weighs one tonne and
-swallows essentially the whole beam. The study's headline rate —
-~7 × 10¹¹ interactions per year in one tonne — therefore describes **an object you
-could carry on a truck**, not a cavern; the hall is sized by the
-instrumentation and the access, not by the beam.
+On-axis at the 1.3 km detector hall, per species, with the 0.854 store-decay
+factor now included:
 
-This is the practical difference between a muon-collider neutrino beam and
-a conventional one. A horn-focused beam is metres wide by construction, so
-"per tonne" means a kilotonne detector. Here the beam is delivered
-pre-collimated by the boost itself, and the same physics reach comes from a
-target small enough to sit inside a spectrometer.
+| quantity | current lattice (f = 0) | dedicated drift (f = 0.49) | old page (pencil, f = 1) |
+|---|---|---|---|
+| on-axis fluence (ν/cm²/yr) | **2.2 × 10¹⁵** | 1.1 × 10¹⁷ | 2.6 × 10¹⁷ |
+| interactions per tonne-year | **2.9 × 10¹⁰** | 2.6 × 10¹² | 7 × 10¹² |
+| in the ⌀16 cm × 2.4 m, 1 t tungsten cylinder | **2.4 × 10¹⁰/yr** (8 % intercept) | 2.7 × 10¹¹/yr | 7 × 10¹¹/yr (89 % intercept) |
+| 99 % of flux within | 65 cm (57 t of tungsten) | 27 cm | 27 cm |
 
-The trade to keep in mind is alignment, not size: with a 2.7 cm core at
-1.3 km, pointing the beam is a 20 µrad problem. That is well inside what the
-IMCC's ±1 mrad mover system resolves, but it does mean the detector's
-position is a survey deliverable, and that the beam should be steerable onto
-it rather than the other way round.
+The one-tonne-cylinder detector concept does not survive the current
+lattice: the beam is no longer smaller than the target, and a cylinder that
+does contain it weighs 57 t. The better model is MINT's own benchmark —
+trade target mass for reconstruction: a ~3 t, 39 m gaseous-argon TPC with a
+vertex tracker sized to the beam centre, a dipole for TeV charge ID, and a
+front muon monitor for the **rock-muon halo this page previously ignored**
+(MINT: ~2 penetrating, highly polarised ⟨E⟩ ≈ 1.2 TeV muons per bunch
+crossing through a 1.3 m-radius face at 5 km — scaled to our 1.3 km hall,
+~5.6 µ/m² per crossing, arriving within tens of ps of the neutrinos, so
+they are tagged geometrically, not by timing).
 
-## 5. ντ appearance: the corridor as an oscillation experiment
+**The dedicated-drift ask, stated once and explicitly.** A dispersion-free
+drift of half-length ℓ with a waist β\* ≈ ℓ has σ<sub>θ</sub> = √(ε/ℓ) =
+1.2 µrad for ℓ = 350 m — a true 1/γ pencil at sub-mm beam size. The current
+insertion cannot do this (it is a final focus; 0.59 mrad at the waist is
+what β\* = 1.5 mm costs), and MINT says the fix out loud: "dedicated
+straight sections for neutrino and muon beam dump physics may be required."
+The corridor's physics numbers therefore carry a **pencil fraction f** — the
+fraction of straight decays in such a drift: f = 0 is today's lattice,
+f = 340/700 ≈ 0.49 is everything that is not the ±180 m of final focus and
+chicanes. Every f > 0 sharpens the exit strips back toward the raw King
+doses (the [safety assessment](../safety/) §4 puts numbers on that trade) —
+physics rate and exit dose are now the same knob, and this study no longer
+pretends otherwise.
 
-The beam contains **no ντ at production** — a muon decay makes exactly one
-μ-type and one e-type neutrino — so every ντ at a detector is
-oscillation-made, driven by Δm²₃₁ = 2.5 × 10⁻³ eV² with the near-maximal
-atmospheric amplitude (P ≈ 0.95 sin²Δ₃₁ for νμ→ντ; the e-type channel adds
-~5 % through sin²2θ₁₃). At these energies and baselines the phase
-Δ₃₁ = 1.267 Δm²L/E is at most ~10⁻⁴, so P ∝ (L/E)² — which produces the
-punchline of this section:
+## 5. ντ appearance along the line
 
-**The ντ event rate per tonne is the same at every detector on the line.**
-The flux falls as 1/L² and the appearance probability grows as L², and they
-cancel *exactly* in the small-phase regime. On axis, with the CSMS
-cross-sections, the Michel spectrum, and the τ-mass threshold factor:
+The structural results survive untouched, because they are ratios: the
+oscillation phase Δ₃₁ ∝ L/E is ≲10⁻⁴ everywhere on the line, so
+P ∝ (L/E)² cancels the 1/L² flux and **the ντ event rate per tonne is the
+same at every detector on the line**; the νμ CC background falls as 1/L², so
+the far site keeps its **23 000× signal-to-background advantage** over the
+on-site hall (S/B 3.8 × 10⁻⁸ at the UIUC exit vs 1.6 × 10⁻¹² at 1.3 km);
+and L/E ≈ 0.06 km/GeV at the far site still parks the first oscillation
+maximum at Δm² ≈ 20 eV², the free sterile-neutrino lever arm.
 
-| location | L | ντ CC per tonne-yr | νμ CC per tonne-yr (background) | S/B | ντ crossing this plane per year |
-|---|---|---|---|---|---|
-| on-site detector | 1.3 km | **6.6** | 4.1 × 10¹² | 1.6 × 10⁻¹² | 1.7 × 10⁷ |
-| north exit | 2.2 km | **6.6** | 1.4 × 10¹² | 4.6 × 10⁻¹² | 4.8 × 10⁷ |
-| Smith Road | 10.1 km | **6.6** | 6.7 × 10¹⁰ | 1.0 × 10⁻¹⁰ | 1.0 × 10⁹ |
-| UIUC South Farms exit | 197.4 km | **6.6** | 1.8 × 10⁸ | 3.8 × 10⁻⁸ | **4.0 × 10¹¹** |
+The absolute rate does not survive. The old 6.6 ντ CC per tonne-year was an
+on-axis pencil number; with the density ÷101, the store factor, and the
+softened spectrum (P σ ∝ 1/E, so the soft tail partly compensates), the
+baseline is **≈ 0.1–0.2 ντ CC per tonne-year (f = 0), or ≈ 2.9 with the
+dedicated drift** — a 100 t far detector on the South Farms collects ~15 or
+~290 ντ CC/yr respectively (the old page said 660). The total oscillation
+inventory is barely touched (it is a whole-plane count): **~3.4 × 10¹¹
+oscillation-made ντ cross the South Farms exit plane per year**, ~7 × 10¹¹
+to ground level counting the second IP's beam.
 
-**Production over a year:** by the time the south beam surfaces at the
-South Farms, **~4 × 10¹¹ of its 6.2 × 10¹⁸ forward-beamed neutrinos
-(6 × 10⁻⁸) have become ντ**; with the second IP's south beam to Willard,
-the machine delivers **~8 × 10¹¹ oscillation-made ντ per year** to ground
-level. (Each straight's two exits carry opposite muon signs — μ⁻ decays aim
-one way, μ⁺ the other — so each exit plane is a single-sign beam: ντ south
-of IP1, ν̄τ from the CP-mirror channel likewise.) The near detector, 150×
-closer, intercepts a beam in which only 1.7 × 10⁷ ντ/yr yet exist.
+Two additions from MINT that this section previously did not know about:
 
-Three physics notes worth the ink:
+1. **Rock-made ντ are a real background.** Primary neutrinos produce
+   ντ + ν̄τ in the rock upstream of any detector (CC charm → D<sub>(s)</sub>
+   → τντ dominant, plus inverse τ decay, resonant D\*<sub>s</sub>, ℓτ
+   tridents): 2.0 × 10⁹/yr through a 1.3 m face at 5 km in MINT's geometry.
+   Scaled along the corridor, they outnumber oscillation ντ by ~10² at the
+   on-site hall — the near site's ντ are essentially all rock-made — and
+   contribute at the ~10 % level at the UIUC exit, softer than the beam
+   (⟨E⟩ ~ 300 GeV vs ~1.7 TeV) and separable on energy. These are scalings
+   of MINT's benchmark, not simulations; a MINT run at 197 km would settle
+   them.
+2. **Wrong-sign contamination is bounded at O(10⁻⁹)** of the primary rate,
+   which is what the "each exit plane is a single-sign beam" claim needed.
 
-1. **What "same rate, 23 000× better S/B" buys.** Six-ish ντ CC per
-   tonne-year is DONUT's and OPERA's entire careers in a tonne — a
-   100-tonne far detector on the South Farms would make **~660 ντ CC/yr**,
-   two orders of magnitude beyond the world sample. But it sits under
-   1.8 × 10⁸ νμ CC/tonne-yr: even emulsion-grade τ identification
-   (~10⁻⁵–10⁻⁶ mis-ID per CC, charm-dominated) leaves the signal a factor
-   ~10–100 under the fakes. The honest statement is that the far site is
-   where ντ appearance *could* be attacked — the near site cannot at all —
-   and that it needs τ-ID progress, kinematic rejection, or sign-selected
-   charm vetoes beyond demonstrated performance.
-2. **The oscillated flux is not a pencil.** Off axis the energy drops as
-   (1+γ²θ²)⁻¹, so P grows as (1+γ²θ²)² — exactly cancelling the beamed
-   flux profile: the ντ surface density is nearly **flat in solid angle**
-   out to several 1/γ rather than peaked. The per-tonne numbers above are
-   on-axis σ-weighted rates and barely change with detector radius.
-3. **A free sterile-neutrino lever arm.** L/E ≈ 0.06 km/GeV at the far
-   site puts the *first oscillation maximum* at Δm² ≈ 20 eV² — the corridor
-   is, incidentally, an eV²–10 eV²-scale sterile-search geometry with a
-   known-flavour TeV beam, something no accelerator facility currently
-   offers.
+The honest statement stands, sharpened: the far site is the only place ντ
+appearance can be attacked at all — now for background reasons as well as
+rate — and it needs τ-ID progress *and* the dedicated drift to be more than
+a curiosity.
 
 ## 6. Caveats
 
-* Unpolarised muons are assumed. Polarisation changes the rest-frame
-  angular distribution of each species (and hence the flavour composition
-  off-axis) without moving the 1/γ scale.
-* The two flavours in each beam have different *energy* spectra (⟨E⟩ ≈
-  0.7 E<sub>μ</sub> for ν<sub>μ</sub>, 0.6 for ν<sub>e</sub>), so their
-  interaction profiles differ slightly through σν ∝ E.
-* Decays are taken as uniform along the straight and the beam as parallel
-  outside the final focus. A real lattice has β varying through the
-  insertion, which redistributes the small halo but not the core.
+* σ<sub>θ</sub> = 0.15 mrad is a one-parameter Gaussian stand-in for MINT's
+  simulated lattice (their Figs. 3, 5, 7); the chicane/arc plateaus are
+  carried as a note, not modelled. The corridor's 700 m straight is a
+  *proposal* — MINT simulated the IMCC ±180 m insertion — so the smeared
+  fraction of a real corridor lattice is a lattice-design output, not an
+  input.
+* Unpolarised muons; polarisation reshapes each species' spectrum without
+  moving the angular scales.
 * Cross-sections: CSMS (arXiv:1106.3723) CC+NC per nucleon, log-log
-  interpolated, as elsewhere in this study; ντ CC includes a τ-mass
-  threshold factor (negligible above ~1 TeV). Oscillations: vacuum,
-  two-channel (νμ→ντ dominant, νe→ντ at the 5 % level); matter effects are
-  irrelevant at Δ₃₁ ≲ 10⁻⁴.
+  interpolated, evaluated at the fluence-mean energies; oscillations vacuum,
+  two-channel, matter effects irrelevant at these phases.
+* Numbers regenerate from
+  [`tools/corridor_layout.py`](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/tools/corridor_layout.py)
+  (σ<sub>θ</sub> and f are explicit inputs); the RCS pencils and the
+  time-structure of all five beams are in [the timing study](../timing/).
 
-*Live recomputation, with ε<sub>N</sub> and β\* as inputs and
-publication-quality figure export: [the beam-geometry tool](../tool/).*
+*Live recomputation, with σ<sub>θ</sub>, ε<sub>N</sub>, β\* and the pencil
+fraction f as inputs: [the beam-geometry tool](../tool/).*

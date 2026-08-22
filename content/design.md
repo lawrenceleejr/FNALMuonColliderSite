@@ -69,8 +69,10 @@ Notes:
   RCS3/4, maximises circumference over (R, L_s).
 * The small **down-to-north pitches** of the RCS planes make their straight
   plumes *converge on the same detector hall* as the collider plume despite
-  the different tunnel depths. LEP/LHC's plane is tilted 14 mrad, so 2–5 mrad
-  is well within precedent.
+  the different tunnel depths — and because the RCS straights are FODO (no
+  final focus), theirs are the corridor's only true 1/γ pencils; the chain
+  they deliver to the hall is quantified in [the timing study](../timing/).
+  LEP/LHC's plane is tilted 14 mrad, so 2–5 mrad is well within precedent.
 * Tunnels at different depths cross in plan freely (60 / 80 / 100 m); the
   stacked straight sections over the IP form a single "corridor vault"
   that can share access shafts.
@@ -126,28 +128,30 @@ at 41.8560° N, 1.3 km from the IP, still on DOE land.)
 **What the detector sees** (per 1.2 × 10⁷ s Snowmass-year, IMCC-class beam:
 1.8 × 10¹² μ/bunch/sign at 5 Hz, 90 % chain transmission):
 
-| Quantity | Value |
-|---|---|
-| Decays aimed north in the IP straight | 6.2 × 10¹⁸ /yr — each emitting **one νμ and one ν̄e** (or the CP mirror, selectable by circulation direction) |
-| Pencil-core radius at detector (1/γ = 21 µrad) | **0.20 m** |
-| Core fluence | 5.2 × 10¹⁵ ν/cm²/yr **per species** (⟨Eνμ⟩ = 0.7 Eμ, ⟨Eν̄e⟩ = 0.6 Eμ on axis) |
-| On-axis mean Eν | ≈ 3.2 TeV (blend) |
-| Interaction rate (CSMS σ, both species) | **1.2 × 10⁸ per kg-year** (1.2 × 10¹¹ per tonne-year) |
+| Quantity | Value (current lattice, f = 0) | Value (dedicated drift, f = 0.49 — [beam-size](../beamsize/) §4) |
+|---|---|---|
+| Decays aimed north in the IP straight | 5.3 × 10¹⁸ /yr — each emitting **one νμ and one ν̄e** (or the CP mirror, selectable by circulation direction) | same |
+| Core radius at detector (50 % flux) | **1.7 m** (σθ = 0.15 mrad, [arXiv:2608.02718](https://arxiv.org/abs/2608.02718)) | **0.20 m** (1/γ pencil) |
+| Core fluence | 4.4 × 10¹³ ν/cm²/yr **per species** | 2.2 × 10¹⁵ |
+| Fluence-mean Eν | ≈ 1.6 TeV (blend; the energy–angle prism is washed out) | ≈ 3.2 TeV on axis |
+| Interaction rate (CSMS σ, both species) | **5.5 × 10⁵ per kg-year** (5.5 × 10⁸ per tonne-year) | 5.2 × 10¹⁰ per tonne-year |
 
-Even a ~10-tonne instrumented target collects ~10¹² TeV-scale ν
-interactions per year — some eight orders of magnitude beyond FASERν, with
-both a νμ and νe component and known parent kinematics. The beam itself is
-tiny: the 50 %-containment radius is L/γ — the 0.20 m in the table above —
-and 99 % of the *interactions* fall within 3L/γ, under 60 cm; see
-[the beam-size study](../beamsize/), which also shows that the target volume
-is set by mass, not by the beam. Around that core, the final-focus region
-(σθ ≈ 0.59 mrad at the IP itself) throws a faint fan out to ±5 m; it is fed
-by only the innermost few centimetres of the straight, so it carries
-~10⁻⁴ of the flux at ~10⁻⁷ of the core's surface density. The wobbled RCS
-straights add lower-energy bands of ±9 m. A hall of order 12 m (E–W) ×
-25 m (vertical) therefore captures everything, with the instrumentation
-rather than the beam setting its size. Physics case reference: "The Neutrino
-Slice at Muon Colliders", arXiv:2412.14115.
+Even a ~10-tonne instrumented target collects ~5 × 10⁹ TeV-scale ν
+interactions per year on the current lattice — six orders of magnitude
+beyond FASERν, with both a νμ and νe component and known parent kinematics —
+and returns to ~5 × 10¹¹ (eight orders) if the dedicated pencil drift of
+[the beam-size study](../beamsize/) §4 is built. The 50 %-containment radius
+is 1.7 m and 99 % of the flux falls within 4.6 m (MINT,
+arXiv:2608.02718; the old 0.20 m pencil figure survives only in the
+dedicated-drift scenario). The aligned RCS straights are not a perturbation:
+their plumes are true 1/γ pencils converged on this same hall by the ring
+pitches, and they add **~40 % of the collider's interaction rate** as a
+63 GeV → 5 TeV energy chirp in the first 7 ms of each cycle — see
+[the timing study](../timing/). With the RCS movers on, those bands sweep
+±9 m. A hall of order 12 m (E–W) × 25 m (vertical) therefore captures
+everything, with the instrumentation rather than the beam setting its size.
+Physics case reference: "The Neutrino Slice at Muon Colliders",
+arXiv:2412.14115.
 
 **Civil.** The hall is a ~110 m-deep cavern with a surface shaft on a parcel
 adjacent to the ROW (the given coordinate is 96 m from the line — outside

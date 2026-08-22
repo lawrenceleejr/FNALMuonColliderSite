@@ -15,18 +15,26 @@ Basin, so the rock under Champaign County is not the rock under Fermilab,
 and this audit no longer pretends it is.
 
 **Headline:** the only place any groundwater standard could be approached
-is a centimetres-wide filament within **2.1 km of the collision point —
-land that is Fermilab's in every direction** (the boundary is ≥ 2.6 km away
-along the beam). The chord bottoms not in a drinking-water aquifer but in
-the **brackish upper Mt. Simon** — the same horizon northern Illinois uses
-for natural-gas storage — sealed under the Eau Claire aquitard. Every
-potable-aquifer crossing beyond the fence is **at least ~45× below the EPA
-drinking-water limit** in a deliberately absurd stagnant worst case
-(most are 100–10 000× below), *before* counting groundwater motion, which
-lowers all of these by further orders of magnitude. Total tritium
-production along the 198 km chord is **≈ 0.06 Ci/yr** — of the order of
-what a single hospital nuclear-medicine department handles, spread through
-two hundred kilometres of deep rock.
+is a decimetres-wide filament within **~200 m of the collision point —
+inside the accelerator complex itself** (the site boundary is ≥ 2.6 km away
+along the beam). This audit now uses the divergence-smeared plume of
+[arXiv:2608.02718](https://arxiv.org/abs/2608.02718) (see the
+[beam-size study](../beamsize/)): the on-axis interaction density falls
+÷118 relative to the superseded pencil model, and every margin below
+improves by that factor. The chord bottoms not in a drinking-water aquifer
+but in the **brackish upper Mt. Simon** — the same horizon northern
+Illinois uses for natural-gas storage — sealed under the Eau Claire
+aquitard. Every potable-aquifer crossing beyond the fence is **at least
+~5 000× below the EPA drinking-water limit** in a deliberately absurd
+stagnant worst case (most are 10⁴–10⁶× below), *before* counting
+groundwater motion, which lowers all of these by further orders of
+magnitude. Total tritium production along the 198 km chord is unchanged at
+**≈ 0.05 Ci/yr** — of the order of what a single hospital nuclear-medicine
+department handles, spread through two hundred kilometres of deep rock.
+(The dedicated-pencil scenario of [beam-size](../beamsize/) §4 restores the
+previously published concentrations — the MCL contour returns to ~1.4 km,
+still well inside the fence, and every off-site margin returns to the
+"≥ ~45×" the earlier revision of this page defended.)
 
 ## 1. The real stratigraphy along the chord
 
@@ -88,11 +96,13 @@ A neutrino beam deposits nothing along its path except through the rare
 interactions of the neutrinos themselves. The number is set by the flux and
 the cross-section:
 
-* decays aimed each way per year: **6.2 × 10¹⁸** (baseline machine, 700 m
-  straight in the 11 km ring),
+* decays aimed each way per year: **5.3 × 10¹⁸** (baseline machine, 700 m
+  straight in the 11 km ring, 85.4 % store-decay factor),
 * on-axis flux at distance *L*: Φ = N γ² / (π L²), with γ = 47 300 at
   Eμ = 5 TeV,
-* σν ≈ 1.1 × 10⁻³⁵ cm² per nucleon at ⟨Eν⟩ ≈ 3.3 TeV.
+* σν ≈ 1.1 × 10⁻³⁵ cm² per nucleon per neutrino, averaged over the
+  angle-integrated spectrum (⟨Eν⟩ ≈ 1.6 TeV — whole-plane totals never
+  depended on the prism).
 
 Along the whole 198 km chord (5 × 10⁷ g/cm² at the corrected mean density
 of ~2.5 g/cm³, or 3.3 × 10⁻⁴ interaction lengths) that gives
@@ -105,7 +115,7 @@ groundwater, and are bounded by the same geometry; tritium, which travels
 *as* water, is the honest worst case. This is the same nuclide hierarchy
 that governs NuMI/LBNF groundwater reviews at Fermilab today.)
 
-Total: **7 × 10¹⁶ ³H atoms per year ≈ 2.2 GBq ≈ 0.06 Ci/yr at saturation**,
+Total: **6 × 10¹⁶ ³H atoms per year ≈ 1.9 GBq ≈ 0.05 Ci/yr at saturation**,
 distributed along 198 km of chord with a 1/L² weighting toward the IP.
 
 ## 3. Unit-by-unit audit
@@ -121,25 +131,25 @@ published here, and they still hold.
 
 | unit | path in unit | closest approach | stagnant in-core saturation | vs EPA MCL (740 Bq/L) |
 |---|---|---|---|---|
-| Silurian dolomite (potable reach) | ~1.4 km on-site (+ deep mineralized re-crossing at 169 km) | 0 (IP sits at its top) | see §4 | exceeds only < 2.1 km from IP, on DOE land |
-| Maquoketa shale (aquitard) | ~12 km | 1.4 km | ~1 500 Bq/L | above MCL — but a shale aquitard, not a water supply, and entirely inside DOE land |
-| Galena–Platteville (tight) | ~20 km | 5.6 km | ~100 Bq/L | 7× below; not a supply unit here |
-| **St. Peter sandstone** | ~13 km | **~14 km** (Kendall Co., under the Fox Valley cone of depression) | **~17 Bq/L** | **~45× below** |
-| **Ironton–Galesville** | ~8 km | **~28 km** | **~4 Bq/L** | **~190× below** |
-| Mt. Simon (brackish/storage) | ~60 km | ~48 km | ~1.3 Bq/L | ~560× below — and not potable |
-| basal drift / Mahomet-class sands | ~6 km | ~192 km (NW Urbana) | **~0.09 Bq/L** | **~8 000× below** |
+| Silurian dolomite (potable reach) | ~1.4 km on-site (+ deep mineralized re-crossing at 169 km) | 0 (IP sits at its top) | see §4 | exceeds only < ~0.2 km from IP, inside the complex |
+| Maquoketa shale (aquitard) | ~12 km | 1.4 km | ~13 Bq/L | ~60× below — and a shale aquitard, not a water supply |
+| Galena–Platteville (tight) | ~20 km | 5.6 km | ~0.9 Bq/L | ~900× below; not a supply unit here |
+| **St. Peter sandstone** | ~13 km | **~14 km** (Kendall Co., under the Fox Valley cone of depression) | **~0.14 Bq/L** | **~5 000× below** |
+| **Ironton–Galesville** | ~8 km | **~28 km** | **~0.03 Bq/L** | **~2 × 10⁴× below** |
+| Mt. Simon (brackish/storage) | ~60 km | ~48 km | ~0.01 Bq/L | ~7 × 10⁴× below — and not potable |
+| basal drift / Mahomet-class sands | ~6 km | ~192 km (NW Urbana) | **~8 × 10⁻⁴ Bq/L** | **~10⁶× below** |
 
 The two aquifers the Fox Valley municipalities actually pump — the
 St. Peter and the Ironton–Galesville — are crossed at ~14 and ~28 km, not
 the 22 and 54 km the flat model gave, and squarely beneath the
 Aurora–Oswego–Yorkville–Joliet **cone of depression** (potentiometric
 declines exceeding 200 m; regional models project partial St. Peter
-desaturation by mid-century). That makes the honest margin statement
-"**≥ 45× below the MCL in the stagnant limit**" rather than the previous
-"two to four orders of magnitude" — still comfortable, over a
-centimetres-to-half-metre-wide core, before any water movement, in units
-already managed as a declining resource for reasons that have nothing to
-do with this beam.
+desaturation by mid-century). With the measured plume the honest margin statement is
+"**≥ ~5 000× below the MCL in the stagnant limit**" (the dedicated-pencil
+scenario returns it to the "≥ ~45×" this page previously defended) — over a
+decimetres-to-metres-wide core, before any water movement, in units already
+managed as a declining resource for reasons that have nothing to do with
+this beam.
 
 ## 4. The Silurian filament — the one real number
 
@@ -147,19 +157,23 @@ The IP straight sits at the drift/Silurian contact (Fermilab's drift is
 15–35 m thick; borings, not this model, would fix which side of the
 contact the hall floor is on). Close to the IP the stagnant-core
 concentration is genuinely high: the in-core saturation falls through the
-MCL at **L = 2.1 km** from the collision point. Three facts keep this a
+MCL at **L ≈ 0.2 km** from the collision point (2.1 km in the superseded
+pencil model; ~1.4 km in the dedicated-pencil scenario). Three facts keep this a
 non-issue, in order of importance:
 
 1. **It is all on Fermilab land.** Along the beam the site boundary is
-   2.6 km south and 2.8 km north of the IP; the 2.1 km MCL contour, in both
-   directions, ends inside the fence. At the *south boundary* the beam is
-   74 m deep — already through the Maquoketa's roof and below the base of
-   most domestic Silurian wells (typ. 30–90 m) — and its in-core ceiling is
-   ~450 Bq/L, under the MCL before it leaves DOE property. (The north beam
+   2.6 km south and 2.8 km north of the IP; the MCL contour, in both
+   directions and in every scenario up to the full dedicated pencil, ends
+   inside the fence. At the *south boundary* the beam is 74 m deep —
+   already through the Maquoketa's roof and below the base of most domestic
+   Silurian wells (typ. 30–90 m) — and its in-core ceiling is ~4 Bq/L
+   (~450 Bq/L in the dedicated-pencil scenario), under the MCL before it
+   leaves DOE property either way. (The north beam
    has left the ground entirely by 2.2 km, still on site.)
-2. **The "filament" is centimetres wide.** The 1/γ core radius is 2 cm at
-   1 km. The volume of Silurian water inside the over-MCL region is a few
-   cubic metres — not an aquifer, a thread. Fermilab's existing radiological
+2. **The "filament" is decimetres wide.** The smeared-core radius is
+   1.2 σθL ≈ 18 cm at 1 km — and the over-MCL reach now ends at ~200 m,
+   where the core is ~4 cm. The volume of Silurian water inside the
+   over-MCL region is under a cubic metre — not an aquifer, a thread. Fermilab's existing radiological
    groundwater program (NuMI, LBNF target complex) manages *larger*
    activation source terms in this same geology today, with decades of
    monitoring-well precedent.
