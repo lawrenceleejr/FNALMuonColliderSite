@@ -183,6 +183,12 @@ Three readings of that table:
 * All doses are King-model raw/bounded, pre-FLUKA, as everywhere in this
   study.
 
+*Sequel:* [aiming the last RCS](../rcs-aim/) takes the depth and angle apart
+as independent knobs and finds that RCS3/4 — this variant's tightest
+tolerance *and* its only new dose problem — is also the ring UIUC needs
+least, and can be sent 656 km into Lake Superior instead at a cost of 3 % of
+the plane-crossing ν̄τ gain.
+
 **Verdict.** If ντ appearance is the far hall's purpose — and it is the
 one measurement this corridor can do that nothing else can — the co-tilted
 chain is the better design: twice the CC rate, nine times the plane-level

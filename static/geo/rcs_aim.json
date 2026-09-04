@@ -1,0 +1,422 @@
+{
+ "master_relation": "theta = d0/D - D/(2 R_E); |theta| ~ 1.57 mrad per 100 km of range, independent of depth. Depth sets only the near-side emergence distance s ~ d0/|theta|.",
+ "data": {
+  "bathymetry": "GEBCO 2020 via opentopodata",
+  "lake_polygons": "Natural Earth 10m",
+  "caveat": "GEBCO decides land/water; the NE polygon only names the body. NE's coarse Lake Superior polygon includes the Keweenaw Peninsula (46.95-47.46 N, up to +416 m), which is land."
+ },
+ "water_windows_on_the_meridian": [
+  {
+   "body": "open water (below MSL)",
+   "lat_range": [
+    30.0,
+    30.3
+   ],
+   "side": "S",
+   "length_km": 33.3,
+   "range_km": [
+    1282.2,
+    1315.5
+   ],
+   "tilt_window_mrad": [
+    103.23,
+    100.61
+   ],
+   "deepest_bed_masl": -26.0,
+   "max_water_column_m": null
+  },
+  {
+   "body": "Lake Superior",
+   "lat_range": [
+    47.48,
+    48.1
+   ],
+   "side": "N",
+   "length_km": 68.9,
+   "range_km": [
+    626.0,
+    694.8
+   ],
+   "tilt_window_mrad": [
+    54.5,
+    49.09
+   ],
+   "deepest_bed_masl": -117.0,
+   "max_water_column_m": 300.0
+  }
+ ],
+ "recommended_target": {
+  "body": "Lake Superior",
+  "lat_range": [
+   47.48,
+   48.1
+  ],
+  "side": "N",
+  "length_km": 68.9,
+  "range_km": [
+   626.0,
+   694.8
+  ],
+  "tilt_window_mrad": [
+   54.5,
+   49.09
+  ],
+  "deepest_bed_masl": -117.0,
+  "max_water_column_m": 300.0
+ },
+ "scenarios": [
+  {
+   "label": "UIUC, south aim (co-tilted chain reference)",
+   "depth_m": 35.0,
+   "theta_mrad": 15.4,
+   "north": {
+    "exit_lat": 41.8669,
+    "range_km": 2.5,
+    "graze_mrad": 15.79,
+    "perigee": null,
+    "water": false,
+    "body": null,
+    "ground_masl": 227.7
+   },
+   "south": {
+    "exit_lat": 40.0642,
+    "range_km": 197.7,
+    "graze_mrad": 15.63,
+    "perigee": {
+     "lat": 40.961,
+     "depth_km": 0.79
+    },
+    "water": false,
+    "body": null,
+    "ground_masl": 211.8
+   },
+   "far_side": "south",
+   "near_side": {
+    "side": "north",
+    "emerges_on_site": true,
+    "height_at_fence_m": 5.0,
+    "reaches_500ft_at_km": 12.41,
+    "sub500ft_offsite_km": 9.56
+   }
+  },
+  {
+   "label": "Lake Superior, 15 m straight",
+   "depth_m": 15.0,
+   "theta_mrad": -51.798313660256994,
+   "north": {
+    "exit_lat": 47.7448,
+    "range_km": 655.4,
+    "graze_mrad": 51.07,
+    "perigee": {
+     "lat": 44.815,
+     "depth_km": 8.58
+    },
+    "water": true,
+    "body": "Lake Superior",
+    "bed_masl": -30.2,
+    "water_column_m": 213.0
+   },
+   "south": {
+    "exit_lat": 41.8418,
+    "range_km": 0.3,
+    "graze_mrad": 51.84,
+    "perigee": null,
+    "water": false,
+    "body": null,
+    "ground_masl": 223.3
+   },
+   "far_side": "north",
+   "near_side": {
+    "side": "south",
+    "emerges_on_site": true,
+    "height_at_fence_m": 121.0,
+    "reaches_500ft_at_km": 3.22,
+    "sub500ft_offsite_km": 0.59
+   }
+  },
+  {
+   "label": "Lake Superior, 35 m straight",
+   "depth_m": 35.0,
+   "theta_mrad": -51.798313660256994,
+   "north": {
+    "exit_lat": 47.7481,
+    "range_km": 655.7,
+    "graze_mrad": 51.13,
+    "perigee": {
+     "lat": 44.815,
+     "depth_km": 8.6
+    },
+    "water": true,
+    "body": "Lake Superior",
+    "bed_masl": -31.6,
+    "water_column_m": 215.0
+   },
+   "south": {
+    "exit_lat": 41.8383,
+    "range_km": 0.7,
+    "graze_mrad": 51.9,
+    "perigee": null,
+    "water": false,
+    "body": null,
+    "ground_masl": 223.1
+   },
+   "far_side": "north",
+   "near_side": {
+    "side": "south",
+    "emerges_on_site": true,
+    "height_at_fence_m": 101.0,
+    "reaches_500ft_at_km": 3.61,
+    "sub500ft_offsite_km": 0.98
+   }
+  },
+  {
+   "label": "Lake Superior, 120 m straight",
+   "depth_m": 120.0,
+   "theta_mrad": -51.798313660256994,
+   "north": {
+    "exit_lat": 47.7618,
+    "range_km": 657.3,
+    "graze_mrad": 51.37,
+    "perigee": {
+     "lat": 44.815,
+     "depth_km": 8.69
+    },
+    "water": true,
+    "body": "Lake Superior",
+    "bed_masl": -38.3,
+    "water_column_m": 221.0
+   },
+   "south": {
+    "exit_lat": 41.8235,
+    "range_km": 2.3,
+    "graze_mrad": 52.16,
+    "perigee": null,
+    "water": false,
+    "body": null,
+    "ground_masl": 223.8
+   },
+   "far_side": "north",
+   "near_side": {
+    "side": "south",
+    "emerges_on_site": true,
+    "height_at_fence_m": 16.0,
+    "reaches_500ft_at_km": 5.25,
+    "sub500ft_offsite_km": 2.63
+   }
+  },
+  {
+   "label": "Lake Superior, 440 m straight (deep-ring option)",
+   "depth_m": 440.0,
+   "theta_mrad": -51.798313660256994,
+   "north": {
+    "exit_lat": 47.8129,
+    "range_km": 662.9,
+    "graze_mrad": 52.26,
+    "perigee": {
+     "lat": 44.815,
+     "depth_km": 9.01
+    },
+    "water": true,
+    "body": "Lake Superior",
+    "bed_masl": -64.5,
+    "water_column_m": 248.0
+   },
+   "south": {
+    "exit_lat": 41.7697,
+    "range_km": 8.3,
+    "graze_mrad": 53.1,
+    "perigee": null,
+    "water": false,
+    "body": null,
+    "ground_masl": 217.9
+   },
+   "far_side": "north",
+   "near_side": {
+    "side": "south",
+    "emerges_on_site": false,
+    "height_at_fence_m": -304.0,
+    "reaches_500ft_at_km": 11.23,
+    "sub500ft_offsite_km": 8.6
+   }
+  },
+  {
+   "label": "Gulf of Mexico, south aim (tilt disqualifier)",
+   "depth_m": 35.0,
+   "theta_mrad": 100.61,
+   "north": {
+    "exit_lat": 41.8475,
+    "range_km": 0.4,
+    "graze_mrad": 100.67,
+    "perigee": null,
+    "water": false,
+    "body": null,
+    "ground_masl": 224.1
+   },
+   "south": {
+    "exit_lat": 30.3192,
+    "range_km": 1280.1,
+    "graze_mrad": 100.32,
+    "perigee": {
+     "lat": 36.073,
+     "depth_km": 32.18
+    },
+    "water": true,
+    "body": "open water (below MSL)",
+    "bed_masl": -0.1,
+    "water_column_m": 0.0
+   },
+   "far_side": "south",
+   "near_side": {
+    "side": "north",
+    "emerges_on_site": true,
+    "height_at_fence_m": 247.0,
+    "reaches_500ft_at_km": 1.87,
+    "sub500ft_offsite_km": 0.0
+   }
+  }
+ ],
+ "ring_feasibility": {
+  "UIUC, south aim (co-tilted chain reference)": {
+   "planar_apex_lift_m": 37.3,
+   "planar_shallow_apex_depth_m": -2.3,
+   "planar_ok": false,
+   "achromat_theta_mrad": 15.4,
+   "achromat_BL_Tm_at_5TeV": 257.0,
+   "achromat_len_m_at_8T": 32.0,
+   "achromat_frac_of_ring_pct": 0.44
+  },
+  "Lake Superior, 15 m straight": {
+   "planar_apex_lift_m": 125.6,
+   "planar_shallow_apex_depth_m": -110.6,
+   "planar_ok": false,
+   "achromat_theta_mrad": -51.798313660256994,
+   "achromat_BL_Tm_at_5TeV": 864.0,
+   "achromat_len_m_at_8T": 108.0,
+   "achromat_frac_of_ring_pct": 1.47
+  },
+  "Lake Superior, 35 m straight": {
+   "planar_apex_lift_m": 125.6,
+   "planar_shallow_apex_depth_m": -90.6,
+   "planar_ok": false,
+   "achromat_theta_mrad": -51.798313660256994,
+   "achromat_BL_Tm_at_5TeV": 864.0,
+   "achromat_len_m_at_8T": 108.0,
+   "achromat_frac_of_ring_pct": 1.47
+  },
+  "Lake Superior, 120 m straight": {
+   "planar_apex_lift_m": 125.6,
+   "planar_shallow_apex_depth_m": -5.6,
+   "planar_ok": false,
+   "achromat_theta_mrad": -51.798313660256994,
+   "achromat_BL_Tm_at_5TeV": 864.0,
+   "achromat_len_m_at_8T": 108.0,
+   "achromat_frac_of_ring_pct": 1.47
+  },
+  "Lake Superior, 440 m straight (deep-ring option)": {
+   "planar_apex_lift_m": 125.6,
+   "planar_shallow_apex_depth_m": 314.4,
+   "planar_ok": true,
+   "achromat_theta_mrad": -51.798313660256994,
+   "achromat_BL_Tm_at_5TeV": 864.0,
+   "achromat_len_m_at_8T": 108.0,
+   "achromat_frac_of_ring_pct": 1.47
+  },
+  "Gulf of Mexico, south aim (tilt disqualifier)": {
+   "planar_apex_lift_m": 244.0,
+   "planar_shallow_apex_depth_m": -209.0,
+   "planar_ok": false,
+   "achromat_theta_mrad": 100.61,
+   "achromat_BL_Tm_at_5TeV": 1678.0,
+   "achromat_len_m_at_8T": 210.0,
+   "achromat_frac_of_ring_pct": 2.85
+  }
+ },
+ "exit_dose_raw_mSv_yr": {
+  "UIUC, south aim (co-tilted chain reference)": {
+   "north": {
+    "RCS3": 165.726,
+    "RCS4": 19030.0
+   },
+   "south": {
+    "RCS3": 0.0265,
+    "RCS4": 3.043
+   }
+  },
+  "Lake Superior, 15 m straight": {
+   "north": {
+    "RCS3": 0.0024,
+    "RCS4": 0.2769
+   },
+   "south": {
+    "RCS3": 11508.75,
+    "RCS4": 1321527.7778
+   }
+  },
+  "Lake Superior, 35 m straight": {
+   "north": {
+    "RCS3": 0.0024,
+    "RCS4": 0.2766
+   },
+   "south": {
+    "RCS3": 2113.852,
+    "RCS4": 242729.5918
+   }
+  },
+  "Lake Superior, 120 m straight": {
+   "north": {
+    "RCS3": 0.0024,
+    "RCS4": 0.2753
+   },
+   "south": {
+    "RCS3": 195.801,
+    "RCS4": 22483.4594
+   }
+  },
+  "Lake Superior, 440 m straight (deep-ring option)": {
+   "north": {
+    "RCS3": 0.0024,
+    "RCS4": 0.2707
+   },
+   "south": {
+    "RCS3": 15.0354,
+    "RCS4": 1726.4843
+   }
+  },
+  "Gulf of Mexico, south aim (tilt disqualifier)": {
+   "north": {
+    "RCS3": 6473.6719,
+    "RCS4": 743359.375
+   },
+   "south": {
+    "RCS3": 0.0006,
+    "RCS4": 0.0726
+   }
+  }
+ },
+ "uiuc_chain_split": {
+  "baseline_store_only": {
+   "flux_integral": 2.4022709419801105,
+   "nutau_cc_per_t_yr": 0.1372494120128466,
+   "numu_cc_per_t_yr": 435371.74868123076,
+   "plane_nutau_Egt5_per_yr": 103549112204959.67
+  },
+  "store_plus_full_chain": {
+   "flux_integral": 5.082399167763036,
+   "nutau_cc_per_t_yr": 0.2973667460262809,
+   "numu_cc_per_t_yr": 789954.8867232541,
+   "plane_nutau_Egt5_per_yr": 966107407674794.2
+  },
+  "store_plus_RCS12_only": {
+   "flux_integral": 2.873817275521172,
+   "nutau_cc_per_t_yr": 0.20039430544939027,
+   "numu_cc_per_t_yr": 456456.14350626146,
+   "plane_nutau_Egt5_per_yr": 936545343356186.6
+  },
+  "reassignment_verdict": {
+   "nutau_cc_gain_retained_pct": 39.4,
+   "plane_nutau_gain_retained_pct": 96.6,
+   "onaxis_flux_gain_given_up_pct": 82.4,
+   "reading": "the oscillated-nutau payoff lives in the LOW-energy turns (RCS1/2), where (L/E)^2 is largest; RCS3/4 -- the high-energy ring and the variant's only new dose problem at UIUC (3.0 mSv/yr raw) -- is the one UIUC needs least."
+  }
+ }
+}

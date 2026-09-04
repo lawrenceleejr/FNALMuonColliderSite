@@ -135,6 +135,13 @@ easement, or University of Illinois land.
   UIUC: ντ CC doubles (0.14 → 0.29 per tonne-year, S/B improved), CC-able
   plane-crossing ν̄τ ×9, every north beam emerging **on site** — and RCS3/4
   fitting through a 25 µrad tilt window as the price.
+* **[Aiming the last RCS](rcs-aim/)** — depth and angle as independent
+  knobs (|θ| ≈ 1.57 mrad per 100 km sets the target; depth sets only the near
+  emergence), and the one GEBCO-verified deep-water target on the meridian:
+  **Lake Superior open water at 626–695 km**, a ±2.7 mrad aim window and
+  0.28 mSv/yr raw into 300 m of water. Sending RCS3/4 there keeps 97 % of the
+  co-tilted chain's plane-crossing ν̄τ gain and deletes its only new dose
+  problem.
 * **[Safety assessment](safety/)** — the King-model dose framework,
   zone-by-zone numbers for the downstream communities, exit-strip
   management, and the UIUC scenario.
