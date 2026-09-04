@@ -131,6 +131,13 @@ belongs in 300 m of Lake Superior water is far outside this study's scope,
 but the flux is there and the exit is, by construction, somewhere nobody
 stands.
 
+*Sequel:* [azimuth freedom](../rcs-azimuth/) drops the assumption that the
+aim must lie on the ComEd meridian at all. Rotating the bearing ENE puts the
+near beam across 4.7 km of Fermilab land instead of 2.6 km, which removes even
+the 0.59 km of overflight above — and opens **Lake Huron at 630 km** (179 m of
+water, azimuth-free) alongside a strictly better Lake Superior aim at 8°
+(319 m of column, a 248 km submerged run).
+
 ## 5. Open items
 
 * **The 0.59 km overflight** needs the envelope treatment the north side

@@ -142,6 +142,13 @@ easement, or University of Illinois land.
   0.28 mSv/yr raw into 300 m of water. Sending RCS3/4 there keeps 97 % of the
   co-tilted chain's plane-crossing ν̄τ gain and deletes its only new dose
   problem.
+* **[Azimuth freedom](rcs-azimuth/)** — the ComEd meridian is a consequence
+  of the *shallow* 15.4 mrad climb, not of physics: the off-site sub-500 ft
+  band goes as 1/θ, so past θ_free ≈ 35–64 mrad (bearing-dependent) the near
+  beam reaches navigable airspace inside the fence and the bearing becomes
+  free. Best target: **Lake Huron, azimuth 50°, 630 km, 49.5 mrad** — 179 m of
+  water, 0.30 mSv/yr raw, and **zero off-site overflight**, because the IP's
+  eastern siting puts 4.7 km of DOE land on the near-side WSW diagonal.
 * **[Safety assessment](safety/)** — the King-model dose framework,
   zone-by-zone numbers for the downstream communities, exit-strip
   management, and the UIUC scenario.
