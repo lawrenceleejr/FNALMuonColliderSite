@@ -149,6 +149,14 @@ easement, or University of Illinois land.
   free. Best target: **Lake Huron, azimuth 50°, 630 km, 49.5 mrad** — 179 m of
   water, 0.30 mSv/yr raw, and **zero off-site overflight**, because the IP's
   eastern siting puts 4.7 km of DOE land on the near-side WSW diagonal.
+* **[The collider's compass](collider-map/)** — the same polar frame for the
+  ring whose tilt is fixed: 15.4 mrad from 35 m surfaces at **198 km in every
+  bearing**, a circle that lies entirely inside θ_free (7.5–11.3 km of
+  off-site climb whichever way it points — the ComEd easement is the near-side
+  choice, not a far-side one). On the circle: UIUC, **Purdue at 192 km**,
+  Kettle Moraine State Forest due north, and 45° of open Lake Michigan; plus
+  every mine, lake, forest and campus within 1300 km placed by true bearing
+  and range, from Argonne at 25 km to Soudan, Ash River and SURF.
 * **[Safety assessment](safety/)** — the King-model dose framework,
   zone-by-zone numbers for the downstream communities, exit-strip
   management, and the UIUC scenario.

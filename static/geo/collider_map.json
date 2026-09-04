@@ -1,0 +1,3378 @@
+{
+ "collider_tilt_mrad": 15.4,
+ "straight_depth_m": 35.0,
+ "exit_circle_km": 198.5,
+ "note": "tilt_to_reach_mrad = D/(2 R_E) - d0/D for a 35 m straight; circle[] gives where the far exit lands per degree of bearing and the near-side sub-500 ft band beyond the fence",
+ "water_arcs_on_circle": [
+  {
+   "body": "Lake Michigan",
+   "az_from": 11,
+   "az_to": 55,
+   "deg": 45
+  }
+ ],
+ "circle": [
+  {
+   "az": 0,
+   "lat": 43.6292,
+   "lon": -88.223,
+   "water": null,
+   "near_fence_m": 2628,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 1,
+   "lat": 43.6289,
+   "lon": -88.1799,
+   "water": null,
+   "near_fence_m": 2630,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 2,
+   "lat": 43.6281,
+   "lon": -88.1369,
+   "water": null,
+   "near_fence_m": 2633,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 3,
+   "lat": 43.6267,
+   "lon": -88.0939,
+   "water": null,
+   "near_fence_m": 2638,
+   "offsite_sub500ft_km": 9.53
+  },
+  {
+   "az": 4,
+   "lat": 43.6247,
+   "lon": -88.051,
+   "water": null,
+   "near_fence_m": 2644,
+   "offsite_sub500ft_km": 9.52
+  },
+  {
+   "az": 5,
+   "lat": 43.6222,
+   "lon": -88.0081,
+   "water": null,
+   "near_fence_m": 2651,
+   "offsite_sub500ft_km": 9.52
+  },
+  {
+   "az": 6,
+   "lat": 43.6192,
+   "lon": -87.9653,
+   "water": null,
+   "near_fence_m": 2659,
+   "offsite_sub500ft_km": 9.51
+  },
+  {
+   "az": 7,
+   "lat": 43.6155,
+   "lon": -87.9226,
+   "water": null,
+   "near_fence_m": 2668,
+   "offsite_sub500ft_km": 9.5
+  },
+  {
+   "az": 8,
+   "lat": 43.6113,
+   "lon": -87.8799,
+   "water": null,
+   "near_fence_m": 2678,
+   "offsite_sub500ft_km": 9.49
+  },
+  {
+   "az": 9,
+   "lat": 43.6066,
+   "lon": -87.8374,
+   "water": null,
+   "near_fence_m": 2688,
+   "offsite_sub500ft_km": 9.48
+  },
+  {
+   "az": 10,
+   "lat": 43.6013,
+   "lon": -87.795,
+   "water": null,
+   "near_fence_m": 2700,
+   "offsite_sub500ft_km": 9.47
+  },
+  {
+   "az": 11,
+   "lat": 43.5955,
+   "lon": -87.7528,
+   "water": "Lake Michigan",
+   "near_fence_m": 2712,
+   "offsite_sub500ft_km": 9.46
+  },
+  {
+   "az": 12,
+   "lat": 43.5891,
+   "lon": -87.7107,
+   "water": "Lake Michigan",
+   "near_fence_m": 2726,
+   "offsite_sub500ft_km": 9.44
+  },
+  {
+   "az": 13,
+   "lat": 43.5822,
+   "lon": -87.6688,
+   "water": "Lake Michigan",
+   "near_fence_m": 2746,
+   "offsite_sub500ft_km": 9.42
+  },
+  {
+   "az": 14,
+   "lat": 43.5747,
+   "lon": -87.627,
+   "water": "Lake Michigan",
+   "near_fence_m": 2768,
+   "offsite_sub500ft_km": 9.4
+  },
+  {
+   "az": 15,
+   "lat": 43.5667,
+   "lon": -87.5855,
+   "water": "Lake Michigan",
+   "near_fence_m": 2790,
+   "offsite_sub500ft_km": 9.38
+  },
+  {
+   "az": 16,
+   "lat": 43.5581,
+   "lon": -87.5442,
+   "water": "Lake Michigan",
+   "near_fence_m": 2814,
+   "offsite_sub500ft_km": 9.35
+  },
+  {
+   "az": 17,
+   "lat": 43.549,
+   "lon": -87.5031,
+   "water": "Lake Michigan",
+   "near_fence_m": 2840,
+   "offsite_sub500ft_km": 9.33
+  },
+  {
+   "az": 18,
+   "lat": 43.5394,
+   "lon": -87.4622,
+   "water": "Lake Michigan",
+   "near_fence_m": 2866,
+   "offsite_sub500ft_km": 9.3
+  },
+  {
+   "az": 19,
+   "lat": 43.5292,
+   "lon": -87.4216,
+   "water": "Lake Michigan",
+   "near_fence_m": 2894,
+   "offsite_sub500ft_km": 9.27
+  },
+  {
+   "az": 20,
+   "lat": 43.5185,
+   "lon": -87.3812,
+   "water": "Lake Michigan",
+   "near_fence_m": 2923,
+   "offsite_sub500ft_km": 9.25
+  },
+  {
+   "az": 21,
+   "lat": 43.5073,
+   "lon": -87.3411,
+   "water": "Lake Michigan",
+   "near_fence_m": 2954,
+   "offsite_sub500ft_km": 9.21
+  },
+  {
+   "az": 22,
+   "lat": 43.4956,
+   "lon": -87.3014,
+   "water": "Lake Michigan",
+   "near_fence_m": 2987,
+   "offsite_sub500ft_km": 9.18
+  },
+  {
+   "az": 23,
+   "lat": 43.4834,
+   "lon": -87.2619,
+   "water": "Lake Michigan",
+   "near_fence_m": 3021,
+   "offsite_sub500ft_km": 9.15
+  },
+  {
+   "az": 24,
+   "lat": 43.4706,
+   "lon": -87.2227,
+   "water": "Lake Michigan",
+   "near_fence_m": 3057,
+   "offsite_sub500ft_km": 9.11
+  },
+  {
+   "az": 25,
+   "lat": 43.4574,
+   "lon": -87.1839,
+   "water": "Lake Michigan",
+   "near_fence_m": 3095,
+   "offsite_sub500ft_km": 9.07
+  },
+  {
+   "az": 26,
+   "lat": 43.4436,
+   "lon": -87.1454,
+   "water": "Lake Michigan",
+   "near_fence_m": 3134,
+   "offsite_sub500ft_km": 9.03
+  },
+  {
+   "az": 27,
+   "lat": 43.4294,
+   "lon": -87.1073,
+   "water": "Lake Michigan",
+   "near_fence_m": 3176,
+   "offsite_sub500ft_km": 8.99
+  },
+  {
+   "az": 28,
+   "lat": 43.4146,
+   "lon": -87.0695,
+   "water": "Lake Michigan",
+   "near_fence_m": 3220,
+   "offsite_sub500ft_km": 8.95
+  },
+  {
+   "az": 29,
+   "lat": 43.3994,
+   "lon": -87.0321,
+   "water": "Lake Michigan",
+   "near_fence_m": 3266,
+   "offsite_sub500ft_km": 8.9
+  },
+  {
+   "az": 30,
+   "lat": 43.3836,
+   "lon": -86.9951,
+   "water": "Lake Michigan",
+   "near_fence_m": 3314,
+   "offsite_sub500ft_km": 8.85
+  },
+  {
+   "az": 31,
+   "lat": 43.3674,
+   "lon": -86.9585,
+   "water": "Lake Michigan",
+   "near_fence_m": 3365,
+   "offsite_sub500ft_km": 8.8
+  },
+  {
+   "az": 32,
+   "lat": 43.3508,
+   "lon": -86.9223,
+   "water": "Lake Michigan",
+   "near_fence_m": 3418,
+   "offsite_sub500ft_km": 8.75
+  },
+  {
+   "az": 33,
+   "lat": 43.3336,
+   "lon": -86.8866,
+   "water": "Lake Michigan",
+   "near_fence_m": 3474,
+   "offsite_sub500ft_km": 8.69
+  },
+  {
+   "az": 34,
+   "lat": 43.316,
+   "lon": -86.8512,
+   "water": "Lake Michigan",
+   "near_fence_m": 3534,
+   "offsite_sub500ft_km": 8.64
+  },
+  {
+   "az": 35,
+   "lat": 43.298,
+   "lon": -86.8164,
+   "water": "Lake Michigan",
+   "near_fence_m": 3596,
+   "offsite_sub500ft_km": 8.57
+  },
+  {
+   "az": 36,
+   "lat": 43.2794,
+   "lon": -86.782,
+   "water": "Lake Michigan",
+   "near_fence_m": 3662,
+   "offsite_sub500ft_km": 8.51
+  },
+  {
+   "az": 37,
+   "lat": 43.2605,
+   "lon": -86.748,
+   "water": "Lake Michigan",
+   "near_fence_m": 3731,
+   "offsite_sub500ft_km": 8.44
+  },
+  {
+   "az": 38,
+   "lat": 43.2411,
+   "lon": -86.7145,
+   "water": "Lake Michigan",
+   "near_fence_m": 3804,
+   "offsite_sub500ft_km": 8.36
+  },
+  {
+   "az": 39,
+   "lat": 43.2213,
+   "lon": -86.6816,
+   "water": "Lake Michigan",
+   "near_fence_m": 3882,
+   "offsite_sub500ft_km": 8.29
+  },
+  {
+   "az": 40,
+   "lat": 43.201,
+   "lon": -86.6491,
+   "water": "Lake Michigan",
+   "near_fence_m": 3964,
+   "offsite_sub500ft_km": 8.21
+  },
+  {
+   "az": 41,
+   "lat": 43.1804,
+   "lon": -86.6171,
+   "water": "Lake Michigan",
+   "near_fence_m": 4050,
+   "offsite_sub500ft_km": 8.12
+  },
+  {
+   "az": 42,
+   "lat": 43.1593,
+   "lon": -86.5857,
+   "water": "Lake Michigan",
+   "near_fence_m": 4142,
+   "offsite_sub500ft_km": 8.03
+  },
+  {
+   "az": 43,
+   "lat": 43.1378,
+   "lon": -86.5548,
+   "water": "Lake Michigan",
+   "near_fence_m": 4239,
+   "offsite_sub500ft_km": 7.93
+  },
+  {
+   "az": 44,
+   "lat": 43.1159,
+   "lon": -86.5244,
+   "water": "Lake Michigan",
+   "near_fence_m": 4343,
+   "offsite_sub500ft_km": 7.83
+  },
+  {
+   "az": 45,
+   "lat": 43.0936,
+   "lon": -86.4946,
+   "water": "Lake Michigan",
+   "near_fence_m": 4453,
+   "offsite_sub500ft_km": 7.72
+  },
+  {
+   "az": 46,
+   "lat": 43.071,
+   "lon": -86.4654,
+   "water": "Lake Michigan",
+   "near_fence_m": 4570,
+   "offsite_sub500ft_km": 7.6
+  },
+  {
+   "az": 47,
+   "lat": 43.0479,
+   "lon": -86.4367,
+   "water": "Lake Michigan",
+   "near_fence_m": 4695,
+   "offsite_sub500ft_km": 7.47
+  },
+  {
+   "az": 48,
+   "lat": 43.0245,
+   "lon": -86.4085,
+   "water": "Lake Michigan",
+   "near_fence_m": 4761,
+   "offsite_sub500ft_km": 7.41
+  },
+  {
+   "az": 49,
+   "lat": 43.0008,
+   "lon": -86.381,
+   "water": "Lake Michigan",
+   "near_fence_m": 4755,
+   "offsite_sub500ft_km": 7.41
+  },
+  {
+   "az": 50,
+   "lat": 42.9766,
+   "lon": -86.3541,
+   "water": "Lake Michigan",
+   "near_fence_m": 4749,
+   "offsite_sub500ft_km": 7.42
+  },
+  {
+   "az": 51,
+   "lat": 42.9522,
+   "lon": -86.3277,
+   "water": "Lake Michigan",
+   "near_fence_m": 4745,
+   "offsite_sub500ft_km": 7.42
+  },
+  {
+   "az": 52,
+   "lat": 42.9274,
+   "lon": -86.302,
+   "water": "Lake Michigan",
+   "near_fence_m": 4743,
+   "offsite_sub500ft_km": 7.43
+  },
+  {
+   "az": 53,
+   "lat": 42.9022,
+   "lon": -86.2769,
+   "water": "Lake Michigan",
+   "near_fence_m": 4742,
+   "offsite_sub500ft_km": 7.43
+  },
+  {
+   "az": 54,
+   "lat": 42.8768,
+   "lon": -86.2524,
+   "water": "Lake Michigan",
+   "near_fence_m": 4742,
+   "offsite_sub500ft_km": 7.43
+  },
+  {
+   "az": 55,
+   "lat": 42.851,
+   "lon": -86.2285,
+   "water": "Lake Michigan",
+   "near_fence_m": 4744,
+   "offsite_sub500ft_km": 7.42
+  },
+  {
+   "az": 56,
+   "lat": 42.8249,
+   "lon": -86.2053,
+   "water": null,
+   "near_fence_m": 4747,
+   "offsite_sub500ft_km": 7.42
+  },
+  {
+   "az": 57,
+   "lat": 42.7985,
+   "lon": -86.1827,
+   "water": null,
+   "near_fence_m": 4752,
+   "offsite_sub500ft_km": 7.42
+  },
+  {
+   "az": 58,
+   "lat": 42.7719,
+   "lon": -86.1608,
+   "water": null,
+   "near_fence_m": 4758,
+   "offsite_sub500ft_km": 7.41
+  },
+  {
+   "az": 59,
+   "lat": 42.7449,
+   "lon": -86.1395,
+   "water": null,
+   "near_fence_m": 4766,
+   "offsite_sub500ft_km": 7.4
+  },
+  {
+   "az": 60,
+   "lat": 42.7177,
+   "lon": -86.1189,
+   "water": null,
+   "near_fence_m": 4775,
+   "offsite_sub500ft_km": 7.39
+  },
+  {
+   "az": 61,
+   "lat": 42.6902,
+   "lon": -86.0989,
+   "water": null,
+   "near_fence_m": 4786,
+   "offsite_sub500ft_km": 7.38
+  },
+  {
+   "az": 62,
+   "lat": 42.6625,
+   "lon": -86.0797,
+   "water": null,
+   "near_fence_m": 4798,
+   "offsite_sub500ft_km": 7.37
+  },
+  {
+   "az": 63,
+   "lat": 42.6345,
+   "lon": -86.0611,
+   "water": null,
+   "near_fence_m": 4811,
+   "offsite_sub500ft_km": 7.36
+  },
+  {
+   "az": 64,
+   "lat": 42.6063,
+   "lon": -86.0431,
+   "water": null,
+   "near_fence_m": 4827,
+   "offsite_sub500ft_km": 7.34
+  },
+  {
+   "az": 65,
+   "lat": 42.5778,
+   "lon": -86.0259,
+   "water": null,
+   "near_fence_m": 4847,
+   "offsite_sub500ft_km": 7.32
+  },
+  {
+   "az": 66,
+   "lat": 42.5492,
+   "lon": -86.0094,
+   "water": null,
+   "near_fence_m": 4868,
+   "offsite_sub500ft_km": 7.3
+  },
+  {
+   "az": 67,
+   "lat": 42.5203,
+   "lon": -85.9935,
+   "water": null,
+   "near_fence_m": 4891,
+   "offsite_sub500ft_km": 7.28
+  },
+  {
+   "az": 68,
+   "lat": 42.4912,
+   "lon": -85.9784,
+   "water": null,
+   "near_fence_m": 4916,
+   "offsite_sub500ft_km": 7.25
+  },
+  {
+   "az": 69,
+   "lat": 42.462,
+   "lon": -85.964,
+   "water": null,
+   "near_fence_m": 4943,
+   "offsite_sub500ft_km": 7.23
+  },
+  {
+   "az": 70,
+   "lat": 42.4325,
+   "lon": -85.9502,
+   "water": null,
+   "near_fence_m": 4971,
+   "offsite_sub500ft_km": 7.2
+  },
+  {
+   "az": 71,
+   "lat": 42.4029,
+   "lon": -85.9372,
+   "water": null,
+   "near_fence_m": 4937,
+   "offsite_sub500ft_km": 7.23
+  },
+  {
+   "az": 72,
+   "lat": 42.3731,
+   "lon": -85.9249,
+   "water": null,
+   "near_fence_m": 4906,
+   "offsite_sub500ft_km": 7.26
+  },
+  {
+   "az": 73,
+   "lat": 42.3431,
+   "lon": -85.9133,
+   "water": null,
+   "near_fence_m": 4880,
+   "offsite_sub500ft_km": 7.29
+  },
+  {
+   "az": 74,
+   "lat": 42.313,
+   "lon": -85.9025,
+   "water": null,
+   "near_fence_m": 4856,
+   "offsite_sub500ft_km": 7.31
+  },
+  {
+   "az": 75,
+   "lat": 42.2828,
+   "lon": -85.8923,
+   "water": null,
+   "near_fence_m": 4833,
+   "offsite_sub500ft_km": 7.34
+  },
+  {
+   "az": 76,
+   "lat": 42.2525,
+   "lon": -85.8829,
+   "water": null,
+   "near_fence_m": 4812,
+   "offsite_sub500ft_km": 7.36
+  },
+  {
+   "az": 77,
+   "lat": 42.222,
+   "lon": -85.8742,
+   "water": null,
+   "near_fence_m": 4793,
+   "offsite_sub500ft_km": 7.38
+  },
+  {
+   "az": 78,
+   "lat": 42.1914,
+   "lon": -85.8662,
+   "water": null,
+   "near_fence_m": 4776,
+   "offsite_sub500ft_km": 7.39
+  },
+  {
+   "az": 79,
+   "lat": 42.1607,
+   "lon": -85.859,
+   "water": null,
+   "near_fence_m": 4760,
+   "offsite_sub500ft_km": 7.41
+  },
+  {
+   "az": 80,
+   "lat": 42.1299,
+   "lon": -85.8525,
+   "water": null,
+   "near_fence_m": 4746,
+   "offsite_sub500ft_km": 7.42
+  },
+  {
+   "az": 81,
+   "lat": 42.0991,
+   "lon": -85.8467,
+   "water": null,
+   "near_fence_m": 4733,
+   "offsite_sub500ft_km": 7.44
+  },
+  {
+   "az": 82,
+   "lat": 42.0682,
+   "lon": -85.8417,
+   "water": null,
+   "near_fence_m": 4721,
+   "offsite_sub500ft_km": 7.45
+  },
+  {
+   "az": 83,
+   "lat": 42.0372,
+   "lon": -85.8373,
+   "water": null,
+   "near_fence_m": 4712,
+   "offsite_sub500ft_km": 7.46
+  },
+  {
+   "az": 84,
+   "lat": 42.0062,
+   "lon": -85.8337,
+   "water": null,
+   "near_fence_m": 4703,
+   "offsite_sub500ft_km": 7.47
+  },
+  {
+   "az": 85,
+   "lat": 41.9751,
+   "lon": -85.8309,
+   "water": null,
+   "near_fence_m": 4696,
+   "offsite_sub500ft_km": 7.47
+  },
+  {
+   "az": 86,
+   "lat": 41.944,
+   "lon": -85.8288,
+   "water": null,
+   "near_fence_m": 4686,
+   "offsite_sub500ft_km": 7.48
+  },
+  {
+   "az": 87,
+   "lat": 41.9128,
+   "lon": -85.8274,
+   "water": null,
+   "near_fence_m": 4678,
+   "offsite_sub500ft_km": 7.49
+  },
+  {
+   "az": 88,
+   "lat": 41.8817,
+   "lon": -85.8267,
+   "water": null,
+   "near_fence_m": 4670,
+   "offsite_sub500ft_km": 7.5
+  },
+  {
+   "az": 89,
+   "lat": 41.8506,
+   "lon": -85.8268,
+   "water": null,
+   "near_fence_m": 4664,
+   "offsite_sub500ft_km": 7.5
+  },
+  {
+   "az": 90,
+   "lat": 41.8194,
+   "lon": -85.8276,
+   "water": null,
+   "near_fence_m": 4657,
+   "offsite_sub500ft_km": 7.51
+  },
+  {
+   "az": 91,
+   "lat": 41.7883,
+   "lon": -85.8291,
+   "water": null,
+   "near_fence_m": 4649,
+   "offsite_sub500ft_km": 7.52
+  },
+  {
+   "az": 92,
+   "lat": 41.7572,
+   "lon": -85.8314,
+   "water": null,
+   "near_fence_m": 4643,
+   "offsite_sub500ft_km": 7.53
+  },
+  {
+   "az": 93,
+   "lat": 41.7261,
+   "lon": -85.8344,
+   "water": null,
+   "near_fence_m": 4639,
+   "offsite_sub500ft_km": 7.53
+  },
+  {
+   "az": 94,
+   "lat": 41.6951,
+   "lon": -85.8381,
+   "water": null,
+   "near_fence_m": 4636,
+   "offsite_sub500ft_km": 7.53
+  },
+  {
+   "az": 95,
+   "lat": 41.6641,
+   "lon": -85.8425,
+   "water": null,
+   "near_fence_m": 4639,
+   "offsite_sub500ft_km": 7.53
+  },
+  {
+   "az": 96,
+   "lat": 41.6332,
+   "lon": -85.8476,
+   "water": null,
+   "near_fence_m": 4646,
+   "offsite_sub500ft_km": 7.52
+  },
+  {
+   "az": 97,
+   "lat": 41.6024,
+   "lon": -85.8535,
+   "water": null,
+   "near_fence_m": 4655,
+   "offsite_sub500ft_km": 7.51
+  },
+  {
+   "az": 98,
+   "lat": 41.5716,
+   "lon": -85.8601,
+   "water": null,
+   "near_fence_m": 4665,
+   "offsite_sub500ft_km": 7.5
+  },
+  {
+   "az": 99,
+   "lat": 41.5409,
+   "lon": -85.8673,
+   "water": null,
+   "near_fence_m": 4677,
+   "offsite_sub500ft_km": 7.49
+  },
+  {
+   "az": 100,
+   "lat": 41.5104,
+   "lon": -85.8753,
+   "water": null,
+   "near_fence_m": 4690,
+   "offsite_sub500ft_km": 7.48
+  },
+  {
+   "az": 101,
+   "lat": 41.4799,
+   "lon": -85.884,
+   "water": null,
+   "near_fence_m": 4704,
+   "offsite_sub500ft_km": 7.46
+  },
+  {
+   "az": 102,
+   "lat": 41.4496,
+   "lon": -85.8934,
+   "water": null,
+   "near_fence_m": 4720,
+   "offsite_sub500ft_km": 7.45
+  },
+  {
+   "az": 103,
+   "lat": 41.4194,
+   "lon": -85.9035,
+   "water": null,
+   "near_fence_m": 4703,
+   "offsite_sub500ft_km": 7.47
+  },
+  {
+   "az": 104,
+   "lat": 41.3893,
+   "lon": -85.9142,
+   "water": null,
+   "near_fence_m": 4411,
+   "offsite_sub500ft_km": 7.76
+  },
+  {
+   "az": 105,
+   "lat": 41.3593,
+   "lon": -85.9257,
+   "water": null,
+   "near_fence_m": 4247,
+   "offsite_sub500ft_km": 7.92
+  },
+  {
+   "az": 106,
+   "lat": 41.3296,
+   "lon": -85.9379,
+   "water": null,
+   "near_fence_m": 4267,
+   "offsite_sub500ft_km": 7.9
+  },
+  {
+   "az": 107,
+   "lat": 41.2999,
+   "lon": -85.9507,
+   "water": null,
+   "near_fence_m": 4289,
+   "offsite_sub500ft_km": 7.88
+  },
+  {
+   "az": 108,
+   "lat": 41.2705,
+   "lon": -85.9642,
+   "water": null,
+   "near_fence_m": 4312,
+   "offsite_sub500ft_km": 7.86
+  },
+  {
+   "az": 109,
+   "lat": 41.2412,
+   "lon": -85.9783,
+   "water": null,
+   "near_fence_m": 4304,
+   "offsite_sub500ft_km": 7.87
+  },
+  {
+   "az": 110,
+   "lat": 41.2121,
+   "lon": -85.9932,
+   "water": null,
+   "near_fence_m": 4203,
+   "offsite_sub500ft_km": 7.97
+  },
+  {
+   "az": 111,
+   "lat": 41.1833,
+   "lon": -86.0087,
+   "water": null,
+   "near_fence_m": 4108,
+   "offsite_sub500ft_km": 8.06
+  },
+  {
+   "az": 112,
+   "lat": 41.1546,
+   "lon": -86.0248,
+   "water": null,
+   "near_fence_m": 4060,
+   "offsite_sub500ft_km": 8.11
+  },
+  {
+   "az": 113,
+   "lat": 41.1261,
+   "lon": -86.0416,
+   "water": null,
+   "near_fence_m": 4081,
+   "offsite_sub500ft_km": 8.09
+  },
+  {
+   "az": 114,
+   "lat": 41.0979,
+   "lon": -86.059,
+   "water": null,
+   "near_fence_m": 4106,
+   "offsite_sub500ft_km": 8.06
+  },
+  {
+   "az": 115,
+   "lat": 41.0699,
+   "lon": -86.0771,
+   "water": null,
+   "near_fence_m": 4033,
+   "offsite_sub500ft_km": 8.14
+  },
+  {
+   "az": 116,
+   "lat": 41.0421,
+   "lon": -86.0958,
+   "water": null,
+   "near_fence_m": 3968,
+   "offsite_sub500ft_km": 8.2
+  },
+  {
+   "az": 117,
+   "lat": 41.0146,
+   "lon": -86.1151,
+   "water": null,
+   "near_fence_m": 3912,
+   "offsite_sub500ft_km": 8.26
+  },
+  {
+   "az": 118,
+   "lat": 40.9873,
+   "lon": -86.135,
+   "water": null,
+   "near_fence_m": 3859,
+   "offsite_sub500ft_km": 8.31
+  },
+  {
+   "az": 119,
+   "lat": 40.9603,
+   "lon": -86.1556,
+   "water": null,
+   "near_fence_m": 3808,
+   "offsite_sub500ft_km": 8.36
+  },
+  {
+   "az": 120,
+   "lat": 40.9335,
+   "lon": -86.1767,
+   "water": null,
+   "near_fence_m": 3760,
+   "offsite_sub500ft_km": 8.41
+  },
+  {
+   "az": 121,
+   "lat": 40.9071,
+   "lon": -86.1985,
+   "water": null,
+   "near_fence_m": 3714,
+   "offsite_sub500ft_km": 8.45
+  },
+  {
+   "az": 122,
+   "lat": 40.8809,
+   "lon": -86.2208,
+   "water": null,
+   "near_fence_m": 3671,
+   "offsite_sub500ft_km": 8.5
+  },
+  {
+   "az": 123,
+   "lat": 40.855,
+   "lon": -86.2438,
+   "water": null,
+   "near_fence_m": 3634,
+   "offsite_sub500ft_km": 8.53
+  },
+  {
+   "az": 124,
+   "lat": 40.8294,
+   "lon": -86.2673,
+   "water": null,
+   "near_fence_m": 3676,
+   "offsite_sub500ft_km": 8.49
+  },
+  {
+   "az": 125,
+   "lat": 40.8042,
+   "lon": -86.2913,
+   "water": null,
+   "near_fence_m": 3610,
+   "offsite_sub500ft_km": 8.56
+  },
+  {
+   "az": 126,
+   "lat": 40.7792,
+   "lon": -86.3159,
+   "water": null,
+   "near_fence_m": 3525,
+   "offsite_sub500ft_km": 8.64
+  },
+  {
+   "az": 127,
+   "lat": 40.7546,
+   "lon": -86.3411,
+   "water": null,
+   "near_fence_m": 3444,
+   "offsite_sub500ft_km": 8.72
+  },
+  {
+   "az": 128,
+   "lat": 40.7303,
+   "lon": -86.3668,
+   "water": null,
+   "near_fence_m": 3404,
+   "offsite_sub500ft_km": 8.77
+  },
+  {
+   "az": 129,
+   "lat": 40.7063,
+   "lon": -86.3931,
+   "water": null,
+   "near_fence_m": 3426,
+   "offsite_sub500ft_km": 8.74
+  },
+  {
+   "az": 130,
+   "lat": 40.6827,
+   "lon": -86.4199,
+   "water": null,
+   "near_fence_m": 3398,
+   "offsite_sub500ft_km": 8.77
+  },
+  {
+   "az": 131,
+   "lat": 40.6595,
+   "lon": -86.4472,
+   "water": null,
+   "near_fence_m": 3371,
+   "offsite_sub500ft_km": 8.8
+  },
+  {
+   "az": 132,
+   "lat": 40.6366,
+   "lon": -86.475,
+   "water": null,
+   "near_fence_m": 3346,
+   "offsite_sub500ft_km": 8.82
+  },
+  {
+   "az": 133,
+   "lat": 40.614,
+   "lon": -86.5033,
+   "water": null,
+   "near_fence_m": 3322,
+   "offsite_sub500ft_km": 8.85
+  },
+  {
+   "az": 134,
+   "lat": 40.5919,
+   "lon": -86.5322,
+   "water": null,
+   "near_fence_m": 3299,
+   "offsite_sub500ft_km": 8.87
+  },
+  {
+   "az": 135,
+   "lat": 40.5701,
+   "lon": -86.5615,
+   "water": null,
+   "near_fence_m": 3278,
+   "offsite_sub500ft_km": 8.89
+  },
+  {
+   "az": 136,
+   "lat": 40.5487,
+   "lon": -86.5912,
+   "water": null,
+   "near_fence_m": 3258,
+   "offsite_sub500ft_km": 8.91
+  },
+  {
+   "az": 137,
+   "lat": 40.5276,
+   "lon": -86.6215,
+   "water": null,
+   "near_fence_m": 3239,
+   "offsite_sub500ft_km": 8.93
+  },
+  {
+   "az": 138,
+   "lat": 40.507,
+   "lon": -86.6522,
+   "water": null,
+   "near_fence_m": 3222,
+   "offsite_sub500ft_km": 8.95
+  },
+  {
+   "az": 139,
+   "lat": 40.4868,
+   "lon": -86.6834,
+   "water": null,
+   "near_fence_m": 3205,
+   "offsite_sub500ft_km": 8.96
+  },
+  {
+   "az": 140,
+   "lat": 40.467,
+   "lon": -86.715,
+   "water": null,
+   "near_fence_m": 3190,
+   "offsite_sub500ft_km": 8.98
+  },
+  {
+   "az": 141,
+   "lat": 40.4476,
+   "lon": -86.747,
+   "water": null,
+   "near_fence_m": 3175,
+   "offsite_sub500ft_km": 8.99
+  },
+  {
+   "az": 142,
+   "lat": 40.4286,
+   "lon": -86.7794,
+   "water": null,
+   "near_fence_m": 3162,
+   "offsite_sub500ft_km": 9.01
+  },
+  {
+   "az": 143,
+   "lat": 40.4101,
+   "lon": -86.8123,
+   "water": null,
+   "near_fence_m": 3150,
+   "offsite_sub500ft_km": 9.02
+  },
+  {
+   "az": 144,
+   "lat": 40.3919,
+   "lon": -86.8456,
+   "water": null,
+   "near_fence_m": 2939,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 145,
+   "lat": 40.3742,
+   "lon": -86.8792,
+   "water": null,
+   "near_fence_m": 2936,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 146,
+   "lat": 40.357,
+   "lon": -86.9133,
+   "water": null,
+   "near_fence_m": 2934,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 147,
+   "lat": 40.3402,
+   "lon": -86.9477,
+   "water": null,
+   "near_fence_m": 2933,
+   "offsite_sub500ft_km": 9.24
+  },
+  {
+   "az": 148,
+   "lat": 40.3238,
+   "lon": -86.9824,
+   "water": null,
+   "near_fence_m": 2933,
+   "offsite_sub500ft_km": 9.24
+  },
+  {
+   "az": 149,
+   "lat": 40.3079,
+   "lon": -87.0176,
+   "water": null,
+   "near_fence_m": 2934,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 150,
+   "lat": 40.2925,
+   "lon": -87.053,
+   "water": null,
+   "near_fence_m": 2936,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 151,
+   "lat": 40.2775,
+   "lon": -87.0888,
+   "water": null,
+   "near_fence_m": 2939,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 152,
+   "lat": 40.263,
+   "lon": -87.125,
+   "water": null,
+   "near_fence_m": 2942,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 153,
+   "lat": 40.249,
+   "lon": -87.1614,
+   "water": null,
+   "near_fence_m": 2947,
+   "offsite_sub500ft_km": 9.22
+  },
+  {
+   "az": 154,
+   "lat": 40.2354,
+   "lon": -87.1981,
+   "water": null,
+   "near_fence_m": 2952,
+   "offsite_sub500ft_km": 9.22
+  },
+  {
+   "az": 155,
+   "lat": 40.2223,
+   "lon": -87.2351,
+   "water": null,
+   "near_fence_m": 2958,
+   "offsite_sub500ft_km": 9.21
+  },
+  {
+   "az": 156,
+   "lat": 40.2097,
+   "lon": -87.2724,
+   "water": null,
+   "near_fence_m": 2966,
+   "offsite_sub500ft_km": 9.2
+  },
+  {
+   "az": 157,
+   "lat": 40.1976,
+   "lon": -87.31,
+   "water": null,
+   "near_fence_m": 2974,
+   "offsite_sub500ft_km": 9.2
+  },
+  {
+   "az": 158,
+   "lat": 40.186,
+   "lon": -87.3478,
+   "water": null,
+   "near_fence_m": 2983,
+   "offsite_sub500ft_km": 9.19
+  },
+  {
+   "az": 159,
+   "lat": 40.1749,
+   "lon": -87.3859,
+   "water": null,
+   "near_fence_m": 2993,
+   "offsite_sub500ft_km": 9.18
+  },
+  {
+   "az": 160,
+   "lat": 40.1642,
+   "lon": -87.4242,
+   "water": null,
+   "near_fence_m": 3004,
+   "offsite_sub500ft_km": 9.16
+  },
+  {
+   "az": 161,
+   "lat": 40.1541,
+   "lon": -87.4628,
+   "water": null,
+   "near_fence_m": 3016,
+   "offsite_sub500ft_km": 9.15
+  },
+  {
+   "az": 162,
+   "lat": 40.1445,
+   "lon": -87.5015,
+   "water": null,
+   "near_fence_m": 3029,
+   "offsite_sub500ft_km": 9.14
+  },
+  {
+   "az": 163,
+   "lat": 40.1353,
+   "lon": -87.5405,
+   "water": null,
+   "near_fence_m": 3044,
+   "offsite_sub500ft_km": 9.13
+  },
+  {
+   "az": 164,
+   "lat": 40.1267,
+   "lon": -87.5796,
+   "water": null,
+   "near_fence_m": 3036,
+   "offsite_sub500ft_km": 9.13
+  },
+  {
+   "az": 165,
+   "lat": 40.1186,
+   "lon": -87.6189,
+   "water": null,
+   "near_fence_m": 3022,
+   "offsite_sub500ft_km": 9.15
+  },
+  {
+   "az": 166,
+   "lat": 40.111,
+   "lon": -87.6584,
+   "water": null,
+   "near_fence_m": 3009,
+   "offsite_sub500ft_km": 9.16
+  },
+  {
+   "az": 167,
+   "lat": 40.1039,
+   "lon": -87.6981,
+   "water": null,
+   "near_fence_m": 2997,
+   "offsite_sub500ft_km": 9.17
+  },
+  {
+   "az": 168,
+   "lat": 40.0974,
+   "lon": -87.7379,
+   "water": null,
+   "near_fence_m": 2986,
+   "offsite_sub500ft_km": 9.18
+  },
+  {
+   "az": 169,
+   "lat": 40.0913,
+   "lon": -87.7779,
+   "water": null,
+   "near_fence_m": 2976,
+   "offsite_sub500ft_km": 9.19
+  },
+  {
+   "az": 170,
+   "lat": 40.0858,
+   "lon": -87.8179,
+   "water": null,
+   "near_fence_m": 2967,
+   "offsite_sub500ft_km": 9.2
+  },
+  {
+   "az": 171,
+   "lat": 40.0808,
+   "lon": -87.8581,
+   "water": null,
+   "near_fence_m": 2958,
+   "offsite_sub500ft_km": 9.21
+  },
+  {
+   "az": 172,
+   "lat": 40.0763,
+   "lon": -87.8984,
+   "water": null,
+   "near_fence_m": 2951,
+   "offsite_sub500ft_km": 9.22
+  },
+  {
+   "az": 173,
+   "lat": 40.0723,
+   "lon": -87.9388,
+   "water": null,
+   "near_fence_m": 2945,
+   "offsite_sub500ft_km": 9.22
+  },
+  {
+   "az": 174,
+   "lat": 40.0689,
+   "lon": -87.9792,
+   "water": null,
+   "near_fence_m": 2939,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 175,
+   "lat": 40.066,
+   "lon": -88.0197,
+   "water": null,
+   "near_fence_m": 2935,
+   "offsite_sub500ft_km": 9.23
+  },
+  {
+   "az": 176,
+   "lat": 40.0636,
+   "lon": -88.0603,
+   "water": null,
+   "near_fence_m": 2931,
+   "offsite_sub500ft_km": 9.24
+  },
+  {
+   "az": 177,
+   "lat": 40.0618,
+   "lon": -88.1009,
+   "water": null,
+   "near_fence_m": 2928,
+   "offsite_sub500ft_km": 9.24
+  },
+  {
+   "az": 178,
+   "lat": 40.0604,
+   "lon": -88.1416,
+   "water": null,
+   "near_fence_m": 2927,
+   "offsite_sub500ft_km": 9.24
+  },
+  {
+   "az": 179,
+   "lat": 40.0596,
+   "lon": -88.1823,
+   "water": null,
+   "near_fence_m": 2845,
+   "offsite_sub500ft_km": 9.32
+  },
+  {
+   "az": 180,
+   "lat": 40.0594,
+   "lon": -88.223,
+   "water": null,
+   "near_fence_m": 2845,
+   "offsite_sub500ft_km": 9.32
+  },
+  {
+   "az": 181,
+   "lat": 40.0596,
+   "lon": -88.2637,
+   "water": null,
+   "near_fence_m": 2804,
+   "offsite_sub500ft_km": 9.36
+  },
+  {
+   "az": 182,
+   "lat": 40.0604,
+   "lon": -88.3043,
+   "water": null,
+   "near_fence_m": 2765,
+   "offsite_sub500ft_km": 9.4
+  },
+  {
+   "az": 183,
+   "lat": 40.0618,
+   "lon": -88.345,
+   "water": null,
+   "near_fence_m": 2728,
+   "offsite_sub500ft_km": 9.44
+  },
+  {
+   "az": 184,
+   "lat": 40.0636,
+   "lon": -88.3856,
+   "water": null,
+   "near_fence_m": 2693,
+   "offsite_sub500ft_km": 9.48
+  },
+  {
+   "az": 185,
+   "lat": 40.066,
+   "lon": -88.4262,
+   "water": null,
+   "near_fence_m": 2659,
+   "offsite_sub500ft_km": 9.51
+  },
+  {
+   "az": 186,
+   "lat": 40.0689,
+   "lon": -88.4667,
+   "water": null,
+   "near_fence_m": 2627,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 187,
+   "lat": 40.0723,
+   "lon": -88.5072,
+   "water": null,
+   "near_fence_m": 2596,
+   "offsite_sub500ft_km": 9.57
+  },
+  {
+   "az": 188,
+   "lat": 40.0763,
+   "lon": -88.5476,
+   "water": null,
+   "near_fence_m": 2240,
+   "offsite_sub500ft_km": 9.93
+  },
+  {
+   "az": 189,
+   "lat": 40.0808,
+   "lon": -88.5878,
+   "water": null,
+   "near_fence_m": 2247,
+   "offsite_sub500ft_km": 9.92
+  },
+  {
+   "az": 190,
+   "lat": 40.0858,
+   "lon": -88.628,
+   "water": null,
+   "near_fence_m": 2254,
+   "offsite_sub500ft_km": 9.91
+  },
+  {
+   "az": 191,
+   "lat": 40.0913,
+   "lon": -88.6681,
+   "water": null,
+   "near_fence_m": 2262,
+   "offsite_sub500ft_km": 9.91
+  },
+  {
+   "az": 192,
+   "lat": 40.0974,
+   "lon": -88.708,
+   "water": null,
+   "near_fence_m": 2271,
+   "offsite_sub500ft_km": 9.9
+  },
+  {
+   "az": 193,
+   "lat": 40.1039,
+   "lon": -88.7478,
+   "water": null,
+   "near_fence_m": 2280,
+   "offsite_sub500ft_km": 9.89
+  },
+  {
+   "az": 194,
+   "lat": 40.111,
+   "lon": -88.7875,
+   "water": null,
+   "near_fence_m": 2291,
+   "offsite_sub500ft_km": 9.88
+  },
+  {
+   "az": 195,
+   "lat": 40.1186,
+   "lon": -88.827,
+   "water": null,
+   "near_fence_m": 2302,
+   "offsite_sub500ft_km": 9.87
+  },
+  {
+   "az": 196,
+   "lat": 40.1267,
+   "lon": -88.8663,
+   "water": null,
+   "near_fence_m": 2314,
+   "offsite_sub500ft_km": 9.85
+  },
+  {
+   "az": 197,
+   "lat": 40.1353,
+   "lon": -88.9055,
+   "water": null,
+   "near_fence_m": 2327,
+   "offsite_sub500ft_km": 9.84
+  },
+  {
+   "az": 198,
+   "lat": 40.1445,
+   "lon": -88.9444,
+   "water": null,
+   "near_fence_m": 2340,
+   "offsite_sub500ft_km": 9.83
+  },
+  {
+   "az": 199,
+   "lat": 40.1541,
+   "lon": -88.9832,
+   "water": null,
+   "near_fence_m": 2355,
+   "offsite_sub500ft_km": 9.81
+  },
+  {
+   "az": 200,
+   "lat": 40.1642,
+   "lon": -89.0217,
+   "water": null,
+   "near_fence_m": 2370,
+   "offsite_sub500ft_km": 9.8
+  },
+  {
+   "az": 201,
+   "lat": 40.1749,
+   "lon": -89.06,
+   "water": null,
+   "near_fence_m": 2387,
+   "offsite_sub500ft_km": 9.78
+  },
+  {
+   "az": 202,
+   "lat": 40.186,
+   "lon": -89.0981,
+   "water": null,
+   "near_fence_m": 2404,
+   "offsite_sub500ft_km": 9.76
+  },
+  {
+   "az": 203,
+   "lat": 40.1976,
+   "lon": -89.1359,
+   "water": null,
+   "near_fence_m": 2422,
+   "offsite_sub500ft_km": 9.75
+  },
+  {
+   "az": 204,
+   "lat": 40.2097,
+   "lon": -89.1735,
+   "water": null,
+   "near_fence_m": 2442,
+   "offsite_sub500ft_km": 9.73
+  },
+  {
+   "az": 205,
+   "lat": 40.2223,
+   "lon": -89.2108,
+   "water": null,
+   "near_fence_m": 2415,
+   "offsite_sub500ft_km": 9.75
+  },
+  {
+   "az": 206,
+   "lat": 40.2354,
+   "lon": -89.2478,
+   "water": null,
+   "near_fence_m": 2315,
+   "offsite_sub500ft_km": 9.85
+  },
+  {
+   "az": 207,
+   "lat": 40.249,
+   "lon": -89.2846,
+   "water": null,
+   "near_fence_m": 2223,
+   "offsite_sub500ft_km": 9.95
+  },
+  {
+   "az": 208,
+   "lat": 40.263,
+   "lon": -89.321,
+   "water": null,
+   "near_fence_m": 2139,
+   "offsite_sub500ft_km": 10.03
+  },
+  {
+   "az": 209,
+   "lat": 40.2775,
+   "lon": -89.3571,
+   "water": null,
+   "near_fence_m": 2061,
+   "offsite_sub500ft_km": 10.11
+  },
+  {
+   "az": 210,
+   "lat": 40.2925,
+   "lon": -89.3929,
+   "water": null,
+   "near_fence_m": 1990,
+   "offsite_sub500ft_km": 10.18
+  },
+  {
+   "az": 211,
+   "lat": 40.3079,
+   "lon": -89.4284,
+   "water": null,
+   "near_fence_m": 1924,
+   "offsite_sub500ft_km": 10.25
+  },
+  {
+   "az": 212,
+   "lat": 40.3238,
+   "lon": -89.4635,
+   "water": null,
+   "near_fence_m": 1862,
+   "offsite_sub500ft_km": 10.31
+  },
+  {
+   "az": 213,
+   "lat": 40.3402,
+   "lon": -89.4983,
+   "water": null,
+   "near_fence_m": 1805,
+   "offsite_sub500ft_km": 10.36
+  },
+  {
+   "az": 214,
+   "lat": 40.357,
+   "lon": -89.5327,
+   "water": null,
+   "near_fence_m": 1752,
+   "offsite_sub500ft_km": 10.42
+  },
+  {
+   "az": 215,
+   "lat": 40.3742,
+   "lon": -89.5667,
+   "water": null,
+   "near_fence_m": 1703,
+   "offsite_sub500ft_km": 10.47
+  },
+  {
+   "az": 216,
+   "lat": 40.3919,
+   "lon": -89.6004,
+   "water": null,
+   "near_fence_m": 1657,
+   "offsite_sub500ft_km": 10.51
+  },
+  {
+   "az": 217,
+   "lat": 40.4101,
+   "lon": -89.6337,
+   "water": null,
+   "near_fence_m": 1613,
+   "offsite_sub500ft_km": 10.56
+  },
+  {
+   "az": 218,
+   "lat": 40.4286,
+   "lon": -89.6665,
+   "water": null,
+   "near_fence_m": 1572,
+   "offsite_sub500ft_km": 10.6
+  },
+  {
+   "az": 219,
+   "lat": 40.4476,
+   "lon": -89.699,
+   "water": null,
+   "near_fence_m": 1534,
+   "offsite_sub500ft_km": 10.63
+  },
+  {
+   "az": 220,
+   "lat": 40.467,
+   "lon": -89.731,
+   "water": null,
+   "near_fence_m": 1498,
+   "offsite_sub500ft_km": 10.67
+  },
+  {
+   "az": 221,
+   "lat": 40.4868,
+   "lon": -89.7626,
+   "water": null,
+   "near_fence_m": 1464,
+   "offsite_sub500ft_km": 10.7
+  },
+  {
+   "az": 222,
+   "lat": 40.507,
+   "lon": -89.7937,
+   "water": null,
+   "near_fence_m": 1432,
+   "offsite_sub500ft_km": 10.74
+  },
+  {
+   "az": 223,
+   "lat": 40.5276,
+   "lon": -89.8245,
+   "water": null,
+   "near_fence_m": 1402,
+   "offsite_sub500ft_km": 10.77
+  },
+  {
+   "az": 224,
+   "lat": 40.5487,
+   "lon": -89.8547,
+   "water": null,
+   "near_fence_m": 1374,
+   "offsite_sub500ft_km": 10.8
+  },
+  {
+   "az": 225,
+   "lat": 40.5701,
+   "lon": -89.8845,
+   "water": null,
+   "near_fence_m": 1347,
+   "offsite_sub500ft_km": 10.82
+  },
+  {
+   "az": 226,
+   "lat": 40.5919,
+   "lon": -89.9138,
+   "water": null,
+   "near_fence_m": 1321,
+   "offsite_sub500ft_km": 10.85
+  },
+  {
+   "az": 227,
+   "lat": 40.614,
+   "lon": -89.9426,
+   "water": null,
+   "near_fence_m": 1297,
+   "offsite_sub500ft_km": 10.87
+  },
+  {
+   "az": 228,
+   "lat": 40.6366,
+   "lon": -89.9709,
+   "water": null,
+   "near_fence_m": 1274,
+   "offsite_sub500ft_km": 10.89
+  },
+  {
+   "az": 229,
+   "lat": 40.6595,
+   "lon": -89.9987,
+   "water": null,
+   "near_fence_m": 1252,
+   "offsite_sub500ft_km": 10.92
+  },
+  {
+   "az": 230,
+   "lat": 40.6827,
+   "lon": -90.0261,
+   "water": null,
+   "near_fence_m": 1231,
+   "offsite_sub500ft_km": 10.94
+  },
+  {
+   "az": 231,
+   "lat": 40.7063,
+   "lon": -90.0528,
+   "water": null,
+   "near_fence_m": 1212,
+   "offsite_sub500ft_km": 10.96
+  },
+  {
+   "az": 232,
+   "lat": 40.7303,
+   "lon": -90.0791,
+   "water": null,
+   "near_fence_m": 1193,
+   "offsite_sub500ft_km": 10.98
+  },
+  {
+   "az": 233,
+   "lat": 40.7546,
+   "lon": -90.1048,
+   "water": null,
+   "near_fence_m": 1175,
+   "offsite_sub500ft_km": 10.99
+  },
+  {
+   "az": 234,
+   "lat": 40.7792,
+   "lon": -90.13,
+   "water": null,
+   "near_fence_m": 1159,
+   "offsite_sub500ft_km": 11.01
+  },
+  {
+   "az": 235,
+   "lat": 40.8042,
+   "lon": -90.1546,
+   "water": null,
+   "near_fence_m": 1142,
+   "offsite_sub500ft_km": 11.03
+  },
+  {
+   "az": 236,
+   "lat": 40.8294,
+   "lon": -90.1787,
+   "water": null,
+   "near_fence_m": 1127,
+   "offsite_sub500ft_km": 11.04
+  },
+  {
+   "az": 237,
+   "lat": 40.855,
+   "lon": -90.2022,
+   "water": null,
+   "near_fence_m": 1113,
+   "offsite_sub500ft_km": 11.06
+  },
+  {
+   "az": 238,
+   "lat": 40.8809,
+   "lon": -90.2251,
+   "water": null,
+   "near_fence_m": 1099,
+   "offsite_sub500ft_km": 11.07
+  },
+  {
+   "az": 239,
+   "lat": 40.9071,
+   "lon": -90.2474,
+   "water": null,
+   "near_fence_m": 1086,
+   "offsite_sub500ft_km": 11.08
+  },
+  {
+   "az": 240,
+   "lat": 40.9335,
+   "lon": -90.2692,
+   "water": null,
+   "near_fence_m": 1073,
+   "offsite_sub500ft_km": 11.1
+  },
+  {
+   "az": 241,
+   "lat": 40.9603,
+   "lon": -90.2904,
+   "water": null,
+   "near_fence_m": 1061,
+   "offsite_sub500ft_km": 11.11
+  },
+  {
+   "az": 242,
+   "lat": 40.9873,
+   "lon": -90.3109,
+   "water": null,
+   "near_fence_m": 1050,
+   "offsite_sub500ft_km": 11.12
+  },
+  {
+   "az": 243,
+   "lat": 41.0146,
+   "lon": -90.3308,
+   "water": null,
+   "near_fence_m": 1039,
+   "offsite_sub500ft_km": 11.13
+  },
+  {
+   "az": 244,
+   "lat": 41.0421,
+   "lon": -90.3502,
+   "water": null,
+   "near_fence_m": 1029,
+   "offsite_sub500ft_km": 11.14
+  },
+  {
+   "az": 245,
+   "lat": 41.0699,
+   "lon": -90.3689,
+   "water": null,
+   "near_fence_m": 1019,
+   "offsite_sub500ft_km": 11.15
+  },
+  {
+   "az": 246,
+   "lat": 41.0979,
+   "lon": -90.3869,
+   "water": null,
+   "near_fence_m": 1010,
+   "offsite_sub500ft_km": 11.16
+  },
+  {
+   "az": 247,
+   "lat": 41.1261,
+   "lon": -90.4044,
+   "water": null,
+   "near_fence_m": 1001,
+   "offsite_sub500ft_km": 11.17
+  },
+  {
+   "az": 248,
+   "lat": 41.1546,
+   "lon": -90.4211,
+   "water": null,
+   "near_fence_m": 992,
+   "offsite_sub500ft_km": 11.18
+  },
+  {
+   "az": 249,
+   "lat": 41.1833,
+   "lon": -90.4373,
+   "water": null,
+   "near_fence_m": 985,
+   "offsite_sub500ft_km": 11.18
+  },
+  {
+   "az": 250,
+   "lat": 41.2121,
+   "lon": -90.4528,
+   "water": null,
+   "near_fence_m": 977,
+   "offsite_sub500ft_km": 11.19
+  },
+  {
+   "az": 251,
+   "lat": 41.2412,
+   "lon": -90.4676,
+   "water": null,
+   "near_fence_m": 970,
+   "offsite_sub500ft_km": 11.2
+  },
+  {
+   "az": 252,
+   "lat": 41.2705,
+   "lon": -90.4818,
+   "water": null,
+   "near_fence_m": 963,
+   "offsite_sub500ft_km": 11.21
+  },
+  {
+   "az": 253,
+   "lat": 41.2999,
+   "lon": -90.4953,
+   "water": null,
+   "near_fence_m": 957,
+   "offsite_sub500ft_km": 11.21
+  },
+  {
+   "az": 254,
+   "lat": 41.3296,
+   "lon": -90.5081,
+   "water": null,
+   "near_fence_m": 951,
+   "offsite_sub500ft_km": 11.22
+  },
+  {
+   "az": 255,
+   "lat": 41.3593,
+   "lon": -90.5202,
+   "water": null,
+   "near_fence_m": 945,
+   "offsite_sub500ft_km": 11.22
+  },
+  {
+   "az": 256,
+   "lat": 41.3893,
+   "lon": -90.5317,
+   "water": null,
+   "near_fence_m": 940,
+   "offsite_sub500ft_km": 11.23
+  },
+  {
+   "az": 257,
+   "lat": 41.4194,
+   "lon": -90.5425,
+   "water": null,
+   "near_fence_m": 935,
+   "offsite_sub500ft_km": 11.23
+  },
+  {
+   "az": 258,
+   "lat": 41.4496,
+   "lon": -90.5526,
+   "water": null,
+   "near_fence_m": 931,
+   "offsite_sub500ft_km": 11.24
+  },
+  {
+   "az": 259,
+   "lat": 41.4799,
+   "lon": -90.5619,
+   "water": null,
+   "near_fence_m": 926,
+   "offsite_sub500ft_km": 11.24
+  },
+  {
+   "az": 260,
+   "lat": 41.5104,
+   "lon": -90.5706,
+   "water": null,
+   "near_fence_m": 922,
+   "offsite_sub500ft_km": 11.25
+  },
+  {
+   "az": 261,
+   "lat": 41.5409,
+   "lon": -90.5786,
+   "water": null,
+   "near_fence_m": 919,
+   "offsite_sub500ft_km": 11.25
+  },
+  {
+   "az": 262,
+   "lat": 41.5716,
+   "lon": -90.5859,
+   "water": null,
+   "near_fence_m": 916,
+   "offsite_sub500ft_km": 11.25
+  },
+  {
+   "az": 263,
+   "lat": 41.6024,
+   "lon": -90.5925,
+   "water": null,
+   "near_fence_m": 913,
+   "offsite_sub500ft_km": 11.26
+  },
+  {
+   "az": 264,
+   "lat": 41.6332,
+   "lon": -90.5983,
+   "water": null,
+   "near_fence_m": 910,
+   "offsite_sub500ft_km": 11.26
+  },
+  {
+   "az": 265,
+   "lat": 41.6641,
+   "lon": -90.6035,
+   "water": null,
+   "near_fence_m": 907,
+   "offsite_sub500ft_km": 11.26
+  },
+  {
+   "az": 266,
+   "lat": 41.6951,
+   "lon": -90.6079,
+   "water": null,
+   "near_fence_m": 905,
+   "offsite_sub500ft_km": 11.26
+  },
+  {
+   "az": 267,
+   "lat": 41.7261,
+   "lon": -90.6116,
+   "water": null,
+   "near_fence_m": 903,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 268,
+   "lat": 41.7572,
+   "lon": -90.6146,
+   "water": null,
+   "near_fence_m": 902,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 269,
+   "lat": 41.7883,
+   "lon": -90.6168,
+   "water": null,
+   "near_fence_m": 901,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 270,
+   "lat": 41.8194,
+   "lon": -90.6183,
+   "water": null,
+   "near_fence_m": 900,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 271,
+   "lat": 41.8506,
+   "lon": -90.6191,
+   "water": null,
+   "near_fence_m": 899,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 272,
+   "lat": 41.8817,
+   "lon": -90.6192,
+   "water": null,
+   "near_fence_m": 898,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 273,
+   "lat": 41.9128,
+   "lon": -90.6186,
+   "water": null,
+   "near_fence_m": 898,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 274,
+   "lat": 41.944,
+   "lon": -90.6172,
+   "water": null,
+   "near_fence_m": 898,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 275,
+   "lat": 41.9751,
+   "lon": -90.615,
+   "water": null,
+   "near_fence_m": 899,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 276,
+   "lat": 42.0062,
+   "lon": -90.6122,
+   "water": null,
+   "near_fence_m": 899,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 277,
+   "lat": 42.0372,
+   "lon": -90.6086,
+   "water": null,
+   "near_fence_m": 900,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 278,
+   "lat": 42.0682,
+   "lon": -90.6043,
+   "water": null,
+   "near_fence_m": 901,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 279,
+   "lat": 42.0991,
+   "lon": -90.5992,
+   "water": null,
+   "near_fence_m": 903,
+   "offsite_sub500ft_km": 11.27
+  },
+  {
+   "az": 280,
+   "lat": 42.1299,
+   "lon": -90.5935,
+   "water": null,
+   "near_fence_m": 905,
+   "offsite_sub500ft_km": 11.26
+  },
+  {
+   "az": 281,
+   "lat": 42.1607,
+   "lon": -90.587,
+   "water": null,
+   "near_fence_m": 907,
+   "offsite_sub500ft_km": 11.26
+  },
+  {
+   "az": 282,
+   "lat": 42.1914,
+   "lon": -90.5797,
+   "water": null,
+   "near_fence_m": 909,
+   "offsite_sub500ft_km": 11.26
+  },
+  {
+   "az": 283,
+   "lat": 42.222,
+   "lon": -90.5717,
+   "water": null,
+   "near_fence_m": 912,
+   "offsite_sub500ft_km": 11.26
+  },
+  {
+   "az": 284,
+   "lat": 42.2525,
+   "lon": -90.563,
+   "water": null,
+   "near_fence_m": 915,
+   "offsite_sub500ft_km": 11.25
+  },
+  {
+   "az": 285,
+   "lat": 42.2828,
+   "lon": -90.5536,
+   "water": null,
+   "near_fence_m": 918,
+   "offsite_sub500ft_km": 11.25
+  },
+  {
+   "az": 286,
+   "lat": 42.313,
+   "lon": -90.5435,
+   "water": null,
+   "near_fence_m": 921,
+   "offsite_sub500ft_km": 11.25
+  },
+  {
+   "az": 287,
+   "lat": 42.3431,
+   "lon": -90.5326,
+   "water": null,
+   "near_fence_m": 925,
+   "offsite_sub500ft_km": 11.24
+  },
+  {
+   "az": 288,
+   "lat": 42.3731,
+   "lon": -90.521,
+   "water": null,
+   "near_fence_m": 929,
+   "offsite_sub500ft_km": 11.24
+  },
+  {
+   "az": 289,
+   "lat": 42.4029,
+   "lon": -90.5087,
+   "water": null,
+   "near_fence_m": 934,
+   "offsite_sub500ft_km": 11.24
+  },
+  {
+   "az": 290,
+   "lat": 42.4325,
+   "lon": -90.4957,
+   "water": null,
+   "near_fence_m": 938,
+   "offsite_sub500ft_km": 11.23
+  },
+  {
+   "az": 291,
+   "lat": 42.462,
+   "lon": -90.482,
+   "water": null,
+   "near_fence_m": 944,
+   "offsite_sub500ft_km": 11.23
+  },
+  {
+   "az": 292,
+   "lat": 42.4912,
+   "lon": -90.4675,
+   "water": null,
+   "near_fence_m": 949,
+   "offsite_sub500ft_km": 11.22
+  },
+  {
+   "az": 293,
+   "lat": 42.5203,
+   "lon": -90.4524,
+   "water": null,
+   "near_fence_m": 955,
+   "offsite_sub500ft_km": 11.21
+  },
+  {
+   "az": 294,
+   "lat": 42.5492,
+   "lon": -90.4366,
+   "water": null,
+   "near_fence_m": 961,
+   "offsite_sub500ft_km": 11.21
+  },
+  {
+   "az": 295,
+   "lat": 42.5778,
+   "lon": -90.42,
+   "water": null,
+   "near_fence_m": 968,
+   "offsite_sub500ft_km": 11.2
+  },
+  {
+   "az": 296,
+   "lat": 42.6063,
+   "lon": -90.4028,
+   "water": null,
+   "near_fence_m": 975,
+   "offsite_sub500ft_km": 11.19
+  },
+  {
+   "az": 297,
+   "lat": 42.6345,
+   "lon": -90.3849,
+   "water": null,
+   "near_fence_m": 982,
+   "offsite_sub500ft_km": 11.19
+  },
+  {
+   "az": 298,
+   "lat": 42.6625,
+   "lon": -90.3663,
+   "water": null,
+   "near_fence_m": 990,
+   "offsite_sub500ft_km": 11.18
+  },
+  {
+   "az": 299,
+   "lat": 42.6902,
+   "lon": -90.347,
+   "water": null,
+   "near_fence_m": 998,
+   "offsite_sub500ft_km": 11.17
+  },
+  {
+   "az": 300,
+   "lat": 42.7177,
+   "lon": -90.3271,
+   "water": null,
+   "near_fence_m": 1007,
+   "offsite_sub500ft_km": 11.16
+  },
+  {
+   "az": 301,
+   "lat": 42.7449,
+   "lon": -90.3064,
+   "water": null,
+   "near_fence_m": 1016,
+   "offsite_sub500ft_km": 11.15
+  },
+  {
+   "az": 302,
+   "lat": 42.7719,
+   "lon": -90.2852,
+   "water": null,
+   "near_fence_m": 1025,
+   "offsite_sub500ft_km": 11.14
+  },
+  {
+   "az": 303,
+   "lat": 42.7985,
+   "lon": -90.2632,
+   "water": null,
+   "near_fence_m": 1035,
+   "offsite_sub500ft_km": 11.13
+  },
+  {
+   "az": 304,
+   "lat": 42.8249,
+   "lon": -90.2406,
+   "water": null,
+   "near_fence_m": 1046,
+   "offsite_sub500ft_km": 11.12
+  },
+  {
+   "az": 305,
+   "lat": 42.851,
+   "lon": -90.2174,
+   "water": null,
+   "near_fence_m": 1057,
+   "offsite_sub500ft_km": 11.11
+  },
+  {
+   "az": 306,
+   "lat": 42.8768,
+   "lon": -90.1936,
+   "water": null,
+   "near_fence_m": 1069,
+   "offsite_sub500ft_km": 11.1
+  },
+  {
+   "az": 307,
+   "lat": 42.9022,
+   "lon": -90.1691,
+   "water": null,
+   "near_fence_m": 1081,
+   "offsite_sub500ft_km": 11.09
+  },
+  {
+   "az": 308,
+   "lat": 42.9274,
+   "lon": -90.1439,
+   "water": null,
+   "near_fence_m": 1094,
+   "offsite_sub500ft_km": 11.07
+  },
+  {
+   "az": 309,
+   "lat": 42.9522,
+   "lon": -90.1182,
+   "water": null,
+   "near_fence_m": 1108,
+   "offsite_sub500ft_km": 11.06
+  },
+  {
+   "az": 310,
+   "lat": 42.9766,
+   "lon": -90.0919,
+   "water": null,
+   "near_fence_m": 1122,
+   "offsite_sub500ft_km": 11.05
+  },
+  {
+   "az": 311,
+   "lat": 43.0008,
+   "lon": -90.0649,
+   "water": null,
+   "near_fence_m": 1137,
+   "offsite_sub500ft_km": 11.03
+  },
+  {
+   "az": 312,
+   "lat": 43.0245,
+   "lon": -90.0374,
+   "water": null,
+   "near_fence_m": 1153,
+   "offsite_sub500ft_km": 11.02
+  },
+  {
+   "az": 313,
+   "lat": 43.0479,
+   "lon": -90.0093,
+   "water": null,
+   "near_fence_m": 1170,
+   "offsite_sub500ft_km": 11.0
+  },
+  {
+   "az": 314,
+   "lat": 43.071,
+   "lon": -89.9806,
+   "water": null,
+   "near_fence_m": 1187,
+   "offsite_sub500ft_km": 10.98
+  },
+  {
+   "az": 315,
+   "lat": 43.0936,
+   "lon": -89.9513,
+   "water": null,
+   "near_fence_m": 1206,
+   "offsite_sub500ft_km": 10.96
+  },
+  {
+   "az": 316,
+   "lat": 43.1159,
+   "lon": -89.9215,
+   "water": null,
+   "near_fence_m": 1225,
+   "offsite_sub500ft_km": 10.94
+  },
+  {
+   "az": 317,
+   "lat": 43.1378,
+   "lon": -89.8911,
+   "water": null,
+   "near_fence_m": 1245,
+   "offsite_sub500ft_km": 10.92
+  },
+  {
+   "az": 318,
+   "lat": 43.1593,
+   "lon": -89.8602,
+   "water": null,
+   "near_fence_m": 1267,
+   "offsite_sub500ft_km": 10.9
+  },
+  {
+   "az": 319,
+   "lat": 43.1804,
+   "lon": -89.8288,
+   "water": null,
+   "near_fence_m": 1289,
+   "offsite_sub500ft_km": 10.88
+  },
+  {
+   "az": 320,
+   "lat": 43.201,
+   "lon": -89.7968,
+   "water": null,
+   "near_fence_m": 1313,
+   "offsite_sub500ft_km": 10.86
+  },
+  {
+   "az": 321,
+   "lat": 43.2213,
+   "lon": -89.7644,
+   "water": null,
+   "near_fence_m": 1338,
+   "offsite_sub500ft_km": 10.83
+  },
+  {
+   "az": 322,
+   "lat": 43.2411,
+   "lon": -89.7314,
+   "water": null,
+   "near_fence_m": 1365,
+   "offsite_sub500ft_km": 10.8
+  },
+  {
+   "az": 323,
+   "lat": 43.2605,
+   "lon": -89.6979,
+   "water": null,
+   "near_fence_m": 1393,
+   "offsite_sub500ft_km": 10.78
+  },
+  {
+   "az": 324,
+   "lat": 43.2794,
+   "lon": -89.664,
+   "water": null,
+   "near_fence_m": 1422,
+   "offsite_sub500ft_km": 10.75
+  },
+  {
+   "az": 325,
+   "lat": 43.298,
+   "lon": -89.6296,
+   "water": null,
+   "near_fence_m": 1454,
+   "offsite_sub500ft_km": 10.72
+  },
+  {
+   "az": 326,
+   "lat": 43.316,
+   "lon": -89.5947,
+   "water": null,
+   "near_fence_m": 1487,
+   "offsite_sub500ft_km": 10.68
+  },
+  {
+   "az": 327,
+   "lat": 43.3336,
+   "lon": -89.5594,
+   "water": null,
+   "near_fence_m": 1522,
+   "offsite_sub500ft_km": 10.65
+  },
+  {
+   "az": 328,
+   "lat": 43.3508,
+   "lon": -89.5236,
+   "water": null,
+   "near_fence_m": 1560,
+   "offsite_sub500ft_km": 10.61
+  },
+  {
+   "az": 329,
+   "lat": 43.3674,
+   "lon": -89.4874,
+   "water": null,
+   "near_fence_m": 1600,
+   "offsite_sub500ft_km": 10.57
+  },
+  {
+   "az": 330,
+   "lat": 43.3836,
+   "lon": -89.4508,
+   "water": null,
+   "near_fence_m": 1642,
+   "offsite_sub500ft_km": 10.53
+  },
+  {
+   "az": 331,
+   "lat": 43.3994,
+   "lon": -89.4138,
+   "water": null,
+   "near_fence_m": 1687,
+   "offsite_sub500ft_km": 10.48
+  },
+  {
+   "az": 332,
+   "lat": 43.4146,
+   "lon": -89.3765,
+   "water": null,
+   "near_fence_m": 1736,
+   "offsite_sub500ft_km": 10.43
+  },
+  {
+   "az": 333,
+   "lat": 43.4294,
+   "lon": -89.3387,
+   "water": null,
+   "near_fence_m": 1788,
+   "offsite_sub500ft_km": 10.38
+  },
+  {
+   "az": 334,
+   "lat": 43.4436,
+   "lon": -89.3005,
+   "water": null,
+   "near_fence_m": 1843,
+   "offsite_sub500ft_km": 10.33
+  },
+  {
+   "az": 335,
+   "lat": 43.4574,
+   "lon": -89.2621,
+   "water": null,
+   "near_fence_m": 1903,
+   "offsite_sub500ft_km": 10.27
+  },
+  {
+   "az": 336,
+   "lat": 43.4706,
+   "lon": -89.2232,
+   "water": null,
+   "near_fence_m": 1967,
+   "offsite_sub500ft_km": 10.2
+  },
+  {
+   "az": 337,
+   "lat": 43.4834,
+   "lon": -89.1841,
+   "water": null,
+   "near_fence_m": 2037,
+   "offsite_sub500ft_km": 10.13
+  },
+  {
+   "az": 338,
+   "lat": 43.4956,
+   "lon": -89.1446,
+   "water": null,
+   "near_fence_m": 2112,
+   "offsite_sub500ft_km": 10.06
+  },
+  {
+   "az": 339,
+   "lat": 43.5073,
+   "lon": -89.1048,
+   "water": null,
+   "near_fence_m": 2194,
+   "offsite_sub500ft_km": 9.97
+  },
+  {
+   "az": 340,
+   "lat": 43.5185,
+   "lon": -89.0647,
+   "water": null,
+   "near_fence_m": 2283,
+   "offsite_sub500ft_km": 9.89
+  },
+  {
+   "az": 341,
+   "lat": 43.5292,
+   "lon": -89.0244,
+   "water": null,
+   "near_fence_m": 2363,
+   "offsite_sub500ft_km": 9.81
+  },
+  {
+   "az": 342,
+   "lat": 43.5394,
+   "lon": -88.9838,
+   "water": null,
+   "near_fence_m": 2428,
+   "offsite_sub500ft_km": 9.74
+  },
+  {
+   "az": 343,
+   "lat": 43.549,
+   "lon": -88.9429,
+   "water": null,
+   "near_fence_m": 2491,
+   "offsite_sub500ft_km": 9.68
+  },
+  {
+   "az": 344,
+   "lat": 43.5581,
+   "lon": -88.9018,
+   "water": null,
+   "near_fence_m": 2550,
+   "offsite_sub500ft_km": 9.62
+  },
+  {
+   "az": 345,
+   "lat": 43.5667,
+   "lon": -88.8605,
+   "water": null,
+   "near_fence_m": 2600,
+   "offsite_sub500ft_km": 9.57
+  },
+  {
+   "az": 346,
+   "lat": 43.5747,
+   "lon": -88.8189,
+   "water": null,
+   "near_fence_m": 2645,
+   "offsite_sub500ft_km": 9.52
+  },
+  {
+   "az": 347,
+   "lat": 43.5822,
+   "lon": -88.7772,
+   "water": null,
+   "near_fence_m": 2676,
+   "offsite_sub500ft_km": 9.49
+  },
+  {
+   "az": 348,
+   "lat": 43.5891,
+   "lon": -88.7353,
+   "water": null,
+   "near_fence_m": 2667,
+   "offsite_sub500ft_km": 9.5
+  },
+  {
+   "az": 349,
+   "lat": 43.5955,
+   "lon": -88.6932,
+   "water": null,
+   "near_fence_m": 2659,
+   "offsite_sub500ft_km": 9.51
+  },
+  {
+   "az": 350,
+   "lat": 43.6013,
+   "lon": -88.6509,
+   "water": null,
+   "near_fence_m": 2652,
+   "offsite_sub500ft_km": 9.52
+  },
+  {
+   "az": 351,
+   "lat": 43.6066,
+   "lon": -88.6085,
+   "water": null,
+   "near_fence_m": 2646,
+   "offsite_sub500ft_km": 9.52
+  },
+  {
+   "az": 352,
+   "lat": 43.6113,
+   "lon": -88.566,
+   "water": null,
+   "near_fence_m": 2641,
+   "offsite_sub500ft_km": 9.53
+  },
+  {
+   "az": 353,
+   "lat": 43.6155,
+   "lon": -88.5234,
+   "water": null,
+   "near_fence_m": 2636,
+   "offsite_sub500ft_km": 9.53
+  },
+  {
+   "az": 354,
+   "lat": 43.6192,
+   "lon": -88.4807,
+   "water": null,
+   "near_fence_m": 2633,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 355,
+   "lat": 43.6222,
+   "lon": -88.4378,
+   "water": null,
+   "near_fence_m": 2630,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 356,
+   "lat": 43.6247,
+   "lon": -88.3949,
+   "water": null,
+   "near_fence_m": 2628,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 357,
+   "lat": 43.6267,
+   "lon": -88.352,
+   "water": null,
+   "near_fence_m": 2627,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 358,
+   "lat": 43.6281,
+   "lon": -88.309,
+   "water": null,
+   "near_fence_m": 2626,
+   "offsite_sub500ft_km": 9.54
+  },
+  {
+   "az": 359,
+   "lat": 43.6289,
+   "lon": -88.266,
+   "water": null,
+   "near_fence_m": 2627,
+   "offsite_sub500ft_km": 9.54
+  }
+ ],
+ "landmarks": [
+  {
+   "name": "Smith Rd / ComEd ROW (houses north of the lab)",
+   "category": "corridor",
+   "lat": 41.9356,
+   "lon": -88.223,
+   "range_km": 10.2,
+   "bearing_deg": 360.0,
+   "tilt_to_reach_mrad": -2.65,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Naperville",
+   "category": "city",
+   "lat": 41.7508,
+   "lon": -88.1535,
+   "range_km": 11.9,
+   "bearing_deg": 151.0,
+   "tilt_to_reach_mrad": -2.01,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Wayne (384-500 ft overflight)",
+   "category": "corridor",
+   "lat": 41.953,
+   "lon": -88.223,
+   "range_km": 12.1,
+   "bearing_deg": 360.0,
+   "tilt_to_reach_mrad": -1.95,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Aurora",
+   "category": "city",
+   "lat": 41.7606,
+   "lon": -88.3201,
+   "range_km": 12.3,
+   "bearing_deg": 220.9,
+   "tilt_to_reach_mrad": -1.88,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Elgin",
+   "category": "city",
+   "lat": 42.0354,
+   "lon": -88.2826,
+   "range_km": 21.8,
+   "bearing_deg": 347.0,
+   "tilt_to_reach_mrad": 0.11,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Argonne NL",
+   "category": "federal",
+   "lat": 41.7183,
+   "lon": -87.9786,
+   "range_km": 24.6,
+   "bearing_deg": 124.6,
+   "tilt_to_reach_mrad": 0.51,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Wheatland Twp (untilted S exit, 28 km)",
+   "category": "corridor",
+   "lat": 41.593,
+   "lon": -88.223,
+   "range_km": 27.9,
+   "bearing_deg": 180.0,
+   "tilt_to_reach_mrad": 0.94,
+   "on_collider_circle": false
+  },
+  {
+   "name": "O'Hare",
+   "category": "airport",
+   "lat": 41.9742,
+   "lon": -87.9073,
+   "range_km": 29.8,
+   "bearing_deg": 61.0,
+   "tilt_to_reach_mrad": 1.17,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Cary / Fox River Grove (untilted N exit, 38 km)",
+   "category": "corridor",
+   "lat": 42.1884,
+   "lon": -88.223,
+   "range_km": 38.3,
+   "bearing_deg": 360.0,
+   "tilt_to_reach_mrad": 2.09,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Midway",
+   "category": "airport",
+   "lat": 41.7868,
+   "lon": -87.7522,
+   "range_km": 39.5,
+   "bearing_deg": 99.1,
+   "tilt_to_reach_mrad": 2.22,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Chicago Loop",
+   "category": "city",
+   "lat": 41.8781,
+   "lon": -87.6298,
+   "range_km": 49.3,
+   "bearing_deg": 85.4,
+   "tilt_to_reach_mrad": 3.16,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Moraine Hills SP",
+   "category": "public",
+   "lat": 42.3,
+   "lon": -88.23,
+   "range_km": 50.7,
+   "bearing_deg": 359.3,
+   "tilt_to_reach_mrad": 3.29,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Midewin Natl Tallgrass Prairie",
+   "category": "federal",
+   "lat": 41.36,
+   "lon": -88.13,
+   "range_km": 54.4,
+   "bearing_deg": 171.8,
+   "tilt_to_reach_mrad": 3.63,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Thornton Quarry",
+   "category": "mine",
+   "lat": 41.573,
+   "lon": -87.611,
+   "range_km": 59.1,
+   "bearing_deg": 120.5,
+   "tilt_to_reach_mrad": 4.04,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Chain O'Lakes SP",
+   "category": "public",
+   "lat": 42.46,
+   "lon": -88.2,
+   "range_km": 68.5,
+   "bearing_deg": 1.6,
+   "tilt_to_reach_mrad": 4.86,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Illinois Beach SP",
+   "category": "public",
+   "lat": 42.43,
+   "lon": -87.81,
+   "range_km": 73.5,
+   "bearing_deg": 27.5,
+   "tilt_to_reach_mrad": 5.29,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Ottawa silica mines",
+   "category": "mine",
+   "lat": 41.36,
+   "lon": -88.85,
+   "range_km": 75.0,
+   "bearing_deg": 224.3,
+   "tilt_to_reach_mrad": 5.42,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Rockford",
+   "category": "city",
+   "lat": 42.2711,
+   "lon": -89.094,
+   "range_km": 86.2,
+   "bearing_deg": 303.7,
+   "tilt_to_reach_mrad": 6.36,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Starved Rock SP",
+   "category": "public",
+   "lat": 41.319,
+   "lon": -88.994,
+   "range_km": 86.7,
+   "bearing_deg": 227.9,
+   "tilt_to_reach_mrad": 6.4,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Herscher gas storage (Mt. Simon)",
+   "category": "storage",
+   "lat": 41.05,
+   "lon": -88.1,
+   "range_km": 88.9,
+   "bearing_deg": 173.3,
+   "tilt_to_reach_mrad": 6.58,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Indiana Dunes NP",
+   "category": "public",
+   "lat": 41.65,
+   "lon": -87.05,
+   "range_km": 99.7,
+   "bearing_deg": 102.1,
+   "tilt_to_reach_mrad": 7.47,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Milwaukee",
+   "category": "city",
+   "lat": 43.0389,
+   "lon": -87.9065,
+   "range_km": 135.3,
+   "bearing_deg": 11.0,
+   "tilt_to_reach_mrad": 10.36,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Manlove gas storage (Mt. Simon)",
+   "category": "storage",
+   "lat": 40.4,
+   "lon": -88.2,
+   "range_km": 160.6,
+   "bearing_deg": 179.3,
+   "tilt_to_reach_mrad": 12.39,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Bloomington-Normal",
+   "category": "city",
+   "lat": 40.4842,
+   "lon": -88.9937,
+   "range_km": 164.4,
+   "bearing_deg": 203.4,
+   "tilt_to_reach_mrad": 12.69,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Notre Dame",
+   "category": "university",
+   "lat": 41.7056,
+   "lon": -86.2353,
+   "range_km": 165.5,
+   "bearing_deg": 94.7,
+   "tilt_to_reach_mrad": 12.78,
+   "on_collider_circle": false
+  },
+  {
+   "name": "UW-Madison",
+   "category": "university",
+   "lat": 43.0766,
+   "lon": -89.4125,
+   "range_km": 168.2,
+   "bearing_deg": 324.9,
+   "tilt_to_reach_mrad": 12.99,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Peoria",
+   "category": "city",
+   "lat": 40.6936,
+   "lon": -89.589,
+   "range_km": 171.5,
+   "bearing_deg": 222.2,
+   "tilt_to_reach_mrad": 13.25,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Purdue",
+   "category": "university",
+   "lat": 40.4237,
+   "lon": -86.9212,
+   "range_km": 191.9,
+   "bearing_deg": 145.0,
+   "tilt_to_reach_mrad": 14.88,
+   "on_collider_circle": true
+  },
+  {
+   "name": "Kettle Moraine SF (N)",
+   "category": "public",
+   "lat": 43.6,
+   "lon": -88.2,
+   "range_km": 195.2,
+   "bearing_deg": 0.5,
+   "tilt_to_reach_mrad": 15.14,
+   "on_collider_circle": true
+  },
+  {
+   "name": "UIUC South Farms (the aim)",
+   "category": "university",
+   "lat": 40.0602,
+   "lon": -88.223,
+   "range_km": 198.4,
+   "bearing_deg": 180.0,
+   "tilt_to_reach_mrad": 15.39,
+   "on_collider_circle": true
+  },
+  {
+   "name": "Willard (UIUC, IP2 aim)",
+   "category": "airport",
+   "lat": 40.0392,
+   "lon": -88.2781,
+   "range_km": 200.8,
+   "bearing_deg": 181.3,
+   "tilt_to_reach_mrad": 15.58,
+   "on_collider_circle": true
+  },
+  {
+   "name": "Springfield IL",
+   "category": "city",
+   "lat": 39.7817,
+   "lon": -89.6501,
+   "range_km": 258.9,
+   "bearing_deg": 208.1,
+   "tilt_to_reach_mrad": 20.18,
+   "on_collider_circle": false
+  },
+  {
+   "name": "U. Iowa",
+   "category": "university",
+   "lat": 41.6611,
+   "lon": -91.5302,
+   "range_km": 275.1,
+   "bearing_deg": 266.9,
+   "tilt_to_reach_mrad": 21.46,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Indianapolis",
+   "category": "city",
+   "lat": 39.7684,
+   "lon": -86.1581,
+   "range_km": 288.9,
+   "bearing_deg": 142.3,
+   "tilt_to_reach_mrad": 22.55,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Michigan State",
+   "category": "university",
+   "lat": 42.7018,
+   "lon": -84.4822,
+   "range_km": 322.2,
+   "bearing_deg": 71.5,
+   "tilt_to_reach_mrad": 25.18,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Indiana U.",
+   "category": "university",
+   "lat": 39.1754,
+   "lon": -86.5127,
+   "range_km": 330.1,
+   "bearing_deg": 153.5,
+   "tilt_to_reach_mrad": 25.8,
+   "on_collider_circle": false
+  },
+  {
+   "name": "St. Louis",
+   "category": "city",
+   "lat": 38.627,
+   "lon": -90.1994,
+   "range_km": 395.1,
+   "bearing_deg": 205.8,
+   "tilt_to_reach_mrad": 30.92,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Chequamegon-Nicolet NF",
+   "category": "public",
+   "lat": 45.75,
+   "lon": -88.85,
+   "range_km": 437.2,
+   "bearing_deg": 353.6,
+   "tilt_to_reach_mrad": 34.23,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Iron Mountain (Menominee Range)",
+   "category": "mine",
+   "lat": 45.82,
+   "lon": -88.07,
+   "range_km": 442.2,
+   "bearing_deg": 1.5,
+   "tilt_to_reach_mrad": 34.63,
+   "on_collider_circle": false
+  },
+  {
+   "name": "S. Illinois coal basin",
+   "category": "mine",
+   "lat": 37.75,
+   "lon": -88.75,
+   "range_km": 457.5,
+   "bearing_deg": 185.8,
+   "tilt_to_reach_mrad": 35.83,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Hiawatha NF",
+   "category": "public",
+   "lat": 46.05,
+   "lon": -86.75,
+   "range_km": 482.3,
+   "bearing_deg": 13.6,
+   "tilt_to_reach_mrad": 37.78,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Shawnee NF",
+   "category": "public",
+   "lat": 37.45,
+   "lon": -88.65,
+   "range_km": 490.0,
+   "bearing_deg": 184.4,
+   "tilt_to_reach_mrad": 38.38,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Ottawa NF",
+   "category": "public",
+   "lat": 46.35,
+   "lon": -89.3,
+   "range_km": 508.3,
+   "bearing_deg": 350.6,
+   "tilt_to_reach_mrad": 39.82,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Marquette Range (Empire/Tilden)",
+   "category": "mine",
+   "lat": 46.45,
+   "lon": -87.6,
+   "range_km": 514.5,
+   "bearing_deg": 5.3,
+   "tilt_to_reach_mrad": 40.31,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Iron Range (Hibbing)",
+   "category": "mine",
+   "lat": 47.427,
+   "lon": -92.938,
+   "range_km": 723.9,
+   "bearing_deg": 330.6,
+   "tilt_to_reach_mrad": 56.77,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Soudan mine (MINOS far)",
+   "category": "mine",
+   "lat": 47.8232,
+   "lon": -92.2373,
+   "range_km": 736.1,
+   "bearing_deg": 335.9,
+   "tilt_to_reach_mrad": 57.72,
+   "on_collider_circle": false
+  },
+  {
+   "name": "Ash River (NOvA far)",
+   "category": "mine",
+   "lat": 48.3794,
+   "lon": -92.8313,
+   "range_km": 811.3,
+   "bearing_deg": 335.2,
+   "tilt_to_reach_mrad": 63.63,
+   "on_collider_circle": false
+  },
+  {
+   "name": "SURF / Homestake (DUNE far)",
+   "category": "mine",
+   "lat": 44.3525,
+   "lon": -103.751,
+   "range_km": 1289.1,
+   "bearing_deg": 287.7,
+   "tilt_to_reach_mrad": 101.14,
+   "on_collider_circle": false
+  }
+ ]
+}

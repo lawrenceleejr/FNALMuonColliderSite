@@ -118,6 +118,11 @@ the rest of the complex**:
   1.4 % of the ring — the same class as the 864 T·m the meridian Lake
   Superior aim needs.
 
+*Sequel:* [the collider's compass](../collider-map/) draws the same frame for
+the ring whose tilt is *not* free — the collider's 198 km exit circle, what
+sits on it (Purdue, Kettle Moraine, 45° of Lake Michigan), what sits under
+both beams, and every mine, lake and forest the compass holds.
+
 ## 4. Open items
 
 * **Land use on the WSW near-side band**, per above — the one thing that
