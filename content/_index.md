@@ -175,6 +175,20 @@ easement, or University of Illinois land.
   of off-site climb whichever way it points) holding UIUC, **Purdue**, Kettle
   Moraine State Forest and 45° of Lake Michigan; plus every mine, lake, forest
   and campus within 1300 km placed by true bearing and range.
+* **[The ring stack](rings/)** — depth, tilt and the transfer lines. A planar
+  racetrack turns tilt into depth, so one north–south section carries all three
+  rings: co-tilted, the straights sit at 32.6 / 33.6 / 45.1 m but the reach
+  swings them 32–73 m, bottoming at **81.6 m** (the 200 m ceiling never binds a
+  ring; the binding constraint is **5.9 m** of cover over the collider's north
+  arc). Because all three tilts agree to 0.1 mrad the three ring planes end up
+  inside a **6.2 m** band, so where two rings cross in plan the tunnels pass
+  within **5.2 m** — a civil constraint the co-tilted chain had not been costed
+  against. *Transfer lines:* the east straights are the only near-tangency, so
+  every transfer is a translation (2d/L of bending, 334 T·m per metre of offset
+  per 100 m of line at 5 TeV). As built, RCS3/4's 390 m southward offset leaves
+  **half the lines with no room** — μ⁺ and μ⁻ counter-rotate and need mirror
+  pairs. Making the three rings concentric closes all four (39 and 155 m of 8 T
+  each) and lifts the collider's arc cover to 12.9 m.
 * **[Safety assessment](safety/)** — the King-model dose framework,
   zone-by-zone numbers for the downstream communities, exit-strip
   management, and the UIUC scenario.
