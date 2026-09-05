@@ -151,7 +151,37 @@ fig.text(0.5, 0.035,
 for ext in ("pdf", "svg"):
     fig.savefig(os.path.join(ROOT, "static", "figs", "two_ends." + ext), bbox_inches="tight")
 
+# ---------------------------------------------------------------- the chord the polar plots draw
+UIUC = (40.0602, -88.2230)
+# the bay proper lies west of the Door Peninsula (lon < -87.75); pick the bearing with the longest run of BAY water
+def bay_run(az):
+    wet = [D for D in np.arange(250, 400, 1.0) if in_michigan(az, D) and cc.fwd(az, D)[1] < -87.75]
+    return (az, float(min(wet)), float(max(wet))) if wet else None
+runs = [r for r in (bay_run(a / 10.0) for a in range(20, 120)) if r]
+best = max(runs, key=lambda r: r[2] - r[1])
+gb_mid_az, gb_mid_D = best[0], 0.5 * (best[1] + best[2])
+GBP = cc.fwd(gb_mid_az, gb_mid_D)
+az_gc, D_gc, dep_gc = cc.great_circle_polar(UIUC, GBP)
+i_min = int(np.argmin(D_gc))
+via_ip = chord(S_UIUC, gb_mid_D)                               # the same two ranges, but as a straight through the IP
+CHORD = dict(uiuc=UIUC, green_bay_point=dict(lat=round(GBP[0], 4), lon=round(GBP[1], 4), bearing_deg=gb_mid_az, range_km=gb_mid_D,
+                                              water_run_km=[best[1], best[2]]),
+             true_chord=dict(closest_approach_to_ip_km=round(float(D_gc[i_min]), 2), closest_approach_bearing_deg=round(float(np.degrees(az_gc[i_min])) % 360, 1),
+                             depth_at_closest_approach_km=round(float(dep_gc[i_min]), 2), midpoint_depth_km=round(float(dep_gc.max()), 2),
+                             arc_km=round(float(cc.R_E * 2 * math.asin(min(1.0, math.sqrt(0) + 0) or 0) + 0), 1)),
+             through_ip=dict(uiuc_end_bearing_deg=round((180 + gb_mid_az) % 360, 1), uiuc_end_offset_km=round(S_UIUC * math.sin(math.radians(gb_mid_az)), 1),
+                             depth_at_ip_km=round(via_ip["d0_km"], 2), tilt_mrad=round(via_ip["tilt_mrad"], 2), deepest_km=round(via_ip["perigee_km"], 2)))
+la1, lo1, la2, lo2 = map(math.radians, (UIUC[0], UIUC[1], GBP[0], GBP[1]))
+CHORD["true_chord"]["arc_km"] = round(cc.R_E * math.acos(math.sin(la1) * math.sin(la2) + math.cos(la1) * math.cos(la2) * math.cos(lo2 - lo1)), 1)
+print("chord for the plots: Green Bay mid-bay point %.4f N %.4f W (bearing %.1f, %.0f km, %.0f km of water); true UIUC-Green Bay chord passes "
+      "%.1f km from the IP at bearing %.0f, %.2f km deep there, %.2f km at midpoint, arc %.0f km; through-the-IP version: UIUC end %.0f km W of the "
+      "South Farms, %.2f km deep at the IP, tilt %.1f mrad" % (GBP[0], -GBP[1], gb_mid_az, gb_mid_D, best[2] - best[1],
+      CHORD["true_chord"]["closest_approach_to_ip_km"], CHORD["true_chord"]["closest_approach_bearing_deg"], CHORD["true_chord"]["depth_at_closest_approach_km"],
+      CHORD["true_chord"]["midpoint_depth_km"], CHORD["true_chord"]["arc_km"], CHORD["through_ip"]["uiuc_end_offset_km"], CHORD["through_ip"]["depth_at_ip_km"],
+      CHORD["through_ip"]["tilt_mrad"]))
+
 json.dump(dict(s1_uiuc_km=round(S_UIUC, 2), formula="d0 = s1 s2 / (2 R_E); tilt = (s2 - s1)/(2 R_E); deepest = ((s1+s2)/2)^2/(2 R_E)",
+               chord_for_plots=CHORD,
                green_bay=dict(first_water_bearing_deg=gb_az, water_km=[gb_d1, gb_d2], uiuc_end_offset_km=gb_offset_uiuc,
                               miss_from_uiuc_line_km=gb_miss,
                               south_end_latlon=gb_south_end, all_bearings=GB[:40]),

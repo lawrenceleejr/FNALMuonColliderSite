@@ -35,8 +35,11 @@ spline
 the faint circles are the smooth-sphere values. Exits over the Great Lakes are
 taken at the water surface, not the bed. The three rings are drawn in plan
 (collider, RCS3/4, RCS1/2: east straights on the meridian, bodies west),
-and the grey dashed chord is the case the next subsection prices: one
-straight with *both* ends far.
+and two chords are drawn for the next subsection: grey dashed, one straight
+through the IP with both ends far (UIUC and Lake Superior); teal, the chord
+through UIUC and Green Bay — dotted the true one from the South Farms to
+mid-bay, which passes 11 km east of the IP, dashed the same two ranges as a
+straight through the IP.
 
 <div style="margin:1.2rem 0"><img src="../figs/exit_pairs.svg" alt="Paired exit curves per tilt: dotted up-going end, solid down-going end, terrain-corrected, with the Fermilab fence and lakes" style="max-width:100%"></div>
 
@@ -121,9 +124,16 @@ daylight, it has to start 4.7 km below it. The tilt, incidentally, is
 Kettle Moraine — which is why depth, not angle, is the cost.
 
 Two geographic notes. Green Bay's water is not on the UIUC line: the bay is
-first reachable at bearing 2.8°, 304 km out, so a straight whose north end
-lands in the bay puts its south end 9.7 km west of the South Farms
-(40.062° N, 88.337° W — still Champaign County). And the level-straight case
+first reachable at bearing 2.8°, 304 km out, and its open water (36 km of it
+along the ray) at bearing 5.2°, 328 km. The polar plots draw that chord two
+ways. The **true chord** from the South Farms to mid-bay is a 526 km arc that
+passes **11 km east of the IP** (near Wheaton) at 5.1 km depth, 5.4 km at its
+midpoint — a straight through both places is not at Fermilab. A straight
+**through the IP** with the same two ranges is 5.1 km deep, tilted 10 mrad,
+and puts its south end **18 km west of the South Farms** (9.7 km for the bay's
+southern tip at 2.8°). In the IP-centred polar frame the true chord is the
+curve that swings out to the east and back; the through-IP version is a pair
+of opposite spokes. And the level-straight case
 is the one the [safety page](../safety/) already knows: at 0.60 km depth the
 UIUC-bound straight's other end would surface at Cary, the Zone D default
 exit.
@@ -175,7 +185,7 @@ Gaussian-cut at E<sub>ν</sub>/E<sub>μ</sub> = 1/50) at 1/101 of the pencil
 density. Each ramp is averaged with decays ∝ 1/E per turn. P̄ depends on
 range alone, so each panel is a set of rings — contoured at 1, 2, 5 × 10ᵏ —
 and the geography under them says what a given fraction would be delivered
-to. Under each panel: the **ν<sub>τ</sub> oscillation baseline** for that
+to (white dotted: the UIUC–Green Bay chord of §1, with its two ends). Under each panel: the **ν<sub>τ</sub> oscillation baseline** for that
 stage's energy (the first maximum of sin², L<sub>max</sub> = 496 km ×
 E<sub>ν</sub>[GeV]), the fractions at UIUC and Soudan, and the on-axis rate.
 
@@ -318,7 +328,8 @@ airports, and the population centres the beam must not graze.
 
 Radius is log range so that 10 km neighbours and 1300 km mines share one
 frame; every range ring is also labelled with the tilt that reaches it. The
-green curve is the site's θ<sub>free</sub>(bearing) from the
+teal dotted curve is the UIUC–Green Bay chord of §1, ending at the mid-bay
+marker. The green curve is the site's θ<sub>free</sub>(bearing) from the
 [azimuth study](../rcs-azimuth/), drawn at its equivalent range 430–1220 km.
 Sanity checks against known baselines: the map places Soudan at 736 km
 (MINOS: 735 km, and NuMI's 58 mrad downward pitch is exactly

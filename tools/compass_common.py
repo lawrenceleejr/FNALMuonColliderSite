@@ -160,3 +160,28 @@ def polar_axes(ax, d_min, d_max, rings, tilt_labels=True, d0_m=35.0, label_color
     ax.set_xticklabels(["N", "NE", "E", "SE", "S", "SW", "W", "NW"], fontsize=8.5)
     ax.grid(color=ring_color, lw=0.6)
     return rmap
+
+# ----------------------------------------------------------------------
+def slerp(p1, p2, t):
+    """Point at fraction t along the great circle from p1 to p2 (lat, lon in degrees)."""
+    la1, lo1, la2, lo2 = map(math.radians, (p1[0], p1[1], p2[0], p2[1]))
+    v1 = (math.cos(la1) * math.cos(lo1), math.cos(la1) * math.sin(lo1), math.sin(la1))
+    v2 = (math.cos(la2) * math.cos(lo2), math.cos(la2) * math.sin(lo2), math.sin(la2))
+    om = math.acos(max(-1.0, min(1.0, sum(a * b for a, b in zip(v1, v2)))))
+    s1, s2 = math.sin((1 - t) * om) / math.sin(om), math.sin(t * om) / math.sin(om)
+    v = [s1 * a + s2 * b for a, b in zip(v1, v2)]
+    return math.degrees(math.atan2(v[2], math.hypot(v[0], v[1]))), math.degrees(math.atan2(v[1], v[0]))
+
+def great_circle_polar(p1, p2, n=600):
+    """The surface trace of the chord p1-p2 as (bearing rad, unwrapped; range km) about the IP, plus the
+    chord's depth below the surface at each point (km): depth(x) = R - sqrt(R^2 cos^2(a) + x^2), x measured
+    along the chord from its midpoint, a = half the central angle."""
+    pts = [slerp(p1, p2, i / n) for i in range(n + 1)]
+    D = np.array([inv(la, lo)[0] for la, lo in pts])
+    az = np.unwrap(np.radians([inv(la, lo)[1] for la, lo in pts]))
+    la1, lo1, la2, lo2 = map(math.radians, (p1[0], p1[1], p2[0], p2[1]))
+    ang = math.acos(max(-1.0, min(1.0, math.sin(la1) * math.sin(la2) + math.cos(la1) * math.cos(la2) * math.cos(lo2 - lo1))))
+    half = R_E * math.sin(ang / 2)                                   # half the chord length
+    x = np.linspace(-half, half, n + 1)                               # along-chord offset from the midpoint
+    depth = R_E - np.sqrt((R_E * math.cos(ang / 2)) ** 2 + x ** 2)
+    return az, D, depth

@@ -125,7 +125,7 @@ def stats(v):
 # ---------------------------------------------------------------- figure
 D_MIN, D_MAX = 0.1, 1500.0
 fig = plt.figure(figsize=(9.8, 10.6))
-fig.subplots_adjust(top=0.915, bottom=0.125)
+fig.subplots_adjust(top=0.915, bottom=0.135)
 ax = fig.add_subplot(111, projection="polar")
 rmap = cc.polar_axes(ax, D_MIN, D_MAX, rings=(0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000),
                      tilt_labels=False, fs=6.6, rlabel_pos=197)
@@ -234,6 +234,31 @@ ax.annotate("one straight, BOTH ends far:\nUIUC 198 km S and Lake Superior 655 k
             bbox=dict(boxstyle="round,pad=0.15", fc="w", ec=gcol, lw=0.6, alpha=.92),
             arrowprops=dict(arrowstyle="-", color=gcol, lw=0.6))
 
+# the chord through UIUC and Green Bay, two ways: (a) a straight through the IP with those two ranges -- its UIUC end
+# is then west of the South Farms; (b) the true great-circle chord from the South Farms to the bay, which misses the IP
+TE = json.load(open(os.path.join(ROOT, "static", "geo", "two_ends.json")))["chord_for_plots"]
+gbp = TE["green_bay_point"]; ccol = "#2a7f9e"
+az_g, D_g = gbp["bearing_deg"], gbp["range_km"]
+tg, tu = math.radians(az_g), math.radians(TE["through_ip"]["uiuc_end_bearing_deg"])
+ax.plot([tu, tu], [0, rmap(S1)], color=ccol, lw=1.2, ls=(0, (3, 2)), alpha=.85, zorder=4)
+ax.plot([tg, tg], [0, rmap(D_g)], color=ccol, lw=1.2, ls=(0, (3, 2)), alpha=.85, zorder=4)
+ax.plot([tg], [rmap(D_g)], "s", ms=7, color=ccol, mec="w", mew=1.0, zorder=22)
+ax.plot([tu], [rmap(S1)], "s", ms=7, color=ccol, mec="w", mew=1.0, zorder=22)
+az_c, D_c, dep_c = cc.great_circle_polar(TE["uiuc"], (gbp["lat"], gbp["lon"]))
+ax.plot(az_c, rmap(D_c), color=ccol, lw=1.6, ls=(0, (1.5, 1.5)), zorder=7)
+i_min = int(np.argmin(D_c))
+ax.plot([az_c[i_min]], [rmap(D_c[i_min])], "o", ms=5, color=ccol, mec="w", zorder=22)
+ax.annotate("chord through UIUC and Green Bay\n"
+            "dotted: the true chord, South Farms to mid-bay (%.0f km at %.0f$^\\circ$):\n"
+            "it passes %.0f km east of the IP, %.1f km deep there, %.1f km at midpoint\n"
+            "dashed: the same two ranges as a straight through the IP:\n"
+            "%.1f km deep, UIUC end %.0f km west of the South Farms"
+            % (D_g, az_g, TE["true_chord"]["closest_approach_to_ip_km"], TE["true_chord"]["depth_at_closest_approach_km"],
+               TE["true_chord"]["midpoint_depth_km"], TE["through_ip"]["depth_at_ip_km"], TE["through_ip"]["uiuc_end_offset_km"]),
+            (az_c[i_min], rmap(D_c[i_min])), xytext=(0.985, 0.162), textcoords="figure fraction", fontsize=6.5, color=ccol,
+            ha="right", va="center", zorder=26, bbox=dict(boxstyle="round,pad=0.2", fc="w", ec=ccol, lw=0.6, alpha=.93),
+            arrowprops=dict(arrowstyle="-", color=ccol, lw=0.6, alpha=.7))
+
 # landmarks
 LM = {"UIUC South Farms": ("*", 11, "#0b6e4f"), "Purdue": ("*", 10, "#0b6e4f"),
       "Kettle Moraine SF": ("^", 7, "#4d7a2f"), "Soudan mine (MINOS far)": ("D", 6, "#7a2e21"),
@@ -260,8 +285,10 @@ H = [Line2D([], [], color="0.3", lw=1.9, ls=(0, (1.2, 1.6)), label="up-going end
      Patch(color="0.80", label="Fermilab site"), Patch(color="#3d7ea6", alpha=.55, label="lakes (Natural Earth 10m)"),
      Line2D([], [], color=c154, lw=3.2, alpha=.35, label="one straight: its two ends are opposite each other"),
      Line2D([], [], color="#0b6e4f", lw=1.3, label="the rings in plan (collider, RCS3/4, RCS1/2)"),
-     Line2D([], [], color="0.35", lw=1.2, ls=(0, (3, 2)), label="a chord with both ends far (10 km deep)")]
-fig.legend(handles=H, loc="lower center", ncol=3, fontsize=7.0, frameon=False, bbox_to_anchor=(0.5, 0.048),
+     Line2D([], [], color="0.35", lw=1.2, ls=(0, (3, 2)), label="a chord with both ends far (10 km deep)"),
+     Line2D([], [], color="#2a7f9e", lw=1.6, ls=(0, (1.5, 1.5)), label="the UIUC$-$Green Bay chord (true, misses the IP)"),
+     Line2D([], [], color="#2a7f9e", lw=1.2, ls=(0, (3, 2)), label="same ranges as a straight through the IP")]
+fig.legend(handles=H, loc="lower center", ncol=3, fontsize=6.8, frameon=False, bbox_to_anchor=(0.5, 0.044),
            handlelength=2.6, columnspacing=1.4)
 ax.set_title("Where the two ends of one straight surface, tilt by tilt\n"
              "35 m-deep straight; one colour per tilt $-$ dotted: the end that goes up, solid: the end that goes down; "

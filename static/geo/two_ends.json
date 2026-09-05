@@ -1,6 +1,36 @@
 {
  "s1_uiuc_km": 198.38,
  "formula": "d0 = s1 s2 / (2 R_E); tilt = (s2 - s1)/(2 R_E); deepest = ((s1+s2)/2)^2/(2 R_E)",
+ "chord_for_plots": {
+  "uiuc": [
+   40.0602,
+   -88.223
+  ],
+  "green_bay_point": {
+   "lat": 44.7813,
+   "lon": -87.8465,
+   "bearing_deg": 5.2,
+   "range_km": 328.0,
+   "water_run_km": [
+    310.0,
+    346.0
+   ]
+  },
+  "true_chord": {
+   "closest_approach_to_ip_km": 11.22,
+   "closest_approach_bearing_deg": 93.2,
+   "depth_at_closest_approach_km": 5.09,
+   "midpoint_depth_km": 5.43,
+   "arc_km": 525.9
+  },
+  "through_ip": {
+   "uiuc_end_bearing_deg": 185.2,
+   "uiuc_end_offset_km": 18.0,
+   "depth_at_ip_km": 5.11,
+   "tilt_mrad": 10.17,
+   "deepest_km": 5.44
+  }
+ },
  "green_bay": {
   "first_water_bearing_deg": 2.8,
   "water_km": [
