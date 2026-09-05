@@ -23,10 +23,14 @@ end dives, and Earth's curvature brings it back to the surface at
 s<sub>far</sub> ≈ 2 R<sub>E</sub> θ — on the opposite bearing. So every tilt
 is a **pair** of exit curves, and the figure draws each pair in one colour:
 dotted for the up-going end, solid for the down-going end. At zero tilt the
-two coincide on a single curve. The bold curves are terrain-corrected with
-GEBCO 2020 sampled along 144 bearings (every 2.5°) from 0.25 to 1000 km,
-smoothed with a periodic Catmull-Rom spline,
-([`fetch_gebco_bearings.py`](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/tools/fetch_gebco_bearings.py),
+two coincide on a single curve. The bold curves are terrain-corrected along
+144 bearings (every 2.5°): USGS 10 m NED inside 6 km, where the up-going
+exits live, and GEBCO 2020 from 6 to 1000 km, the two grids tied together by
+their +1.6 m mean offset in the overlap, smoothed with a periodic Catmull-Rom
+spline
+([`fetch_ned_near.py`](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/tools/fetch_ned_near.py),
+[`fetch_gebco_bearings.py`](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/tools/fetch_gebco_bearings.py);
+[data/ned_near.json](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/data/ned_near.json),
 [data/gebco_bearings.json](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/data/gebco_bearings.json));
 the faint circles are the smooth-sphere values. Exits over the Great Lakes are
 taken at the water surface, not the bed. The three rings are drawn in plan
@@ -38,19 +42,19 @@ straight with *both* ends far.
 
 | tilt | up-going end, smooth | with terrain (min–max over bearings) | down-going end, smooth | with terrain | up end inside the fence |
 |---|---|---|---|---|---|
-| **0 mrad** | 21.1 km | **11.8–37.3 km** (29 km due N, 16 km due S) | same | same | 0 of 48 bearings |
-| 2 mrad | 11.9 km | 8.2–18.7 km | 37.4 km | 24–50 km | 0 of 48 |
-| 5 mrad | 6.4 km | 4.8–9.9 km | 70 km | 55–81 km | 0 of 48 |
-| **15.4 mrad** (collider) | 2.25 km | 1.9–3.0 km | 198.5 km | 195–206 km | 31 of 48 (off-site when the up end points E–NE, fence 0.9–1.5 km) |
-| 25 mrad | 1.39 km | 1.2–1.5 km | 320 km | 316–325 km | 36 of 48 |
-| 35 mrad | 1.00 km | 0.87–1.05 km | 447 km | 444–455 km | 45 of 48 (off-site only due E) |
-| 50 mrad | 0.70 km | 0.63–0.72 km | 638 km | 635–643 km | **48 of 48** |
-| 65 mrad | 0.54 km | 0.48–0.54 km | 829 km | 826–845 km | **48 of 48** |
+| **0 mrad** | 21.1 km | **11.0–37.2 km** (29 km due N, 16 km due S) | same | same | 0 of 144 bearings |
+| 2 mrad | 11.9 km | 7.9–18.7 km | 37.4 km | 24–50 km | 0 of 144 |
+| 5 mrad | 6.4 km | 4.1–9.9 km | 70 km | 55–81 km | 0 of 144 |
+| **15.4 mrad** (collider) | 2.25 km | 1.7–2.5 km | 198.5 km | 195–206 km | 90 of 144 (off-site when the up end points E–NE, fence 0.9–1.5 km) |
+| 25 mrad | 1.39 km | 1.2–1.6 km | 320 km | 316–325 km | 106 of 144 |
+| 35 mrad | 1.00 km | 0.85–1.12 km | 447 km | 444–455 km | 132 of 144 (off-site only around due E) |
+| 50 mrad | 0.70 km | 0.60–0.78 km | 638 km | 635–643 km | **144 of 144** |
+| 65 mrad | 0.54 km | 0.46–0.57 km | 829 km | 826–845 km | **144 of 144** |
 
 Four readings:
 
 1. **"Modulo terrain" is a factor of three at zero tilt.** A level 35 m
-   straight surfaces anywhere from 12 to 37 km out depending on bearing:
+   straight surfaces anywhere from 11 to 37 km out depending on bearing:
    29 km due north, where the ground climbs toward the moraines, 16 km due
    south. For tilts below ~5 mrad the near exit moves by tens of percent
    with bearing and the far exit by ±30 %. Above 15 mrad terrain is a
@@ -60,9 +64,10 @@ Four readings:
 2. **The fence test is on the plot.** The grey site is 0.9–4.9 km across
    from the IP, so a dotted curve inside the grey means the up-going end
    emerges on DOE land. Below 5 mrad no bearing does; at the collider's
-   15.4 mrad, 31 of 48 bearings do — the failures are the east and
+   15.4 mrad, 90 of 144 bearings do — the failures are the east and
    north-east, where the fence is under 1.5 km; from 50 mrad on, every
-   bearing does. This is θ<sub>free</sub>'s emergence half, drawn rather
+   bearing does. With the 10 m terrain the baseline's own up-going end sits
+   at 2.13 km due north, 0.7 km inside the fence. This is θ<sub>free</sub>'s emergence half, drawn rather
    than tabulated.
 3. **Two worked pairs.** The baseline collider: up end due north at
    2.2 km inside the fence, down end at UIUC, 198 km — one straight, two dots
@@ -389,10 +394,11 @@ can — and §2 says the low-energy ones are the ones to send.
 
 ## 4. Open items
 
-* GEBCO at 15″ (~460 m) sets the terrain resolution; the near-exit curves
-  for tilts ≥ 25 mrad (0.5–1.5 km out) are at the limit of what it resolves
-  and want a local DEM. Bearings are sampled every 2.5° and spline-smoothed
-  between samples.
+* Terrain is USGS NED at 10 m inside 6 km and GEBCO at 15″ (~460 m) beyond;
+  the two disagree by +1.6 ± 2.2 m where they overlap, and GEBCO is shifted
+  onto NED. Bearings are sampled every 2.5° and spline-smoothed between
+  samples; the far exits over 100 km away are still GEBCO-limited to a few
+  hundred metres.
 * The two-straight ring's 142 mrad of vertical bending per lap, with closed
   vertical dispersion in a rapid-cycling ring, is unverified lattice work; so
   is the 2 mrad arc grade's effect on the ring's other systems.

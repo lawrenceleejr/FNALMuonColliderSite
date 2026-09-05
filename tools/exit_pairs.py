@@ -58,31 +58,62 @@ def surface_elev(az, D, e):
             return zs
     return e
 
-PROF = {}                                        # bearing -> ground height rel. to IP tangent plane (m)
-for az in BRG:
-    el = G["elev"]["%.1f" % az]
-    el = np.array([surface_elev(az, D, e) for D, e in zip(RAD, el)], float)
-    PROF[az] = el - Z0 - (RAD * 1000.0) ** 2 / (2 * cc.R_E * 1000.0)
+# Near field at 10 m: USGS NED (tools/fetch_ned_near.py -> data/ned_near.json) replaces GEBCO inside
+# NED_MAX km; the two grids are tied together by their mean difference over the overlap (1-5 km).
+NED_PATH = os.path.join(ROOT, "data", "ned_near.json")
+NED = json.load(open(NED_PATH)) if os.path.exists(NED_PATH) else None
+NED_MAX, SEAM_OFFSET_M, NED_USED = 6.0, 0.0, False
+if NED and NED.get("ip_elev_m") is not None and all(v is not None for k in NED["elev"] for v in NED["elev"][k]):
+    NRAD = np.array(NED["radii_km"], float)
+    diffs = []
+    for az in BRG:
+        key = "%.1f" % az
+        if key not in NED["elev"]:
+            continue
+        gi = {float(D): e for D, e in zip(RAD, G["elev"][key]) if 1.0 <= D <= 5.0}
+        ni = {float(D): e for D, e in zip(NRAD, NED["elev"][key])}
+        diffs += [gi[D] - ni[D] for D in gi if D in ni and gi[D] is not None and ni[D] is not None]
+    SEAM_OFFSET_M = float(np.mean(diffs)) if diffs else 0.0          # GEBCO minus NED where both exist
+    NED_USED = all("%.1f" % az in NED["elev"] for az in BRG)
+    Z0 = float(NED["ip_elev_m"])                                      # reference the profiles to the 10 m grade at the IP
+    print("NED near field: %d bearings, seam offset GEBCO-NED = %+.2f m (sd %.2f m over %d pairs), IP grade %.1f m" % (
+        len(NED["elev"]), SEAM_OFFSET_M, float(np.std(diffs)) if diffs else 0.0, len(diffs), Z0))
 
-def first_exit(theta_end, hg):
+def merged_profile(az):
+    """(ranges km, elevations m) along a bearing: NED to NED_MAX km, GEBCO (shifted onto NED) beyond."""
+    key = "%.1f" % az
+    if NED_USED:
+        r_n, e_n = list(NRAD), list(NED["elev"][key])
+        far = [(D, e - SEAM_OFFSET_M if e is not None else None) for D, e in zip(RAD, G["elev"][key]) if D > NED_MAX]
+        return np.array(r_n + [d for d, _ in far], float), [e for e in e_n] + [e for _, e in far]
+    return RAD, list(G["elev"][key])
+
+PROF, RADS = {}, {}                              # bearing -> (ground height rel. to IP tangent plane (m), ranges km)
+for az in BRG:
+    rad, el = merged_profile(az)
+    el = np.array([surface_elev(az, D, e) for D, e in zip(rad, el)], float)
+    PROF[az] = el - Z0 - (rad * 1000.0) ** 2 / (2 * cc.R_E * 1000.0)
+    RADS[az] = rad
+
+def first_exit(theta_end, hg, rad):
     """First range (km) where the beam end (signed slope theta_end, rad) is at or above ground."""
-    diff = -D0 + theta_end * RAD * 1000.0 - hg
+    diff = -D0 + theta_end * rad * 1000.0 - hg
     idx = np.where(diff >= 0)[0]
     if len(idx) == 0:
         return None
     i = idx[0]
     if i == 0:
-        return RAD[0]
+        return float(rad[0])
     d1, d2 = diff[i - 1], diff[i]
     f = -d1 / (d2 - d1) if d2 != d1 else 0.0
-    return float(RAD[i - 1] + f * (RAD[i] - RAD[i - 1]))
+    return float(rad[i - 1] + f * (rad[i] - rad[i - 1]))
 
 RES = []
 for th_mrad in TILTS:
     th = th_mrad * 1e-3
     sn, sf = cc.exits_smooth(th, D0)
-    near = [first_exit(+th, PROF[az]) for az in BRG]
-    far = [first_exit(-th, PROF[az]) for az in BRG]
+    near = [first_exit(+th, PROF[az], RADS[az]) for az in BRG]
+    far = [first_exit(-th, PROF[az], RADS[az]) for az in BRG]
     RES.append(dict(tilt_mrad=th_mrad, smooth_near_km=round(sn, 3), smooth_far_km=round(sf, 2),
                     near_km=[None if v is None else round(v, 3) for v in near],
                     far_km=[None if v is None else round(v, 2) for v in far]))
@@ -237,7 +268,8 @@ ax.set_title("Where the two ends of one straight surface, tilt by tilt\n"
              "at 0 mrad they are the same curve",
              fontsize=9.6, pad=22)
 fig.text(0.5, 0.012,
-         "Bold curves: GEBCO 2020 terrain along %d bearings (0.25$-$1000 km), Catmull-Rom smoothed; exits over the Great Lakes taken at the water surface. " % len(BRG) + 
+         ("Bold curves: USGS NED 10 m terrain inside 6 km and GEBCO 2020 beyond, along %d bearings (0.1$-$1000 km), Catmull-Rom smoothed; exits over the Great Lakes taken at the water surface. " % len(BRG) if NED_USED else
+          "Bold curves: GEBCO 2020 terrain along %d bearings (0.25$-$1000 km), Catmull-Rom smoothed; exits over the Great Lakes taken at the water surface. " % len(BRG)) + 
          "Faint circles: smooth sphere,\n"
          "$s_{near}=R_E(-\\theta+\\sqrt{\\theta^2+2d_0/R_E})\\approx d_0/\\theta$ and "
          "$s_{far}=R_E(\\theta+\\sqrt{\\theta^2+2d_0/R_E})\\approx 2R_E\\theta$. "
@@ -260,6 +292,8 @@ for r in RES:
           r["meridian"]["up_south_end_km"], r["meridian"]["down_north_end_km"]))
 fd = {("%.1f" % b): round(cc.fence_distance(b)) for b in BRG}
 json.dump(dict(straight_depth_m=D0, ip_elev_m=Z0, bearings_deg=BRG, fence_m=fd, tilts=RES,
+               terrain=dict(near_field="USGS NED 10 m to %.0f km" % NED_MAX if NED_USED else "GEBCO 2020 only",
+                            far_field="GEBCO 2020", seam_offset_gebco_minus_ned_m=round(SEAM_OFFSET_M, 2)),
                worked_pairs=dict(baseline_15p4_up_north=dict(far_south_km=Df_b, near_north_km=Dn_b),
                                  rcs_50_to_lake_huron_az52=dict(far_km=Df_h, near_km=Dn_h))),
           open(os.path.join(ROOT, "static", "geo", "exit_pairs.json"), "w"), indent=1)

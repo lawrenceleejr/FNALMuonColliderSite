@@ -151,9 +151,10 @@ easement, or University of Illinois land.
   eastern siting puts 4.7 km of DOE land on the near-side WSW diagonal.
 * **[The collider's compass](collider-map/)** — three views of one polar
   frame. *Paired exits:* for each tilt of a 35 m straight, where its up-going
-  end (dotted) and down-going end (solid) surface, GEBCO-terrain-corrected on
-  48 bearings — at 0 mrad both fall on one curve (21 km smooth, 12–37 km with
-  terrain); from 50 mrad the up end is inside the fence on every bearing.
+  end (dotted) and down-going end (solid) surface, terrain-corrected on 144
+  bearings (USGS 10 m NED inside 6 km, GEBCO beyond) — at 0 mrad both fall
+  on one curve (21 km smooth, 11–37 km with terrain); from 50 mrad the up end
+  is inside the fence on every bearing.
   *Tau appearance:* per-stage colour maps of the on-axis ν̄τ fraction with each
   stage's oscillation baseline (54,000 km for RCS1: everything here is L²) and
   the on-axis ν<sub>τ</sub> CC rate, flat in range at **0.37 per tonne-year
