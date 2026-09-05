@@ -34,13 +34,9 @@ spline
 [data/gebco_bearings.json](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/data/gebco_bearings.json));
 the faint circles are the smooth-sphere values. Exits over the Great Lakes are
 taken at the water surface, not the bed. The three rings are drawn in plan
-(collider, RCS3/4, RCS1/2: east straights on the meridian, bodies west),
-and three chords are drawn for the next subsection: grey dashed, one straight
-through the IP with both ends far (UIUC and Lake Superior); teal, the chord
-through UIUC and Green Bay — dotted the true one from the South Farms to
-mid-bay, which passes 11 km east of the IP, dashed the same two ranges as a
-straight through the IP; olive dotted, the true chord through UIUC and Lake
-Winnebago, which crosses the Fermilab site 3.9 km west of the IP.
+(collider, RCS3/4, RCS1/2: east straights on the meridian, bodies west). Two
+dashed circles mark what the **200 m depth ceiling** costs, and they are the
+subject of the next subsection.
 
 <div style="margin:1.2rem 0"><img src="../figs/exit_pairs.svg" alt="Paired exit curves per tilt: dotted up-going end, solid down-going end, terrain-corrected, with the Fermilab fence and lakes" style="max-width:100%"></div>
 
@@ -83,82 +79,186 @@ Four readings:
 4. **Which solid circle reaches which water** is now a single glance: 15.4
    mrad grazes Lake Michigan for 45° of bearing; 25 mrad crosses it fully;
    50 mrad reaches Superior, Huron and Erie; 65 mrad reaches Ontario and
-   passes Ash River.
+   passes Ash River. Everything outside the dark red circle at 435 km — which
+   is most of that list — has to come from a ring whose arcs stay level, for
+   the reason in the next subsection.
 
 All curves are for a 35 m straight. The [RCS aiming](../rcs-aim/) study's
 15 m straight halves every up-going range and leaves the down-going ones
 essentially unchanged (s<sub>far</sub> depends on depth only through the
 √(θ² + 2d₀/R<sub>E</sub>) term).
 
-### Both ends far? The depth it costs
+### The 200 m ceiling, and what it does and does not limit
+
+Nothing here may be tunnelled deeper than **200 m below grade**. That single
+number bites in three separate places, and it is worth keeping them apart —
+only one of the three actually shrinks the compass.
+
+**It does not limit the neutrinos.** Only the machine has to fit under the
+ceiling; the beam past the last magnet is neutrinos in rock, and the chord it
+follows may be as deep as Earth's curvature makes it. A 65 mrad straight at
+35 m depth puts its down-going end 829 km out with the chord bottoming 13 km
+down — irrelevant, because there is no tunnel there. Every solid curve on the
+figure above, out to 1000 km, stands.
+
+**It caps the up-going end at 50 km.** s<sub>near</sub> = d₀/θ grows with
+depth, so the farthest any up-going end can surface is the level case at the
+ceiling, √(2 R<sub>E</sub> d₀) = **50.5 km** (42–58 km with terrain). That is
+the grey dashed circle. No dotted curve, at any tilt and any legal depth, gets
+outside it — which is also why the both-ends-far chords below are impossible.
+
+**It caps a *co-tilted* ring's tilt.** If a whole ring is rotated into the
+tilted plane — the [co-tilted chain's](../uiuc-chain/) geometry — its depth
+swings by θ·(L<sub>s</sub> + 2R) from end to end. With 35 m of cover at the
+shallow end:
+
+| ring | extent along the tilt | depth swing at 15.4 mrad | at 50 mrad | steepest co-tilt under the ceiling | its far exit |
+|---|---|---|---|---|---|
+| collider (C = 11.0 km) | 3.76 km | 58 m | 188 m | 43.9 mrad | 561 km |
+| **RCS3/4** (C = 14.7 km) | 4.85 km | 75 m | **242 m — over** | **34.0 mrad** | **435 km** |
+| RCS1/2 (C = 6.3 km) | 2.18 km | 34 m | 109 m | 75.6 mrad | 964 km |
+
+The baseline's 15.4 mrad is comfortable everywhere. But the
+[azimuth study's](../rcs-azimuth/) 50 mrad aim at Lake Huron, 637 km out,
+would need a co-tilted RCS3/4 to swing 242 m — over the ceiling by 20 %. The
+dark red dash-dot circle at 435 km is where a co-tilted RCS3/4 runs out of
+room. **Beyond it the ring has to keep its arcs level and put the tilt in
+vertical achromats at the ends of the straights**, which costs θ·L<sub>s</sub>
+instead: 22 m for a 450 m straight at 50 mrad, 29 m at 65 mrad. That is the
+same trick the two-straight layout below already needs, and it is cheap in
+depth — the price is bending, not excavation. So the ceiling does not forbid
+the Lake Huron aim; it forbids one *way* of building it.
+
+### How far depth alone moves the up-going end
+
+Between 35 m and the ceiling every up-going exit slides outward, and that
+sliding is the one genuinely new freedom the cap leaves. The factor is
+√(200/35) ≈ 2.4 at zero tilt, where s<sub>near</sub> = √(2R<sub>E</sub>d₀),
+rising to 200/35 ≈ 5.7 once the tilt dominates and s<sub>near</sub> → d₀/θ.
+The zoomed figure draws the band: bold at 35 m, thin at 200 m, rungs between.
+
+<div style="margin:1.2rem 0"><img src="../figs/exit_pairs_near.svg" alt="Near-field polar zoom: for each tilt, the band of up-going exit ranges between a 35 m straight and one at the 200 m ceiling" style="max-width:100%"></div>
+
+All numbers below are terrain-corrected and taken due north, the baseline's
+own up-going bearing; the last two columns count how many of the 144 bearings
+put the up-going end inside the fence.
+
+| tilt | up end at 35 m | at the 200 m ceiling | depth at which it leaves the fence | on site at 35 m | on site at the ceiling |
+|---|---|---|---|---|---|
+| 0 mrad | 29.2 km | 51.2 km | 4 m | 0 / 144 | 0 / 144 |
+| 2 mrad | 15.5 km | 40.0 km | 8 m | 0 / 144 | 0 / 144 |
+| 5 mrad | 7.7 km | 30.7 km | 15 m | 0 / 144 | 0 / 144 |
+| **15.4 mrad** (the baseline) | **2.13 km** | **12.85 km** | **42 m** | 90 / 144 | **0 / 144** |
+| 25 mrad | 1.47 km | 8.1 km | 69 m | 106 / 144 | 0 / 144 |
+| 35 mrad | 1.04 km | 5.9 km | 98 m | 132 / 144 | 0 / 144 |
+| 50 mrad | 0.73 km | 4.1 km | 140 m | 144 / 144 | 29 / 144 |
+| 65 mrad | 0.55 km | 3.1 km | 183 m | 144 / 144 | 47 / 144 |
+
+Two readings, and the second is the one that matters.
+
+The obvious one: on-site emergence needs d₀ ≲ θ·s<sub>fence</sub>, and the
+fence is 0.9–4.9 km from the IP depending on bearing, so the steeper the tilt
+the more depth it tolerates — 42 m at the baseline, 183 m at 65 mrad.
+
+The sharper one: **the ceiling is not the binding constraint on the UIUC
+straight; 42 m is.** The baseline's up-going end emerges at 2.13 km, 0.7 km
+inside the fence, and only 7 m of extra depth walks it out past the boundary.
+Push the straight to the full 200 m and the right-hand column collapses: zero
+bearings on site at every tilt up to 35 mrad, 29 of 144 at 50 mrad, and even
+at 65 mrad only a third of the compass. So the shallow 35 m straight is not a
+convenience — for the baseline tilt it is the only depth band, 35 to 42 m,
+that keeps the near beam on DOE land. The ceiling buys the down-going end
+freedom it never needed; the up-going end is bounded far more tightly by the
+fence than by any tunnelling limit.
+
+### Both ends far? Ruled out by the ceiling, by a factor of 20
 
 The paired curves suggest a question: could the last RCS be angled so that
 one end comes out at UIUC and the other in Green Bay or Lake Superior — both
-ends far? A straight is a chord of the Earth, and its two exits obey
-s<sub>near</sub> s<sub>far</sub> = 2 R<sub>E</sub> d₀. Fixing the south end
-at UIUC (s₁ = 198.4 km) and asking the north end to surface at s₂ gives
+ends far? The geometry answers immediately, and the answer is no. A straight
+is a chord of the Earth, and its two exits obey
+s<sub>near</sub> s<sub>far</sub> = 2 R<sub>E</sub> d₀. Fixing the south end at
+UIUC (s₁ = 198.4 km):
 
 <div style="text-align:center;font-family:monospace;margin:.8rem 0">
 d₀ = s₁ s₂ / 2R<sub>E</sub>, &nbsp; θ = (s₂ − s₁) / 2R<sub>E</sub>, &nbsp; deepest point ((s₁+s₂)/2)² / 2R<sub>E</sub>
 </div>
 
-<div style="margin:1.2rem 0"><img src="../figs/two_ends.svg" alt="Depth of a straight whose south end is at UIUC as a function of where its north end surfaces, against real excavation depths" style="max-width:100%"></div>
+Invert the first relation at the ceiling and the whole idea collapses in one
+line: with d₀ ≤ 200 m and s₁ = 198.4 km,
 
-| north end at | s₂ | straight depth at the IP | deepest point of the chord | tilt |
-|---|---|---|---|---|
-| the north fence (the baseline) | 2.9 km | **44 m** | 0.79 km | 15.4 mrad up-N |
-| Cary / Fox River Grove (the level ring's exit) | 38 km | 0.60 km | 1.10 km | 12.6 |
-| Kettle Moraine SF | 195 km | 3.0 km | 3.0 km | level |
-| Green Bay's latitude on the UIUC line (Shawano Co., 15 km W of the bay) | 298 km | 4.6 km | 4.8 km | 7.8 down-N |
-| **Lake Winnebago** (bearing 358°, see below) | 258 km | **4.0 km** | 4.1 km | 4.7 |
-| **Green Bay water** (needs bearing 2.8°, see below) | 304 km | **4.7 km** | 5.0 km | 8.3 |
-| **Lake Superior** (south shore / mid-crossing / north shore) | 626 / 655 / 695 km | **9.7 / 10.2 / 10.8 km** | 13.3 / 14.3 / 15.7 km | 34–39 |
+<div style="text-align:center;font-family:monospace;margin:.8rem 0">
+s₂ ≤ 2 R<sub>E</sub> d₀ / s₁ = <b>12.85 km</b>
+</div>
 
-For scale: this study's tunnels are 35–107 m deep; SNOLAB is 2.07 km, the
-Gotthard base tunnel's greatest overburden 2.3 km, the deepest mine
-(Mponeng) 4.0 km, the deepest borehole (Kola) 12.3 km. **Both ends far is
-not a tunnel.** Even Kettle Moraine — the mirror-image exit at the same
-198 km — needs the straight 3 km down; Green Bay needs 4.7 km, below every
-mine but one; Lake Superior needs 10 km, below every mine. The physics is
-just the sagitta: to have the up-going end travel 300 km before it reaches
-daylight, it has to start 4.7 km below it. The tilt, incidentally, is
-*small* for these chords — 8 mrad for Green Bay, and exactly level for
-Kettle Moraine — which is why depth, not angle, is the cost.
+The other end of the UIUC straight cannot get past **Wayne** — it is the
+same 12.85 km that appears in the depth table above, seen from the other
+side. Green Bay is 24× farther than that, Lake Superior 51×.
 
-Two geographic notes. Green Bay's water is not on the UIUC line: the bay is
-first reachable at bearing 2.8°, 304 km out, and its open water (36 km of it
-along the ray) at bearing 5.2°, 328 km. The polar plots draw that chord two
-ways. The **true chord** from the South Farms to mid-bay is a 526 km arc that
-passes **11 km east of the IP** (near Wheaton) at 5.1 km depth, 5.4 km at its
-midpoint — a straight through both places is not at Fermilab. A straight
-**through the IP** with the same two ranges is 5.1 km deep, tilted 10 mrad,
-and puts its south end **18 km west of the South Farms** (9.7 km for the bay's
-southern tip at 2.8°). In the IP-centred polar frame the true chord is the
-curve that swings out to the east and back; the through-IP version is a pair
-of opposite spokes.
+<div style="margin:1.2rem 0"><img src="../figs/two_ends.svg" alt="Depth of a straight whose south end is at UIUC as a function of where its north end surfaces, against the 200 m ceiling and real excavation depths" style="max-width:100%"></div>
 
-**Lake Winnebago is the one lake that lines up.** It is the nearest water on
-a UIUC line (258 km at bearing 358°), and the chord from the South Farms into
-its water — choosing the lake point at least 2 km from shore that brings the
-chord nearest Fermilab — passes **3.9 km west of the IP, inside the fence**,
-at **4.0 km depth** (4.1 km at its midpoint, 458 km arc). UIUC, the west side
-of the site and the lake are nearly collinear: the through-IP version of the
-same chord is 4.0 km deep with a 4.7 mrad tilt and puts its south end only
-6.9 km east of the South Farms; the chord to the lake's centre passes 6.9 km
-west of the IP, just outside the fence. It is still a 4 km-deep straight —
-the deepest mine on Earth — but of every both-ends-far chord on the compass it
-is the only one whose two exits are water and a partner campus *and* whose
-middle lies under Fermilab land. On the paired-exit plot it is the olive
-dotted curve threading the west side of the grey site polygon. And the level-straight case
-is the one the [safety page](../safety/) already knows: at 0.60 km depth the
-UIUC-bound straight's other end would surface at Cary, the Zone D default
-exit.
+| north end at | s₂ | straight depth at the IP | deepest point of the chord | tilt | vs the ceiling |
+|---|---|---|---|---|---|
+| the north fence (the baseline) | 2.9 km | **44 m** | 0.79 km | 15.4 mrad up-N | ✅ 0.2× |
+| **the ceiling itself (Wayne)** | **12.85 km** | **200 m** | 0.88 km | 14.6 | ✅ **the limit** |
+| Cary / Fox River Grove (the level ring's exit) | 38 km | 0.60 km | 1.10 km | 12.6 | ❌ 3× over |
+| Kettle Moraine SF | 195 km | 3.0 km | 3.0 km | level | ❌ 15× |
+| Green Bay's latitude on the UIUC line (Shawano Co., 15 km W of the bay) | 298 km | 4.6 km | 4.8 km | 7.8 down-N | ❌ 23× |
+| Lake Winnebago (bearing 358°) | 258 km | 4.0 km | 4.1 km | 4.7 | ❌ 20× |
+| Green Bay water (bearing 2.8°) | 304 km | 4.7 km | 5.0 km | 8.3 | ❌ 24× |
+| Lake Superior (south shore / mid / north shore) | 626 / 655 / 695 km | 9.7 / 10.2 / 10.8 km | 13.3 / 14.3 / 15.7 km | 34–39 | ❌ 48–54× |
 
-**The feasible version is two straights, not one.** A racetrack has two long
-straights, and with the [bent-ring](../uiuc-chain/) vertical achromats each
-can carry its own tilt: the east straight up-north at 15.4 mrad (down-going
-end at UIUC), the west straight down-north (down-going end in the water) —
-both at ordinary depth. For RCS3/4 (L<sub>s</sub> = 450 m, R = 2.2 km,
+The column that the ceiling constrains is the third one, d₀ — the depth at
+the IP, where the tunnel is. The fourth is the deepest point of the *chord*,
+tens of kilometres out under farmland, and it is beam-in-rock, not
+excavation: the baseline's chord bottoms at 0.79 km with a tunnel 44 m down.
+Only when the whole chord has to be a machine — the both-ends-far idea — do
+the two columns mean the same thing.
+
+For scale: this study's tunnels are 35–107 m deep and the ceiling is 200 m;
+SNOLAB is 2.07 km, the Gotthard base tunnel's greatest overburden 2.3 km, the
+deepest mine (Mponeng) 4.0 km, the deepest borehole (Kola) 12.3 km. **Both
+ends far is not a tunnel, and at 200 m it is not even close.** Even Kettle
+Moraine — the mirror-image exit at the same 198 km — needs 3 km, fifteen times
+the ceiling; Green Bay 4.7 km, below every mine but one; Lake Superior 10 km,
+below every mine on Earth. The physics is just the sagitta: for an up-going
+end to travel 300 km before it reaches daylight it has to start 4.7 km below
+it. The tilt, incidentally, is *small* for these chords — 8 mrad for Green
+Bay, exactly level for Kettle Moraine — which is why depth, not angle, is
+what kills it.
+
+Worth recording, because the geometry is otherwise attractive and someone
+will ask again. **Lake Winnebago is the one lake that lines up.** It is the
+nearest water on a UIUC line (258 km at bearing 358°), and the chord from the
+South Farms into its water — taking the lake point at least 2 km from shore
+that brings the chord nearest Fermilab — passes **3.9 km west of the IP,
+inside the fence**, 4.02 km down there and 4.09 km at its midpoint over a
+458 km arc. UIUC, the west side of the site and the lake really are nearly
+collinear; the through-IP version of the same chord is 4.02 km deep at 4.7
+mrad and lands its south end only 6.9 km east of the South Farms. Green Bay's
+water, by contrast, does not line up at all: the bay is first reachable at
+bearing 2.8°, 304 km out, and the true chord from the South Farms to mid-bay
+passes **11 km east of the IP** near Wheaton — a straight through both places
+is not a straight at Fermilab. Neither survives the ceiling by a factor of
+20, so neither is drawn on the compass any more; the numbers are kept in
+[two_ends.json](../geo/two_ends.json) so the question does not have to be
+re-derived.
+
+And the level-straight case is the one the [safety page](../safety/) already
+knows, now with a firmer bound: at 0.60 km the UIUC-bound straight's other end
+would surface at Cary, the Zone D default exit — but 0.60 km is three times
+the ceiling, so under this constraint the Zone D exit is not reachable from a
+UIUC-aimed straight at all. The farthest legal partner exit is Wayne.
+
+**The feasible version is two straights, not one, and it fits under the
+ceiling with room to spare.** A racetrack has two long straights, and with the
+[bent-ring](../uiuc-chain/) vertical achromats each can carry its own tilt: the
+east straight up-north at 15.4 mrad (down-going end at UIUC), the west straight
+down-north (down-going end in the water) — both at ordinary depth. This is the
+level-arc geometry the ceiling forces past 435 km, and it costs almost nothing
+in depth: the two straights drop 7 m and 23 m along their own length and the
+2.2 mrad arc grade adds 15 m, so the whole ring swings about **45 m** end to
+end — a quarter of the ceiling, against 242 m for the same aim co-tilted. For RCS3/4 (L<sub>s</sub> = 450 m, R = 2.2 km,
 C = 14.7 km) aimed at Lake Superior:
 
 | | west end in Lake Superior (655 km) | west end at Green Bay's range (300 km) |
@@ -201,8 +301,8 @@ Gaussian-cut at E<sub>ν</sub>/E<sub>μ</sub> = 1/50) at 1/101 of the pencil
 density. Each ramp is averaged with decays ∝ 1/E per turn. P̄ depends on
 range alone, so each panel is a set of rings — contoured at 1, 2, 5 × 10ᵏ —
 and the geography under them says what a given fraction would be delivered
-to (white dotted and dash-dot: the UIUC–Green Bay and UIUC–Lake Winnebago
-chords of §1, with their ends). Under each panel: the **ν<sub>τ</sub> oscillation baseline** for that
+to; the orange dashed circle is the 198 km ring the collider and the co-tilted
+chain both exit on. Under each panel: the **ν<sub>τ</sub> oscillation baseline** for that
 stage's energy (the first maximum of sin², L<sub>max</sub> = 496 km ×
 E<sub>ν</sub>[GeV]), the fractions at UIUC and Soudan, and the on-axis rate.
 
@@ -345,8 +445,7 @@ airports, and the population centres the beam must not graze.
 
 Radius is log range so that 10 km neighbours and 1300 km mines share one
 frame; every range ring is also labelled with the tilt that reaches it. The
-teal and olive dotted curves are the UIUC–Green Bay and UIUC–Lake Winnebago
-chords of §1, ending at their lake markers. The green curve is the site's
+green curve is the site's
 θ<sub>free</sub>(bearing) from the
 [azimuth study](../rcs-azimuth/), drawn at its equivalent range 430–1220 km.
 Sanity checks against known baselines: the map places Soudan at 736 km

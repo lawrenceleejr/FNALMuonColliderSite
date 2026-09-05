@@ -11,6 +11,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 R_E = 6371.0088                      # km
+DEPTH_CAP_M = 200.0                  # no ring in this study may sit deeper than this below grade
 IP_LAT, IP_LON = 41.8443, -88.222972
 FT = 0.3048
 

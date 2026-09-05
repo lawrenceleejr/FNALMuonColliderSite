@@ -66,6 +66,8 @@ TARGETS = [("north fence, on site", 2.85), ("Zone D level-ring exit (Cary / Fox 
            ("Kettle Moraine SF", 195.2), ("Shawano County, WI (Green Bay's latitude, %.0f km west of the bay)" % gb_miss, 298.0),
            ("Green Bay water (needs bearing %.1f$^\\circ$)" % gb_az, gb_d1),
            ("Lake Superior, south shore", 626.0), ("Lake Superior, mid-crossing", 655.0), ("Lake Superior, north shore", 695.0)]
+DEPTH_CAP_KM = 0.2                                          # no ring here may be deeper than 200 m
+S2_MAX_AT_CAP = 2 * R * DEPTH_CAP_KM / S_UIUC               # the farthest the UIUC straight's other end can be
 REF = [("collider straight", 0.035), ("deep reference hall", 0.107), ("Gotthard base tunnel, max overburden", 2.3),
        ("SNOLAB", 2.07), ("Mponeng mine, deepest excavation", 4.0), ("Kola superdeep borehole", 12.26)]
 rows = []
@@ -195,11 +197,20 @@ ax.plot(s2, ((S_UIUC + s2) / 2) ** 2 / (2 * R), color="#0b6e4f", lw=1.0, ls="--"
 for nm, d in REF:
     ax.axhline(d, color="0.6", lw=0.6, ls=":")
     if nm.startswith("Gotthard"):
-        ax.text(950, d * 1.08, nm, fontsize=6.6, color="0.4", va="bottom", ha="right")
+        ax.text(300, d * 0.90, nm, fontsize=6.6, color="0.4", va="top", ha="left")
     else:
         ax.text(2.1, d * 1.08, nm, fontsize=6.6, color="0.4", va="bottom")
+ax.axhspan(DEPTH_CAP_KM, 30, color="0.5", alpha=.055, lw=0, zorder=0)
+ax.text(2.35, 26.0, "ruled out: no ring here may sit deeper than 200 m", fontsize=6.8, color="0.45", ha="left", va="center")
 ax.axhspan(0.03, 0.15, color="#0b6e4f", alpha=.07, lw=0)
 ax.text(2.1, 0.062, "this study's tunnels", fontsize=6.6, color="#0b6e4f", va="center")
+ax.axhline(DEPTH_CAP_KM, color="#b5541c", lw=1.4, ls="--", zorder=4)
+ax.axvline(S2_MAX_AT_CAP, color="#b5541c", lw=0.9, ls=":", zorder=4)
+ax.plot([S2_MAX_AT_CAP], [DEPTH_CAP_KM], "o", ms=6, color="#b5541c", mec="w", zorder=6)
+ax.text(2.1, DEPTH_CAP_KM * 1.10, "200 m: the ceiling for any ring here", fontsize=6.8, color="#b5541c", va="bottom", fontweight="bold")
+ax.annotate("at the ceiling the other end can be\nno farther than %.1f km (Wayne)" % S2_MAX_AT_CAP, (S2_MAX_AT_CAP, DEPTH_CAP_KM),
+            xytext=(34, -30), textcoords="offset points", fontsize=6.8, color="#b5541c", ha="left", va="top", fontweight="bold",
+            arrowprops=dict(arrowstyle="-", color="#b5541c", lw=0.6))
 for r in rows:
     if r["north_exit_km"] is None:
         continue
@@ -207,43 +218,49 @@ for r in rows:
 short = {"north fence, on site": "on-site fence", "Zone D level-ring exit (Cary / Fox River Grove)": "Cary / Fox River Grove\n(level ring's exit)",
          "Kettle Moraine SF": "Kettle Moraine", "Lake Superior, south shore": "", "Lake Superior, north shore": "",
          "Lake Superior, mid-crossing": "Lake Superior"}
+# labels go in the two empty wedges: above the curve on the left, below it on the right
+TEXTPOS = {"north fence, on site": (5.0, 0.021, "center", "bottom"),
+           "Zone D level-ring exit (Cary / Fox River Grove)": (62.0, 0.36, "right", "center"),
+           "Kettle Moraine SF": (95.0, 6.2, "right", "center"),
+           "Lake Winnebago": (150.0, 20.0, "right", "top"),
+           "Shawano": (235.0, 1.20, "right", "center"),
+           "Green Bay water": (235.0, 0.45, "right", "center"),
+           "Lake Superior, mid-crossing": (940.0, 3.6, "right", "center")}
 for r in rows:
     nm = r["target"]; lab = short.get(nm, nm)
     if nm.startswith("Shawano"):
         lab = "Green Bay's latitude on the UIUC line\n(Shawano Co., %.0f km W of the bay)" % gb_miss
     if nm.startswith("Green Bay water"):
-        lab = "Green Bay water\n(bearing %.1f$^\\circ$, not on the UIUC line)" % gb_az
-    OFF = {"north fence, on site": ((28, -18), "left", "top"), "Kettle Moraine SF": ((-10, 14), "right", "bottom"),
-           "Lake Superior, mid-crossing": ((0, -26), "center", "top")}
-    off, ha, va = OFF.get(nm, ((0, -26), "center", "top"))
-    if nm.startswith("Shawano"):
-        off, ha, va = (-4, -44), "center", "top"
-    if nm.startswith("Green Bay water"):
-        off, ha, va = (16, 18), "left", "bottom"
+        lab = "Green Bay water\n(bearing %.1f$^\\circ$, off the UIUC line)" % gb_az
     if nm.startswith("Lake Winnebago"):
-        lab = "Lake Winnebago\n(bearing %.0f$^\\circ$; the true chord\ncrosses the site 3.9 km W of the IP)" % CHORDS[1]["point"]["bearing_deg"]
-        off, ha, va = (-14, 26), "right", "bottom"
-    if lab:
-        ax.annotate("%s\n%.2f km deep" % (lab, r["d0_km"]) if r["d0_km"] >= 1 else "%s\n%.0f m deep" % (lab, r["d0_km"] * 1000),
-                    (r["north_exit_km"], r["d0_km"]), xytext=off, textcoords="offset points", fontsize=6.6,
-                    color="#b5541c", ha=ha, va=va, arrowprops=dict(arrowstyle="-", color="#b5541c", lw=0.5))
+        lab = "Lake Winnebago (bearing %.0f$^\\circ$;\nthe true chord crosses the site\n3.9 km W of the IP)" % CHORDS[1]["point"]["bearing_deg"]
+    key = next((k for k in TEXTPOS if nm.startswith(k)), None)
+    if not lab or key is None:
+        continue
+    x, y, ha, va = TEXTPOS[key]
+    ax.annotate("%s\n%.2f km deep" % (lab, r["d0_km"]) if r["d0_km"] >= 1 else "%s\n%.0f m deep" % (lab, r["d0_km"] * 1000),
+                (r["north_exit_km"], r["d0_km"]), xytext=(x, y), textcoords="data", fontsize=6.6,
+                color="#b5541c", ha=ha, va=va, arrowprops=dict(arrowstyle="-", color="#b5541c", lw=0.5,
+                shrinkA=1, shrinkB=3))
 ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlim(2, 1000); ax.set_ylim(0.01, 30)
 ax.set_xlabel("range of the OTHER end, north on the UIUC line, $s_2$ (km)", fontsize=8.5)
 ax.set_ylabel("depth (km)", fontsize=8.5)
 ax.tick_params(labelsize=7.5)
-ax.legend(fontsize=7, frameon=False, loc="upper left", bbox_to_anchor=(0.30, 1.0))
+ax.legend(fontsize=7, frameon=False, loc="lower right", bbox_to_anchor=(1.0, 0.02))
 ax.set_title("One straight with BOTH ends far: south end at UIUC (198 km), north end at $s_2$\n"
              "the straight must sit $d_0 = s_1 s_2/2R_E$ below the IP $-$ kilometres, for any northern water", fontsize=9.5, pad=10)
 fig.text(0.5, 0.035,
-         "A straight is a chord: its two exits obey $s_{near}\\,s_{far} = 2R_E d_0$. Pushing the near exit from 2 km to 300 km (Green Bay's latitude) "
-         "takes the straight from 35 m to 4.7 km;\nLake Superior needs 10 km, deeper than any mine. The feasible route is the ring's two straights aimed "
-         "separately at ordinary depth (see text): inclined arcs and ~%d mrad of vertical bending per lap." % round(ALT[0]["vertical_bend_per_lap_mrad"]),
+         "A straight is a chord: its two exits obey $s_{near}\\,s_{far} = 2R_E d_0$. With no ring deeper than 200 m, the UIUC straight's other end can reach "
+         "%.1f km at most; Green Bay would need 4.7 km,\nLake Superior 10 km $-$ deeper than any mine, drawn for scale. The feasible route is the ring's two straights aimed "
+         "separately at ordinary depth (see text): inclined arcs and ~%d mrad of vertical bending per lap." % (S2_MAX_AT_CAP, round(ALT[0]["vertical_bend_per_lap_mrad"])),
          ha="center", va="center", fontsize=6.8, color="0.35")
 for ext in ("pdf", "svg"):
     fig.savefig(os.path.join(ROOT, "static", "figs", "two_ends." + ext), bbox_inches="tight")
 
 json.dump(dict(s1_uiuc_km=round(S_UIUC, 2), formula="d0 = s1 s2 / (2 R_E); tilt = (s2 - s1)/(2 R_E); deepest = ((s1+s2)/2)^2/(2 R_E)",
+               depth_ceiling_m=DEPTH_CAP_KM * 1000, s2_max_at_ceiling_km=round(S2_MAX_AT_CAP, 2),
+               level_straight_exit_at_ceiling_km=round(math.sqrt(2 * R * DEPTH_CAP_KM), 1),
                chord_for_plots=CHORD,
                green_bay=dict(first_water_bearing_deg=gb_az, water_km=[gb_d1, gb_d2], uiuc_end_offset_km=gb_offset_uiuc,
                               miss_from_uiuc_line_km=gb_miss,

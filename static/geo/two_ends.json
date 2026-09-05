@@ -1,6 +1,9 @@
 {
  "s1_uiuc_km": 198.38,
  "formula": "d0 = s1 s2 / (2 R_E); tilt = (s2 - s1)/(2 R_E); deepest = ((s1+s2)/2)^2/(2 R_E)",
+ "depth_ceiling_m": 200.0,
+ "s2_max_at_ceiling_km": 12.85,
+ "level_straight_exit_at_ceiling_km": 50.5,
  "chord_for_plots": {
   "uiuc": [
    40.0602,

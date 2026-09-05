@@ -116,7 +116,11 @@ the rest of the complex**:
 * the vertical achromat that the [bent ring](../uiuc-chain/) already needs
   grows with tilt: 49.5 mrad is 826 T·m at 5 TeV, ~103 m of 8 T per end,
   1.4 % of the ring — the same class as the 864 T·m the meridian Lake
-  Superior aim needs.
+  Superior aim needs. The achromat is not optional at this tilt: with no
+  tunnel deeper than 200 m, a *co-tilted* RCS3/4 tops out at 34 mrad (435 km)
+  because the whole ring's depth would swing θ·(L<sub>s</sub> + 2R) = 242 m at
+  50 mrad. Keeping the arcs level costs θ·L<sub>s</sub> ≈ 22 m instead — see
+  [the collider's compass](../collider-map/#the-200-m-ceiling-and-what-it-does-and-does-not-limit).
 
 *Sequel:* [the collider's compass](../collider-map/) draws the same frame for
 the ring whose tilt is *not* free — the collider's 198 km exit circle, what

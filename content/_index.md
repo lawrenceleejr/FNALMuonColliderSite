@@ -155,16 +155,22 @@ easement, or University of Illinois land.
   bearings (USGS 10 m NED inside 6 km, GEBCO beyond) — at 0 mrad both fall
   on one curve (21 km smooth, 11–37 km with terrain); from 50 mrad the up end
   is inside the fence on every bearing.
+  *The 200 m ceiling:* no tunnel here goes deeper, which caps the up-going end
+  at 50 km, forces any ring reaching past **435 km** to keep its arcs level and
+  put the tilt in vertical achromats (a co-tilted RCS3/4 at 50 mrad would swing
+  242 m), and pins the UIUC straight near 35 m — at 42 m its near beam already
+  leaves the fence.
   *Tau appearance:* per-stage colour maps of the on-axis ν̄τ fraction with each
   stage's oscillation baseline (54,000 km for RCS1: everything here is L²) and
   the on-axis ν<sub>τ</sub> CC rate, flat in range at **0.37 per tonne-year
   for the full chain — 15× DUNE's τ-optimised beam per tonne**, 350–2,700 t on
   axis to match DUNE's yearly counts; sign-resolved at four sites (a μ⁻-fed
   site sees 0.23 ν<sub>τ</sub> + 0.01 ν̄<sub>τ</sub>, a μ⁺-fed one 0.14 + 0.01,
-  the minority from ν<sub>e</sub>→ν<sub>τ</sub>). *Both ends far?* A straight
-  with one end at UIUC and the other in Green Bay or Lake Superior is a chord
-  4.7 or 10 km deep (d₀ = s₁s₂/2R<sub>E</sub>); the feasible version is the
-  ring's two straights aimed separately, at 296 m of 8 T vertical bending. *Landmarks:* the collider's fixed 15.4 mrad surfaces at
+  the minority from ν<sub>e</sub>→ν<sub>τ</sub>). *Both ends far?* Ruled out:
+  d₀ = s₁s₂/2R<sub>E</sub> caps the UIUC straight's other end at **12.85 km**
+  (Wayne), so Green Bay would need 4.7 km of depth and Lake Superior 10 km,
+  24–51× the ceiling; the feasible version is the ring's two straights aimed
+  separately, which swings only 45 m for 296 m of 8 T vertical bending. *Landmarks:* the collider's fixed 15.4 mrad surfaces at
   **198 km in every bearing**, a circle inside θ_free everywhere (7.5–11.3 km
   of off-site climb whichever way it points) holding UIUC, **Purdue**, Kettle
   Moraine State Forest and 45° of Lake Michigan; plus every mine, lake, forest
