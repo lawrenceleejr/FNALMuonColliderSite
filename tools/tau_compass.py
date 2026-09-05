@@ -138,7 +138,7 @@ NORM = Normalize(LO, HI)
 fig = plt.figure(figsize=(13.6, 10.6))
 gs = fig.add_gridspec(2, 3, left=0.025, right=0.985, top=0.875, bottom=0.155, wspace=0.14, hspace=0.36)
 lakes = cc.lakes_polar(D_MAX, min_vertices=40, decimate_to=150)
-th_e = np.linspace(0, 2 * np.pi, 91)
+th_e = np.linspace(0, 2 * np.pi, 721)
 LE = np.geomspace(D_MIN, D_MAX, 601)
 LABEL = {"UIUC South Farms": ("UIUC", (6, -9), "left"), "Purdue": ("Purdue", (6, 2), "left"),
          "Soudan mine (MINOS far)": ("Soudan", (-6, -7), "right"), "Ash River (NOvA far)": ("Ash River", (-6, 5), "right"),

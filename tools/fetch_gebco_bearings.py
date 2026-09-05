@@ -19,7 +19,7 @@ def fwd(az_deg, D):
 RADII = ([0.25 * k for k in range(1, 21)] + [5 + 0.5 * k for k in range(1, 51)]
          + [30 + 2.5 * k for k in range(1, 29)] + [100 + 10 * k for k in range(1, 21)]
          + [300 + 25 * k for k in range(1, 29)])
-BEARINGS = [7.5 * k for k in range(48)]
+BEARINGS = [2.5 * k for k in range(144)]
 
 if os.path.exists(OUT):
     C = json.load(open(OUT))
@@ -66,5 +66,7 @@ for i in range(0, len(need), 95):
     json.dump(C, open(OUT, "w"))
     print("chunk %d/%d done (%.0f s)" % (i // 95 + 1, (len(need) + 94) // 95, time.time() - t0), flush=True)
     time.sleep(1.2)
+C["bearings_deg"] = sorted(float(k) for k in C["elev"].keys())
+json.dump(C, open(OUT, "w"))
 missing = sum(1 for k in C["elev"] for v in C["elev"][k] if v is None)
 print("finished; missing:", missing, "ip elev:", C["ip_elev_m"], flush=True)

@@ -1,0 +1,352 @@
+{
+ "s1_uiuc_km": 198.38,
+ "formula": "d0 = s1 s2 / (2 R_E); tilt = (s2 - s1)/(2 R_E); deepest = ((s1+s2)/2)^2/(2 R_E)",
+ "green_bay": {
+  "first_water_bearing_deg": 2.8,
+  "water_km": [
+   304.0,
+   305.0
+  ],
+  "uiuc_end_offset_km": 9.69097085020183,
+  "miss_from_uiuc_line_km": 14.85033001786643,
+  "south_end_latlon": [
+   40.06227287202642,
+   -88.33682759021619
+  ],
+  "all_bearings": [
+   [
+    2.8,
+    304.0,
+    305.0
+   ],
+   [
+    2.9,
+    303.0,
+    307.0
+   ],
+   [
+    3.0,
+    303.0,
+    311.0
+   ],
+   [
+    3.1,
+    303.0,
+    312.0
+   ],
+   [
+    3.2,
+    302.0,
+    313.0
+   ],
+   [
+    3.3,
+    302.0,
+    319.0
+   ],
+   [
+    3.4,
+    302.0,
+    321.0
+   ],
+   [
+    3.5,
+    301.0,
+    322.0
+   ],
+   [
+    3.6,
+    301.0,
+    323.0
+   ],
+   [
+    3.7,
+    301.0,
+    323.0
+   ],
+   [
+    3.8,
+    301.0,
+    324.0
+   ],
+   [
+    3.9,
+    301.0,
+    325.0
+   ],
+   [
+    4.0,
+    301.0,
+    326.0
+   ],
+   [
+    4.1,
+    301.0,
+    330.0
+   ],
+   [
+    4.2,
+    301.0,
+    331.0
+   ],
+   [
+    4.3,
+    302.0,
+    332.0
+   ],
+   [
+    4.4,
+    302.0,
+    333.0
+   ],
+   [
+    4.5,
+    303.0,
+    334.0
+   ],
+   [
+    4.6,
+    305.0,
+    334.0
+   ],
+   [
+    4.7,
+    307.0,
+    335.0
+   ],
+   [
+    4.8,
+    308.0,
+    336.0
+   ],
+   [
+    4.9,
+    309.0,
+    337.0
+   ],
+   [
+    5.0,
+    309.0,
+    344.0
+   ],
+   [
+    5.1,
+    310.0,
+    345.0
+   ],
+   [
+    5.2,
+    310.0,
+    346.0
+   ],
+   [
+    5.3,
+    311.0,
+    347.0
+   ],
+   [
+    5.4,
+    311.0,
+    347.0
+   ],
+   [
+    5.5,
+    312.0,
+    347.0
+   ],
+   [
+    5.6,
+    312.0,
+    348.0
+   ],
+   [
+    5.7,
+    313.0,
+    348.0
+   ],
+   [
+    5.8,
+    313.0,
+    348.0
+   ],
+   [
+    5.9,
+    313.0,
+    348.0
+   ],
+   [
+    6.0,
+    314.0,
+    349.0
+   ],
+   [
+    6.1,
+    314.0,
+    349.0
+   ],
+   [
+    6.2,
+    314.0,
+    349.0
+   ],
+   [
+    6.3,
+    314.0,
+    349.0
+   ],
+   [
+    6.4,
+    315.0,
+    349.0
+   ],
+   [
+    6.5,
+    315.0,
+    350.0
+   ],
+   [
+    6.6,
+    316.0,
+    350.0
+   ],
+   [
+    6.7,
+    316.0,
+    350.0
+   ]
+  ]
+ },
+ "targets": [
+  {
+   "d0_km": 0.044372247341500054,
+   "tilt_mrad": -15.345540148883318,
+   "perigee_km": 0.7945126701176338,
+   "perigee_offset_km": -97.76657132928892,
+   "target": "north fence, on site",
+   "north_exit_km": 2.85
+  },
+  {
+   "d0_km": 0.5947438064720358,
+   "tilt_mrad": -12.571254230458592,
+   "perigee_km": 1.0981695589207356,
+   "perigee_offset_km": -80.09157132928891,
+   "target": "Zone D level-ring exit (Cary / Fox River Grove)",
+   "north_exit_km": 38.2
+  },
+  {
+   "d0_km": 3.039109712652915,
+   "tilt_mrad": -0.24981464933605574,
+   "perigee_km": 3.039308511569675,
+   "perigee_offset_km": -1.591571329288925,
+   "target": "Kettle Moraine SF",
+   "north_exit_km": 195.2
+  },
+  {
+   "d0_km": 4.63962445886562,
+   "tilt_mrad": 7.817981458558193,
+   "perigee_km": 4.834325144779388,
+   "perigee_offset_km": 49.80842867071108,
+   "target": "Shawano County, WI (Green Bay's latitude, 15 km west of the bay)",
+   "north_exit_km": 298.0
+  },
+  {
+   "d0_km": 4.733039716426672,
+   "tilt_mrad": 8.288864499874979,
+   "perigee_km": 4.951900671278092,
+   "perigee_offset_km": 52.80842867071108,
+   "target": "Green Bay water (needs bearing 2.8$^\\circ$)",
+   "north_exit_km": 304.0
+  },
+  {
+   "d0_km": 9.746325205536502,
+   "tilt_mrad": 33.5595877172091,
+   "perigee_km": 13.33398656386319,
+   "perigee_offset_km": 213.80842867071107,
+   "target": "Lake Superior, south shore",
+   "north_exit_km": 626.0
+  },
+  {
+   "d0_km": 10.197832283748257,
+   "tilt_mrad": 35.83552241690689,
+   "perigee_km": 14.288608190547288,
+   "perigee_offset_km": 228.30842867071107,
+   "target": "Lake Superior, mid-crossing",
+   "north_exit_km": 655.0
+  },
+  {
+   "d0_km": 10.820600667488609,
+   "tilt_mrad": 38.97474269235212,
+   "perigee_km": 15.65947922538023,
+   "perigee_offset_km": 248.30842867071107,
+   "target": "Lake Superior, north shore",
+   "north_exit_km": 695.0
+  }
+ ],
+ "reference_depths_km": {
+  "collider straight": 0.035,
+  "deep reference hall": 0.107,
+  "Gotthard base tunnel, max overburden": 2.3,
+  "SNOLAB": 2.07,
+  "Mponeng mine, deepest excavation": 4.0,
+  "Kola superdeep borehole": 12.26
+ },
+ "two_straights_alternative": [
+  {
+   "depth_m": 35.0,
+   "far_west_km": 655.0,
+   "tilt_east_mrad": 15.392783312873465,
+   "tilt_west_mrad": 51.35129689591187,
+   "near_east_km": 2.2737928085253047,
+   "near_west_km": 0.681579670148241,
+   "arc_slope_mrad": 2.1728148315034352,
+   "vertical_bend_per_lap_mrad": 142.17941974358442,
+   "BL_Tm_at_5TeV": 2371.237820940367,
+   "m_of_8T": 296.40472761754586,
+   "fraction_of_ring": 0.020132077232075413
+  },
+  {
+   "depth_m": 80.0,
+   "far_west_km": 655.0,
+   "tilt_east_mrad": 15.165949523485189,
+   "tilt_west_mrad": 51.28259460583553,
+   "near_east_km": 5.2749746975035245,
+   "near_west_km": 1.5599834722655914,
+   "arc_slope_mrad": 2.163193825794819,
+   "vertical_bend_per_lap_mrad": 141.5498635618207,
+   "BL_Tm_at_5TeV": 2360.7382181757953,
+   "m_of_8T": 295.0922772719744,
+   "fraction_of_ring": 0.020042934417341358
+  },
+  {
+   "depth_m": 35.0,
+   "far_west_km": 300.0,
+   "tilt_east_mrad": 15.392783312873465,
+   "tilt_west_mrad": 23.42748539917258,
+   "near_east_km": 2.2737928085253047,
+   "near_west_km": 1.4939716919527415,
+   "arc_slope_mrad": 1.2637713390704537,
+   "vertical_bend_per_lap_mrad": 82.6956227803739,
+   "BL_Tm_at_5TeV": 1379.1798328948282,
+   "m_of_8T": 172.39747911185353,
+   "fraction_of_ring": 0.011709392734697703
+  },
+  {
+   "depth_m": 80.0,
+   "far_west_km": 300.0,
+   "tilt_east_mrad": 15.165949523485189,
+   "tilt_west_mrad": 23.27748539917258,
+   "near_east_km": 5.2749746975035245,
+   "near_west_km": 3.436797344220165,
+   "arc_slope_mrad": 1.2515037335534822,
+   "vertical_bend_per_lap_mrad": 81.89288477952947,
+   "BL_Tm_at_5TeV": 1365.791940952793,
+   "m_of_8T": 170.72399261909914,
+   "fraction_of_ring": 0.011595728018248111
+  }
+ ],
+ "rcs34": {
+  "Ls_m": 450.0,
+  "R_m": 2200.0,
+  "C_m": 14723.00767579509
+ }
+}

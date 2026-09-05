@@ -24,11 +24,15 @@ s<sub>far</sub> ≈ 2 R<sub>E</sub> θ — on the opposite bearing. So every til
 is a **pair** of exit curves, and the figure draws each pair in one colour:
 dotted for the up-going end, solid for the down-going end. At zero tilt the
 two coincide on a single curve. The bold curves are terrain-corrected with
-GEBCO 2020 sampled along 48 bearings from 0.25 to 1000 km
+GEBCO 2020 sampled along 144 bearings (every 2.5°) from 0.25 to 1000 km,
+smoothed with a periodic Catmull-Rom spline,
 ([`fetch_gebco_bearings.py`](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/tools/fetch_gebco_bearings.py),
 [data/gebco_bearings.json](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/data/gebco_bearings.json));
 the faint circles are the smooth-sphere values. Exits over the Great Lakes are
-taken at the water surface, not the bed.
+taken at the water surface, not the bed. The three rings are drawn in plan
+(collider, RCS3/4, RCS1/2: east straights on the meridian, bodies west),
+and the grey dashed chord is the case the next subsection prices: one
+straight with *both* ends far.
 
 <div style="margin:1.2rem 0"><img src="../figs/exit_pairs.svg" alt="Paired exit curves per tilt: dotted up-going end, solid down-going end, terrain-corrected, with the Fermilab fence and lakes" style="max-width:100%"></div>
 
@@ -76,6 +80,74 @@ All curves are for a 35 m straight. The [RCS aiming](../rcs-aim/) study's
 15 m straight halves every up-going range and leaves the down-going ones
 essentially unchanged (s<sub>far</sub> depends on depth only through the
 √(θ² + 2d₀/R<sub>E</sub>) term).
+
+### Both ends far? The depth it costs
+
+The paired curves suggest a question: could the last RCS be angled so that
+one end comes out at UIUC and the other in Green Bay or Lake Superior — both
+ends far? A straight is a chord of the Earth, and its two exits obey
+s<sub>near</sub> s<sub>far</sub> = 2 R<sub>E</sub> d₀. Fixing the south end
+at UIUC (s₁ = 198.4 km) and asking the north end to surface at s₂ gives
+
+<div style="text-align:center;font-family:monospace;margin:.8rem 0">
+d₀ = s₁ s₂ / 2R<sub>E</sub>, &nbsp; θ = (s₂ − s₁) / 2R<sub>E</sub>, &nbsp; deepest point ((s₁+s₂)/2)² / 2R<sub>E</sub>
+</div>
+
+<div style="margin:1.2rem 0"><img src="../figs/two_ends.svg" alt="Depth of a straight whose south end is at UIUC as a function of where its north end surfaces, against real excavation depths" style="max-width:100%"></div>
+
+| north end at | s₂ | straight depth at the IP | deepest point of the chord | tilt |
+|---|---|---|---|---|
+| the north fence (the baseline) | 2.9 km | **44 m** | 0.79 km | 15.4 mrad up-N |
+| Cary / Fox River Grove (the level ring's exit) | 38 km | 0.60 km | 1.10 km | 12.6 |
+| Kettle Moraine SF | 195 km | 3.0 km | 3.0 km | level |
+| Green Bay's latitude on the UIUC line (Shawano Co., 15 km W of the bay) | 298 km | 4.6 km | 4.8 km | 7.8 down-N |
+| **Green Bay water** (needs bearing 2.8°, see below) | 304 km | **4.7 km** | 5.0 km | 8.3 |
+| **Lake Superior** (south shore / mid-crossing / north shore) | 626 / 655 / 695 km | **9.7 / 10.2 / 10.8 km** | 13.3 / 14.3 / 15.7 km | 34–39 |
+
+For scale: this study's tunnels are 35–107 m deep; SNOLAB is 2.07 km, the
+Gotthard base tunnel's greatest overburden 2.3 km, the deepest mine
+(Mponeng) 4.0 km, the deepest borehole (Kola) 12.3 km. **Both ends far is
+not a tunnel.** Even Kettle Moraine — the mirror-image exit at the same
+198 km — needs the straight 3 km down; Green Bay needs 4.7 km, below every
+mine but one; Lake Superior needs 10 km, below every mine. The physics is
+just the sagitta: to have the up-going end travel 300 km before it reaches
+daylight, it has to start 4.7 km below it. The tilt, incidentally, is
+*small* for these chords — 8 mrad for Green Bay, and exactly level for
+Kettle Moraine — which is why depth, not angle, is the cost.
+
+Two geographic notes. Green Bay's water is not on the UIUC line: the bay is
+first reachable at bearing 2.8°, 304 km out, so a straight whose north end
+lands in the bay puts its south end 9.7 km west of the South Farms
+(40.062° N, 88.337° W — still Champaign County). And the level-straight case
+is the one the [safety page](../safety/) already knows: at 0.60 km depth the
+UIUC-bound straight's other end would surface at Cary, the Zone D default
+exit.
+
+**The feasible version is two straights, not one.** A racetrack has two long
+straights, and with the [bent-ring](../uiuc-chain/) vertical achromats each
+can carry its own tilt: the east straight up-north at 15.4 mrad (down-going
+end at UIUC), the west straight down-north (down-going end in the water) —
+both at ordinary depth. For RCS3/4 (L<sub>s</sub> = 450 m, R = 2.2 km,
+C = 14.7 km) aimed at Lake Superior:
+
+| | west end in Lake Superior (655 km) | west end at Green Bay's range (300 km) |
+|---|---|---|
+| tilts, east / west straight | 15.4 / 51.4 mrad | 15.4 / 23.4 mrad |
+| up-going ends (35 m straights) | 2.27 km N, 0.68 km S — both on site | 2.27 km N, 1.49 km S — both on site |
+| arcs inclined by | 2.2 mrad | 1.3 mrad |
+| vertical bending per lap | 142 mrad = 2,370 T·m at 5 TeV = **296 m of 8 T (2.0 % of the ring)** | 83 mrad = 1,380 T·m = 172 m of 8 T (1.2 %) |
+| depth | free: 35 m as shown; at 80 m the UIUC straight's up end moves to 5.3 km, off site, so the UIUC straight stays shallow while the water straight may be deeper | same |
+
+Both straights rise in the direction of travel, so the arcs must descend to
+close the loop — a 2 mrad grade — and every straight end needs an achromat:
+2(θ<sub>A</sub> + θ<sub>B</sub>) plus the arc slopes, 142 mrad per lap. That
+is 4.6× the vertical bending of the co-tilted chain's bent ring (which
+needed 15.4 mrad per end), the price of using both straights for physics
+instead of one. One consequence for the next subsection: the sign a site
+receives is set by which way μ⁺ circulates, and a particle southbound on the
+east straight is northbound on the west one — so UIUC and Lake Superior would
+receive the **same** sign from this ring, and the on-site up-going ends the
+other.
 
 ## 2. Tau appearance around the compass, stage by stage
 
@@ -162,6 +234,70 @@ Readings:
    circle — UIUC, Purdue, Kettle Moraine, 45° of Lake Michigan — every
    stage's fraction and rate are fixed; the choice among them is land use,
    not physics. Range buys fraction (×14 to Soudan) but not on-axis rate.
+
+### ν<sub>τ</sub> versus ν̄<sub>τ</sub> at four sites, per tonne-year, against DUNE
+
+μ⁺ and μ⁻ counter-rotate, so each direction along a straight carries one
+sign: the beam going one way is μ⁺ decays (ν̄<sub>μ</sub> + ν<sub>e</sub>),
+the other way μ⁻ decays (ν<sub>μ</sub> + ν̄<sub>e</sub>). A site therefore
+sees mostly ν̄<sub>τ</sub> — from ν̄<sub>μ</sub> → ν̄<sub>τ</sub>, amplitude
+0.95 — with a ν<sub>τ</sub> minority from ν<sub>e</sub> → ν<sub>τ</sub>
+(amplitude sin²2θ₁₃ sin²θ₂₃ ≈ 0.050), or the mirror image. Which one is a
+choice of circulation sense, made once. Taking μ⁺ southbound on the east
+straights (UIUC receives μ⁺ decays; northbound beams from a separate ring or
+sense carry μ⁻ decays), with the same on-axis machinery as above
+([`nutau_sites.py`](https://github.com/lawrenceleejr/FNALMuonColliderSite/blob/main/tools/nutau_sites.py),
+[nutau_sites.json](../geo/nutau_sites.json)):
+
+<div style="margin:1.2rem 0"><img src="../figs/nutau_sites.svg" alt="nu_tau and nubar_tau CC per tonne-year at four sites for the store and the full chain, against DUNE, and signal-to-background versus baseline" style="max-width:100%"></div>
+
+| site | L | arriving sign | ν<sub>τ</sub> CC / t·yr | ν̄<sub>τ</sub> CC / t·yr | store only (ν<sub>τ</sub> / ν̄<sub>τ</sub>) | all-flavour CC background / t·yr | S/B | collider spot r₅₀ |
+|---|---|---|---|---|---|---|---|---|
+| FNAL site, 2.0 km N (beam 4.5 m underground) | 2 km | μ⁻ (ν) | 0.231 | 0.008 | 0.088 / 0.003 | 2.2 × 10¹⁰ | 1 × 10⁻¹¹ | 0.36 m |
+| **UIUC**, South Farms | 198 km | μ⁺ (ν̄) | 0.014 | **0.137** | 0.005 / 0.052 | 2.2 × 10⁶ | 7 × 10⁻⁸ | 36 m |
+| **Green Bay** (bay water at bearing 2.8°) | 300 km | μ⁻ (ν) | **0.231** | 0.008 | 0.088 / 0.003 | 9.9 × 10⁵ | 2.4 × 10⁻⁷ | 54 m |
+| **Lake Superior** | 655 km | μ⁻ (ν) | **0.231** | 0.008 | 0.088 / 0.003 | 2.1 × 10⁵ | 1.2 × 10⁻⁶ | 118 m |
+| DUNE, ν mode ([TDR](https://arxiv.org/abs/2002.03005)) | 1300 km | ν (with ν̄ contamination) | ≈ 0.003 (130 / yr in 40 kt, mostly ν<sub>τ</sub>) | | | | ≈ 0.05 | 40 kt fiducial |
+| DUNE, ν̄ mode (scaled ×0.6 from the TDR's background ratios) | 1300 km | ν̄ | ≈ 0.002 (≈ 80 / yr, mostly ν̄<sub>τ</sub>) | | | | ≈ 0.05 | |
+
+Whole-plane τ-flavour neutrinos per year (one sign, E<sub>ν</sub> > 3.5 GeV),
+which unlike the on-axis rate grow as L²: 1.4 × 10¹¹ at 2 km, 1.4 × 10¹⁵ at
+UIUC, 3.2 × 10¹⁵ at Green Bay, 1.5 × 10¹⁶ at Lake Superior.
+
+Readings:
+
+1. **Per tonne on the axis the rate is the same at every far site**, as §2
+   showed; what the sign choice changes is the total, because
+   σ<sub>ν</sub> ≈ 2 σ<sub>ν̄</sub>: a site fed by μ⁻ decays sees
+   0.24 τ CC per tonne-year (0.231 ν<sub>τ</sub> + 0.008 ν̄<sub>τ</sub>), one
+   fed by μ⁺ decays 0.15 (0.137 ν̄<sub>τ</sub> + 0.014 ν<sub>τ</sub>). UIUC
+   can have either by reversing the circulation — a free choice, made once
+   for the whole complex.
+2. **The minority sign is 5–9 % of the sample and comes from the
+   ν<sub>e</sub>**, whose ×20 smaller appearance amplitude is partly repaid
+   by σ<sub>ν</sub>/σ<sub>ν̄</sub> and a softer spectrum. A far hall that
+   can tell τ⁻ from τ⁺ (a magnetised or emulsion detector) measures both
+   ν<sub>μ</sub>→ν<sub>τ</sub> and ν<sub>e</sub>→ν<sub>τ</sub> in one beam.
+3. **What baseline buys is signal-to-background, not rate.** The
+   unoscillated CC background is 2 × 10⁶ per tonne-year at UIUC and falls as
+   1/L²; S/B is 7 × 10⁻⁸ at UIUC, 2.4 × 10⁻⁷ at Green Bay, 1.2 × 10⁻⁶ at Lake
+   Superior — every one of them four to six orders below DUNE's ≈ 5 %. τ
+   identification here cannot rely on statistics; it has to come from
+   topology, and TeV-scale τ leptons oblige: a 500 GeV τ flies 25 mm before
+   decaying, resolvable in emulsion or pixels, where DUNE's few-GeV τ leptons
+   travel tens of microns.
+4. **The FNAL site is not a τ site.** On axis it has the same per-tonne rate
+   as everywhere else, but the collider spot is 0.36 m across and the RCS
+   pencils 4 cm to 3 m, so no tonne fits on the axis, and S/B is 10⁻¹¹. It
+   is the near detector for flux, cross-sections and the turn-tagged
+   spectrum, not for appearance.
+5. **Against nominal DUNE, per tonne**: 70–80× in either sign (0.24 vs 0.0033
+   in the ν-type comparison; 0.15 vs 0.0019 in the ν̄-type). DUNE's plan
+   alternates modes over seven years and averages ≈ 0.0026 per tonne-year;
+   the corridor delivers both signs simultaneously to opposite ends of every
+   straight, each turn-tagged, at 2 × 10⁶ background events per tonne-year
+   per far hall for a 100 m-scale spot. Equal yearly *counts* need
+   330–870 t on axis.
 
 ## 3. The landmarks around the collider's default aim
 
@@ -255,7 +391,14 @@ can — and §2 says the low-energy ones are the ones to send.
 
 * GEBCO at 15″ (~460 m) sets the terrain resolution; the near-exit curves
   for tilts ≥ 25 mrad (0.5–1.5 km out) are at the limit of what it resolves
-  and want a local DEM.
+  and want a local DEM. Bearings are sampled every 2.5° and spline-smoothed
+  between samples.
+* The two-straight ring's 142 mrad of vertical bending per lap, with closed
+  vertical dispersion in a rapid-cycling ring, is unverified lattice work; so
+  is the 2 mrad arc grade's effect on the ring's other systems.
+* The DUNE antineutrino-mode ν<sub>τ</sub> yield is a scaling of the TDR's
+  neutrino-mode number, not a TDR value; the sign split of DUNE's samples is
+  illustrative.
 * The tau rates are for a point detector on the axis; a detector wider than
   the spot collects the whole plume, whose ν̄<sub>τ</sub> count grows as L²
   instead of staying flat — the aperture is the missing design parameter.

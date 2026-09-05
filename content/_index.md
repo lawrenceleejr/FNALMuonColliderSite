@@ -158,7 +158,12 @@ easement, or University of Illinois land.
   stage's oscillation baseline (54,000 km for RCS1: everything here is L²) and
   the on-axis ν<sub>τ</sub> CC rate, flat in range at **0.37 per tonne-year
   for the full chain — 15× DUNE's τ-optimised beam per tonne**, 350–2,700 t on
-  axis to match DUNE's yearly counts. *Landmarks:* the collider's fixed 15.4 mrad surfaces at
+  axis to match DUNE's yearly counts; sign-resolved at four sites (a μ⁻-fed
+  site sees 0.23 ν<sub>τ</sub> + 0.01 ν̄<sub>τ</sub>, a μ⁺-fed one 0.14 + 0.01,
+  the minority from ν<sub>e</sub>→ν<sub>τ</sub>). *Both ends far?* A straight
+  with one end at UIUC and the other in Green Bay or Lake Superior is a chord
+  4.7 or 10 km deep (d₀ = s₁s₂/2R<sub>E</sub>); the feasible version is the
+  ring's two straights aimed separately, at 296 m of 8 T vertical bending. *Landmarks:* the collider's fixed 15.4 mrad surfaces at
   **198 km in every bearing**, a circle inside θ_free everywhere (7.5–11.3 km
   of off-site climb whichever way it points) holding UIUC, **Purdue**, Kettle
   Moraine State Forest and 45° of Lake Michigan; plus every mine, lake, forest

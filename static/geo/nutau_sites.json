@@ -1,0 +1,200 @@
+{
+ "sites": {
+  "FNAL site (2.0 km N)": {
+   "range_km": 2.0,
+   "sign_side": "nu",
+   "stages": {
+    "RCS1": {
+     "nutau_cc_per_t_yr": 0.0109821490751729,
+     "nubartau_cc_per_t_yr": 0.0003851722375737063,
+     "mu_type_plus_e_type_cc_per_t_yr": 12558074.693944857
+    },
+    "RCS2": {
+     "nutau_cc_per_t_yr": 0.039274092558937435,
+     "nubartau_cc_per_t_yr": 0.0014047311434775835,
+     "mu_type_plus_e_type_cc_per_t_yr": 268358894.2717744
+    },
+    "RCS3": {
+     "nutau_cc_per_t_yr": 0.02551553998226157,
+     "nubartau_cc_per_t_yr": 0.0009195148133258754,
+     "mu_type_plus_e_type_cc_per_t_yr": 693386882.0039122
+    },
+    "RCS4": {
+     "nutau_cc_per_t_yr": 0.06738952645435799,
+     "nubartau_cc_per_t_yr": 0.0025125797765331846,
+     "mu_type_plus_e_type_cc_per_t_yr": 14532654718.903927
+    },
+    "Collider store": {
+     "nutau_cc_per_t_yr": 0.08795895162330543,
+     "nubartau_cc_per_t_yr": 0.0030676981949850843,
+     "mu_type_plus_e_type_cc_per_t_yr": 6751395025.353983
+    }
+   },
+   "totals": {
+    "nutau": 0.23112025969403532,
+    "nubartau": 0.008289696165895434,
+    "bg": 22258353595.22754,
+    "store_nutau": 0.08795895162330543,
+    "store_nubartau": 0.0030676981949850843,
+    "store_bg": 6751395025.353983
+   },
+   "S_over_B_full_chain": 1.0755959771942123e-11,
+   "S_over_B_store": 1.3482643139151509e-11,
+   "spot_r50_collider_m": 0.36,
+   "spot_rcs4_top_m": 0.04226336,
+   "spot_rcs1_bottom_m": 3.3542349206349207,
+   "plane_crossing_tau_per_year_one_sign": 143695503560.77194
+  },
+  "UIUC (198 km S)": {
+   "range_km": 198.4,
+   "sign_side": "nubar",
+   "stages": {
+    "RCS1": {
+     "nutau_cc_per_t_yr": 0.000657970963526989,
+     "nubartau_cc_per_t_yr": 0.006428357904081581,
+     "mu_type_plus_e_type_cc_per_t_yr": 1225.945048173433
+    },
+    "RCS2": {
+     "nutau_cc_per_t_yr": 0.0023997323010513344,
+     "nubartau_cc_per_t_yr": 0.022989605248632198,
+     "mu_type_plus_e_type_cc_per_t_yr": 26197.74651638367
+    },
+    "RCS3": {
+     "nutau_cc_per_t_yr": 0.0015704891918418638,
+     "nubartau_cc_per_t_yr": 0.014944697066588995,
+     "mu_type_plus_e_type_cc_per_t_yr": 67747.68476749632
+    },
+    "RCS4": {
+     "nutau_cc_per_t_yr": 0.004222766468171794,
+     "nubartau_cc_per_t_yr": 0.040372784295034644,
+     "mu_type_plus_e_type_cc_per_t_yr": 1432175.8835080273
+    },
+    "Collider store": {
+     "nutau_cc_per_t_yr": 0.005212346061435229,
+     "nubartau_cc_per_t_yr": 0.0518720828000476,
+     "mu_type_plus_e_type_cc_per_t_yr": 665253.4036510948
+    }
+   },
+   "totals": {
+    "nutau": 0.01406330498602721,
+    "nubartau": 0.13660752731438502,
+    "bg": 2192600.6634911755,
+    "store_nutau": 0.005212346061435229,
+    "store_nubartau": 0.0518720828000476,
+    "store_bg": 665253.4036510948
+   },
+   "S_over_B_full_chain": 6.871786313359319e-08,
+   "S_over_B_store": 8.580854836395829e-08,
+   "spot_r50_collider_m": 35.712,
+   "spot_rcs4_top_m": 4.192525312,
+   "spot_rcs1_bottom_m": 332.74010412698414,
+   "plane_crossing_tau_per_year_one_sign": 1408928141379591.5
+  },
+  "Green Bay (300 km N)": {
+   "range_km": 300.0,
+   "sign_side": "nu",
+   "stages": {
+    "RCS1": {
+     "nutau_cc_per_t_yr": 0.010981301160619992,
+     "nubartau_cc_per_t_yr": 0.0003851299521669481,
+     "mu_type_plus_e_type_cc_per_t_yr": 558.1366530642158
+    },
+    "RCS2": {
+     "nutau_cc_per_t_yr": 0.03927367285166051,
+     "nubartau_cc_per_t_yr": 0.0014047087485237024,
+     "mu_type_plus_e_type_cc_per_t_yr": 11927.061967634418
+    },
+    "RCS3": {
+     "nutau_cc_per_t_yr": 0.025515469732128097,
+     "nubartau_cc_per_t_yr": 0.0009195109716572252,
+     "mu_type_plus_e_type_cc_per_t_yr": 30817.194755729426
+    },
+    "RCS4": {
+     "nutau_cc_per_t_yr": 0.0673894919133722,
+     "nubartau_cc_per_t_yr": 0.002512577844652661,
+     "mu_type_plus_e_type_cc_per_t_yr": 645895.7652846188
+    },
+    "Collider store": {
+     "nutau_cc_per_t_yr": 0.0879585729626681,
+     "nubartau_cc_per_t_yr": 0.0030676841797558766,
+     "mu_type_plus_e_type_cc_per_t_yr": 300062.0011268436
+    }
+   },
+   "totals": {
+    "nutau": 0.2311185086204489,
+    "nubartau": 0.008289611696756414,
+    "bg": 989260.1597878905,
+    "store_nutau": 0.0879585729626681,
+    "store_nubartau": 0.0030676841797558766,
+    "store_bg": 300062.0011268436
+   },
+   "S_over_B_full_chain": 2.420072393985191e-07,
+   "S_over_B_store": 3.0335816198181297e-07,
+   "spot_r50_collider_m": 53.99999999999999,
+   "spot_rcs4_top_m": 6.339504,
+   "spot_rcs1_bottom_m": 503.1352380952381,
+   "plane_crossing_tau_per_year_one_sign": 3206428661400062.5
+  },
+  "Lake Superior (655 km N)": {
+   "range_km": 655.0,
+   "sign_side": "nu",
+   "stages": {
+    "RCS1": {
+     "nutau_cc_per_t_yr": 0.010978115160946118,
+     "nubartau_cc_per_t_yr": 0.0003849711426663884,
+     "mu_type_plus_e_type_cc_per_t_yr": 117.08478241542898
+    },
+    "RCS2": {
+     "nutau_cc_per_t_yr": 0.03927209385222954,
+     "nubartau_cc_per_t_yr": 0.0014046245110223851,
+     "mu_type_plus_e_type_cc_per_t_yr": 2502.0350261339026
+    },
+    "RCS3": {
+     "nutau_cc_per_t_yr": 0.025515205348535512,
+     "nubartau_cc_per_t_yr": 0.0009194965153444783,
+     "mu_type_plus_e_type_cc_per_t_yr": 6464.769018158962
+    },
+    "RCS4": {
+     "nutau_cc_per_t_yr": 0.06738936188406268,
+     "nubartau_cc_per_t_yr": 0.0025125705725851126,
+     "mu_type_plus_e_type_cc_per_t_yr": 135494.7121394224
+    },
+    "Collider store": {
+     "nutau_cc_per_t_yr": 0.08795714654939306,
+     "nubartau_cc_per_t_yr": 0.0030676313844405787,
+     "mu_type_plus_e_type_cc_per_t_yr": 62946.401961228206
+    }
+   },
+   "totals": {
+    "nutau": 0.2311119227951669,
+    "nubartau": 0.008289294126058944,
+    "bg": 207525.00292735887,
+    "store_nutau": 0.08795714654939306,
+    "store_nubartau": 0.0030676313844405787,
+    "store_bg": 62946.401961228206
+   },
+   "S_over_B_full_chain": 1.1536017999962384e-06,
+   "S_over_B_store": 1.4460680054421583e-06,
+   "spot_r50_collider_m": 117.89999999999999,
+   "spot_rcs4_top_m": 13.841250399999998,
+   "spot_rcs1_bottom_m": 1098.5119365079363,
+   "plane_crossing_tau_per_year_one_sign": 1.4818103639509248e+16
+  }
+ },
+ "notes": [
+  "on-axis point detector; per-tonne rates are baseline-independent (1/L^2 flux x L^2 probability)",
+  "sign side: mu+ southbound on the east straights -> UIUC sees nubar_mu, nu_e; northbound beams carry mu- decays. Reversing the circulation swaps every site",
+  "nu_e -> nu_tau amplitude 0.050 (sin^2 2th13 sin^2 th23); vacuum formulas: matter effects cancel at these L << 4E/A",
+  "DUNE nubar-mode yield is a scaling, not a TDR number"
+ ],
+ "dune": {
+  "source": "DUNE TDR vol. II arXiv:2002.03005, sec. 4.1.1.3 (130 nu_tau CC/yr, CP-optimised, 40 kt, before efficiency); antineutrino mode scaled by the TDR's selected nu_tau-CC background ratios 27/46 and 20/32",
+  "nu_mode_cc_per_yr": 130.0,
+  "nubar_mode_cc_per_yr": 78.0,
+  "mass_t": 40000.0,
+  "nu_mode_per_t_yr": 0.00325,
+  "nubar_mode_per_t_yr": 0.00195,
+  "nominal_3p5_plus_3p5_avg_per_t_yr": 0.0026,
+  "S_over_B_approx": 0.05
+ }
+}

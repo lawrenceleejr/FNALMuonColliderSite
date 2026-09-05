@@ -36,7 +36,7 @@ COL = [_cm(0.02 + 0.86 * i / (len(TILTS) - 1)) for i in range(len(TILTS))]
 # ---------------------------------------------------------------- terrain
 G = json.load(open(os.path.join(ROOT, "data", "gebco_bearings.json")))
 RAD = np.array(G["radii_km"], float)             # km
-BRG = [float(b) for b in G["bearings_deg"]]
+BRG = sorted(float(k) for k in G["elev"].keys())        # every bearing the cache holds (2.5 deg steps)
 Z0 = float(G["ip_elev_m"])
 LAKE_SURFACE = {"Lake Superior": 183.0, "Lake Michigan": 176.0, "Lake Huron": 176.0,
                 "Lake Erie": 174.0, "Lake Ontario": 75.0}
@@ -92,14 +92,14 @@ def stats(v):
     return (min(v), float(np.median(v)), max(v)) if v else (None, None, None)
 
 # ---------------------------------------------------------------- figure
-D_MIN, D_MAX = 0.3, 1500.0
+D_MIN, D_MAX = 0.1, 1500.0
 fig = plt.figure(figsize=(9.8, 10.6))
-fig.subplots_adjust(top=0.915, bottom=0.115)
+fig.subplots_adjust(top=0.915, bottom=0.125)
 ax = fig.add_subplot(111, projection="polar")
-rmap = cc.polar_axes(ax, D_MIN, D_MAX, rings=(0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000),
+rmap = cc.polar_axes(ax, D_MIN, D_MAX, rings=(0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000),
                      tilt_labels=False, fs=6.6, rlabel_pos=197)
 ax.set_yticklabels([])
-for d in (0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000):        # ring labels, drawn on top
+for d in (0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000):        # ring labels, drawn on top
     ax.text(math.radians(197), rmap(d), "%g km" % d, fontsize=6.6, color="0.35", ha="center", va="center",
             zorder=30, bbox=dict(boxstyle="round,pad=0.15", fc="w", ec="none", alpha=.85))
 
@@ -112,25 +112,56 @@ for nm, la, lo in cc.LAKE_LABELS:
     ax.text(math.radians(a), rmap(D), nm, fontsize=7.2, color="#1f5a7a", ha="center", va="center",
             style="italic", zorder=3, bbox=dict(boxstyle="round,pad=0.1", fc="w", ec="none", alpha=.5))
 
-# the pairs
-AZ = np.radians(BRG + [BRG[0]])
-circ = np.radians(np.arange(0, 361, 2))
+# the pairs: periodic Catmull-Rom (cubic Hermite) interpolation through the sampled bearings, in log range,
+# evaluated every half degree -- local, C1-smooth, no ringing at lake edges
+AZ_FINE = np.radians(np.arange(0, 360.5, 0.5))
+def smooth(vals):
+    v = np.array([np.nan if x is None else x for x in vals], float)
+    if np.isnan(v).any():
+        return np.full_like(AZ_FINE, np.nan)
+    y = np.log(v); n = len(y); step = 360.0 / n
+    out = np.empty_like(AZ_FINE)
+    for k, a in enumerate(np.degrees(AZ_FINE)):
+        u = (a % 360.0) / step; i = int(np.floor(u)); t = u - i
+        y0, y1, y2, y3 = y[(i - 1) % n], y[i % n], y[(i + 1) % n], y[(i + 2) % n]
+        out[k] = 0.5 * ((2 * y1) + (-y0 + y2) * t + (2 * y0 - 5 * y1 + 4 * y2 - y3) * t * t + (-y0 + 3 * y1 - 3 * y2 + y3) * t ** 3)
+    return np.exp(out)
+circ = np.radians(np.arange(0, 360.5, 0.5))
 for i, (r, col) in enumerate(zip(RES, COL)):
     sn, sf = r["smooth_near_km"], r["smooth_far_km"]
-    near = np.array([np.nan if v is None else v for v in r["near_km"] + r["near_km"][:1]])
-    far = np.array([np.nan if v is None else v for v in r["far_km"] + r["far_km"][:1]])
+    near, far = smooth(r["near_km"]), smooth(r["far_km"])
     if r["tilt_mrad"] == 0:
         ax.plot(circ, np.full_like(circ, rmap(sf)), color=col, lw=0.8, alpha=.35, zorder=3)
-        ax.plot(AZ, rmap(far), color=col, lw=1.9, zorder=5)
+        ax.plot(AZ_FINE, rmap(far), color=col, lw=1.9, zorder=5)
     else:
         ax.plot(circ, np.full_like(circ, rmap(sn)), color=col, lw=0.8, alpha=.35, ls=(0, (1.2, 1.6)), zorder=3)
         ax.plot(circ, np.full_like(circ, rmap(sf)), color=col, lw=0.8, alpha=.35, zorder=3)
-        ax.plot(AZ, rmap(near), color=col, lw=1.9, ls=(0, (1.2, 1.6)), zorder=5)
-        ax.plot(AZ, rmap(far), color=col, lw=1.9, zorder=5)
+        ax.plot(AZ_FINE, rmap(near), color=col, lw=1.9, ls=(0, (1.2, 1.6)), zorder=5)
+        ax.plot(AZ_FINE, rmap(far), color=col, lw=1.9, zorder=5)
     lab = "0 mrad (both ends)" if r["tilt_mrad"] == 0 else "%g mrad" % r["tilt_mrad"]
     az_lab = (215, 160)[i % 2]
     ax.text(math.radians(az_lab), rmap(sf) + 0.03, lab, fontsize=7.2, color=col, fontweight="bold",
             ha="center", va="bottom", zorder=25, bbox=dict(boxstyle="round,pad=0.12", fc="w", ec="none", alpha=.9))
+
+# the accelerator rings themselves, in plan: racetracks with the east straight on the meridian, body to the west
+import io, contextlib
+with contextlib.redirect_stdout(io.StringIO()):
+    import corridor_layout as cl
+RINGS = [("collider ring, C 11.0 km", cl.y_coll - cl.IP_Y, cl.LS_COLLIDER, cl.R_COLL, "#0b6e4f", 10.0),
+         ("RCS3/4, C 14.7 km", cl.y_rcs34 - cl.IP_Y, cl.LS_RCS34, cl.R_RCS34, "#7a2e21", -12.0),
+         ("RCS1/2, C 6.3 km", cl.y_rcs12 - cl.IP_Y, cl.LS_RCS12, cl.R_RCS12, "#1c5a96", -8.0)]
+for nm, yc, Ls, Rr, colr, da in RINGS:
+    pts = cl.racetrack(yc, Ls, Rr, n_arc=90)                      # (x east, y north) metres from the IP
+    az_r = np.unwrap(np.array([math.atan2(x, y) for x, y in pts]))
+    D_r = np.array([math.hypot(x, y) / 1000.0 for x, y in pts])
+    ax.plot(az_r, rmap(D_r), color=colr, lw=1.3, alpha=.9, zorder=6)
+    if nm.startswith("RCS3/4"):
+        xw, yw = -Rr, yc + Ls / 2 + Rr                                # label at the north arc apex
+    else:
+        xw, yw = -2 * Rr, yc                                            # label near the west straight's midpoint
+    ax.text(math.atan2(xw, yw) + math.radians(da if not nm.startswith("RCS3/4") else 0.0),
+            rmap(math.hypot(xw, yw) / 1000.0) + 0.04, nm, fontsize=6.4, color=colr,
+            ha="center", va="bottom", zorder=24, bbox=dict(boxstyle="round,pad=0.12", fc="w", ec="none", alpha=.85))
 
 # two worked pairs: the baseline (15.4 mrad, up-north) and an RCS aimed at Lake Huron (50 mrad, up-SW)
 def pair(th_mrad, az_far, label_far, label_near, col, dr_far, dr_near, ha_far, ha_near, da_near=0.0):
@@ -159,6 +190,19 @@ Df_b, Dn_b = pair(15.4, 180.0, "baseline, down-going end:\nUIUC %.0f km", "basel
 Df_h, Dn_h = pair(50.0, 52.5, "RCS3/4 aimed at Lake Huron:\ndown-going end %.0f km", "its up-going end:\n%.2f km, inside the fence",
                   c50, 0.18, 0.62, "center", "center", da_near=22)
 
+# one straight with BOTH ends far: UIUC (S) and Lake Superior (N) -- a chord 10.2 km below the IP
+S1, S2 = 198.4, 655.0
+d_chord = S1 * S2 / (2 * cc.R_E)
+gcol = "0.35"
+ax.plot([math.pi, math.pi], [0, rmap(S1)], color=gcol, lw=1.2, ls=(0, (3, 2)), alpha=.8, zorder=4)
+ax.plot([0, 0], [0, rmap(S2)], color=gcol, lw=1.2, ls=(0, (3, 2)), alpha=.8, zorder=4)
+ax.plot([0], [rmap(S2)], "s", ms=7, color=gcol, mec="w", mew=1.0, zorder=22)
+ax.annotate("one straight, BOTH ends far:\nUIUC 198 km S and Lake Superior 655 km N\nneeds the straight %.1f km below the IP\n"
+            "($d_0 = s_1 s_2 / 2R_E$; deepest point 14 km)" % d_chord, (0, rmap(S2)), xytext=(math.radians(24), rmap(1050.0)),
+            fontsize=6.8, color=gcol, ha="left", va="center", zorder=26,
+            bbox=dict(boxstyle="round,pad=0.15", fc="w", ec=gcol, lw=0.6, alpha=.92),
+            arrowprops=dict(arrowstyle="-", color=gcol, lw=0.6))
+
 # landmarks
 LM = {"UIUC South Farms": ("*", 11, "#0b6e4f"), "Purdue": ("*", 10, "#0b6e4f"),
       "Kettle Moraine SF": ("^", 7, "#4d7a2f"), "Soudan mine (MINOS far)": ("D", 6, "#7a2e21"),
@@ -183,15 +227,17 @@ H = [Line2D([], [], color="0.3", lw=1.9, ls=(0, (1.2, 1.6)), label="up-going end
      Line2D([], [], color="0.3", lw=1.9, label="down-going end surfaces here (far exit)"),
      Line2D([], [], color="0.3", lw=0.8, alpha=.4, label="same, smooth sphere"),
      Patch(color="0.80", label="Fermilab site"), Patch(color="#3d7ea6", alpha=.55, label="lakes (Natural Earth 10m)"),
-     Line2D([], [], color=c154, lw=3.2, alpha=.35, label="one straight: its two ends are opposite each other")]
-fig.legend(handles=H, loc="lower center", ncol=3, fontsize=7.2, frameon=False, bbox_to_anchor=(0.5, 0.055),
+     Line2D([], [], color=c154, lw=3.2, alpha=.35, label="one straight: its two ends are opposite each other"),
+     Line2D([], [], color="#0b6e4f", lw=1.3, label="the rings in plan (collider, RCS3/4, RCS1/2)"),
+     Line2D([], [], color="0.35", lw=1.2, ls=(0, (3, 2)), label="a chord with both ends far (10 km deep)")]
+fig.legend(handles=H, loc="lower center", ncol=3, fontsize=7.0, frameon=False, bbox_to_anchor=(0.5, 0.048),
            handlelength=2.6, columnspacing=1.4)
 ax.set_title("Where the two ends of one straight surface, tilt by tilt\n"
              "35 m-deep straight; one colour per tilt $-$ dotted: the end that goes up, solid: the end that goes down; "
              "at 0 mrad they are the same curve",
              fontsize=9.6, pad=22)
-fig.text(0.5, 0.015,
-         "Bold curves: GEBCO 2020 terrain along 48 bearings (0.25$-$1000 km), exits over the Great Lakes taken at the water surface. "
+fig.text(0.5, 0.012,
+         "Bold curves: GEBCO 2020 terrain along %d bearings (0.25$-$1000 km), Catmull-Rom smoothed; exits over the Great Lakes taken at the water surface. " % len(BRG) + 
          "Faint circles: smooth sphere,\n"
          "$s_{near}=R_E(-\\theta+\\sqrt{\\theta^2+2d_0/R_E})\\approx d_0/\\theta$ and "
          "$s_{far}=R_E(\\theta+\\sqrt{\\theta^2+2d_0/R_E})\\approx 2R_E\\theta$. "
