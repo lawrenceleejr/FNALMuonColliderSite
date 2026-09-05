@@ -35,11 +35,12 @@ spline
 the faint circles are the smooth-sphere values. Exits over the Great Lakes are
 taken at the water surface, not the bed. The three rings are drawn in plan
 (collider, RCS3/4, RCS1/2: east straights on the meridian, bodies west),
-and two chords are drawn for the next subsection: grey dashed, one straight
+and three chords are drawn for the next subsection: grey dashed, one straight
 through the IP with both ends far (UIUC and Lake Superior); teal, the chord
 through UIUC and Green Bay — dotted the true one from the South Farms to
 mid-bay, which passes 11 km east of the IP, dashed the same two ranges as a
-straight through the IP.
+straight through the IP; olive dotted, the true chord through UIUC and Lake
+Winnebago, which crosses the Fermilab site 3.9 km west of the IP.
 
 <div style="margin:1.2rem 0"><img src="../figs/exit_pairs.svg" alt="Paired exit curves per tilt: dotted up-going end, solid down-going end, terrain-corrected, with the Fermilab fence and lakes" style="max-width:100%"></div>
 
@@ -109,6 +110,7 @@ d₀ = s₁ s₂ / 2R<sub>E</sub>, &nbsp; θ = (s₂ − s₁) / 2R<sub>E</sub>,
 | Cary / Fox River Grove (the level ring's exit) | 38 km | 0.60 km | 1.10 km | 12.6 |
 | Kettle Moraine SF | 195 km | 3.0 km | 3.0 km | level |
 | Green Bay's latitude on the UIUC line (Shawano Co., 15 km W of the bay) | 298 km | 4.6 km | 4.8 km | 7.8 down-N |
+| **Lake Winnebago** (bearing 358°, see below) | 258 km | **4.0 km** | 4.1 km | 4.7 |
 | **Green Bay water** (needs bearing 2.8°, see below) | 304 km | **4.7 km** | 5.0 km | 8.3 |
 | **Lake Superior** (south shore / mid-crossing / north shore) | 626 / 655 / 695 km | **9.7 / 10.2 / 10.8 km** | 13.3 / 14.3 / 15.7 km | 34–39 |
 
@@ -133,7 +135,21 @@ midpoint — a straight through both places is not at Fermilab. A straight
 and puts its south end **18 km west of the South Farms** (9.7 km for the bay's
 southern tip at 2.8°). In the IP-centred polar frame the true chord is the
 curve that swings out to the east and back; the through-IP version is a pair
-of opposite spokes. And the level-straight case
+of opposite spokes.
+
+**Lake Winnebago is the one lake that lines up.** It is the nearest water on
+a UIUC line (258 km at bearing 358°), and the chord from the South Farms into
+its water — choosing the lake point at least 2 km from shore that brings the
+chord nearest Fermilab — passes **3.9 km west of the IP, inside the fence**,
+at **4.0 km depth** (4.1 km at its midpoint, 458 km arc). UIUC, the west side
+of the site and the lake are nearly collinear: the through-IP version of the
+same chord is 4.0 km deep with a 4.7 mrad tilt and puts its south end only
+6.9 km east of the South Farms; the chord to the lake's centre passes 6.9 km
+west of the IP, just outside the fence. It is still a 4 km-deep straight —
+the deepest mine on Earth — but of every both-ends-far chord on the compass it
+is the only one whose two exits are water and a partner campus *and* whose
+middle lies under Fermilab land. On the paired-exit plot it is the olive
+dotted curve threading the west side of the grey site polygon. And the level-straight case
 is the one the [safety page](../safety/) already knows: at 0.60 km depth the
 UIUC-bound straight's other end would surface at Cary, the Zone D default
 exit.
@@ -185,7 +201,8 @@ Gaussian-cut at E<sub>ν</sub>/E<sub>μ</sub> = 1/50) at 1/101 of the pencil
 density. Each ramp is averaged with decays ∝ 1/E per turn. P̄ depends on
 range alone, so each panel is a set of rings — contoured at 1, 2, 5 × 10ᵏ —
 and the geography under them says what a given fraction would be delivered
-to (white dotted: the UIUC–Green Bay chord of §1, with its two ends). Under each panel: the **ν<sub>τ</sub> oscillation baseline** for that
+to (white dotted and dash-dot: the UIUC–Green Bay and UIUC–Lake Winnebago
+chords of §1, with their ends). Under each panel: the **ν<sub>τ</sub> oscillation baseline** for that
 stage's energy (the first maximum of sin², L<sub>max</sub> = 496 km ×
 E<sub>ν</sub>[GeV]), the fractions at UIUC and Soudan, and the on-axis rate.
 
@@ -328,8 +345,9 @@ airports, and the population centres the beam must not graze.
 
 Radius is log range so that 10 km neighbours and 1300 km mines share one
 frame; every range ring is also labelled with the tilt that reaches it. The
-teal dotted curve is the UIUC–Green Bay chord of §1, ending at the mid-bay
-marker. The green curve is the site's θ<sub>free</sub>(bearing) from the
+teal and olive dotted curves are the UIUC–Green Bay and UIUC–Lake Winnebago
+chords of §1, ending at their lake markers. The green curve is the site's
+θ<sub>free</sub>(bearing) from the
 [azimuth study](../rcs-azimuth/), drawn at its equivalent range 430–1220 km.
 Sanity checks against known baselines: the map places Soudan at 736 km
 (MINOS: 735 km, and NuMI's 58 mrad downward pitch is exactly

@@ -141,7 +141,10 @@ lakes = cc.lakes_polar(D_MAX, min_vertices=40, decimate_to=150)
 th_e = np.linspace(0, 2 * np.pi, 721)
 LE = np.geomspace(D_MIN, D_MAX, 601)
 TE = json.load(open(os.path.join(ROOT, "static", "geo", "two_ends.json")))["chord_for_plots"]
-CH_AZ, CH_D, CH_DEP = cc.great_circle_polar(TE["uiuc"], (TE["green_bay_point"]["lat"], TE["green_bay_point"]["lon"]))
+CHORDS = []
+for CH, ls in zip(TE["chords"][:2], ((0, (1.5, 1.5)), (0, (4, 1.5, 1, 1.5)))):
+    az_, D_, dep_ = cc.great_circle_polar(TE["uiuc"], (CH["point"]["lat"], CH["point"]["lon"]))
+    CHORDS.append((CH, az_, D_, ls))
 LABEL = {"UIUC South Farms": ("UIUC", (6, -9), "left"), "Purdue": ("Purdue", (6, 2), "left"),
          "Soudan mine (MINOS far)": ("Soudan", (-6, -7), "right"), "Ash River (NOvA far)": ("Ash River", (-6, 5), "right"),
          "SURF (DUNE far)": ("SURF", (4, -9), "left"), "Chicago": ("Chicago", (5, 0), "left")}
@@ -175,10 +178,11 @@ for k, (nm, E1, E2, _, smeared) in enumerate(STAGES):
             continue
         ax.fill(az, rmap(Ds), color="w", alpha=.18, lw=0.6, ec="w", zorder=2)
     ax.plot(th_e, np.full_like(th_e, rmap(198.4)), color="#ff9d3a", lw=1.4, ls=(0, (4, 2.5)), zorder=6)
-    # the true chord through UIUC South Farms and Green Bay (misses the IP; see two_ends.py)
-    ax.plot(CH_AZ, rmap(CH_D), color="w", lw=1.1, ls=(0, (1.5, 1.5)), alpha=.95, zorder=6)
-    for a_, d_ in ((CH_AZ[0], CH_D[0]), (CH_AZ[-1], CH_D[-1])):
-        ax.plot([a_], [rmap(d_)], "s", ms=5, color="w", mec="0.1", mew=0.6, zorder=8)
+    # the true chords through UIUC South Farms and Green Bay / Lake Winnebago (see two_ends.py)
+    for CH, az_, D_, ls in CHORDS:
+        ax.plot(az_, rmap(D_), color="w", lw=1.1, ls=ls, alpha=.95, zorder=6)
+        ax.plot([az_[-1]], [rmap(D_[-1])], "s", ms=5, color="w", mec="0.1", mew=0.6, zorder=8)
+    ax.plot([CHORDS[0][1][0]], [rmap(CHORDS[0][2][0])], "s", ms=5, color="w", mec="0.1", mew=0.6, zorder=8)
     for d in RINGS:                                             # ring labels, drawn on top
         ax.text(math.radians(250), rmap(d), "%g km" % d, fontsize=5.8, color="0.15", ha="center", va="center",
                 zorder=30, bbox=dict(boxstyle="round,pad=0.15", fc="w", ec="none", alpha=.8))
@@ -194,9 +198,15 @@ for k, (nm, E1, E2, _, smeared) in enumerate(STAGES):
                         color="0.1", ha=ha, va="center", zorder=4.5,
                         bbox=dict(boxstyle="round,pad=0.12", fc="w", ec="none", alpha=.75))
     if k == 0:
-        ax.annotate("UIUC$-$Green Bay chord\n(%.1f km deep, misses the IP by %.0f km)" % (TE["true_chord"]["depth_at_closest_approach_km"],
-                    TE["true_chord"]["closest_approach_to_ip_km"]), (CH_AZ[-1], rmap(CH_D[-1])), xytext=(8, -2), textcoords="offset points",
-                    fontsize=6.0, color="0.1", ha="left", va="top", zorder=30, bbox=dict(boxstyle="round,pad=0.12", fc="w", ec="none", alpha=.8))
+        gb, wn = CHORDS[0][0], CHORDS[1][0]
+        ax.annotate("UIUC$-$Green Bay chord (dotted)\n%.1f km deep, misses the IP by %.0f km" % (gb["true_chord"]["depth_at_closest_approach_km"],
+                    gb["true_chord"]["closest_approach_to_ip_km"]), (CHORDS[0][1][-1], rmap(CHORDS[0][2][-1])), xytext=(8, -2),
+                    textcoords="offset points", fontsize=6.0, color="0.1", ha="left", va="top", zorder=30,
+                    bbox=dict(boxstyle="round,pad=0.12", fc="w", ec="none", alpha=.8))
+        ax.text(0.0, 0.04, "UIUC$-$Winnebago chord (dash-dot):\n%.1f km deep, crosses the site %.1f km W of the IP" % (
+                wn["true_chord"]["depth_at_closest_approach_km"], wn["true_chord"]["closest_approach_to_ip_km"]),
+                transform=ax.transAxes, fontsize=6.0, color="0.1", ha="left", va="bottom", zorder=30,
+                bbox=dict(boxstyle="round,pad=0.12", fc="w", ec="none", alpha=.8))
         ax.text(math.radians(118), rmap(198.4) + 0.04, "198 km: UIUC /\ncollider circle", fontsize=6.2,
                 color="#b5541c", ha="center", va="bottom", zorder=30, fontweight="bold",
                 bbox=dict(boxstyle="round,pad=0.15", fc="w", ec="none", alpha=.8))
@@ -268,7 +278,8 @@ fig.text(0.665, 0.083,
          "Rates: north-aimed decays per cycle from chain_timing.json, 5 Hz, $1.2\\times10^7$ s/yr, both signs,\n"
          "CSMS CC cross-sections, $\\tau$-threshold suppression; on-axis flux $\\propto 1/L^2$ and $\\bar P\\propto L^2$ cancel, so the "
          "rate is flat in $L$.\nDUNE lines: TDR vol. II $\\S$4.1.1.3 $\\nu_\\tau$ CC interactions per year before detector efficiency (130 CP-optimised,\n"
-         "~1000 $\\tau$-optimised) in the 40 kt fiducial far detector at 1300 km, per tonne. White dotted: the UIUC$-$Green Bay chord (two_ends.py).",
+         "~1000 $\\tau$-optimised) in the 40 kt fiducial far detector at 1300 km, per tonne.\n"
+         "White dotted / dash-dot: the UIUC$-$Green Bay and UIUC$-$Lake Winnebago chords (two_ends.py).",
          ha="left", va="top", fontsize=6.6, color="0.35")
 for ext in ("pdf", "svg"):
     fig.savefig(os.path.join(ROOT, "static", "figs", "tau_compass." + ext), bbox_inches="tight")

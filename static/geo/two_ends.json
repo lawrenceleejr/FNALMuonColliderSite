@@ -29,7 +29,90 @@
    "depth_at_ip_km": 5.11,
    "tilt_mrad": 10.17,
    "deepest_km": 5.44
-  }
+  },
+  "chords": [
+   {
+    "name": "Green Bay",
+    "short": "Green Bay",
+    "color": "#2a7f9e",
+    "point": {
+     "lat": 44.7813,
+     "lon": -87.8465,
+     "bearing_deg": 5.2,
+     "range_km": 328.0,
+     "note": "mid-bay water, the bearing with the longest run of bay water"
+    },
+    "true_chord": {
+     "closest_approach_to_ip_km": 11.22,
+     "closest_approach_bearing_deg": 93.2,
+     "depth_at_closest_approach_km": 5.09,
+     "midpoint_depth_km": 5.43,
+     "arc_km": 525.9,
+     "inside_fence": false
+    },
+    "through_ip": {
+     "uiuc_end_bearing_deg": 185.2,
+     "uiuc_end_offset_km": 18.0,
+     "depth_at_ip_km": 5.11,
+     "tilt_mrad": 10.17,
+     "deepest_km": 5.44
+    }
+   },
+   {
+    "name": "Lake Winnebago",
+    "short": "Winnebago",
+    "color": "#6b8e23",
+    "point": {
+     "lat": 44.1656,
+     "lon": -88.336,
+     "bearing_deg": 358.0,
+     "range_km": 258.3,
+     "note": "the lake point (>= 2 km from shore) whose chord to UIUC passes closest to the IP"
+    },
+    "true_chord": {
+     "closest_approach_to_ip_km": 3.93,
+     "closest_approach_bearing_deg": 272.9,
+     "depth_at_closest_approach_km": 4.02,
+     "midpoint_depth_km": 4.09,
+     "arc_km": 456.6,
+     "inside_fence": true
+    },
+    "through_ip": {
+     "uiuc_end_bearing_deg": 178.0,
+     "uiuc_end_offset_km": -6.9,
+     "depth_at_ip_km": 4.02,
+     "tilt_mrad": 4.7,
+     "deepest_km": 4.09
+    }
+   },
+   {
+    "name": "Lake Winnebago (centre)",
+    "short": "Winnebago centre",
+    "color": "#6b8e23",
+    "point": {
+     "lat": 44.0243,
+     "lon": -88.4136,
+     "bearing_deg": 356.4,
+     "range_km": 242.9,
+     "note": "lake centre, for reference; not drawn"
+    },
+    "true_chord": {
+     "closest_approach_to_ip_km": 6.87,
+     "closest_approach_bearing_deg": 269.8,
+     "depth_at_closest_approach_km": 3.78,
+     "midpoint_depth_km": 3.82,
+     "arc_km": 441.1,
+     "inside_fence": false
+    },
+    "through_ip": {
+     "uiuc_end_bearing_deg": 176.4,
+     "uiuc_end_offset_km": -12.5,
+     "depth_at_ip_km": 3.78,
+     "tilt_mrad": 3.49,
+     "deepest_km": 3.82
+    }
+   }
+  ]
  },
  "green_bay": {
   "first_water_bearing_deg": 2.8,
@@ -310,6 +393,14 @@
    "perigee_offset_km": 248.30842867071107,
    "target": "Lake Superior, north shore",
    "north_exit_km": 695.0
+  },
+  {
+   "d0_km": 4.021526838003321,
+   "tilt_mrad": 4.702305335178801,
+   "perigee_km": 4.091963677489249,
+   "perigee_offset_km": 29.958428670711086,
+   "target": "Lake Winnebago (needs bearing 358.0$^\\circ$)",
+   "north_exit_km": 258.3
   }
  ],
  "reference_depths_km": {

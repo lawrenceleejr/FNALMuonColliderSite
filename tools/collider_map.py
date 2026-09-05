@@ -268,18 +268,21 @@ for f in _lk["features"]:
 ax.plot(np.radians(np.arange(0, 361)), np.full(361, rmap(D_COLL)),
         color="#0b6e4f", lw=2.0, ls=(0, (5, 3)), zorder=6)
 
-# the chord through UIUC South Farms and Green Bay's water: a straight that misses the IP (see two_ends.py)
+# the chords through UIUC South Farms and a northern lake (two_ends.py): straights that miss the IP or cross the site
 import compass_common as cc
 TE = json.load(open(os.path.join(ROOT, "static", "geo", "two_ends.json")))["chord_for_plots"]
-gbp = TE["green_bay_point"]
-ch_az, ch_D, ch_dep = cc.great_circle_polar(TE["uiuc"], (gbp["lat"], gbp["lon"]))
-ax.plot(ch_az, rmap(ch_D), color="#2a7f9e", lw=1.5, ls=(0, (1.5, 1.5)), zorder=6)
-ax.plot([math.radians(gbp["bearing_deg"])], [rmap(gbp["range_km"])], "s", ms=7, color="#2a7f9e", mec="w", mew=0.9, zorder=8)
-ax.annotate("Green Bay (mid-bay): the UIUC$-$Green Bay chord is %.0f km deep and misses the IP by %.0f km E" % (
-            TE["true_chord"]["depth_at_closest_approach_km"], TE["true_chord"]["closest_approach_to_ip_km"]),
-            (math.radians(gbp["bearing_deg"]), rmap(gbp["range_km"])), xytext=(math.radians(gbp["bearing_deg"] + 9), rmap(gbp["range_km"]) - 0.07),
-            fontsize=6.4, color="#2a7f9e", ha="left", va="center", zorder=9,
-            bbox=dict(boxstyle="round,pad=0.12", fc="w", ec="none", alpha=.85), arrowprops=dict(arrowstyle="-", color="#2a7f9e", lw=0.6))
+for CH in TE["chords"][:2]:
+    pt = CH["point"]; tcx = CH["true_chord"]; col = CH["color"]
+    ch_az, ch_D, ch_dep = cc.great_circle_polar(TE["uiuc"], (pt["lat"], pt["lon"]))
+    ax.plot(ch_az, rmap(ch_D), color=col, lw=1.5, ls=(0, (1.5, 1.5)), zorder=6)
+    ax.plot([math.radians(pt["bearing_deg"])], [rmap(pt["range_km"])], "s", ms=7, color=col, mec="w", mew=0.9, zorder=8)
+    if CH["name"] == "Green Bay":
+        ax.annotate("Green Bay (mid-bay): the UIUC$-$Green Bay chord is %.0f km deep and misses the IP by %.0f km E" % (
+                    tcx["depth_at_closest_approach_km"], tcx["closest_approach_to_ip_km"]),
+                    (math.radians(pt["bearing_deg"]), rmap(pt["range_km"])), xytext=(math.radians(pt["bearing_deg"] + 9), rmap(pt["range_km"]) - 0.07),
+                    fontsize=6.4, color=col, ha="left", va="center", zorder=9,
+                    bbox=dict(boxstyle="round,pad=0.12", fc="w", ec="none", alpha=.85), arrowprops=dict(arrowstyle="-", color=col, lw=0.6))
+    # (Lake Winnebago: marker + legend only; the north sector has no room for another label)
 
 # the two beams: south chord underground to UIUC; north near-beam's sub-500 ft band
 ax.plot([math.pi, math.pi], [0, rmap(D_COLL)], color="#0b6e4f", lw=1.1, alpha=.7, zorder=5)
@@ -367,7 +370,7 @@ label("SURF / Homestake\n(DUNE far, 1290 km)", 44.3525, -103.7510, dr=-0.08, da=
 # lake names
 for nm, la, lo in (("Lake Michigan", 44.0, -86.5), ("Lake Superior", 48.3, -87.5),
                    ("Lake Huron", 45.0, -82.4), ("Lake Erie", 42.2, -81.2),
-                   ("L. Ontario", 43.7, -77.9), ("L. Winnebago", 44.15, -88.42)):
+                   ("L. Ontario", 43.7, -77.9)):
     D, a = inv(la, lo)
     ax.text(math.radians(a), rmap(D), nm, fontsize=7.5, color="#1f5a7a",
             ha="center", va="center", style="italic", zorder=8,
@@ -404,7 +407,8 @@ H = [Line2D([], [], marker="*", ms=10, color=G, ls="", mec="w", label="universit
      Line2D([], [], color="#0b6e4f", lw=1.3, label=r"$\theta_{free}$(bearing); shaded = azimuth free"),
      Patch(color="#3d7ea6", alpha=.55, label="lake (Natural Earth 10m footprint)"),
      Line2D([], [], color=K, lw=3.5, label="near beam below 500 ft (north)"),
-     Line2D([], [], color="#2a7f9e", lw=1.5, ls=(0, (1.5, 1.5)), label="the UIUC$-$Green Bay chord (5 km deep, misses the IP)")]
+     Line2D([], [], color="#2a7f9e", lw=1.5, ls=(0, (1.5, 1.5)), label="the UIUC$-$Green Bay chord (5 km deep, misses the IP)"),
+     Line2D([], [], color="#6b8e23", lw=1.5, ls=(0, (1.5, 1.5)), label="the UIUC$-$Winnebago chord (4 km deep, crosses the site)")]
 fig.legend(handles=H, loc="lower center", ncol=4, fontsize=7.0, frameon=False,
            bbox_to_anchor=(0.5, 0.052), handletextpad=0.5, columnspacing=1.2)
 fig.text(0.5, 0.016,
