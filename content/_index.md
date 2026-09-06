@@ -175,6 +175,22 @@ easement, or University of Illinois land.
   of off-site climb whichever way it points) holding UIUC, **Purdue**, Kettle
   Moraine State Forest and 45° of Lake Michigan; plus every mine, lake, forest
   and campus within 1300 km placed by true bearing and range.
+* **[The case](case/)** — why the corridor is two discoveries for the price of
+  one machine. Every other muon collider study treats the decay-neutrino flux
+  as a liability; aimed on purpose it is the **only** route to an identified
+  **ν̄τ** (91 %-pure sign-tagged beam; the world has 19 ν<sub>τ</sub>
+  interactions, DONUT 9 + OPERA 10, and has never charge-tagged one), the
+  **largest** neutrino dataset ever taken (NuTeV's entire 1996–97 run every
+  **38 minutes per tonne** in the on-site hall), and the
+  **best-characterised** beam ever built (flux = muon decay, not
+  hadroproduction; exactly 50/50 ν̄<sub>μ</sub>/ν<sub>e</sub>). It would measure
+  the ν<sub>τ</sub>/ν̄<sub>τ</sub> cross-sections (DONUT's 47 % is the only one
+  there is), test third-row PMNS unitarity against a strict L² prediction over
+  four decades, and re-open sin²θ<sub>W</sub> with the systematics that broke
+  NuTeV removed. The catch is S/B, and it has one answer: **S/B ∝ L²**, so the
+  τ hall belongs at 700–800 km, not 198 km — **14 kt at Ash River** reaches 5σ
+  in 5 years on OPERA's own τ-ID performance. And the ring that carries 90 % of
+  it is **RCS1/2, the smallest in the complex**.
 * **[The ring stack](rings/)** — depth, tilt and the transfer lines. A planar
   racetrack turns tilt into depth, so one north–south section carries all three
   rings: co-tilted, the straights sit at 32.6 / 33.6 / 45.1 m but the reach

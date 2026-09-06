@@ -1,0 +1,1337 @@
+{
+ "note": "physics case: sample size, sign, tau flight path and appearance reach for the corridor beam",
+ "inputs": {
+  "tau_efficiency": 0.09,
+  "opera_fake_rate_per_interaction": 0.00010253781081773904,
+  "inelasticity_Etau_over_Enu": 0.6,
+  "literature": {
+   "DONUT": {
+    "label": "DONUT (1997 run)",
+    "nu_tau_identified": 9,
+    "interactions": null,
+    "charge_resolved": false,
+    "mean_E_nu_GeV": 100.0,
+    "sigma_nutau_uncertainty": 0.47,
+    "source": "Phys. Rev. D 78, 052002 (2008): 9 nu_tau CC interactions; sigma = (0.39 +- 0.13 +- 0.13) x 10^-38 E cm^2/GeV"
+   },
+   "OPERA": {
+    "label": "OPERA (2008-12)",
+    "nu_tau_identified": 10,
+    "interactions": 19505,
+    "background": 2.0,
+    "tau_efficiency": 0.09,
+    "charge_resolved": false,
+    "mean_E_nu_GeV": 17.0,
+    "source": "Phys. Rev. Lett. 120, 211801 (2018): 10 candidates, 2.0 expected background, 19 505 located interactions"
+   },
+   "DUNE_cpv": {
+    "label": "DUNE, 7 yr, CP-optimised",
+    "nu_tau_identified": 175,
+    "mean_E_nu_GeV": 8.0,
+    "charge_resolved": false,
+    "source": "DUNE TDR vol. II arXiv:2002.03005 sec. 8.9.1: ~25 selected/yr"
+   },
+   "DUNE_tau": {
+    "label": "DUNE, 7 yr, $\\tau$-optimised",
+    "nu_tau_identified": 1050,
+    "mean_E_nu_GeV": 20.0,
+    "charge_resolved": false,
+    "source": "DUNE TDR vol. II sec. 8.9.1: ~150 selected/yr with a high-energy beam"
+   },
+   "NuTeV": {
+    "label": "NuTeV",
+    "cc_events": 1620000.0,
+    "source": "Phys. Rev. Lett. 88, 091802 (2002): 1.62e6 CC events; sin^2 theta_W = 0.2277 +- 0.0016, ~3 sigma from the SM"
+   }
+  }
+ },
+ "stage_energies_GeV": {
+  "RCS1": 109.47968784193482,
+  "RCS2": 350.5178581140318,
+  "RCS3": 757.2795601161881,
+  "RCS4": 2035.5673693138417,
+  "Collider store": 1805.6623446143012
+ },
+ "tau_flight_m": {
+  "RCS1": 0.0032203242600692037,
+  "RCS2": 0.010310416336789608,
+  "RCS3": 0.022275234677483137,
+  "RCS4": 0.059875828216380156,
+  "Collider store": 0.05311321550578607
+ },
+ "sites": {
+  "on-site hall, 2 km N": {
+   "range_km": 2.0,
+   "sign_side": "nu",
+   "stages": {
+    "RCS1": {
+     "nutau_per_t_yr": 0.0109821490751729,
+     "nubartau_per_t_yr": 0.0003851722375737063,
+     "tau_total_per_t_yr": 0.011367321312746606,
+     "cc_per_t_yr": 12558074.693944857,
+     "S_over_B": 9.051802596959869e-10,
+     "fake_rate_needed": 8.146622337263882e-11,
+     "vs_opera": 7.944993434416602e-07,
+     "tau_flight_mm": 3.2203242600692037
+    },
+    "RCS2": {
+     "nutau_per_t_yr": 0.039274092558937435,
+     "nubartau_per_t_yr": 0.0014047311434775835,
+     "tau_total_per_t_yr": 0.04067882370241502,
+     "cc_per_t_yr": 268358894.2717744,
+     "S_over_B": 1.5158366117434684e-10,
+     "fake_rate_needed": 1.3642529505691215e-11,
+     "vs_opera": 1.3304876900425359e-07,
+     "tau_flight_mm": 10.310416336789608
+    },
+    "RCS3": {
+     "nutau_per_t_yr": 0.02551553998226157,
+     "nubartau_per_t_yr": 0.0009195148133258754,
+     "tau_total_per_t_yr": 0.026435054795587446,
+     "cc_per_t_yr": 693386882.0039122,
+     "S_over_B": 3.8124538380635666e-11,
+     "fake_rate_needed": 3.4312084542572096e-12,
+     "vs_opera": 3.346286045014344e-08,
+     "tau_flight_mm": 22.275234677483137
+    },
+    "RCS4": {
+     "nutau_per_t_yr": 0.06738952645435799,
+     "nubartau_per_t_yr": 0.0025125797765331846,
+     "tau_total_per_t_yr": 0.06990210623089117,
+     "cc_per_t_yr": 14532654718.903927,
+     "S_over_B": 4.810002548258663e-12,
+     "fake_rate_needed": 4.329002293432797e-13,
+     "vs_opera": 4.2218594866703356e-09,
+     "tau_flight_mm": 59.87582821638016
+    },
+    "Collider store": {
+     "nutau_per_t_yr": 0.08795895162330543,
+     "nubartau_per_t_yr": 0.0030676981949850843,
+     "tau_total_per_t_yr": 0.0910266498182905,
+     "cc_per_t_yr": 6751395025.353983,
+     "S_over_B": 1.3482643139151509e-11,
+     "fake_rate_needed": 1.2134378825236357e-12,
+     "vs_opera": 1.1834052949311757e-08,
+     "tau_flight_mm": 53.11321550578607
+    },
+    "FULL CHAIN": {
+     "tau_total_per_t_yr": 0.23940995585993075,
+     "cc_per_t_yr": 22258353595.22754,
+     "S_over_B": 1.0755959771942123e-11,
+     "nutau_per_t_yr": 0.23112025969403532,
+     "nubartau_per_t_yr": 0.008289696165895434,
+     "fake_rate_needed": 9.680363794747912e-13,
+     "vs_opera": 9.440774790827901e-09,
+     "tau_flight_mm": null
+    },
+    "RCS1+RCS2 window": {
+     "tau_total_per_t_yr": 0.052046145015161624,
+     "cc_per_t_yr": 280916968.9657193,
+     "S_over_B": 1.8527234295167441e-10,
+     "nutau_per_t_yr": 0.050256241634110334,
+     "nubartau_per_t_yr": 0.0017899033810512897,
+     "fake_rate_needed": 1.6674510865650697e-11,
+     "vs_opera": 1.6261816721725842e-07,
+     "tau_flight_mm": null
+    }
+   }
+  },
+  "deep hall, 9.25 km N": {
+   "range_km": 9.25,
+   "sign_side": "nu",
+   "stages": {
+    "RCS1": {
+     "nutau_per_t_yr": 0.010982148305517352,
+     "nubartau_per_t_yr": 0.0003851721991782039,
+     "tau_total_per_t_yr": 0.011367320504695556,
+     "cc_per_t_yr": 587083.1120617025,
+     "S_over_B": 1.9362370116176753e-08,
+     "fake_rate_needed": 1.7426133104559077e-09,
+     "vs_opera": 1.699483631022124e-05,
+     "tau_flight_mm": 3.2203242600692037
+    },
+    "RCS2": {
+     "nutau_per_t_yr": 0.039274092178372584,
+     "nubartau_per_t_yr": 0.0014047311231697595,
+     "tau_total_per_t_yr": 0.04067882330154234,
+     "cc_per_t_yr": 12545631.288088799,
+     "S_over_B": 3.242469220354343e-09,
+     "fake_rate_needed": 2.918222298318909e-10,
+     "vs_opera": 2.845996296435516e-06,
+     "tau_flight_mm": 10.310416336789608
+    },
+    "RCS3": {
+     "nutau_per_t_yr": 0.025515539918578436,
+     "nubartau_per_t_yr": 0.0009195148098432219,
+     "tau_total_per_t_yr": 0.02643505472842166,
+     "cc_per_t_yr": 32415456.865047757,
+     "S_over_B": 8.155077017262552e-10,
+     "fake_rate_needed": 7.339569315536296e-11,
+     "vs_opera": 7.157914974976773e-07,
+     "tau_flight_mm": 22.275234677483137
+    },
+    "RCS4": {
+     "nutau_per_t_yr": 0.06738952642304913,
+     "nubartau_per_t_yr": 0.0025125797747820523,
+     "tau_total_per_t_yr": 0.06990210619783119,
+     "cc_per_t_yr": 679393646.464464,
+     "S_over_B": 1.0288896071018447e-10,
+     "fake_rate_needed": 9.260006463916602e-12,
+     "vs_opera": 9.030821303934666e-08,
+     "tau_flight_mm": 59.87582821638016
+    },
+    "Collider store": {
+     "nutau_per_t_yr": 0.08795895128012676,
+     "nubartau_per_t_yr": 0.003067698182283136,
+     "tau_total_per_t_yr": 0.0910266494624099,
+     "cc_per_t_yr": 315624018.71632934,
+     "S_over_B": 2.8840216227086676e-10,
+     "fake_rate_needed": 2.5956194604378006e-11,
+     "vs_opera": 2.531377878791965e-07,
+     "tau_flight_mm": 53.11321550578607
+    },
+    "FULL CHAIN": {
+     "tau_total_per_t_yr": 0.23940995419490063,
+     "cc_per_t_yr": 1040565836.4459915,
+     "S_over_B": 2.300767003965796e-10,
+     "nutau_per_t_yr": 0.23112025810564427,
+     "nubartau_per_t_yr": 0.008289696089256374,
+     "fake_rate_needed": 2.0706903035692163e-11,
+     "vs_opera": 2.019440718555878e-07,
+     "tau_flight_mm": null
+    },
+    "RCS1+RCS2 window": {
+     "tau_total_per_t_yr": 0.0520461438062379,
+     "cc_per_t_yr": 13132714.4001505,
+     "S_over_B": 3.963091118896292e-09,
+     "nutau_per_t_yr": 0.050256240483889936,
+     "nubartau_per_t_yr": 0.0017899033223479634,
+     "fake_rate_needed": 3.566782007006663e-10,
+     "vs_opera": 3.4785041523332482e-06,
+     "tau_flight_mm": null
+    }
+   }
+  },
+  "UIUC, 198 km S": {
+   "range_km": 198.4,
+   "sign_side": "nubar",
+   "stages": {
+    "RCS1": {
+     "nutau_per_t_yr": 0.000657970963526989,
+     "nubartau_per_t_yr": 0.006428357904081581,
+     "tau_total_per_t_yr": 0.00708632886760857,
+     "cc_per_t_yr": 1225.945048173433,
+     "S_over_B": 5.780298944203636e-06,
+     "fake_rate_needed": 5.202269049783272e-07,
+     "vs_opera": 0.005073512890801136,
+     "tau_flight_mm": 3.2203242600692037
+    },
+    "RCS2": {
+     "nutau_per_t_yr": 0.0023997323010513344,
+     "nubartau_per_t_yr": 0.022989605248632198,
+     "tau_total_per_t_yr": 0.025389337549683533,
+     "cc_per_t_yr": 26197.74651638367,
+     "S_over_B": 9.691420418090322e-07,
+     "fake_rate_needed": 8.722278376281289e-08,
+     "vs_opera": 0.0008506401986468328,
+     "tau_flight_mm": 10.310416336789608
+    },
+    "RCS3": {
+     "nutau_per_t_yr": 0.0015704891918418638,
+     "nubartau_per_t_yr": 0.014944697066588995,
+     "tau_total_per_t_yr": 0.016515186258430858,
+     "cc_per_t_yr": 67747.68476749632,
+     "S_over_B": 2.437749174028518e-07,
+     "fake_rate_needed": 2.193974256625666e-08,
+     "vs_opera": 0.0002139673393774181,
+     "tau_flight_mm": 22.275234677483137
+    },
+    "RCS4": {
+     "nutau_per_t_yr": 0.004222766468171794,
+     "nubartau_per_t_yr": 0.040372784295034644,
+     "tau_total_per_t_yr": 0.04459555076320644,
+     "cc_per_t_yr": 1432175.8835080273,
+     "S_over_B": 3.113831986471687e-08,
+     "fake_rate_needed": 2.802448787824518e-09,
+     "vs_opera": 2.7330881803258614e-05,
+     "tau_flight_mm": 59.87582821638016
+    },
+    "Collider store": {
+     "nutau_per_t_yr": 0.005212346061435229,
+     "nubartau_per_t_yr": 0.0518720828000476,
+     "tau_total_per_t_yr": 0.05708442886148283,
+     "cc_per_t_yr": 665253.4036510948,
+     "S_over_B": 8.580854836395829e-08,
+     "fake_rate_needed": 7.722769352756246e-09,
+     "vs_opera": 7.531630811275529e-05,
+     "tau_flight_mm": 53.11321550578607
+    },
+    "FULL CHAIN": {
+     "tau_total_per_t_yr": 0.15067083230041223,
+     "cc_per_t_yr": 2192600.6634911755,
+     "S_over_B": 6.871786313359319e-08,
+     "nutau_per_t_yr": 0.01406330498602721,
+     "nubartau_per_t_yr": 0.13660752731438502,
+     "fake_rate_needed": 6.184607682023387e-09,
+     "vs_opera": 6.031538641893308e-05,
+     "tau_flight_mm": null
+    },
+    "RCS1+RCS2 window": {
+     "tau_total_per_t_yr": 0.032475666417292104,
+     "cc_per_t_yr": 27423.691564557106,
+     "S_over_B": 1.1842193579534078e-06,
+     "nutau_per_t_yr": 0.0030577032645783234,
+     "nubartau_per_t_yr": 0.029417963152713777,
+     "fake_rate_needed": 1.065797422158067e-07,
+     "vs_opera": 0.001039418935959655,
+     "tau_flight_mm": null
+    }
+   }
+  },
+  "400 km S": {
+   "range_km": 400.0,
+   "sign_side": "nubar",
+   "stages": {
+    "RCS1": {
+     "nutau_per_t_yr": 0.0006578742213485159,
+     "nubartau_per_t_yr": 0.0064276930933948795,
+     "tau_total_per_t_yr": 0.0070855673147433955,
+     "cc_per_t_yr": 301.60209697143523,
+     "S_over_B": 2.349309698405204e-05,
+     "fake_rate_needed": 2.1143787285646834e-06,
+     "vs_opera": 0.020620478550327077,
+     "tau_flight_mm": 3.2203242600692037
+    },
+    "RCS2": {
+     "nutau_per_t_yr": 0.0023996810396672034,
+     "nubartau_per_t_yr": 0.022989276044634514,
+     "tau_total_per_t_yr": 0.02538895708430172,
+     "cc_per_t_yr": 6445.064806974646,
+     "S_over_B": 3.939286546324032e-06,
+     "fake_rate_needed": 3.545357891691629e-07,
+     "vs_opera": 0.003457610283872261,
+     "tau_flight_mm": 10.310416336789608
+    },
+    "RCS3": {
+     "nutau_per_t_yr": 0.0015704803973145222,
+     "nubartau_per_t_yr": 0.01494464195635189,
+     "tau_total_per_t_yr": 0.016515122353666412,
+     "cc_per_t_yr": 16667.014415760375,
+     "S_over_B": 9.908866664235718e-07,
+     "fake_rate_needed": 8.917979997812145e-08,
+     "vs_opera": 0.0008697259992866295,
+     "tau_flight_mm": 22.275234677483137
+    },
+    "RCS4": {
+     "nutau_per_t_yr": 0.004222762050369981,
+     "nubartau_per_t_yr": 0.04037275713889668,
+     "tau_total_per_t_yr": 0.044595519189266665,
+     "cc_per_t_yr": 352338.1821571109,
+     "S_over_B": 1.2657021420795406e-07,
+     "fake_rate_needed": 1.1391319278715865e-08,
+     "vs_opera": 0.00011109384126567648,
+     "tau_flight_mm": 59.87582821638016
+    },
+    "Collider store": {
+     "nutau_per_t_yr": 0.00521231396956786,
+     "nubartau_per_t_yr": 0.05187178565070869,
+     "tau_total_per_t_yr": 0.05708409962027655,
+     "cc_per_t_yr": 163662.98135262774,
+     "S_over_B": 3.4879053985508996e-07,
+     "fake_rate_needed": 3.13911485869581e-08,
+     "vs_opera": 0.00030614217659430886,
+     "tau_flight_mm": 53.11321550578607
+    },
+    "FULL CHAIN": {
+     "tau_total_per_t_yr": 0.15066926556225474,
+     "cc_per_t_yr": 539414.844829445,
+     "S_over_B": 2.793198352001123e-07,
+     "nutau_per_t_yr": 0.014063111678268084,
+     "nubartau_per_t_yr": 0.13660615388398664,
+     "fake_rate_needed": 2.5138785168010105e-08,
+     "vs_opera": 0.0002451660023510186,
+     "tau_flight_mm": null
+    },
+    "RCS1+RCS2 window": {
+     "tau_total_per_t_yr": 0.032474524399045114,
+     "cc_per_t_yr": 6746.666903946081,
+     "S_over_B": 4.813417478792524e-06,
+     "nutau_per_t_yr": 0.0030575552610157194,
+     "nubartau_per_t_yr": 0.029416969138029395,
+     "fake_rate_needed": 4.332075730913272e-07,
+     "vs_opera": 0.004224856856573168,
+     "tau_flight_mm": null
+    }
+   }
+  },
+  "655 km S (W. Tennessee)": {
+   "range_km": 655.0,
+   "sign_side": "nubar",
+   "stages": {
+    "RCS1": {
+     "nutau_per_t_yr": 0.0006576590353884121,
+     "nubartau_per_t_yr": 0.006426213752748965,
+     "tau_total_per_t_yr": 0.007083872788137377,
+     "cc_per_t_yr": 112.47907584739735,
+     "S_over_B": 6.297947182414809e-05,
+     "fake_rate_needed": 5.668152464173328e-06,
+     "vs_opera": 0.05527865690685038,
+     "tau_flight_mm": 3.2203242600692037
+    },
+    "RCS2": {
+     "nutau_per_t_yr": 0.002399566872996562,
+     "nubartau_per_t_yr": 0.02298854274276865,
+     "tau_total_per_t_yr": 0.025388109615765212,
+     "cc_per_t_yr": 2403.6137034344,
+     "S_over_B": 1.0562474984848625e-05,
+     "fake_rate_needed": 9.506227486363762e-07,
+     "vs_opera": 0.009270948356076258,
+     "tau_flight_mm": 10.310416336789608
+    },
+    "RCS3": {
+     "nutau_per_t_yr": 0.0015704608037280915,
+     "nubartau_per_t_yr": 0.014944519162431693,
+     "tau_total_per_t_yr": 0.016514979966159783,
+     "cc_per_t_yr": 6215.773688064005,
+     "S_over_B": 2.6569467929427814e-06,
+     "fake_rate_needed": 2.391252113648503e-07,
+     "vs_opera": 0.002332068623835703,
+     "tau_flight_mm": 22.275234677483137
+    },
+    "RCS4": {
+     "nutau_per_t_yr": 0.004222752205318842,
+     "nubartau_per_t_yr": 0.040372696617806035,
+     "tau_total_per_t_yr": 0.04459544882312488,
+     "cc_per_t_yr": 131400.52245239262,
+     "S_over_B": 3.3938562793220353e-07,
+     "fake_rate_needed": 3.0544706513898316e-08,
+     "vs_opera": 0.0002978872502767933,
+     "tau_flight_mm": 59.87582821638016
+    },
+    "Collider store": {
+     "nutau_per_t_yr": 0.005212242405766086,
+     "nubartau_per_t_yr": 0.05187112301747973,
+     "tau_total_per_t_yr": 0.05708336542324582,
+     "cc_per_t_yr": 61036.24967407597,
+     "S_over_B": 9.352371046396537e-07,
+     "fake_rate_needed": 8.417133941756884e-08,
+     "vs_opera": 0.0008208809876698401,
+     "tau_flight_mm": 53.11321550578607
+    },
+    "FULL CHAIN": {
+     "tau_total_per_t_yr": 0.15066577661643307,
+     "cc_per_t_yr": 201168.6385938144,
+     "S_over_B": 7.489526084662075e-07,
+     "nutau_per_t_yr": 0.014062681323197993,
+     "nubartau_per_t_yr": 0.13660309529323508,
+     "fake_rate_needed": 6.740573476195868e-08,
+     "vs_opera": 0.000657374428266002,
+     "tau_flight_mm": null
+    },
+    "RCS1+RCS2 window": {
+     "tau_total_per_t_yr": 0.03247198240390259,
+     "cc_per_t_yr": 2516.0927792817974,
+     "S_over_B": 1.2905717416816206e-05,
+     "nutau_per_t_yr": 0.0030572259083849742,
+     "nubartau_per_t_yr": 0.029414756495517613,
+     "fake_rate_needed": 1.1615145675134585e-06,
+     "vs_opera": 0.011327670819675005,
+     "tau_flight_mm": null
+    }
+   }
+  },
+  "830 km S (NE Mississippi)": {
+   "range_km": 830.0,
+   "sign_side": "nubar",
+   "stages": {
+    "RCS1": {
+     "nutau_per_t_yr": 0.0006574518319154289,
+     "nubartau_per_t_yr": 0.00642478859505488,
+     "tau_total_per_t_yr": 0.007082240426970309,
+     "cc_per_t_yr": 70.04838948385782,
+     "S_over_B": 0.00010110497156543997,
+     "fake_rate_needed": 9.099447440889597e-06,
+     "vs_opera": 0.0887423611672758,
+     "tau_flight_mm": 3.2203242600692037
+    },
+    "RCS2": {
+     "nutau_per_t_yr": 0.0023994567705363967,
+     "nubartau_per_t_yr": 0.022987835403842014,
+     "tau_total_per_t_yr": 0.02538729217437841,
+     "cc_per_t_yr": 1496.8941342951712,
+     "S_over_B": 1.695997839308275e-05,
+     "fake_rate_needed": 1.5263980553774474e-06,
+     "vs_opera": 0.014886197035068556,
+     "tau_flight_mm": 10.310416336789608
+    },
+    "RCS3": {
+     "nutau_per_t_yr": 0.001570441898947224,
+     "nubartau_per_t_yr": 0.014944400670519909,
+     "tau_total_per_t_yr": 0.01651484256946713,
+     "cc_per_t_yr": 3870.9860742076644,
+     "S_over_B": 4.26631412587747e-06,
+     "fake_rate_needed": 3.839682713289723e-07,
+     "vs_opera": 0.0037446505661358023,
+     "tau_flight_mm": 22.275234677483137
+    },
+    "RCS4": {
+     "nutau_per_t_yr": 0.004222742703714589,
+     "nubartau_per_t_yr": 0.04037263820323274,
+     "tau_total_per_t_yr": 0.04459538090694733,
+     "cc_per_t_yr": 81832.0643709359,
+     "S_over_B": 5.44962188718609e-07,
+     "fake_rate_needed": 4.904659698467481e-08,
+     "vs_opera": 0.0004783269370930411,
+     "tau_flight_mm": 59.87582821638016
+    },
+    "Collider store": {
+     "nutau_per_t_yr": 0.005212173278588327,
+     "nubartau_per_t_yr": 0.05187048294571565,
+     "tau_total_per_t_yr": 0.057082656224303974,
+     "cc_per_t_yr": 38011.43419425233,
+     "S_over_B": 1.501723295485004e-06,
+     "fake_rate_needed": 1.3515509659365035e-07,
+     "vs_opera": 0.001318100079529575,
+     "tau_flight_mm": 53.11321550578607
+    },
+    "FULL CHAIN": {
+     "tau_total_per_t_yr": 0.15066241230206714,
+     "cc_per_t_yr": 125281.42716317493,
+     "S_over_B": 1.2025917625110888e-06,
+     "nutau_per_t_yr": 0.014062266483701964,
+     "nubartau_per_t_yr": 0.1366001458183652,
+     "fake_rate_needed": 1.0823325862599799e-07,
+     "vs_opera": 0.0010555448547500453,
+     "tau_flight_mm": null
+    },
+    "RCS1+RCS2 window": {
+     "tau_total_per_t_yr": 0.032469532601348716,
+     "cc_per_t_yr": 1566.942523779029,
+     "S_over_B": 2.0721584939210946e-05,
+     "nutau_per_t_yr": 0.0030569086024518255,
+     "nubartau_per_t_yr": 0.029412623998896895,
+     "fake_rate_needed": 1.864942644528985e-06,
+     "vs_opera": 0.018187853140768928,
+     "tau_flight_mm": null
+    }
+   }
+  },
+  "655 km N (Lake Superior)": {
+   "range_km": 655.0,
+   "sign_side": "nu",
+   "stages": {
+    "RCS1": {
+     "nutau_per_t_yr": 0.010978115160946118,
+     "nubartau_per_t_yr": 0.0003849711426663884,
+     "tau_total_per_t_yr": 0.011363086303612506,
+     "cc_per_t_yr": 117.08478241542898,
+     "S_over_B": 9.705006978016234e-05,
+     "fake_rate_needed": 8.73450628021461e-06,
+     "vs_opera": 0.08518327249779299,
+     "tau_flight_mm": 3.2203242600692037
+    },
+    "RCS2": {
+     "nutau_per_t_yr": 0.03927209385222954,
+     "nubartau_per_t_yr": 0.0014046245110223851,
+     "tau_total_per_t_yr": 0.04067671836325192,
+     "cc_per_t_yr": 2502.0350261339026,
+     "S_over_B": 1.625745360811548e-05,
+     "fake_rate_needed": 1.4631708247303932e-06,
+     "vs_opera": 0.01426957346818316,
+     "tau_flight_mm": 10.310416336789608
+    },
+    "RCS3": {
+     "nutau_per_t_yr": 0.025515205348535512,
+     "nubartau_per_t_yr": 0.0009194965153444783,
+     "tau_total_per_t_yr": 0.02643470186387999,
+     "cc_per_t_yr": 6464.769018158962,
+     "S_over_B": 4.089040426599505e-06,
+     "fake_rate_needed": 3.680136383939555e-07,
+     "vs_opera": 0.003589053008437051,
+     "tau_flight_mm": 22.275234677483137
+    },
+    "RCS4": {
+     "nutau_per_t_yr": 0.06738936188406268,
+     "nubartau_per_t_yr": 0.0025125705725851126,
+     "tau_total_per_t_yr": 0.06990193245664779,
+     "cc_per_t_yr": 135494.7121394224,
+     "S_over_B": 5.159015532998775e-07,
+     "fake_rate_needed": 4.643113979698898e-08,
+     "vs_opera": 0.00045281969087013506,
+     "tau_flight_mm": 59.87582821638016
+    },
+    "Collider store": {
+     "nutau_per_t_yr": 0.08795714654939306,
+     "nubartau_per_t_yr": 0.0030676313844405787,
+     "tau_total_per_t_yr": 0.09102477793383364,
+     "cc_per_t_yr": 62946.401961228206,
+     "S_over_B": 1.4460680054421583e-06,
+     "fake_rate_needed": 1.3014612048979425e-07,
+     "vs_opera": 0.0012692500400767184,
+     "tau_flight_mm": 53.11321550578607
+    },
+    "FULL CHAIN": {
+     "tau_total_per_t_yr": 0.23940121692122585,
+     "cc_per_t_yr": 207525.00292735887,
+     "S_over_B": 1.1536017999962384e-06,
+     "nutau_per_t_yr": 0.2311119227951669,
+     "nubartau_per_t_yr": 0.008289294126058944,
+     "fake_rate_needed": 1.0382416199966145e-07,
+     "vs_opera": 0.0010125451399016982,
+     "tau_flight_mm": null
+    },
+    "RCS1+RCS2 window": {
+     "tau_total_per_t_yr": 0.05203980466686443,
+     "cc_per_t_yr": 2619.1198085493315,
+     "S_over_B": 1.9869195940176575e-05,
+     "nutau_per_t_yr": 0.05025020901317566,
+     "nubartau_per_t_yr": 0.0017895956536887736,
+     "fake_rate_needed": 1.7882276346158918e-06,
+     "vs_opera": 0.017439690006591485,
+     "tau_flight_mm": null
+    }
+   }
+  }
+ },
+ "chirp_gates": {
+  "on-site hall, 2 km N": [
+   {
+    "e_max_GeV": 80,
+    "tau_per_t_yr": 0.0005975117673289277,
+    "cc_per_t_yr": 106080.90827168761,
+    "S_over_B": 5.632604179807915e-09,
+    "fake_rate_needed": 5.069343761827123e-10,
+    "better_than_opera_by": 202270.38377208365
+   },
+   {
+    "e_max_GeV": 100,
+    "tau_per_t_yr": 0.0013485938795671452,
+    "cc_per_t_yr": 300643.4195065955,
+    "S_over_B": 4.4856923254146255e-09,
+    "fake_rate_needed": 4.037123092873163e-10,
+    "better_than_opera_by": 253987.32825053483
+   },
+   {
+    "e_max_GeV": 125,
+    "tau_per_t_yr": 0.0023545390752736724,
+    "cc_per_t_yr": 679630.5384104559,
+    "S_over_B": 3.4644397833866502e-09,
+    "fake_rate_needed": 3.117995805047985e-10,
+    "better_than_opera_by": 328858.078165891
+   },
+   {
+    "e_max_GeV": 160,
+    "tau_per_t_yr": 0.0039008164429966785,
+    "cc_per_t_yr": 1562251.0808554653,
+    "S_over_B": 2.4969203035280665e-09,
+    "fake_rate_needed": 2.2472282731752598e-10,
+    "better_than_opera_by": 456285.6922089916
+   },
+   {
+    "e_max_GeV": 200,
+    "tau_per_t_yr": 0.005722390176970292,
+    "cc_per_t_yr": 3137108.3419548627,
+    "S_over_B": 1.824097083432073e-09,
+    "fake_rate_needed": 1.6416873750888655e-10,
+    "better_than_opera_by": 624587.9232164321
+   },
+   {
+    "e_max_GeV": 250,
+    "tau_per_t_yr": 0.008104207605097698,
+    "cc_per_t_yr": 6204763.114092693,
+    "S_over_B": 1.306126834510548e-09,
+    "fake_rate_needed": 1.1755141510594932e-10,
+    "better_than_opera_by": 872280.531249424
+   },
+   {
+    "e_max_GeV": 314,
+    "tau_per_t_yr": 0.01151489185583287,
+    "cc_per_t_yr": 12903920.099338058,
+    "S_over_B": 8.923561031987137e-10,
+    "fake_rate_needed": 8.031204928788423e-11,
+    "better_than_opera_by": 1276742.5526670972
+   },
+   {
+    "e_max_GeV": 500,
+    "tau_per_t_yr": 0.02795210327626644,
+    "cc_per_t_yr": 76043672.83989748,
+    "S_over_B": 3.6757960567103144e-10,
+    "fake_rate_needed": 3.308216451039283e-11,
+    "better_than_opera_by": 3099489.1759735546
+   },
+   {
+    "e_max_GeV": 750,
+    "tau_per_t_yr": 0.05215559434813264,
+    "cc_per_t_yr": 282205043.33892244,
+    "S_over_B": 1.8481453673205566e-10,
+    "fake_rate_needed": 1.6633308305885007e-11,
+    "better_than_opera_by": 6164607.120368248
+   },
+   {
+    "e_max_GeV": 1500,
+    "tau_per_t_yr": 0.0787009751422244,
+    "cc_per_t_yr": 983840537.685475,
+    "S_over_B": 7.999362917833378e-11,
+    "fake_rate_needed": 7.19942662605004e-12,
+    "better_than_opera_by": 14242496.818666285
+   },
+   {
+    "e_max_GeV": 5000,
+    "tau_per_t_yr": 0.23940995585993075,
+    "cc_per_t_yr": 22258353595.22754,
+    "S_over_B": 1.0755959771942123e-11,
+    "fake_rate_needed": 9.680363794747912e-13,
+    "better_than_opera_by": 105923509.68604197
+   }
+  ],
+  "deep hall, 9.25 km N": [
+   {
+    "e_max_GeV": 80,
+    "tau_per_t_yr": 0.0005975116154511547,
+    "cc_per_t_yr": 4959.2243457910945,
+    "S_over_B": 1.2048489315839566e-07,
+    "fake_rate_needed": 1.0843640384255609e-08,
+    "better_than_opera_by": 9456.032032067249
+   },
+   {
+    "e_max_GeV": 100,
+    "tau_per_t_yr": 0.001348593596632461,
+    "cc_per_t_yr": 14054.915155896359,
+    "S_over_B": 9.595174226766465e-08,
+    "fake_rate_needed": 8.635656804089818e-09,
+    "better_than_opera_by": 11873.770941102879
+   },
+   {
+    "e_max_GeV": 125,
+    "tau_per_t_yr": 0.002354538670330678,
+    "cc_per_t_yr": 31772.3553383997,
+    "S_over_B": 7.410651949636891e-08,
+    "fake_rate_needed": 6.669586754673202e-09,
+    "better_than_opera_by": 15373.937635025668
+   },
+   {
+    "e_max_GeV": 160,
+    "tau_per_t_yr": 0.0039008159112853508,
+    "cc_per_t_yr": 73034.38215832709,
+    "S_over_B": 5.341067858736716e-08,
+    "fake_rate_needed": 4.806961072863044e-09,
+    "better_than_opera_by": 21331.109044464785
+   },
+   {
+    "e_max_GeV": 200,
+    "tau_per_t_yr": 0.005722389544450831,
+    "cc_per_t_yr": 146658.09633682342,
+    "S_over_B": 3.901857236240447e-08,
+    "fake_rate_needed": 3.5116715126164025e-09,
+    "better_than_opera_by": 29199.146460410906
+   },
+   {
+    "e_max_GeV": 250,
+    "tau_per_t_yr": 0.008104206881738577,
+    "cc_per_t_yr": 290069.2763345014,
+    "S_over_B": 2.7938866825706103e-08,
+    "fake_rate_needed": 2.514498014313549e-09,
+    "better_than_opera_by": 40778.64060104719
+   },
+   {
+    "e_max_GeV": 314,
+    "tau_per_t_yr": 0.011514891044604762,
+    "cc_per_t_yr": 603251.1952941093,
+    "S_over_B": 1.908805342522494e-08,
+    "fake_rate_needed": 1.7179248082702447e-09,
+    "better_than_opera_by": 59687.019084952255
+   },
+   {
+    "e_max_GeV": 500,
+    "tau_per_t_yr": 0.027952102229849313,
+    "cc_per_t_yr": 3555000.0451084287,
+    "S_over_B": 7.862757208206101e-09,
+    "fake_rate_needed": 7.07648148738549e-10,
+    "better_than_opera_by": 144899.42636114085
+   },
+   {
+    "e_max_GeV": 750,
+    "tau_per_t_yr": 0.05215559313868773,
+    "cc_per_t_yr": 13192931.17143246,
+    "S_over_B": 3.9532983581104206e-09,
+    "fake_rate_needed": 3.557968522299378e-10,
+    "better_than_opera_by": 288192.012310083
+   },
+   {
+    "e_max_GeV": 1500,
+    "tau_per_t_yr": 0.07870097386582726,
+    "cc_per_t_yr": 45994006.14453646,
+    "S_over_B": 1.7111136963914157e-09,
+    "fake_rate_needed": 1.5400023267522742e-10,
+    "better_than_opera_by": 665828.9343885734
+   },
+   {
+    "e_max_GeV": 5000,
+    "tau_per_t_yr": 0.23940995419490063,
+    "cc_per_t_yr": 1040565836.4459915,
+    "S_over_B": 2.300767003965796e-10,
+    "fake_rate_needed": 2.0706903035692163e-11,
+    "better_than_opera_by": 4951866.082581071
+   }
+  ],
+  "UIUC, 198 km S": [
+   {
+    "e_max_GeV": 80,
+    "tau_per_t_yr": 0.0003716883853394993,
+    "cc_per_t_yr": 10.35583617480167,
+    "S_over_B": 3.589168262857516e-05,
+    "fake_rate_needed": 3.230251436571764e-06,
+    "better_than_opera_by": 31.742981260480907
+   },
+   {
+    "e_max_GeV": 100,
+    "tau_per_t_yr": 0.000839245544330977,
+    "cc_per_t_yr": 29.34942818804492,
+    "S_over_B": 2.859495384216146e-05,
+    "fake_rate_needed": 2.573545845794531e-06,
+    "better_than_opera_by": 39.84300920276885
+   },
+   {
+    "e_max_GeV": 125,
+    "tau_per_t_yr": 0.0014658123023346906,
+    "cc_per_t_yr": 66.34692924334037,
+    "S_over_B": 2.209314461199156e-05,
+    "fake_rate_needed": 1.9883830150792406e-06,
+    "better_than_opera_by": 51.56844030557801
+   },
+   {
+    "e_max_GeV": 160,
+    "tau_per_t_yr": 0.0024294640532367432,
+    "cc_per_t_yr": 152.51015965861563,
+    "S_over_B": 1.5929850566512716e-05,
+    "fake_rate_needed": 1.4336865509861444e-06,
+    "better_than_opera_by": 71.52038271350848
+   },
+   {
+    "e_max_GeV": 200,
+    "tau_per_t_yr": 0.0035651870115399405,
+    "cc_per_t_yr": 306.250960528012,
+    "S_over_B": 1.164139046419037e-05,
+    "fake_rate_needed": 1.0477251417771332e-06,
+    "better_than_opera_by": 97.86709006888599
+   },
+   {
+    "e_max_GeV": 250,
+    "tau_per_t_yr": 0.005050685111236829,
+    "cc_per_t_yr": 605.7217209003256,
+    "S_over_B": 8.33829287767599e-06,
+    "fake_rate_needed": 7.50446358990839e-07,
+    "better_than_opera_by": 136.6357629552984
+   },
+   {
+    "e_max_GeV": 314,
+    "tau_per_t_yr": 0.007178397269297861,
+    "cc_per_t_yr": 1259.7071870767604,
+    "S_over_B": 5.6984649630806975e-06,
+    "fake_rate_needed": 5.128618466772627e-07,
+    "better_than_opera_by": 199.9326163216519
+   },
+   {
+    "e_max_GeV": 500,
+    "tau_per_t_yr": 0.017435718557717108,
+    "cc_per_t_yr": 7423.539550050893,
+    "S_over_B": 2.348706899203841e-06,
+    "fake_rate_needed": 2.1138362092834566e-07,
+    "better_than_opera_by": 485.07926190032043
+   },
+   {
+    "e_max_GeV": 750,
+    "tau_per_t_yr": 0.03254399341777309,
+    "cc_per_t_yr": 27549.436030806293,
+    "S_over_B": 1.1812943604864283e-06,
+    "fake_rate_needed": 1.0631649244377854e-07,
+    "better_than_opera_by": 964.4581801074963
+   },
+   {
+    "e_max_GeV": 1500,
+    "tau_per_t_yr": 0.04912839991217154,
+    "cc_per_t_yr": 96104.18630950282,
+    "S_over_B": 5.111993743327048e-07,
+    "fake_rate_needed": 4.600794368994343e-08,
+    "better_than_opera_by": 2228.697972436271
+   },
+   {
+    "e_max_GeV": 5000,
+    "tau_per_t_yr": 0.15067083230041223,
+    "cc_per_t_yr": 2192600.6634911755,
+    "S_over_B": 6.871786313359319e-08,
+    "fake_rate_needed": 6.184607682023387e-09,
+    "better_than_opera_by": 16579.517422872694
+   }
+  ],
+  "400 km S": [
+   {
+    "e_max_GeV": 80,
+    "tau_per_t_yr": 0.00037154593951234296,
+    "cc_per_t_yr": 2.5477013923800076,
+    "S_over_B": 0.0001458357485000441,
+    "fake_rate_needed": 1.3125217365003969e-05,
+    "better_than_opera_by": 7.812275253523623
+   },
+   {
+    "e_max_GeV": 100,
+    "tau_per_t_yr": 0.0008389799016261073,
+    "cc_per_t_yr": 7.220428925110059,
+    "S_over_B": 0.00011619529952139499,
+    "fake_rate_needed": 1.0457576956925549e-05,
+    "better_than_opera_by": 9.805121324001655
+   },
+   {
+    "e_max_GeV": 125,
+    "tau_per_t_yr": 0.001465431754315215,
+    "cc_per_t_yr": 16.322406144729626,
+    "S_over_B": 8.978037559666968e-05,
+    "fake_rate_needed": 8.080233803700271e-06,
+    "better_than_opera_by": 12.689955923154447
+   },
+   {
+    "e_max_GeV": 160,
+    "tau_per_t_yr": 0.0024289639083254857,
+    "cc_per_t_yr": 37.519939438574,
+    "S_over_B": 6.473794853272829e-05,
+    "fake_rate_needed": 5.826415367945546e-06,
+    "better_than_opera_by": 17.598781470654902
+   },
+   {
+    "e_max_GeV": 200,
+    "tau_per_t_yr": 0.0035645916150503975,
+    "cc_per_t_yr": 75.34263630525939,
+    "S_over_B": 4.731174524618495e-05,
+    "fake_rate_needed": 4.258057072156645e-06,
+    "better_than_opera_by": 24.08089160857703
+   },
+   {
+    "e_max_GeV": 250,
+    "tau_per_t_yr": 0.005050003774022447,
+    "cc_per_t_yr": 149.01723488901447,
+    "S_over_B": 3.388872285667899e-05,
+    "fake_rate_needed": 3.049985057101109e-06,
+    "better_than_opera_by": 33.61911907699548
+   },
+   {
+    "e_max_GeV": 314,
+    "tau_per_t_yr": 0.0071776327057217265,
+    "cc_per_t_yr": 309.90812333587627,
+    "S_over_B": 2.316051811892216e-05,
+    "fake_rate_needed": 2.0844466307029944e-06,
+    "better_than_opera_by": 49.191861910687265
+   },
+   {
+    "e_max_GeV": 500,
+    "tau_per_t_yr": 0.01743473091645422,
+    "cc_per_t_yr": 1826.3095059453203,
+    "S_over_B": 9.546427294879456e-06,
+    "fake_rate_needed": 8.59178456539151e-07,
+    "better_than_opera_by": 119.34401990335124
+   },
+   {
+    "e_max_GeV": 750,
+    "tau_per_t_yr": 0.032542850904088726,
+    "cc_per_t_yr": 6777.602054554842,
+    "S_over_B": 4.8015287179952565e-06,
+    "fake_rate_needed": 4.321375846195731e-07,
+    "better_than_opera_by": 237.2804737824573
+   },
+   {
+    "e_max_GeV": 1500,
+    "tau_per_t_yr": 0.049127193696140506,
+    "cc_per_t_yr": 23643.16749911865,
+    "S_over_B": 2.0778600709051286e-06,
+    "fake_rate_needed": 1.8700740638146157e-07,
+    "better_than_opera_by": 548.3088226387157
+   },
+   {
+    "e_max_GeV": 5000,
+    "tau_per_t_yr": 0.15066926556225474,
+    "cc_per_t_yr": 539414.844829445,
+    "S_over_B": 2.793198352001123e-07,
+    "fake_rate_needed": 2.5138785168010105e-08,
+    "better_than_opera_by": 4078.8689720862735
+   }
+  ],
+  "655 km S (W. Tennessee)": [
+   {
+    "e_max_GeV": 80,
+    "tau_per_t_yr": 0.00037122924580533983,
+    "cc_per_t_yr": 0.9501362922459092,
+    "S_over_B": 0.0003907115735236648,
+    "fake_rate_needed": 3.516404161712983e-05,
+    "better_than_opera_by": 2.9159847987379446
+   },
+   {
+    "e_max_GeV": 100,
+    "tau_per_t_yr": 0.0008383891963677613,
+    "cc_per_t_yr": 2.6927769431096307,
+    "S_over_B": 0.0003113474357811404,
+    "fake_rate_needed": 2.8021269220302635e-05,
+    "better_than_opera_by": 3.6592850242288777
+   },
+   {
+    "e_max_GeV": 125,
+    "tau_per_t_yr": 0.0014645853966918896,
+    "cc_per_t_yr": 6.0872559481539295,
+    "S_over_B": 0.00024059862262503545,
+    "fake_rate_needed": 2.165387603625319e-05,
+    "better_than_opera_by": 4.735309772997174
+   },
+   {
+    "e_max_GeV": 160,
+    "tau_per_t_yr": 0.0024278513848416156,
+    "cc_per_t_yr": 13.992635184830345,
+    "S_over_B": 0.00017350923201897602,
+    "fake_rate_needed": 1.5615830881707843e-05,
+    "better_than_opera_by": 6.566273136183252
+   },
+   {
+    "e_max_GeV": 200,
+    "tau_per_t_yr": 0.003563267056708539,
+    "cc_per_t_yr": 28.0981803131321,
+    "S_over_B": 0.00012681486904129495,
+    "fake_rate_needed": 1.1413338213716545e-05,
+    "better_than_opera_by": 8.98403332116358
+   },
+   {
+    "e_max_GeV": 250,
+    "tau_per_t_yr": 0.0050484878720455486,
+    "cc_per_t_yr": 55.57428490703879,
+    "S_over_B": 9.084215623269549e-05,
+    "fake_rate_needed": 8.175794060942593e-06,
+    "better_than_opera_by": 12.541633271755549
+   },
+   {
+    "e_max_GeV": 314,
+    "tau_per_t_yr": 0.007175931474362181,
+    "cc_per_t_yr": 115.57671402305277,
+    "S_over_B": 6.208803853803007e-05,
+    "fake_rate_needed": 5.587923468422706e-06,
+    "better_than_opera_by": 18.34989534076103
+   },
+   {
+    "e_max_GeV": 500,
+    "tau_per_t_yr": 0.017432532835129747,
+    "cc_per_t_yr": 681.1013832556407,
+    "S_over_B": 2.559462256823331e-05,
+    "fake_rate_needed": 2.303516031140998e-06,
+    "better_than_opera_by": 44.513608514783854
+   },
+   {
+    "e_max_GeV": 750,
+    "tau_per_t_yr": 0.03254030780514628,
+    "cc_per_t_yr": 2527.629692276149,
+    "S_over_B": 1.2873842993925069e-05,
+    "fake_rate_needed": 1.158645869453256e-06,
+    "better_than_opera_by": 88.4979729536556
+   },
+   {
+    "e_max_GeV": 1500,
+    "tau_per_t_yr": 0.049124508660540175,
+    "cc_per_t_yr": 8817.450730980674,
+    "S_over_B": 5.571282466930956e-06,
+    "fake_rate_needed": 5.014154220237861e-07,
+    "better_than_opera_by": 204.49672330356617
+   },
+   {
+    "e_max_GeV": 5000,
+    "tau_per_t_yr": 0.15066577661643307,
+    "cc_per_t_yr": 201168.6385938144,
+    "S_over_B": 7.489526084662075e-07,
+    "fake_rate_needed": 6.740573476195868e-08,
+    "better_than_opera_by": 1521.2030724069432
+   }
+  ],
+  "830 km S (NE Mississippi)": [
+   {
+    "e_max_GeV": 80,
+    "tau_per_t_yr": 0.0003709244825025109,
+    "cc_per_t_yr": 0.5917146505745409,
+    "S_over_B": 0.0006268637799357377,
+    "fake_rate_needed": 5.641774019421639e-05,
+    "better_than_opera_by": 1.8174746181742778
+   },
+   {
+    "e_max_GeV": 100,
+    "tau_per_t_yr": 0.0008378206093289087,
+    "cc_per_t_yr": 1.6769757991255765,
+    "S_over_B": 0.0004996020871414915,
+    "fake_rate_needed": 4.496418784273424e-05,
+    "better_than_opera_by": 2.2804328452761795
+   },
+   {
+    "e_max_GeV": 125,
+    "tau_per_t_yr": 0.0014637705640093966,
+    "cc_per_t_yr": 3.790949315077282,
+    "S_over_B": 0.000386122430650212,
+    "fake_rate_needed": 3.4751018758519084e-05,
+    "better_than_opera_by": 2.95064186550221
+   },
+   {
+    "e_max_GeV": 160,
+    "tau_per_t_yr": 0.0024267800898318138,
+    "cc_per_t_yr": 8.714167963669382,
+    "S_over_B": 0.00027848672414273036,
+    "fake_rate_needed": 2.5063805172845732e-05,
+    "better_than_opera_by": 4.091071172577941
+   },
+   {
+    "e_max_GeV": 200,
+    "tau_per_t_yr": 0.0035619913968410397,
+    "cc_per_t_yr": 17.49865264746916,
+    "S_over_B": 0.00020355803778733858,
+    "fake_rate_needed": 1.832022340086047e-05,
+    "better_than_opera_by": 5.596973823633777
+   },
+   {
+    "e_max_GeV": 250,
+    "tau_per_t_yr": 0.005047027748115723,
+    "cc_per_t_yr": 34.60989633073351,
+    "S_over_B": 0.00014582614463464814,
+    "fake_rate_needed": 1.3124353017118332e-05,
+    "better_than_opera_by": 7.81278975687389
+   },
+   {
+    "e_max_GeV": 314,
+    "tau_per_t_yr": 0.007174292647579111,
+    "cc_per_t_yr": 71.97749997639747,
+    "S_over_B": 9.967410162803198e-05,
+    "fake_rate_needed": 8.970669146522879e-06,
+    "better_than_opera_by": 11.430341387351659
+   },
+   {
+    "e_max_GeV": 500,
+    "tau_per_t_yr": 0.01743041481007255,
+    "cc_per_t_yr": 424.1682696345641,
+    "S_over_B": 4.109316056358828e-05,
+    "fake_rate_needed": 3.698384450722945e-06,
+    "better_than_opera_by": 27.72502755836954
+   },
+   {
+    "e_max_GeV": 750,
+    "tau_per_t_yr": 0.03253785693762784,
+    "cc_per_t_yr": 1574.1273461007036,
+    "S_over_B": 2.067040955627122e-05,
+    "fake_rate_needed": 1.86033686006441e-06,
+    "better_than_opera_by": 55.117873014776954
+   },
+   {
+    "e_max_GeV": 1500,
+    "tau_per_t_yr": 0.04912192083115143,
+    "cc_per_t_yr": 5491.2277541863605,
+    "S_over_B": 8.94552603353635e-06,
+    "fake_rate_needed": 8.050973430182715e-07,
+    "better_than_opera_by": 127.36076166060825
+   },
+   {
+    "e_max_GeV": 5000,
+    "tau_per_t_yr": 0.15066241230206714,
+    "cc_per_t_yr": 125281.42716317493,
+    "S_over_B": 1.2025917625110888e-06,
+    "fake_rate_needed": 1.0823325862599799e-07,
+    "better_than_opera_by": 947.3780251970453
+   }
+  ],
+  "655 km N (Lake Superior)": [
+   {
+    "e_max_GeV": 80,
+    "tau_per_t_yr": 0.0005967171460655599,
+    "cc_per_t_yr": 0.989041741359479,
+    "S_over_B": 0.0006033285766537491,
+    "fake_rate_needed": 5.429957189883742e-05,
+    "better_than_opera_by": 1.8883723615495838
+   },
+   {
+    "e_max_GeV": 100,
+    "tau_per_t_yr": 0.0013471129603148959,
+    "cc_per_t_yr": 2.8030386994379866,
+    "S_over_B": 0.00048059021111088976,
+    "fake_rate_needed": 4.325311899998008e-05,
+    "better_than_opera_by": 2.3706454745560954
+   },
+   {
+    "e_max_GeV": 125,
+    "tau_per_t_yr": 0.002352418809165798,
+    "cc_per_t_yr": 6.336512216401898,
+    "S_over_B": 0.0003712482086086132,
+    "fake_rate_needed": 3.3412338774775185e-05,
+    "better_than_opera_by": 3.06886062388277
+   },
+   {
+    "e_max_GeV": 160,
+    "tau_per_t_yr": 0.00389803150116652,
+    "cc_per_t_yr": 14.565594833452273,
+    "S_over_B": 0.0002676191082985538,
+    "fake_rate_needed": 2.4085719746869842e-05,
+    "better_than_opera_by": 4.257203517078403
+   },
+   {
+    "e_max_GeV": 200,
+    "tau_per_t_yr": 0.005719076425249011,
+    "cc_per_t_yr": 29.248722959779617,
+    "S_over_B": 0.0001955325172012947,
+    "fake_rate_needed": 1.7597926548116522e-05,
+    "better_than_opera_by": 5.826698420258692
+   },
+   {
+    "e_max_GeV": 250,
+    "tau_per_t_yr": 0.008100417162611862,
+    "cc_per_t_yr": 57.84989792289674,
+    "S_over_B": 0.00014002474426848992,
+    "fake_rate_needed": 1.2602226984164092e-05,
+    "better_than_opera_by": 8.136483412541898
+   },
+   {
+    "e_max_GeV": 314,
+    "tau_per_t_yr": 0.011510640167300927,
+    "cc_per_t_yr": 120.30926029334472,
+    "S_over_B": 9.567542963222486e-05,
+    "fake_rate_needed": 8.610788666900237e-06,
+    "better_than_opera_by": 11.908062639127714
+   },
+   {
+    "e_max_GeV": 500,
+    "tau_per_t_yr": 0.027946616579925726,
+    "cc_per_t_yr": 708.9905981226965,
+    "S_over_B": 3.941747133731291e-05,
+    "fake_rate_needed": 3.5475724203581616e-06,
+    "better_than_opera_by": 28.90365542062334
+   },
+   {
+    "e_max_GeV": 750,
+    "tau_per_t_yr": 0.052149251261648155,
+    "cc_per_t_yr": 2631.129126171411,
+    "S_over_B": 1.982010337042302e-05,
+    "fake_rate_needed": 1.7838093033380718e-06,
+    "better_than_opera_by": 57.48249581715845
+   },
+   {
+    "e_max_GeV": 1500,
+    "tau_per_t_yr": 0.07869428024547061,
+    "cc_per_t_yr": 9172.803801041666,
+    "S_over_B": 8.579086825833348e-06,
+    "fake_rate_needed": 7.721178143250013e-07,
+    "better_than_opera_by": 132.80073185123874
+   },
+   {
+    "e_max_GeV": 5000,
+    "tau_per_t_yr": 0.23940121692122585,
+    "cc_per_t_yr": 207525.00292735887,
+    "S_over_B": 1.1536017999962384e-06,
+    "fake_rate_needed": 1.0382416199966145e-07,
+    "better_than_opera_by": 987.6102907343802
+   }
+  ]
+ },
+ "reach": {
+  "on-site hall, 2 km N": {
+   "range_km": 2.0,
+   "sign_side": "nu",
+   "Q_per_t_yr": 2.795063492440663e-11,
+   "dominant_turn_GeV": 66.1375,
+   "dominant_share": 0.05146908866841848,
+   "Z_10kt_5yr_opera_rejection": 0.010507062847228603,
+   "Z_10kt_5yr_10x_opera": 0.03322625011577617,
+   "mass_t_for_5sigma_5yr_opera": 2264526194.8576407
+  },
+  "deep hall, 9.25 km N": {
+   "range_km": 9.25,
+   "sign_side": "nu",
+   "Q_per_t_yr": 5.978814523642996e-10,
+   "dominant_turn_GeV": 66.1375,
+   "dominant_share": 0.05146906764331271,
+   "Z_10kt_5yr_opera_rejection": 0.04859516169325961,
+   "Z_10kt_5yr_10x_opera": 0.1536713942148651,
+   "mass_t_for_5sigma_5yr_opera": 105865376.31987771
+  },
+  "UIUC, 198 km S": {
+   "range_km": 198.4,
+   "sign_side": "nubar",
+   "Q_per_t_yr": 1.1131533489523221e-07,
+   "dominant_turn_GeV": 66.1375,
+   "dominant_share": 0.051199444474622095,
+   "Z_10kt_5yr_opera_rejection": 0.6630755126259223,
+   "Z_10kt_5yr_10x_opera": 2.09682888058165,
+   "mass_t_for_5sigma_5yr_opera": 568609.3924866109
+  },
+  "400 km S": {
+   "range_km": 400.0,
+   "sign_side": "nubar",
+   "Q_per_t_yr": 4.523604323218875e-07,
+   "dominant_turn_GeV": 66.1375,
+   "dominant_share": 0.051167920161012306,
+   "Z_10kt_5yr_opera_rejection": 1.3366810659498318,
+   "Z_10kt_5yr_10x_opera": 4.22695667362321,
+   "mass_t_for_5sigma_5yr_opera": 139921.48832367957
+  },
+  "655 km S (W. Tennessee)": {
+   "range_km": 655.0,
+   "sign_side": "nubar",
+   "Q_per_t_yr": 1.2122973192978413e-06,
+   "dominant_turn_GeV": 66.1375,
+   "dominant_share": 0.05109786252836161,
+   "Z_10kt_5yr_opera_rejection": 2.1882153665974333,
+   "Z_10kt_5yr_10x_opera": 6.919744569428224,
+   "mass_t_for_5sigma_5yr_opera": 52210.743966572365
+  },
+  "830 km S (NE Mississippi)": {
+   "range_km": 830.0,
+   "sign_side": "nubar",
+   "Q_per_t_yr": 1.9455996246314973e-06,
+   "dominant_turn_GeV": 66.1375,
+   "dominant_share": 0.05103047868620477,
+   "Z_10kt_5yr_opera_rejection": 2.772121288360876,
+   "Z_10kt_5yr_10x_opera": 8.766217221460785,
+   "mass_t_for_5sigma_5yr_opera": 32532.358738098483
+  },
+  "655 km N (Lake Superior)": {
+   "range_km": 655.0,
+   "sign_side": "nu",
+   "Q_per_t_yr": 2.9953125566765703e-06,
+   "dominant_turn_GeV": 66.1375,
+   "dominant_share": 0.05135918136004406,
+   "Z_10kt_5yr_opera_rejection": 3.4395891051316347,
+   "Z_10kt_5yr_10x_opera": 10.876935787316317,
+   "mass_t_for_5sigma_5yr_opera": 21131.332290560727
+  }
+ },
+ "underground_labs": [
+  {
+   "lab": "Soudan (MINOS far hall)",
+   "range_km": 736.1,
+   "bearing_deg": 335.9,
+   "tilt_mrad": 57.769501118880896,
+   "up_going_end_km": 0.6053581815948433,
+   "Q_per_t_yr": 3.7821230047251087e-06,
+   "kt_for_5sigma_5yr": 16.735295195356034,
+   "Z_40kt_5yr": 7.730067946519114,
+   "within_study_tilt_range": true
+  },
+  {
+   "lab": "Ash River (NOvA far hall)",
+   "range_km": 811.3,
+   "bearing_deg": 335.2,
+   "tilt_mrad": 63.671235236717926,
+   "up_going_end_km": 0.5493268285903633,
+   "Q_per_t_yr": 4.5932967092733294e-06,
+   "kt_for_5sigma_5yr": 13.779851151665541,
+   "Z_40kt_5yr": 8.518786555293236,
+   "within_study_tilt_range": true
+  },
+  {
+   "lab": "SURF (DUNE far site)",
+   "range_km": 1289.1,
+   "bearing_deg": 287.7,
+   "tilt_mrad": 101.16922142691124,
+   "up_going_end_km": 0.3458622258325713,
+   "Q_per_t_yr": 1.1573740821176955e-05,
+   "kt_for_5sigma_5yr": 5.468840708218405,
+   "Z_40kt_5yr": 13.522355930858193,
+   "within_study_tilt_range": false
+  }
+ ],
+ "on_site_cc_per_t_yr": 22258353595.22754,
+ "nutev_equivalent_minutes_per_tonne": 38.25404230178848
+}
