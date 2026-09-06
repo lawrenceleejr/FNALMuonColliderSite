@@ -201,12 +201,14 @@ to 10⁶ km, four Earth diameters and up — so the τ appearance fraction is 10
 
 **Lever one: distance.** The per-tonne signal is flat in L and the background
 falls as 1/L², so **S/B ∝ L²**. This is the single most important design
-consequence in this study, and it says the τ far detector does *not* belong at
-UIUC:
+consequence in this study. Read one way it says a τ detector wants to be far;
+read the other way — [the case for UIUC](../uiuc-case/) — it fixes the
+background rejection a UIUC detector has to reach, and everything that is
+rate-limited rather than S/B-limited points the opposite direction:
 
 | far hall | range | detector mass for 5σ in 5 yr, at OPERA's own τ efficiency and fake rate |
 |---|---|---|
-| UIUC | 198 km | 569 kt — not a proposal |
+| UIUC | 198 km | 569 kt at OPERA's rejection; **40 kt at 10⁻⁶** — see [the UIUC case](../uiuc-case/) |
 | W. Tennessee, due S | 655 km | 52 kt |
 | Soudan (MINOS far hall) | 736 km | **17 kt** |
 | NE Mississippi, due S | 830 km | 33 kt |

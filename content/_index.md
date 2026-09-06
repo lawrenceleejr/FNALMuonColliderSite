@@ -187,10 +187,20 @@ easement, or University of Illinois land.
   the ν<sub>τ</sub>/ν̄<sub>τ</sub> cross-sections (DONUT's 47 % is the only one
   there is), test third-row PMNS unitarity against a strict L² prediction over
   four decades, and re-open sin²θ<sub>W</sub> with the systematics that broke
-  NuTeV removed. The catch is S/B, and it has one answer: **S/B ∝ L²**, so the
-  τ hall belongs at 700–800 km, not 198 km — **14 kt at Ash River** reaches 5σ
-  in 5 years on OPERA's own τ-ID performance. And the ring that carries 90 % of
-  it is **RCS1/2, the smallest in the complex**.
+  NuTeV removed. The catch is S/B, and **S/B ∝ L²**: at 700–800 km, **14 kt at Ash
+  River** reaches 5σ on OPERA's own τ-ID performance; at UIUC the same result
+  needs 40 kt and 10⁻⁶ fakes per interaction. The ring that carries 90 % of the
+  τ sensitivity is **RCS1/2, the smallest in the complex**.
+* **[The case for UIUC](uiuc-case/)** — the other reading of S/B ∝ L². One
+  fixed 11.7 kt detector carried along the corridor: closer in, the beam is a
+  7–34 cm pencil and the detector is dark; **198 km is the first hall where
+  every stage lights all of it and the last where the rate is 10¹⁰ a year**
+  (2.6 × 10¹⁰ CC, 813 Hz). Same τ yield as any far hall — 1,763 a year, 6,000 in
+  40 kt — and 17× everything else: 1.5 × 10¹⁰ ν<sub>e</sub> CC a year against a
+  world sample of ~10⁴, and 1.4 × 10⁷ ν–e elastic events (**CHARM II's entire
+  run every 3.4 hours**) for a leptonic sin²θ<sub>W</sub> at Q² ~ 0.1–2 GeV²
+  with a statistical floor of 4 × 10⁻⁵. The τ programme there is a stated
+  detector number: **10⁻⁶ fakes per interaction** for 13σ with 40 kt.
 * **[The ring stack](rings/)** — depth, tilt and the transfer lines. A planar
   racetrack turns tilt into depth, so one north–south section carries all three
   rings: co-tilted, the straights sit at 32.6 / 33.6 / 45.1 m but the reach
